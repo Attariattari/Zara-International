@@ -1,6 +1,8 @@
 // Welcome.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Welcome() {
   const navigate = useNavigate();
@@ -26,16 +28,49 @@ function Welcome() {
   };
 
   const handleGoClick = () => {
-    if (!selectedCountry || !selectedLanguage) {
-      tosat("Please select both country and language before proceeding.");
-      return;
+    if (!selectedCountry && !selectedLanguage) {
+      toast.error("Please select a country and a language before proceeding.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    } else if (!selectedCountry) {
+      toast.error("Please select a country before proceeding.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    } else if (!selectedLanguage) {
+      toast.error("Please select a language before proceeding.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    } else {
+      localStorage.setItem("visited", "true");
+      localStorage.setItem("NotVisited", "false");
+      localStorage.setItem("selectedCountry", selectedCountry);
+      localStorage.setItem("selectedLanguage", selectedLanguage);
+      navigate("/Home");
     }
-
-    localStorage.setItem("visited", "true");
-    localStorage.setItem("NotVisited", "false");
-    localStorage.setItem("selectedCountry", selectedCountry);
-    localStorage.setItem("selectedLanguage", selectedLanguage);
-    navigate("/Home");
   };
 
   return (
@@ -64,7 +99,6 @@ function Welcome() {
           ))}
         </select>
       </label>
-
       <br />
       <label>
         Select Language:
@@ -78,6 +112,7 @@ function Welcome() {
         </select>
       </label>
       <br />
+      <ToastContainer />
       <button onClick={handleGoClick}>Go</button>
     </div>
   );
