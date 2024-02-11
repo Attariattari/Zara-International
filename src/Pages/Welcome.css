@@ -1,37 +1,54 @@
 .Welcome-container {
     width: 100%;
-    height: 100vh;
-    background-size: cover;
+    height: 100dvh;
     background-position: center;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
     background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50% 50%;
 }
 
 .zaralogocontainer {
     width: 100%;
-    height: 15em;
+    height: 250px;
+    padding-top: 10px;
 }
 
 .zaralogo {
     width: 600px;
     height: 100%;
-    padding-top: 2px;
 }
 
-@media (min-width: 767px) {
+@media (min-width: 768px) {
     .zaralogo {
-        padding-left: 10em;
+        padding-left: 09em;
     }
 }
 
 @media (max-width: 768px) {
     .zaralogo {
+        width: 100%;
+        height: 250px;
+        padding: 0px 10px 0px 10px;
         display: flex;
         justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        padding-left: 10px;
-        padding-right: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .zaralogocontainer {
+        padding-top: 0px;
+    }
+
+    .zaralogo {
+        padding: 0px 10px 0px 10px;
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -84,8 +101,7 @@ button {
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .zara-input-container {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 0px 10px 0px 10px;
     }
 
     .zarainputs {
@@ -101,4 +117,53 @@ button {
     button {
         max-width: none;
     }
+}
+
+.cookiepolicy {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    flex-wrap: wrap;
+    margin: 40px;
+}
+
+.cookie {
+    padding: 36px 16px 24px 24px;
+    font-size: 12px;
+}
+
+.cookiepolicy__button {
+    position: absolute;
+    margin: auto;
+    width: 2.3rem;
+    height: 2.3rem;
+    top: 0.4rem;
+    right: 0.4rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(105, 105, 105);
+}
+
+/* Media query for screens under 768px */
+@media (max-width: 768px) {
+    .cookiepolicy {
+        max-width: none;
+        padding: 20px;
+        margin: 30px 10px 0px 10px;
+        width: 97%;
+    }
+
+}
+@media (max-width: 600px) {
+    .cookiepolicy {
+        max-width: none;
+        padding: 20px;
+        margin: 40px 10px 0px 10px;
+        width: 96%;
+    }
+
 }
