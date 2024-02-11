@@ -1,0 +1,104 @@
+.Welcome-container {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.zaralogocontainer {
+    width: 100%;
+    height: 15em;
+}
+
+.zaralogo {
+    width: 600px;
+    height: 100%;
+    padding-top: 2px;
+}
+
+@media (min-width: 767px) {
+    .zaralogo {
+        padding-left: 10em;
+    }
+}
+
+@media (max-width: 768px) {
+    .zaralogo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.zara-input-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 100px;
+    padding-left: 10em;
+    flex-direction: column;
+    font-family: serif;
+    flex-wrap: wrap;
+}
+
+.zarainputlabel {
+    width: 100%;
+}
+
+.zarainputs {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    max-width: 600px;
+    column-gap: 20px;
+
+}
+
+.zarainput {
+    width: 100%;
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 1px solid white;
+    height: 30px;
+}
+
+button {
+    width: 100%;
+    max-width: 600px;
+    height: 40px;
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .zara-input-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .zarainputs {
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 800px;
+    }
+
+    .zarainput {
+        width: 100%;
+    }
+
+    button {
+        max-width: none;
+    }
+}
