@@ -20,7 +20,7 @@
 }
 
 .zaralogo {
-    width: 600px;
+    width: 500px;
     height: 100%;
 }
 
@@ -73,7 +73,7 @@
     justify-content: center;
     align-items: start;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     column-gap: 20px;
 
 }
@@ -86,10 +86,13 @@
     border-bottom: 1px solid white;
     height: 30px;
 }
-
+.dropdown-open::placeholder {
+    color: black; /* Change the color to your desired color */
+  }
+  
 button {
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     height: 40px;
     background: transparent;
     color: white;
@@ -98,7 +101,6 @@ button {
     outline: none;
 }
 
-/* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .zara-input-container {
         padding: 0px 10px 0px 10px;
@@ -118,52 +120,67 @@ button {
         max-width: none;
     }
 }
-
-.cookiepolicy {
+.error-border {
+    border: 1px solid red;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+.cookies_setting{
     width: 100%;
-    max-width: 400px;
-    position: relative;
-    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: serif;
     flex-wrap: wrap;
-    margin: 40px;
-}
-
-.cookie {
-    padding: 36px 16px 24px 24px;
+    z-index: 50px;
+    margin-top: 100px;
+    color: white;
+    cursor: pointer;
     font-size: 12px;
 }
 
-.cookiepolicy__button {
+.cookiepolicy {
+    position: fixed;
+    top: 85%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 500px;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+  
+  .cookie {
+    font-size: 12px;
+  }
+  
+  .cookiepolicy__button {
     position: absolute;
-    margin: auto;
-    width: 2.3rem;
-    height: 2.3rem;
-    top: 0.4rem;
-    right: 0.4rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    font-size: 18px;
-    font-weight: bold;
-    color: rgb(105, 105, 105);
-}
-
-/* Media query for screens under 768px */
-@media (max-width: 768px) {
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
     .cookiepolicy {
-        max-width: none;
-        padding: 20px;
-        margin: 30px 10px 0px 10px;
-        width: 97%;
+      max-width: none;
+      width: 97%;
+      left: 50%;
     }
-
-}
-@media (max-width: 600px) {
+  }
+  
+  @media (max-width: 600px) {
     .cookiepolicy {
-        max-width: none;
-        padding: 20px;
-        margin: 40px 10px 0px 10px;
-        width: 96%;
+      max-width: none;
+      width: 96%;
     }
-
-}
+  }
+  

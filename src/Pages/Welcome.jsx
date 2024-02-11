@@ -1,15 +1,16 @@
-// Welcome.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { welcome } from "../ZaraDummyData/ZaraData";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Welcome.css";
-import { GrFormClose } from "react-icons/gr";
+import Welcomecookiepopup from "./Welcomecookiepopup";
 function Welcome() {
   const navigate = useNavigate();
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [countryError, setCountryError] = useState("");
+  const [languageError, setLanguageError] = useState("");
   const [backgroundImage, setBackgroundImage] = useState(
     window.innerWidth > 768 ? welcome.pcimage : welcome.mobileimage
   );
@@ -23,29 +24,51 @@ function Welcome() {
     "Chinese",
     "Hindi",
   ];
-  console.log(selectedCountry);
+
+  const isNewUser = !localStorage.getItem("visited");
+
+  const [showCookiePolicy, setShowCookiePolicy] = useState(isNewUser);
+
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);
+    setCountryError(""); // Reset the error when the user makes a selection
   };
-
+  
   const handleLanguageChange = (event) => {
     setSelectedLanguage(event.target.value);
+    setLanguageError(""); // Reset the error when the user makes a selection
   };
-
+  
   const handleGoClick = () => {
+    // Reset previous errors
+    setCountryError("");
+    setLanguageError("");
+
     if (!selectedCountry && !selectedLanguage) {
-      toast.error("Please select a country and a language before proceeding.");
+      setCountryError("Select a country");
+      setLanguageError("Select a language");
     } else if (!selectedCountry) {
-      toast.error("Please select a country before proceeding.");
+      setCountryError("Select a country");
     } else if (!selectedLanguage) {
-      toast.error("Please select a language before proceeding.");
+      setLanguageError("Select a language");
     } else {
       localStorage.setItem("visited", "true");
       localStorage.setItem("NotVisited", "false");
       localStorage.setItem("selectedCountry", selectedCountry);
       localStorage.setItem("selectedLanguage", selectedLanguage);
+
+      setShowCookiePolicy(false);
+
       navigate("/Home");
     }
+  };
+
+  const handleCookieClose = () => {
+    // Set a flag in local storage to indicate that the user has closed the cookie policy
+    localStorage.setItem("cookiePolicyClosed", "true");
+
+    // Hide the cookie policy
+    setShowCookiePolicy(false);
   };
 
   useEffect(() => {
@@ -61,6 +84,14 @@ function Welcome() {
       window.removeEventListener("resize", handleResize);
     };
   }, [welcome.pcimage, welcome.mobileimage]);
+
+  useEffect(() => {
+    // Check if the user has closed the cookie policy
+    const isCookiePolicyClosed = localStorage.getItem("cookiePolicyClosed");
+
+    // Hide the cookie policy if the user has closed it
+    setShowCookiePolicy(!isCookiePolicyClosed);
+  }, []);
 
   return (
     <div
@@ -89,7 +120,9 @@ function Welcome() {
         <div className="zarainputs">
           <label style={{ width: "100%" }}>
             <select
-              className="zarainput outline-none"
+              className={`zarainput outline-none ${
+                countryError ? "error-border" : ""
+              }`}
               value={selectedCountry}
               onChange={handleCountryChange}
             >
@@ -100,11 +133,17 @@ function Welcome() {
                 </option>
               ))}
             </select>
+            {countryError && (
+              <div className="error-message">{countryError}</div>
+            )}
           </label>
+
           <br />
           <label style={{ width: "100%" }}>
             <select
-              className="zarainput outline-none"
+              className={`zarainput outline-none ${
+                languageError ? "error-border" : ""
+              }`}
               value={selectedLanguage}
               onChange={handleLanguageChange}
             >
@@ -115,6 +154,9 @@ function Welcome() {
                 </option>
               ))}
             </select>
+            {languageError && (
+              <div className="error-message">{languageError}</div>
+            )}
           </label>
         </div>
         <br />
@@ -135,20 +177,12 @@ function Welcome() {
           Go
         </button>
       </div>
-      <div className="cookiepolicy">
-        <div className="cookie">
-          We use first-party and third-party cookies to understand how our
-          online store is used and to enable us to improve it, adapt the content
-          to your preferences, and personalize our advertisements, marketing and
-          publications on social media. For more information, please see our
-          <a className="pl-2 underline" href="">
-            Cookie Policy
-          </a>
-        </div>
-        <div className="cookiepolicy__button">
-          <GrFormClose className="text-2xl cursor-pointer" />
-        </div>
+      <div className="cookies_setting">
+        <div>COOKIES SETTINGS</div>
       </div>
+      {showCookiePolicy && (
+        <Welcomecookiepopup handleCookieClose={handleCookieClose} />
+      )}
     </div>
   );
 }
