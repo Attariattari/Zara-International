@@ -7,8 +7,9 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import Welcome from "./Pages/Welcome";
+import Welcome from "./Components/Welcome/Welcome";
 import Home from "./Pages/Home";
+import Navbar from "./Components/Navbar/Navbar.jsx";
 
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
@@ -17,30 +18,31 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              hasVisited ? (
-                <Navigate to="/Home" replace />
-              ) : (
-                <Navigate to="/welcome" replace />
-              )
-            }
-          />
+          <Route path="/" element={<Navbar />}>
+            <Route
+              path="/"
+              element={
+                hasVisited ? (
+                  <Navigate to="/Home" replace />
+                ) : (
+                  <Navigate to="/welcome" replace />
+                )
+              }
+            />
+            <Route
+              path="/Home"
+              element={<ProtectedHomeRoute redirectTo="/welcome" />}
+            />
+          </Route>
           <Route
             path="/welcome"
             element={<ProtectedRoute redirectTo="/Home" />}
-          />
-          <Route
-            path="/Home"
-            element={<ProtectedHomeRoute redirectTo="/welcome" />}
           />
         </Routes>
       </Router>
     </div>
   );
 }
-// Custom wrapper component to protect routes
 function ProtectedRoute({ redirectTo }) {
   const hasVisited = localStorage.getItem("visited") === "true";
   const navigate = useNavigate();

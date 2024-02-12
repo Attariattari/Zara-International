@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { welcome } from "../ZaraDummyData/ZaraData";
+import { welcome } from "../../ZaraDummyData/ZaraData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Welcome.css";
