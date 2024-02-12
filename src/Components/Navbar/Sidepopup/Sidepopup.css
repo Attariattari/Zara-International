@@ -1,0 +1,40 @@
+/* SidePopup.css */
+.sidePopup {
+    position: fixed;
+    top: 0;
+    left: 58px;
+    bottom: 0;
+    width: 380px; /* Adjust the width as needed */
+    background-color: white;
+    box-shadow: -4px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-height: 85vh;
+    margin-top: 3px;
+    border: 1px solid black;
+  }
+.popupicon{
+    width: 100%;
+    height: 109px;
+    padding: 15px 20px 20px 20px;
+}
+.iconpop{
+    width: 77%;
+    height: 100px;
+    margin-left: 12px;
+}
+.maincategory{
+    width: 100%;
+    height: 110px;
+    display: flex;
+    justify-content: start;
+    padding-top: 60px;
+    margin-top: 40px;
+    gap: 20px;
+    padding-left: 35px;
+    font-size: 13px;
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+}
+  

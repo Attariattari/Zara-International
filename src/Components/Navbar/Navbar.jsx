@@ -1,16 +1,15 @@
-import Nav from "./Nav/Nav";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { HiMenu } from "react-icons/hi";
-import { CgCloseR } from "react-icons/cg";
 import "./Navbar.css";
-import NavInput from "./Nav/NavInput";
+import NavInput from "./NavInput";
+import SidePopup from "./Sidepopup/SidePopup";
+import { VscClose } from "react-icons/vsc";
 export default function Navbar({ sections }) {
   const scrollToSection = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
   };
   const [showNav, setShowNav] = useState(false);
-
+  const [showSidePopup, setShowSidePopup] = useState(false);
   function resize() {
     if (window.innerWidth >= 1024) {
       setShowNav(false);
@@ -29,26 +28,34 @@ export default function Navbar({ sections }) {
     setShowNav(false);
   }, [useLocation()]);
 
+  const showpopup = () => {
+    setShowSidePopup(!showSidePopup);
+  };
+
   return (
     <div className="Navbar">
       <div className="navbarmain">
         <div className="firstsection">
-          <div className="sidebaricon">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
-              stroke="inherit"
-              class="layout-header-icon__icon"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M20.4 6.9H3.6v-1h16.8v1zm0 11.2H3.6v-1h16.8v1z"
-              ></path>
-            </svg>
+          <div className="sidebaricon cursor-pointer" onClick={showpopup}>
+            {showSidePopup ? (
+              <VscClose />
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="inherit"
+                stroke="inherit"
+                className="layout-header-icon__icon"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M20.4 6.9H3.6v-1h16.8v1zm0 11.2H3.6v-1h16.8v1z"
+                ></path>
+              </svg>
+            )}
           </div>
           <div className="navzara">
             <svg
@@ -74,6 +81,11 @@ export default function Navbar({ sections }) {
         </div>
       </div>
       <Outlet />
+      {showSidePopup && (
+        <div className="sidePopup">
+           <SidePopup  showpopup={showpopup}/>
+        </div>
+      )}
     </div>
   );
 }
