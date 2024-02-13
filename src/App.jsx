@@ -10,6 +10,10 @@ import {
 import Welcome from "./Components/Welcome/Welcome";
 import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar/Navbar.jsx";
+import Login from "./Components/LoginSingup/Login.jsx";
+import Help from "./Components/Help/Help.jsx";
+import Signup from "./Components/LoginSingup/Singup.jsx";
+import ShoppingBag from "./Components/ShoppingBag/ShoppingBag.jsx";
 
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
@@ -33,6 +37,10 @@ function App() {
               path="/Home"
               element={<ProtectedHomeRoute redirectTo="/welcome" />}
             />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Help" element={<Help />} />
+            <Route path="/Shopping_Bag" element={<ShoppingBag/>} />
           </Route>
           <Route
             path="/welcome"

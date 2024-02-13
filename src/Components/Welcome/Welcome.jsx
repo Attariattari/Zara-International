@@ -40,7 +40,6 @@ function Welcome() {
   };
   
   const handleGoClick = () => {
-    // Reset previous errors
     setCountryError("");
     setLanguageError("");
 

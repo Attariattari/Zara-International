@@ -1,0 +1,34 @@
+.login {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 0px 0px 0px 88px;
+}
+
+.loginarea {
+    max-width: 100%;
+    width: 370px;
+    height: 250px;
+}
+
+.logintext {
+    margin: 30px 0px 0px 0px;
+    font-size: 16px;
+    font-weight: lighter;
+    color: rgb(37, 37, 37);
+}
+
+.singuparea {
+    max-width: 100%;
+    width: 370px;
+    height: 250px;
+    margin: 0px 0px 0px 130px;
+}
+
+.Registerbutton {
+    width: 100%;
+    height: 35px;
+    border: 1px solid black;
+    font-size: 11px;
+    margin-top: 16px;
+}
