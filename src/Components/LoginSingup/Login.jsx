@@ -33,7 +33,6 @@ export default function Login() {
   const navigation = useNavigate();
 
   async function handleLogin(values) {
-    // Make a POST request to your server's authentication endpoint
     await axios
       .post(
         "https://zarabackendserver-448d1df25aec.herokuapp.com/user/authenticate",
@@ -71,7 +70,6 @@ export default function Login() {
         }}
         onSubmit={(values) => {
           handleLogin(values);
-          // same shape as initial values
         }}
       >
         <Form>
