@@ -1,41 +1,28 @@
-.login {
+.singup {
     width: 100%;
     height: auto;
     display: flex;
-    padding: 0px 0px 0px 88px;
     margin-top: 10px;
 }
 
-.loginarea {
+.singuparea {
     max-width: 100%;
     width: 370px;
-    height: 300px;
+    height: auto;
+    margin-left: 89.5px;
 
 }
 
-.logintext {
+.singuptext {
     margin: 20px 0px 40px 0px;
     font-size: 15px;
     font-weight: lighter;
     color: rgb(37, 37, 37);
 }
 
-.singuptext {
-    margin: 20px 0px 0px 0px;
-    font-size: 15px;
-    font-weight: lighter;
-    color: rgb(37, 37, 37);
-}
-
-.singuparea {
-    max-width: 100%;
-    width: 370px;
-    height: 300px;
-    margin: 0px 0px 0px 130px;
-}
-
 .Registerbutton {
-    display: inline-block; /* or display: block; */
+    display: inline-block;
+    /* or display: block; */
     width: 100%;
     height: 35px;
     border: 1px solid black;
@@ -66,11 +53,53 @@
     justify-content: center;
     align-items: center;
 }
+
 .Loginbutton:hover {
     background-color: rgb(255, 255, 255);
     color: rgb(98, 98, 98);
 }
+
 .Fogotten {
     margin-top: 30px;
     font-size: 11px;
+}
+
+.singupcheck {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.checkbox {
+    width: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.singupchecktext {
+    padding-left: 10px;
+    font-size: 11px;
+
+    color: rgb(89, 89, 89);
+}
+
+
+.singupcookies {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.singupcookiestext {
+    padding-left: 10px;
+    font-size: 11px;
+    color: rgb(89, 89, 89);
 }
