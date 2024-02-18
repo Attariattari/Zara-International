@@ -3,13 +3,53 @@
     height: auto;
     display: flex;
     margin-top: 10px;
+    transition: all 0.6s ease;
 }
 
 .signuparea {
     max-width: 100%;
-    width: 370px;
+    width: 23.125em;
     height: auto;
     margin-left: 89.5px;
+    transition: all 0.6s ease;
+
+}
+
+@media (max-width: 1279px) {
+    .signup {
+        padding: 0px 0px 0px 200px;
+    }
+}
+
+@media (max-width: 1179px) {
+    .signup {
+        padding: 0px 0px 0px 150px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .signup {
+        padding: 0px 0px 0px 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .signup {
+        padding: 0px;
+        width: 100%;
+        padding: 0px 20px 0px 20px;
+        height: auto;
+        margin: 0%;
+    }
+
+    .signuparea {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        /* Center the signuparea */
+        transition: all 0.6s ease;
+    }
 
 }
 

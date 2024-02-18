@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import NavInput from "./NavInput";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
+import { userContext } from "./../../Context/UserContext";
 export default function Navbar({ sections }) {
   const scrollToSection = (id) => {
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
   };
   const [showNav, setShowNav] = useState(false);
   const [showSidePopup, setShowSidePopup] = useState(false);
+  const { user } = useContext(userContext);
+
   function resize() {
     if (window.innerWidth >= 1024) {
       setShowNav(false);
@@ -84,10 +87,11 @@ export default function Navbar({ sections }) {
             {shouldShowLogin && (
               <div>
                 <NavLink to="/Login" activeClassName="active">
-                  LOG IN
+                  {user ? `Hello, ${user.firstname}` : "LOG IN"}
                 </NavLink>
               </div>
             )}
+
             {shouldShowHelp && (
               <div>
                 <NavLink to="/Help" activeClassName="active">
@@ -95,10 +99,11 @@ export default function Navbar({ sections }) {
                 </NavLink>
               </div>
             )}
+
             {shouldShowShoppingBag && (
               <div>
                 <NavLink to="/Shopping_Bag" activeClassName="active">
-                  SHOPPING BAG(0)
+                  BAG(0)
                 </NavLink>{" "}
               </div>
             )}

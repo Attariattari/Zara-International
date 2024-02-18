@@ -51,6 +51,7 @@ export default function Login() {
           email: email,
           profileImage: profileImage,
           phoneno: phoneno,
+          token: token,
         });
         localStorage.setItem("token", token);
         navigation("/");
