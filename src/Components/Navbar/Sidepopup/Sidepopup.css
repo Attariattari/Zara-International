@@ -4,7 +4,8 @@
     top: 0;
     left: 58px;
     bottom: 0;
-    width: 380px; /* Adjust the width as needed */
+    width: 380px;
+    /* Adjust the width as needed */
     background-color: white;
     box-shadow: -4px 0px 10px 0px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -13,18 +14,21 @@
     max-height: 85vh;
     margin-top: 3px;
     border: 1px solid black;
-  }
-.popupicon{
+}
+
+.popupicon {
     width: 100%;
     height: 109px;
     padding: 15px 20px 20px 20px;
 }
-.iconpop{
+
+.iconpop {
     width: 77%;
     height: 100px;
     margin-left: 12px;
 }
-.maincategory{
+
+.maincategory {
     width: 100%;
     height: 110px;
     display: flex;
@@ -37,7 +41,24 @@
     border-bottom: 1px solid black;
     padding-bottom: 20px;
 }
-.maincategory div{
+
+.maincategory div {
     cursor: pointer;
 }
-  
+
+@media (max-width: 768px) {
+    .sidePopup {
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        padding-left: 0px;
+        left: 0px;
+    }
+
+    .iconpop {
+        display: none;
+    }
+    .maincategory {
+        width: 100%;
+    }
+}

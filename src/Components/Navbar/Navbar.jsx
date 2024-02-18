@@ -103,7 +103,7 @@ export default function Navbar({ sections }) {
             {shouldShowShoppingBag && (
               <div>
                 <NavLink to="/Shopping_Bag" activeClassName="active">
-                  BAG(0)
+                  SHOPPING BAG(0)
                 </NavLink>{" "}
               </div>
             )}

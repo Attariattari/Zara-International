@@ -10,6 +10,7 @@
     height: 140px;
 }
 
+
 .sidebaricon {
     width: 20px;
     height: 20px;
@@ -21,12 +22,14 @@
 
 .navzara {
     margin: 20px 0px 0px 54px;
-    width: 38.5%;
+    width: 15.789em;
+    transition: all 0.6s ease;
 }
 
 .navsearch {
     margin: 20px 0px 0px 0px;
     width: 56%;
+    transition: all 0.6s ease;
 }
 
 .input {
@@ -49,18 +52,58 @@
     padding-right: 30px;
 }
 
-.navlhs {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    margin: 20px 0px 0px 25px;
-    font-size: 11px;
-    width: 45%;
-    color: rgb(129, 129, 129);
+@media (max-width: 1279px) {
+    .navzara {
+        margin: 20px 0px 0px 114px;
+        width: 13.789em;
+    }
+
+    .navsearch {
+        margin: 40px 0px 0px 0px;
+        width: 46%;
+    }
 }
-.navlhs div {
-    cursor: pointer;
+
+@media (max-width: 1179px) {
+    .login {
+        padding: 0px 0px 0px 130px;
+    }
+
+    .navzara {
+        margin: 20px 0px 0px 90px;
+        width: 33.5%;
+    }
+
+    .navsearch {
+        margin: 40px 0px 0px 0px;
+        width: 56%;
+    }
 }
+
+@media (max-width: 768px) {
+    .navzara,
+    .navsearch {
+        display: none;
+    }
+
+    .navlhs {
+        display: flex;
+        flex-direction: column; /* Change to column layout */
+    }
+
+    .navlhs div:not(:last-child) {
+        display: none;
+    }
+
+    .navlhs div:last-child {
+        margin-bottom: auto; /* Push the last child to the bottom */
+        margin-right: 0; /* Set margin-right to 0px or 0 */
+        align-self: flex-end; /* Align the last child to the flex-end */
+    }
+}
+
+
+
 
 .firstsection {
     width: 100%;
@@ -70,18 +113,33 @@
 .secondsection {
     width: 100%;
     display: flex;
-    gap: 40px;
 }
-/* Add this to your existing CSS file or create a new one */
+
+.secondsection>* {
+    flex: 1;
+}
+.navlhs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin: 20px 0px 0px 25px;
+    font-size: 11px;
+    width: 45%;
+    color: rgb(129, 129, 129);
+}
+
+.navlhs div {
+    cursor: pointer;
+}
+
 .navsearch {
     position: relative;
-  }
-  
-  .navsearch input[disabled] {
+}
+
+.navsearch input[disabled] {
     cursor: not-allowed;
-  }
-  
-  .navsearch:hover input[disabled] {
+}
+
+.navsearch:hover input[disabled] {
     cursor: pointer;
-  }
-  
+}
