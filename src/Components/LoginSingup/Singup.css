@@ -1,11 +1,11 @@
-.singup {
+.signup {
     width: 100%;
     height: auto;
     display: flex;
     margin-top: 10px;
 }
 
-.singuparea {
+.signuparea {
     max-width: 100%;
     width: 370px;
     height: auto;
@@ -13,7 +13,7 @@
 
 }
 
-.singuptext {
+.signuptext {
     margin: 20px 0px 40px 0px;
     font-size: 15px;
     font-weight: lighter;
@@ -64,7 +64,7 @@
     font-size: 11px;
 }
 
-.singupcheck {
+.signupcheck {
     width: 100%;
     height: 35px;
     display: flex;
@@ -81,7 +81,7 @@
     align-items: flex-start;
 }
 
-.singupchecktext {
+.signupchecktext {
     padding-left: 10px;
     font-size: 11px;
 
@@ -89,7 +89,7 @@
 }
 
 
-.singupcookies {
+.signupcookies {
     width: 100%;
     height: 40px;
     display: flex;
@@ -98,7 +98,7 @@
     margin-top: 10px;
 }
 
-.singupcookiestext {
+.signupcookiestext {
     padding-left: 10px;
     font-size: 11px;
     color: rgb(89, 89, 89);

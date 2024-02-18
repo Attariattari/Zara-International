@@ -1,99 +1,103 @@
 import React, { useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { Formik } from "formik";
-import "./Singup.css";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Singup.css";
 
-function Singup() {
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().min(6, "Too Short!").required("Required"),
+  firstname: Yup.string().min(4, "Too Short!").required("Required"),
+  lastname: Yup.string().min(4, "Too Short!").required("Required"),
+  receiveCommunications: Yup.boolean(),
+  readPrivacyPolicy: Yup.boolean().oneOf(
+    [true],
+    "You must read and accept the Privacy Policy"
+  ),
+});
+
+function Signup() {
+  const navigate = useNavigate();
   const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedPassword, setFocusedPassword] = useState(false);
-  const [focusedFirstName, setFocusedFirstName] = useState(false);
-  const [focusedLastName, setFocusedLastName] = useState(false);
+  const [focusedfirstname, setFocusedfirstname] = useState(false);
+  const [focusedlastname, setFocusedlastname] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    receiveCommunications: false,
-    readPrivacyPolicy: false,
-  });
-
   const [errors, setErrors] = useState({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
   });
-
-  const validateEmail = (value) => {
-    let error;
-    if (!value) {
-      error = "Required Field!";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address";
-    }
-    return error;
-  };
-
-  const validatePassword = (value) => {
-    let error;
-    if (!value) {
-      error = "Required Field!";
-    } else if (value.length < 6) {
-      error = "Enter at least 6 characters";
-    }
-    return error;
-  };
-
-  const validateFirstName = (value) => {
-    let error;
-    if (!value) {
-      error = "Required Field!";
-    } else if (value.length < 4) {
-      error = "Enter at least 4 characters";
-    }
-    return error;
-  };
-
-  const validateLastName = (value) => {
-    let error;
-    if (!value) {
-      error = "Required Field!";
-    } else if (value.length < 4) {
-      error = "Enter at least 4 characters";
-    }
-    return error;
-  };
-
-  const buttonclick = async (values, actions) => {
+  async function handleSignup(values) {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/users/register`,
-        values
+        "https://zarabackendserver-448d1df25aec.herokuapp.com/user/registerUser",
+        {
+          email: values.email,
+          password: values.password,
+          pageRoll: 0,
+          firstname: values.firstname,
+          lastname: values.lastname,
+          commercialcommunications: values.receiveCommunications || false,
+          Cookies: values.readPrivacyPolicy || false,
+        }
       );
-      console.log(response.data); // Handle the response data here
-      // Optionally, you can redirect the user or perform other actions based on the response
+      console.log(response.data);
+
+      navigate("/Login");
+      resetForm();
     } catch (error) {
-      console.error("Registration failed:", error);
-      // Handle error, you can set error state or show an error message to the user
-    } finally {
-      actions.setSubmitting(false); // Reset the form submission state
+      console.error(error);
+    }
+  }
+  const validate = async (fieldName, value, setFieldTouched) => {
+    try {
+      await SignupSchema.validateAt(fieldName, { [fieldName]: value });
+      setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+      setFieldTouched(fieldName, true, false); // Set field as touched
+    } catch (error) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: error.message,
+      }));
     }
   };
-
   return (
-    <div className="singup">
-      <div className="singuparea">
-        <p className="singuptext font-extralight">PERSONAL DETAILS</p>
-        <Formik initialValues={userData} onSubmit={buttonclick}>
-          {(formikProps) => (
-            <form onSubmit={formikProps.handleSubmit}>
+    <div className="signup">
+      <div className="signuparea">
+        <p className="signuptext font-extralight">PERSONAL DETAILS</p>
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+            firstname: "",
+            lastname: "",
+            receiveCommunications: false,
+            readPrivacyPolicy: false,
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={(values, { resetForm }) => {
+            handleSignup(values);
+            resetForm(); // This line resets the form
+          }}
+        >
+          {({
+            values,
+            setFieldValue,
+            handleChange,
+            touched,
+            errors,
+            setFieldTouched,
+          }) => (
+            <Form>
               <div
                 className={`mb-4 relative ${
-                  errors.email ? "border-b-1 border-red-500" : "border-b-1"
+                  errors.email && touched.email
+                    ? "border-b-1 border-red-500"
+                    : "border-b-1"
                 }`}
               >
                 <label
@@ -109,32 +113,29 @@ function Singup() {
                   name="email"
                   type="email"
                   placeholder={!focusedEmail ? "Email" : ""}
-                  value={formikProps.values.email}
-                  onChange={formikProps.handleChange}
-                  validate={validateEmail}
                   onFocus={() => setFocusedEmail(true)}
-                  onBlur={(ev) => {
-                    if (ev.target.value.length === 0) setFocusedEmail(false);
-                    setErrors({
-                      ...errors,
-                      email: validateEmail(ev.target.value),
-                    });
-                  }}
+                  onBlur={() => setFieldTouched("email", true)}
+                  onChange={handleChange}
+                  value={values.email}
                   style={{
-                    borderBottom: errors.email
-                      ? "1px solid red"
-                      : "1px solid black",
+                    borderBottom:
+                      errors.email && touched.email
+                        ? "1px solid red"
+                        : "1px solid black",
                   }}
                 />
-                {errors.email && (
+                {errors.email && touched.email && (
                   <div className="text-red-500 text-xs absolute">
                     {errors.email}
                   </div>
                 )}
               </div>
+
               <div
                 className={`mb-4 relative ${
-                  errors.password ? "border-b-1 border-red-500" : "border-b-1"
+                  errors.password && touched.password
+                    ? "border-b-1 border-red-500"
+                    : "border-b-1"
                 }`}
               >
                 <label
@@ -150,21 +151,15 @@ function Singup() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder={!focusedPassword ? "Password" : ""}
-                  value={formikProps.values.password}
-                  onChange={formikProps.handleChange}
-                  validate={validatePassword}
                   onFocus={() => setFocusedPassword(true)}
-                  onBlur={(ev) => {
-                    if (ev.target.value.length === 0) setFocusedPassword(false);
-                    setErrors({
-                      ...errors,
-                      password: validatePassword(ev.target.value),
-                    });
-                  }}
+                  onBlur={() => setFieldTouched("password", true)}
+                  onChange={handleChange}
+                  value={values.password}
                   style={{
-                    borderBottom: errors.password
-                      ? "1px solid red"
-                      : "1px solid black",
+                    borderBottom:
+                      errors.password && touched.password
+                        ? "1px solid red"
+                        : "1px solid black",
                   }}
                 />
                 {showPassword ? (
@@ -178,130 +173,121 @@ function Singup() {
                     onClick={() => setShowPassword(true)}
                   />
                 )}
-                {errors.password && (
+                {errors.password && touched.password && (
                   <div className="text-red-500 text-xs absolute">
                     {errors.password}
                   </div>
                 )}
               </div>
+
               <div
                 className={`mb-4 relative ${
-                  errors.firstName ? "border-b-1 border-red-500" : "border-b-1"
+                  errors.firstname && touched.firstname
+                    ? "border-b-1 border-red-500"
+                    : "border-b-1"
                 }`}
               >
                 <label
                   className={
                     "absolute mb-3 text-xs transition-all duration-150 " +
-                    (!focusedFirstName ? "-z-10 top-5" : "top-1")
+                    (!focusedfirstname ? "-z-10 top-5" : "top-1")
                   }
                 >
                   First Name
                 </label>
                 <input
                   className="pt-5 pb-2 outline-none w-full text-xs"
-                  name="firstName"
+                  name="firstname"
                   type="text"
-                  placeholder={!focusedFirstName ? "First Name" : ""}
-                  value={formikProps.values.firstName}
-                  onChange={formikProps.handleChange}
-                  validate={validateFirstName}
-                  onFocus={() => setFocusedFirstName(true)}
-                  onBlur={(ev) => {
-                    if (ev.target.value.length === 0) setFocusedFistName(false);
-                    setErrors({
-                      ...errors,
-                      FistName: validateFirstName(ev.target.value),
-                    });
-                  }}
+                  placeholder={!focusedfirstname ? "First Name" : ""}
+                  onFocus={() => setFocusedfirstname(true)}
+                  onBlur={() => setFieldTouched("firstname", true)}
+                  onChange={handleChange}
+                  value={values.firstname}
                   style={{
-                    borderBottom: errors.firstName
-                      ? "1px solid red"
-                      : "1px solid black",
+                    borderBottom:
+                      errors.firstname && touched.firstname
+                        ? "1px solid red"
+                        : "1px solid black",
                   }}
                 />
-                {errors.firstName && (
+                {errors.firstname && touched.firstname && (
                   <div className="text-red-500 text-xs absolute">
-                    {errors.firstName}
+                    {errors.firstname}
                   </div>
                 )}
               </div>
+
               <div
                 className={`mb-4 relative ${
-                  errors.lastName ? "border-b-1 border-red-500" : "border-b-1"
+                  errors.lastname && touched.lastname
+                    ? "border-b-1 border-red-500"
+                    : "border-b-1"
                 }`}
               >
                 <label
                   className={
                     "absolute mb-3 text-xs transition-all duration-150 " +
-                    (!focusedLastName ? "-z-10 top-5" : "top-1")
+                    (!focusedlastname ? "-z-10 top-5" : "top-1")
                   }
                 >
                   Last Name
                 </label>
                 <input
                   className="pt-5 pb-2 outline-none w-full text-xs"
-                  name="lastName"
+                  name="lastname"
                   type="text"
-                  placeholder={!focusedLastName ? "Last Name" : ""}
-                  value={formikProps.values.lastName}
-                  onChange={formikProps.handleChange}
-                  validate={validateLastName}
-                  onFocus={() => setFocusedLastName(true)}
-                  onBlur={(ev) => {
-                    if (ev.target.value.length === 0)
-                      setFocusedLastName(false);
-                    setErrors({
-                      ...errors,
-                      LastName: validateLastName(ev.target.value),
-                    });
-                  }}
+                  placeholder={!focusedlastname ? "Last Name" : ""}
+                  onFocus={() => setFocusedlastname(true)}
+                  onBlur={() => setFieldTouched("lastname", true)}
+                  onChange={handleChange}
+                  value={values.lastname}
                   style={{
-                    borderBottom: errors.lastName
-                      ? "1px solid red"
-                      : "1px solid black",
+                    borderBottom:
+                      errors.lastname && touched.lastname
+                        ? "1px solid red"
+                        : "1px solid black",
                   }}
                 />
-                {errors.lastName && (
+                {errors.lastname && touched.lastname && (
                   <div className="text-red-500 text-xs absolute">
-                    {errors.lastName}
+                    {errors.lastname}
                   </div>
                 )}
               </div>
+
               <div>
-                <div className="singupcheck">
+                <div className="signupcheck">
                   <div className="checkbox">
-                    <input
+                    <Field
                       type="checkbox"
                       name="receiveCommunications"
                       id="receiveCommunications"
-                      checked={formikProps.values.receiveCommunications}
-                      onChange={formikProps.handleChange}
                     />
                   </div>
-                  <p className="singupchecktext">
+                  <p className="signupchecktext">
                     I want to receive personalized commercial communications
                     from <b className="font-bold text-black">ZARA</b> by email.
                   </p>
                 </div>
-                <div className="singupcookies">
+                <div className="signupcookies">
                   <div className="checkbox">
-                    <input
+                    <Field
                       type="checkbox"
                       name="readPrivacyPolicy"
                       id="readPrivacyPolicy"
-                      checked={formikProps.values.readPrivacyPolicy}
-                      onChange={formikProps.handleChange}
                     />
                   </div>
-                  <p className="singupcookiestext">
+                  <p className="signupcookiestext">
                     I have read and understand the Privacy and Cookies Policy
                   </p>
                 </div>
               </div>
+
               <button type="submit" className="Loginbutton">
                 CREATE ACCOUNT
               </button>
-            </form>
+            </Form>
           )}
         </Formik>
       </div>
@@ -309,4 +295,4 @@ function Singup() {
   );
 }
 
-export default Singup;
+export default Signup;
