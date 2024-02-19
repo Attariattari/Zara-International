@@ -14,6 +14,7 @@ import Login from "./Components/LoginSingup/Login.jsx";
 import Help from "./Components/Help/Help.jsx";
 import Signup from "./Components/LoginSingup/Singup.jsx";
 import ShoppingBag from "./Components/ShoppingBag/ShoppingBag.jsx";
+import UserOrder from './Components/UserOrder/UserOrder';
 
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
@@ -38,6 +39,7 @@ function App() {
               element={<ProtectedHomeRoute redirectTo="/welcome" />}
             />
             <Route path="/Login" element={<Login />} />
+            <Route path="/User/Order" element={<UserOrder />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Help" element={<Help />} />
             <Route path="/Shopping_Bag" element={<ShoppingBag/>} />

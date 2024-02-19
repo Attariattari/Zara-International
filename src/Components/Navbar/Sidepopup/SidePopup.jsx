@@ -2,6 +2,8 @@
 import React, { useRef, useEffect } from "react";
 import "./Sidepopup.css";
 import { Link } from "react-router-dom";
+import { VscClose } from "react-icons/vsc";
+import { NavLink } from "react-router-dom";
 
 const SidePopup = ({ showpopup }) => {
   const popupRef = useRef();
@@ -22,6 +24,15 @@ const SidePopup = ({ showpopup }) => {
 
   return (
     <div className="sidePopup" ref={popupRef}>
+      <div className="popupclose">
+        <div onClick={showpopup} className="Close__Button">
+          <VscClose />
+        </div>
+        <NavLink to="/Shopping_Bag" onClick={showpopup} activeClassName="active" className="shoppingbag">
+          SHOPPING BAG(0)
+        </NavLink>{" "}
+      </div>
+
       <div className="popupicon">
         <div className="iconpop">
           <Link to="/" onClick={showpopup}>

@@ -5,41 +5,27 @@ import NavInput from "./NavInput";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
 import { userContext } from "./../../Context/UserContext";
-export default function Navbar({ sections }) {
-  const scrollToSection = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-  };
-  const [showNav, setShowNav] = useState(false);
+export default function Navbar({ sections }) { 
   const [showSidePopup, setShowSidePopup] = useState(false);
-  const { user } = useContext(userContext);
-
-  function resize() {
-    if (window.innerWidth >= 1024) {
-      setShowNav(false);
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", resize);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  useEffect(() => {
-    setShowNav(false);
-  }, [useLocation()]);
-
+  const { user, setUser } = useContext(userContext);
   const showpopup = () => {
     setShowSidePopup(!showSidePopup);
   };
   const location = useLocation();
   const currentPath = location.pathname;
-
   const shouldShowLogin = currentPath !== "/Login";
   const shouldShowHelp = currentPath !== "/Help";
   const shouldShowShoppingBag = currentPath !== "/Shopping_Bag";
+  
+  useEffect(() => {
+    // Check if the user is authenticated when the component mounts
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser]);
+
+
   return (
     <div className="Navbar">
       <div className="navbarmain">
@@ -84,13 +70,23 @@ export default function Navbar({ sections }) {
         <div className="secondsection">
           <NavInput />
           <div className="navlhs">
-            {shouldShowLogin && (
+            {/* {shouldShowLogin && (
               <div>
                 <NavLink to="/Login" activeClassName="active">
-                  {user ? `Hello, ${user.firstname}` : "LOG IN"}
+                  {user.firstname ? `${user.firstname}` : "LOG IN"}
                 </NavLink>
               </div>
-            )}
+            )} */}
+{shouldShowLogin && (
+  <div>
+    <NavLink
+      to={user.firstname ? "/User/Order" : "/Login"}
+      activeClassName="active"
+    >
+      {user.firstname ? `Hello, ${user.firstname}` : "LOG IN"}
+    </NavLink>
+  </div>
+)}
 
             {shouldShowHelp && (
               <div>

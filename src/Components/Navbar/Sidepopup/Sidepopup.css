@@ -15,7 +15,27 @@
     margin-top: 3px;
     border: 1px solid black;
 }
-
+.popupclose{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+}
+.Close__Button{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.shoppingbag{
+    font-size: 12px;
+    color: rgb(60, 60, 60);
+}
 .popupicon {
     width: 100%;
     height: 109px;
@@ -58,6 +78,7 @@
     .iconpop {
         display: none;
     }
+
     .maincategory {
         width: 100%;
     }
