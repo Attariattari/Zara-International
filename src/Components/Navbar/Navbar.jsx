@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import NavInput from "./NavInput";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
 import { userContext } from "./../../Context/UserContext";
-export default function Navbar({ sections }) { 
+export default function Navbar() {
   const [showSidePopup, setShowSidePopup] = useState(false);
   const { user, setUser } = useContext(userContext);
   const showpopup = () => {
@@ -16,18 +16,29 @@ export default function Navbar({ sections }) {
   const shouldShowLogin = currentPath !== "/Login";
   const shouldShowHelp = currentPath !== "/Help";
   const shouldShowShoppingBag = currentPath !== "/Shopping_Bag";
-  
+  const navbarRef = useRef(null);
   useEffect(() => {
-    // Check if the user is authenticated when the component mounts
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    const handleScroll = () => {
+      const navbar = navbarRef.current;
+      if (navbar) {
+        const isSticky = window.scrollY > navbar.offsetTop;
+        navbar.classList.toggle("sticky", isSticky);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [setUser]);
 
-
   return (
-    <div className="Navbar">
+    <div ref={navbarRef} className="Navbar">
       <div className="navbarmain">
         <div className="firstsection">
           <div className="sidebaricon cursor-pointer" onClick={showpopup}>
@@ -70,24 +81,16 @@ export default function Navbar({ sections }) {
         <div className="secondsection">
           <NavInput />
           <div className="navlhs">
-            {/* {shouldShowLogin && (
+            {shouldShowLogin && (
               <div>
-                <NavLink to="/Login" activeClassName="active">
-                  {user.firstname ? `${user.firstname}` : "LOG IN"}
+                <NavLink
+                  to={user.firstname ? "/User/Order" : "/Login"}
+                  activeClassName="active"
+                >
+                  {user.firstname ? `Hello, ${user.firstname}` : "LOG IN"}
                 </NavLink>
               </div>
-            )} */}
-{shouldShowLogin && (
-  <div>
-    <NavLink
-      to={user.firstname ? "/User/Order" : "/Login"}
-      activeClassName="active"
-    >
-      {user.firstname ? `Hello, ${user.firstname}` : "LOG IN"}
-    </NavLink>
-  </div>
-)}
-
+            )}
             {shouldShowHelp && (
               <div>
                 <NavLink to="/Help" activeClassName="active">
@@ -95,7 +98,6 @@ export default function Navbar({ sections }) {
                 </NavLink>
               </div>
             )}
-
             {shouldShowShoppingBag && (
               <div>
                 <NavLink to="/Shopping_Bag" activeClassName="active">

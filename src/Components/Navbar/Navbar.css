@@ -1,15 +1,15 @@
-.Navbar {
+.Navbar.sticky {
+    top: 0;
     width: 100%;
-    height: 195px;
-}
-
+    z-index: 100;
+  }
+  
 .navbarmain {
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    height: 140px;
-}
 
+}
 
 .sidebaricon {
     width: 20px;
@@ -27,8 +27,6 @@
 }
 
 .navsearch {
-    margin: 20px 0px 0px 0px;
-    width: 56%;
     transition: all 0.6s ease;
 }
 
@@ -38,7 +36,7 @@
     position: relative;
     border: 1px solid black;
     background-color: white;
-    margin-top: 10px;
+    margin-top: 30px;
     cursor: pointer;
 }
 
@@ -52,6 +50,16 @@
     padding-right: 30px;
 }
 
+.navlhs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 20px 0px 0px 25px;
+    font-size: 11px;
+    width: 45%;
+    color: rgb(129, 129, 129);
+}
+
 @media (max-width: 1279px) {
     .navzara {
         margin: 20px 0px 0px 114px;
@@ -59,7 +67,6 @@
     }
 
     .navsearch {
-        margin: 40px 0px 0px 0px;
         width: 46%;
     }
 }
@@ -75,12 +82,23 @@
     }
 
     .navsearch {
-        margin: 40px 0px 0px 0px;
         width: 56%;
     }
 }
 
 @media (max-width: 768px) {
+    .Navbar {
+        height: 40px;
+    }
+
+    .navlhs {
+        padding: 10px 0px 0px 25px;
+    }
+
+    .sidebaricon {
+        margin: 10px 0px 0px 16px;
+    }
+
     .navzara,
     .navsearch {
         display: none;
@@ -88,7 +106,8 @@
 
     .navlhs {
         display: flex;
-        flex-direction: column; /* Change to column layout */
+        flex-direction: column;
+        /* Change to column layout */
     }
 
     .navlhs div:not(:last-child) {
@@ -96,9 +115,12 @@
     }
 
     .navlhs div:last-child {
-        margin-bottom: auto; /* Push the last child to the bottom */
-        margin-right: 0; /* Set margin-right to 0px or 0 */
-        align-self: flex-end; /* Align the last child to the flex-end */
+        margin-bottom: auto;
+        /* Push the last child to the bottom */
+        margin-right: 0;
+        /* Set margin-right to 0px or 0 */
+        align-self: flex-end;
+        /* Align the last child to the flex-end */
     }
 }
 
@@ -118,15 +140,8 @@
 .secondsection>* {
     flex: 1;
 }
-.navlhs {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    margin: 20px 0px 0px 25px;
-    font-size: 11px;
-    width: 45%;
-    color: rgb(129, 129, 129);
-}
+
+
 
 .navlhs div {
     cursor: pointer;
