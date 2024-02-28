@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "./Home.css";
 import Navbar from "../Components/Navbar/Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import SidePopup from "../Components/Navbar/Sidepopup/SidePopup";
 export default function Home() {
   const categories = {
     women: [
@@ -37,9 +38,12 @@ export default function Home() {
   const [currentCategory, setCurrentCategory] = useState("women");
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
+  const [showSidePopup, setShowSidePopup] = useState(false);
+
   const swiperRef = useRef(null);
 
   const handleCategoryChange = (category) => {
+    console.log("Changing category to:", category);
     setCurrentCategory(category);
     setAutoplayEnabled(true);
     const swiper = swiperRef.current?.swiper;
@@ -47,8 +51,9 @@ export default function Home() {
       swiper.slideTo(0);
     }
     setTimeout(() => {
+      setCurrentCategory(category);
       setManualScroll(false);
-    }, 500);
+    }, 600);
   };
 
   const getSlides = (category, imageUrls) => {
@@ -95,6 +100,17 @@ export default function Home() {
       (currentIndex - 1 + categoriesList.length) % categoriesList.length;
     handleCategoryChange(categoriesList[prevIndex]);
   };
+  const getCategoryButtons = () => {
+    return Object.keys(categories).map((category) => (
+      <button
+        key={category}
+        onClick={() => handleCategoryChange(category)}
+        className={currentCategory === category ? "active" : "wmk"}
+      >
+        {category.charAt(0).toUpperCase() + category.slice(1)}
+      </button>
+    ));
+  };
   return (
     <div className="Home">
       <div className="sticky top-0 z-10">
@@ -102,26 +118,7 @@ export default function Home() {
           <Navbar />
         </div>
         <div className="CategoryButtons">
-          <div className="categoriesButtons">
-            <button
-              onClick={() => handleCategoryChange("men")}
-              className={currentCategory === "men" ? "active" : "wmk"}
-            >
-              Men
-            </button>
-            <button
-              onClick={() => handleCategoryChange("women")}
-              className={currentCategory === "women" ? "active" : "wmk"}
-            >
-              Women
-            </button>
-            <button
-              onClick={() => handleCategoryChange("kids")}
-              className={currentCategory === "kids" ? "active" : "wmk"}
-            >
-              Kids
-            </button>
-          </div>
+          <div className="categoriesButtons">{getCategoryButtons()}</div>
         </div>
       </div>
       <div className="SwiperArea">
@@ -160,28 +157,16 @@ export default function Home() {
           {getCategorySlides()}
         </Swiper>
       </div>
+
+      {showSidePopup && (
+        <div className="sidePopup">
+          <SidePopup
+            showpopup={() => setShowSidePopup(false)}
+            handleCategoryChange={handleCategoryChange}
+            currentCategory={currentCategory}
+          />
+        </div>
+      )}
     </div>
   );
-}
-{
-  /* <div className="CategoryButtons">
-        <button
-          onClick={() => handleCategoryChange("men")}
-          className={currentCategory === "men" ? "active" : "z-20"}
-        >
-          Men
-        </button>
-        <button
-          onClick={() => handleCategoryChange("women")}
-          className={currentCategory === "women" ? "active" : ""}
-        >
-          Women
-        </button>
-        <button
-          onClick={() => handleCategoryChange("kids")}
-          className={currentCategory === "kids" ? "active" : ""}
-        >
-          Kids
-        </button>
-      </div> */
 }
