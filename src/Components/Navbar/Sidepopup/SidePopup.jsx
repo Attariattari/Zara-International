@@ -4,31 +4,22 @@ import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types"; // Import PropTypes
 import "./Sidepopup.css";
 
-const SidePopup = ({ showpopup, handleCategoryChange, currentCategory }) => {
-  console.log("Current category in SidePopup:", currentCategory);
+const SidePopup = ({ showpopup, setShowSidePopup, getCategoryButtons }) => {
   const popupRef = useRef();
   const handleClickOutside = (event) => {
-    if (popupRef.current &&!popupRef.current.contains(event.target)) {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
       showpopup(false);
     }
   };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
+    console.log(getCategoryButtons)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showpopup]);
-
-  const handleCategoryClick = (category) => {
-    console.log("Clicked category:", category);
-    handleCategoryChange?.(category); // Use optional chaining to avoid errors
-  };
-
-  useEffect(() => {
-    console.log("Current category in SidePopup (effect):", currentCategory);
-  }, [currentCategory]);
 
   return (
     <div className="sidePopup" ref={popupRef}>
@@ -63,35 +54,13 @@ const SidePopup = ({ showpopup, handleCategoryChange, currentCategory }) => {
           </Link>
         </div>
       </div>
-      <div className="CategoryButtons">
-        {/* Buttons for all categories, with onClick handling */}
-        <button
-          onClick={() => handleCategoryClick("men")}
-          className={currentCategory === "men" ? "active" : ""}
-        >
-          Men
-        </button>
-        <button
-          onClick={() => handleCategoryClick("women")}
-          className={currentCategory === "women" ? "active" : ""}
-        >
-          Women
-        </button>
-        <button
-          onClick={() => handleCategoryClick("kids")}
-          className={currentCategory === "kids" ? "active" : ""}
-        >
-          Kids
-        </button>
-      </div>
+      <div className="CategoryButtons">{getCategoryButtons}</div>
     </div>
   );
 };
 
 SidePopup.propTypes = {
-  showpopup: PropTypes.func.isRequired,
-  handleCategoryChange: PropTypes.func.isRequired,
-  currentCategory: PropTypes.string.isRequired,
+  getCategoryButtons: PropTypes.func.getCategoryButtons,
 };
 
 export default SidePopup;

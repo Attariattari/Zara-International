@@ -21,7 +21,6 @@ export default function Home() {
       "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-shoes/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-d506e232-e46c-4a6b-b3a6-b825618a3d0e-default_0.jpg?ts=1708531602763",
       "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-joinlife/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-e5f251d6-cf1a-4ea4-8980-4cbaa5b602c5-default_0.jpg?ts=1708507654789",
     ],
-
     kids: [
       "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
       "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babygirl/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d55e6a7d-2adf-41fa-a2a7-a75d3aa73810-default_0.jpg?ts=1708674688839",
@@ -100,6 +99,7 @@ export default function Home() {
       (currentIndex - 1 + categoriesList.length) % categoriesList.length;
     handleCategoryChange(categoriesList[prevIndex]);
   };
+
   const getCategoryButtons = () => {
     return Object.keys(categories).map((category) => (
       <button
@@ -111,6 +111,7 @@ export default function Home() {
       </button>
     ));
   };
+
   return (
     <div className="Home">
       <div className="sticky top-0 z-10">
@@ -160,11 +161,7 @@ export default function Home() {
 
       {showSidePopup && (
         <div className="sidePopup">
-          <SidePopup
-            showpopup={() => setShowSidePopup(false)}
-            handleCategoryChange={handleCategoryChange}
-            currentCategory={currentCategory}
-          />
+          <SidePopup getCategoryButtons={getCategoryButtons} setShowSidePopup={setShowSidePopup} />
         </div>
       )}
     </div>
