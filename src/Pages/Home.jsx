@@ -33,52 +33,62 @@ export default function Home() {
       "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-join-life/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-b9e660c9-aad1-46c7-ae19-1e2b1ac59952-default_0.jpg?ts=1708517450733",
     ],
   };
-
   const [currentCategory, setCurrentCategory] = useState("women");
+  const [selectedCategory, setSelectedCategory] = useState("women");
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
   const [showSidePopup, setShowSidePopup] = useState(false);
-
   const swiperRef = useRef(null);
 
   const handleCategoryChange = (category) => {
-    console.log("Changing category to:", category);
+    console.log(category);
     setCurrentCategory(category);
-    setAutoplayEnabled(true);
+    setSelectedCategory(category);
+    const firstSlide = categories[category];
+    const firstSlideIsVideo = isVideo(firstSlide);
     const swiper = swiperRef.current?.swiper;
     if (swiper) {
       swiper.slideTo(0);
-    }
-    setTimeout(() => {
-      setCurrentCategory(category);
-      setManualScroll(false);
-    }, 600);
-  };
 
+      if (firstSlideIsVideo) {
+        setAutoplayEnabled(true);
+      } else {
+        setAutoplayEnabled(false);
+        swiper.autoplay.stop();
+      }
+    }
+    setManualScroll(false);
+  };
   const getSlides = (category, imageUrls) => {
     return imageUrls.map((imageUrl, index) => (
       <SwiperSlide key={`${category}-slide-${index}`}>
-        <img src={imageUrl} alt="" />
+        {index === 0 && isVideo(imageUrl) ? (
+          <video autoPlay muted loop playsInline className="video">
+            <source src={imageUrl} />
+          </video>
+        ) : (
+          <img src={imageUrl} alt="" />
+        )}
       </SwiperSlide>
     ));
   };
-
+  // Helper function to check if the URL is a video
+  const isVideo = (url) => {
+    return /\.(mp4|webm|ogg|ogv)$/i.test(url);
+  };
   const getCategorySlides = () => {
     const imageUrls = categories[currentCategory] || [];
     return getSlides(currentCategory, imageUrls);
   };
-
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     const activeIndex = swiper.activeIndex;
-
     if (activeIndex === 0 && autoplayEnabled && !manualScroll) {
       swiper.autoplay.start(); // Start autoplay only if it's the first slide (active category) and not manually scrolled
     } else {
       swiper.autoplay.stop(); // Stop autoplay if manually scrolled
     }
   }, [currentCategory, autoplayEnabled, manualScroll]);
-
   const handleScroll = () => {
     setManualScroll(true);
     setTimeout(() => {
@@ -91,7 +101,6 @@ export default function Home() {
     const nextIndex = (currentIndex + 1) % categoriesList.length;
     handleCategoryChange(categoriesList[nextIndex]);
   };
-
   const handlePrevCategory = () => {
     const categoriesList = Object.keys(categories);
     const currentIndex = categoriesList.indexOf(currentCategory);
@@ -99,7 +108,6 @@ export default function Home() {
       (currentIndex - 1 + categoriesList.length) % categoriesList.length;
     handleCategoryChange(categoriesList[prevIndex]);
   };
-
   const getCategoryButtons = () => {
     return Object.keys(categories).map((category) => (
       <button
@@ -111,7 +119,15 @@ export default function Home() {
       </button>
     ));
   };
-
+  useEffect(() => {
+    // Check if the popup is being closed and update the category accordingly
+    if (!showSidePopup) {
+      const swiper = swiperRef.current?.swiper;
+      swiper.slideTo(0);
+      setAutoplayEnabled(true);
+      setManualScroll(false);
+    }
+  }, [showSidePopup]);
   return (
     <div className="Home">
       <div className="sticky top-0 z-10">
@@ -124,13 +140,13 @@ export default function Home() {
       </div>
       <div className="SwiperArea">
         <div className="NavigationButtons">
-          <div className=" z-20">
+          <div>
             <IoIosArrowBack
               onClick={handlePrevCategory}
               className="arrow-icon"
             />
           </div>
-          <div className="z-20">
+          <div>
             <IoIosArrowForward
               onClick={handleNextCategory}
               className="arrow-icon"
@@ -158,12 +174,15 @@ export default function Home() {
           {getCategorySlides()}
         </Swiper>
       </div>
-
       {showSidePopup && (
-        <div className="sidePopup">
-          <SidePopup getCategoryButtons={getCategoryButtons} setShowSidePopup={setShowSidePopup} />
-        </div>
-      )}
+  <div className="sidePopup">
+    <SidePopup
+      showpopup={setShowSidePopup}
+      handleCategoryChange={handleCategoryChange}
+      getCurrentCategory={() => currentCategory} // Pass a function to get the current category
+    />
+  </div>
+)}
     </div>
   );
 }

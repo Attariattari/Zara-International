@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { VscClose } from "react-icons/vsc";
 import { Link, NavLink } from "react-router-dom";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import "./Sidepopup.css";
 
-const SidePopup = ({ showpopup, setShowSidePopup, getCategoryButtons }) => {
+const SidePopup = ({ showpopup}) => {
+
   const popupRef = useRef();
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -14,7 +15,6 @@ const SidePopup = ({ showpopup, setShowSidePopup, getCategoryButtons }) => {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    console.log(getCategoryButtons)
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -54,13 +54,13 @@ const SidePopup = ({ showpopup, setShowSidePopup, getCategoryButtons }) => {
           </Link>
         </div>
       </div>
-      <div className="CategoryButtons">{getCategoryButtons}</div>
+      <div className="maincategory">
+        <button>Men</button>
+        <button>Women</button>
+        <button>Kids</button>
+      </div>
     </div>
   );
-};
-
-SidePopup.propTypes = {
-  getCategoryButtons: PropTypes.func.getCategoryButtons,
 };
 
 export default SidePopup;

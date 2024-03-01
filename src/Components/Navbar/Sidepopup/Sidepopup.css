@@ -1,4 +1,3 @@
-/* SidePopup.css */
 .sidePopup {
     position: fixed;
     top: 0;
@@ -11,19 +10,24 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    max-height: 85vh;
-    margin-top: 3px;
+    height: 85vh;
+    max-height: 100vh;
     border: 1px solid black;
+    transition: all 0.6s ease;
 }
-.popupclose{
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    padding: 0px 10px 0px 10px;
+
+.hidden-popup {
+    display: none;
 }
-.Close__Button{
+@media (min-width: 768px) {
+    .popupclose {
+        display: none;
+    } .popupicon {
+      display: block; /* Show the icon section for screen width >= 768px */
+    }
+}
+
+.Close__Button {
     cursor: pointer;
     width: 20px;
     height: 20px;
@@ -32,10 +36,12 @@
     justify-content: center;
     align-items: center;
 }
-.shoppingbag{
+
+.shoppingbag {
     font-size: 12px;
     color: rgb(60, 60, 60);
 }
+
 .popupicon {
     width: 100%;
     height: 109px;
@@ -43,7 +49,7 @@
 }
 
 .iconpop {
-    width: 77%;
+    width: 75%;
     height: 100px;
     margin-left: 12px;
 }
@@ -53,16 +59,14 @@
     height: 110px;
     display: flex;
     justify-content: start;
-    padding-top: 60px;
+    align-items: center;
     margin-top: 40px;
     gap: 20px;
-    padding-left: 35px;
     font-size: 13px;
     border-bottom: 1px solid black;
-    padding-bottom: 20px;
 }
 
-.maincategory div {
+.maincategory button {
     cursor: pointer;
 }
 
@@ -73,13 +77,26 @@
         margin: 0px;
         padding-left: 0px;
         left: 0px;
+        height: 100%;
     }
-
+    .popupicon {
+        display: none; /* Hide the icon section for screen width < 768px */
+      }
     .iconpop {
         display: none;
     }
 
     .maincategory {
         width: 100%;
+        margin-top: 0px;
+    }
+
+    .popupclose {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 10px 0px 10px;
     }
 }
