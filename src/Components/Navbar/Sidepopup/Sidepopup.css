@@ -19,11 +19,25 @@
 .hidden-popup {
     display: none;
 }
+
 @media (min-width: 768px) {
     .popupclose {
         display: none;
-    } .popupicon {
-      display: block; /* Show the icon section for screen width >= 768px */
+    }
+
+    .popupicon {
+        display: block;
+        /* Show the icon section for screen width >= 768px */
+    }
+
+    .Sub-Catgeory-area {
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine;
+    }
+
+    .acount-area {
+        display: none;
     }
 }
 
@@ -79,9 +93,11 @@
         left: 0px;
         height: 100%;
     }
+
     .popupicon {
-        display: none; /* Hide the icon section for screen width < 768px */
-      }
+        display: none;
+    }
+
     .iconpop {
         display: none;
     }
@@ -98,5 +114,30 @@
         justify-content: space-between;
         align-items: center;
         padding: 0px 10px 0px 10px;
+    }
+
+    .Sub-Catgeory-area {
+        width: 100%;
+        height: 100%;
+        background-color: aquamarine;
+    }
+
+    .acount-area {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        height: 100px;
+        width: 100%;
+        gap: 30px;
+        padding-right: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        border-top: 1px solid black;
+    }
+}
+
+@media (max-width: 500px) {
+    .shoppingbag {
+        padding-right: 05px;
     }
 }

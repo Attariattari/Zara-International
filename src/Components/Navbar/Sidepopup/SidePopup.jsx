@@ -4,8 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Sidepopup.css";
 
-const SidePopup = ({ showpopup}) => {
-
+const SidePopup = ({ showpopup }) => {
   const popupRef = useRef();
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -58,6 +57,13 @@ const SidePopup = ({ showpopup}) => {
         <button>Men</button>
         <button>Women</button>
         <button>Kids</button>
+      </div>
+      <div className="Sub-Catgeory-area">
+        kljfdkflsdhfklsdfsdklfjsdlkfjsdklfjdsklf
+      </div>
+      <div className="acount-area">
+        <NavLink to="/">Home</NavLink>
+        <div>Acount</div>
       </div>
     </div>
   );

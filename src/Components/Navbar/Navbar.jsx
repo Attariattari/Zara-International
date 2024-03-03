@@ -87,7 +87,7 @@ export default function Navbar() {
                   to={user.firstname ? "/User/Order" : "/Login"}
                   activeClassName="active"
                 >
-                  {user.firstname ? `Hello, ${user.firstname}` : "LOG IN"}
+                  {user.firstname ? `${user.firstname}` : "LOG IN"}
                 </NavLink>
               </div>
             )}
@@ -101,7 +101,7 @@ export default function Navbar() {
             {shouldShowShoppingBag && (
               <div>
                 <NavLink to="/Shopping_Bag" activeClassName="active">
-                  SHOPPING BAG(0)
+                  Your Cart(0)
                 </NavLink>{" "}
               </div>
             )}

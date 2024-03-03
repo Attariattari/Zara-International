@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "./Home.css";
 import Navbar from "../Components/Navbar/Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import SidePopup from "../Components/Navbar/Sidepopup/SidePopup";
+import SocialSlidepage from "../Components/SocialPageforHome/SocialSlidepage";
 export default function Home() {
   const categories = {
     women: [
@@ -34,16 +34,12 @@ export default function Home() {
     ],
   };
   const [currentCategory, setCurrentCategory] = useState("women");
-  const [selectedCategory, setSelectedCategory] = useState("women");
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
-  const [showSidePopup, setShowSidePopup] = useState(false);
   const swiperRef = useRef(null);
 
   const handleCategoryChange = (category) => {
-    console.log(category);
     setCurrentCategory(category);
-    setSelectedCategory(category);
     const firstSlide = categories[category];
     const firstSlideIsVideo = isVideo(firstSlide);
     const swiper = swiperRef.current?.swiper;
@@ -59,6 +55,25 @@ export default function Home() {
     }
     setManualScroll(false);
   };
+  useEffect(() => {
+    const swiper = swiperRef.current?.swiper;
+
+    const handleSlideChange = () => {
+      if (!manualScroll) {
+        swiper.autoplay.start();
+      }
+    };
+
+    if (swiper) {
+      swiper.on("slideChange", handleSlideChange);
+    }
+
+    return () => {
+      if (swiper) {
+        swiper.off("slideChange", handleSlideChange);
+      }
+    };
+  }, [manualScroll]);
   const getSlides = (category, imageUrls) => {
     return imageUrls.map((imageUrl, index) => (
       <SwiperSlide key={`${category}-slide-${index}`}>
@@ -78,7 +93,15 @@ export default function Home() {
   };
   const getCategorySlides = () => {
     const imageUrls = categories[currentCategory] || [];
-    return getSlides(currentCategory, imageUrls);
+
+    return [
+      ...getSlides(currentCategory, imageUrls),
+      <SwiperSlide key={`${currentCategory}-social-slide`}>
+        <div className="social-slide-page w-full h-full flex justify-center items-center">
+          <SocialSlidepage />
+        </div>
+      </SwiperSlide>,
+    ];
   };
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
@@ -91,9 +114,14 @@ export default function Home() {
   }, [currentCategory, autoplayEnabled, manualScroll]);
   const handleScroll = () => {
     setManualScroll(true);
-    setTimeout(() => {
-      setManualScroll(false);
-    }, 500);
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    setScrollTimeout(
+      setTimeout(() => {
+        setManualScroll(false);
+      }, 500)
+    );
   };
   const handleNextCategory = () => {
     const categoriesList = Object.keys(categories);
@@ -119,15 +147,7 @@ export default function Home() {
       </button>
     ));
   };
-  useEffect(() => {
-    // Check if the popup is being closed and update the category accordingly
-    if (!showSidePopup) {
-      const swiper = swiperRef.current?.swiper;
-      swiper.slideTo(0);
-      setAutoplayEnabled(true);
-      setManualScroll(false);
-    }
-  }, [showSidePopup]);
+
   return (
     <div className="Home">
       <div className="sticky top-0 z-10">
@@ -174,15 +194,6 @@ export default function Home() {
           {getCategorySlides()}
         </Swiper>
       </div>
-      {showSidePopup && (
-  <div className="sidePopup">
-    <SidePopup
-      showpopup={setShowSidePopup}
-      handleCategoryChange={handleCategoryChange}
-      getCurrentCategory={() => currentCategory} // Pass a function to get the current category
-    />
-  </div>
-)}
     </div>
   );
 }

@@ -22,7 +22,6 @@ function App() {
   return (
     <div>
       <Router>
-        {" "}
         <Routes>
             <Route
               path="/"
@@ -38,12 +37,13 @@ function App() {
               path="/Home"
               element={<ProtectedHomeRoute redirectTo="/welcome" />}
             />
+            <Route path="/" element={<Navbar/>}>
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Help" element={<Help />} />
             <Route path="/Shopping_Bag" element={<ShoppingBag />} />
             <Route path="/User/Order" element={<UserOrder />} />
-         
+            </Route>
           <Route
             path="/welcome"
             element={<ProtectedRoute redirectTo="/Home" />}
