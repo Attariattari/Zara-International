@@ -37,12 +37,9 @@
     border: 1px solid black;
     margin-top: 30px;
     cursor: pointer;
-}
-
-.input::placeholder {
-    position: absolute;
-    right: 30px;
-    color: black;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 
 .input {
@@ -123,28 +120,18 @@
         display: none;
     }
 
-  .searchicon {
-        display: block;
-        padding-right: 10px;
-    }
-  .searchicon input {
-        outline: none;
-        background-color: white;
+    .searchicon {
+        width: 50%;
+        position: relative;
         border: 1px solid black;
-    }
-    .searchicon input[disabled] {
-        cursor: not-allowed;
-    }
-    
-    .searchicon:hover input[disabled] {
         cursor: pointer;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        padding: 0px 0px 0px 10px;
+        display: block;
     }
-    input::placeholder {
-        position: absolute;
-        right: 5px;
-        top: 2px;
-        color: black;
-    }
+
     .navlhs div {
         display: block;
     }
@@ -162,6 +149,7 @@
     .cartbut {
         padding-right: 10px;
     }
+
     .helpbut {
         padding-right: 10px;
         display: none;
@@ -188,12 +176,4 @@
 
 .navsearch {
     position: relative;
-}
-
-.navsearch input[disabled] {
-    cursor: not-allowed;
-}
-
-.navsearch:hover input[disabled] {
-    cursor: pointer;
 }

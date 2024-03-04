@@ -1,5 +1,11 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
@@ -11,34 +17,22 @@ export default function Navbar() {
   const showpopup = () => {
     setShowSidePopup(!showSidePopup);
   };
+
   const location = useLocation();
   const currentPath = location.pathname;
   const shouldShowLogin = currentPath !== "/Login";
   const shouldShowHelp = currentPath !== "/Help";
   const shouldShowShoppingBag = currentPath !== "/Shopping_Bag";
   const navbarRef = useRef(null);
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    const handleScroll = () => {
-      const navbar = navbarRef.current;
-      if (navbar) {
-        const isSticky = window.scrollY > navbar.offsetTop;
-        navbar.classList.toggle("sticky", isSticky);
-      }
-    };
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [setUser]);
   const isInputDisabled = true;
+  const navigate = useNavigate();
+
+  const handleInputClick = () => {
+    navigate("/Search/Products");
+  };
   return (
-    <div ref={navbarRef} className="Navbar sticky top-0 z-10">
+    <div ref={navbarRef} className="">
       <div className="navbarmain">
         <div className="firstsection">
           <div className="sidebaricon cursor-pointer" onClick={showpopup}>
@@ -80,12 +74,9 @@ export default function Navbar() {
         </div>
         <div className="secondsection">
           <div className={`navsearch ${isInputDisabled ? "disabled" : ""}`}>
-            <input
-              className="input"
-              type="text"
-              placeholder="Search"
-              disabled={isInputDisabled}
-            />
+            <div className="input" onClick={handleInputClick}>
+              <div className="">Search</div>
+            </div>
           </div>
           <div className="navlhs">
             {shouldShowLogin && (
@@ -109,8 +100,8 @@ export default function Navbar() {
                 </NavLink>
               </div>
             )}
-            <div className="searchicon">
-              <input type="text" placeholder="Sreach" disabled />
+            <div className="searchicon" onClick={handleInputClick}>
+              <div>Search</div>
             </div>
             {shouldShowShoppingBag && (
               <div>

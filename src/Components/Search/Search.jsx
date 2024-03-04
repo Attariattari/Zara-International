@@ -1,17 +1,17 @@
 import React from "react";
-import "./Help.css";
 import Navbar from "../Navbar/Navbar";
-function Help() {
+
+function Search() {
   return (
-    <div className="Help">
+    <div>
       <div className="sticky top-0 z-10">
         <div className="absolute w-full bg-white">
           <Navbar />
         </div>
       </div>
-      <div className="pt-32">Help</div>
+      <div className="pt-32">Search</div>
     </div>
   );
 }
 
-export default Help;
+export default Search;
