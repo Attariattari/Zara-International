@@ -10,7 +10,6 @@ import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
 import { userContext } from "./../../Context/UserContext";
-import { IoSearchCircle } from "react-icons/io5";
 export default function Navbar() {
   const [showSidePopup, setShowSidePopup] = useState(false);
   const { user, setUser } = useContext(userContext);

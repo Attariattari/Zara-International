@@ -1,11 +1,13 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { VscClose } from "react-icons/vsc";
 import { Link, NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Sidepopup.css";
+import { userContext } from "../../../Context/UserContext";
 
 const SidePopup = ({ showpopup }) => {
   const popupRef = useRef();
+  const { user, setUser } = useContext(userContext);
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       showpopup(false);
@@ -63,7 +65,14 @@ const SidePopup = ({ showpopup }) => {
       </div>
       <div className="acount-area">
         <NavLink to="/">Home</NavLink>
-        <div>Acount</div>
+        <div>
+                <NavLink
+                  to={user.firstname ? "/User/Order" : "/Login"}
+                  activeClassName="active"
+                >
+                  {user.firstname ? `${user.firstname}` : "LOG IN"}
+                </NavLink>
+              </div>
       </div>
     </div>
   );
