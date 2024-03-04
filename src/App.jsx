@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -23,27 +23,27 @@ function App() {
     <div>
       <Router>
         <Routes>
-            <Route
-              path="/"
-              element={
-                hasVisited ? (
-                  <Navigate to="/Home" replace />
-                ) : (
-                  <Navigate to="/welcome" replace />
-                )
-              }
-            />
-            <Route
-              path="/Home"
-              element={<ProtectedHomeRoute redirectTo="/welcome" />}
-            />
-            <Route path="/" element={<Navbar/>}>
+          <Route
+            path="/"
+            element={
+              hasVisited ? (
+                <Navigate to="/Home" replace />
+              ) : (
+                <Navigate to="/welcome" replace />
+              )
+            }
+          />
+          <Route
+            path="/Home"
+            element={<ProtectedHomeRoute redirectTo="/welcome" />}
+          />
+          <Route path="/" element={<Navbar />}>
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Help" element={<Help />} />
             <Route path="/Shopping_Bag" element={<ShoppingBag />} />
             <Route path="/User/Order" element={<UserOrder />} />
-            </Route>
+          </Route>
           <Route
             path="/welcome"
             element={<ProtectedRoute redirectTo="/Home" />}
@@ -53,6 +53,7 @@ function App() {
     </div>
   );
 }
+
 function ProtectedRoute({ redirectTo }) {
   const hasVisited = localStorage.getItem("visited") === "true";
   const navigate = useNavigate();

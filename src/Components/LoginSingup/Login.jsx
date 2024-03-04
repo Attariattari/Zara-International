@@ -131,7 +131,7 @@ export default function Login() {
               <Field
                 className="pt-5 pb-2 outline-none w-full text-xs"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={!focusedPassword ? "Password" : ""}
                 onFocus={() => setFocusedPassword(true)}
                 onBlur={(ev) => {

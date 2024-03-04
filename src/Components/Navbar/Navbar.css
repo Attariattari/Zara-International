@@ -35,7 +35,6 @@
     height: 27%;
     position: relative;
     border: 1px solid black;
-    background-color: transparent;
     margin-top: 30px;
     cursor: pointer;
 }
@@ -61,6 +60,10 @@
     justify-content: end;
 }
 
+.searchicon {
+    display: none;
+}
+
 @media (max-width: 1279px) {
     .navzara {
         margin: 20px 0px 0px 114px;
@@ -70,6 +73,7 @@
     .navsearch {
         width: 46%;
     }
+
     .navlhs {
         padding: 20px 20px 0px 0px;
     }
@@ -88,16 +92,19 @@
     .navsearch {
         width: 56%;
     }
+
     .navlhs {
         padding: 20px 20px 0px 0px;
     }
 }
+
 @media (max-width: 970px) {
     .navlhs {
         padding: 20px 20px 0px 0px;
         gap: 20px;
     }
 }
+
 @media (max-width: 768px) {
     .Navbar {
         height: 40px;
@@ -108,7 +115,7 @@
     }
 
     .sidebaricon {
-        margin: 10px 20px 0px 0px;
+        margin: 10px 20px 0px 10px;
     }
 
     .navzara,
@@ -116,28 +123,50 @@
         display: none;
     }
 
-    .navlhs {
-        display: flex;
-        flex-direction: column;
-        /* Change to column layout */
+  .searchicon {
+        display: block;
+        padding-right: 10px;
+    }
+  .searchicon input {
+        outline: none;
+        background-color: white;
+        border: 1px solid black;
+    }
+    .searchicon input[disabled] {
+        cursor: not-allowed;
+    }
+    
+    .searchicon:hover input[disabled] {
+        cursor: pointer;
+    }
+    input::placeholder {
+        position: absolute;
+        right: 5px;
+        top: 2px;
+        color: black;
+    }
+    .navlhs div {
+        display: block;
     }
 
-    .navlhs div:not(:last-child) {
+    .navlhs div:not(:nth-last-child(-n+2)) {
         display: none;
     }
 
     .navlhs div:last-child {
         margin-bottom: auto;
-        /* Push the last child to the bottom */
         margin-right: 0;
-        /* Set margin-right to 0px or 0 */
         align-self: flex-end;
-        /* Align the last child to the flex-end */
+    }
+
+    .cartbut {
+        padding-right: 10px;
+    }
+    .helpbut {
+        padding-right: 10px;
+        display: none;
     }
 }
-
-
-
 
 .firstsection {
     width: 45%;
@@ -152,8 +181,6 @@
 .secondsection>* {
     flex: 1;
 }
-
-
 
 .navlhs div {
     cursor: pointer;

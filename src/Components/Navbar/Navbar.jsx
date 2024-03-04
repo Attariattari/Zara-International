@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import NavInput from "./NavInput";
 import SidePopup from "./Sidepopup/SidePopup";
 import { VscClose } from "react-icons/vsc";
 import { userContext } from "./../../Context/UserContext";
+import { IoSearchCircle } from "react-icons/io5";
 export default function Navbar() {
   const [showSidePopup, setShowSidePopup] = useState(false);
   const { user, setUser } = useContext(userContext);
@@ -36,9 +36,9 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [setUser]);
-
+  const isInputDisabled = true;
   return (
-    <div ref={navbarRef} className="Navbar">
+    <div ref={navbarRef} className="Navbar sticky top-0 z-10">
       <div className="navbarmain">
         <div className="firstsection">
           <div className="sidebaricon cursor-pointer" onClick={showpopup}>
@@ -79,7 +79,14 @@ export default function Navbar() {
           </div>
         </div>
         <div className="secondsection">
-          <NavInput />
+          <div className={`navsearch ${isInputDisabled ? "disabled" : ""}`}>
+            <input
+              className="input"
+              type="text"
+              placeholder="Search"
+              disabled={isInputDisabled}
+            />
+          </div>
           <div className="navlhs">
             {shouldShowLogin && (
               <div>
@@ -93,14 +100,25 @@ export default function Navbar() {
             )}
             {shouldShowHelp && (
               <div>
-                <NavLink to="/Help" activeClassName="active">
+                <NavLink
+                  to="/Help"
+                  activeClassName="active"
+                  className="helpbut"
+                >
                   HELP
                 </NavLink>
               </div>
             )}
+            <div className="searchicon">
+              <input type="text" placeholder="Sreach" disabled />
+            </div>
             {shouldShowShoppingBag && (
               <div>
-                <NavLink to="/Shopping_Bag" activeClassName="active">
+                <NavLink
+                  to="/Shopping_Bag"
+                  activeClassName="active"
+                  className="cartbut"
+                >
                   Your Cart(0)
                 </NavLink>{" "}
               </div>

@@ -43,11 +43,13 @@ export default function Home() {
     const firstSlide = categories[category];
     const firstSlideIsVideo = isVideo(firstSlide);
     const swiper = swiperRef.current?.swiper;
+
     if (swiper) {
       swiper.slideTo(0);
 
       if (firstSlideIsVideo) {
         setAutoplayEnabled(true);
+        swiper.autoplay.start();
       } else {
         setAutoplayEnabled(false);
         swiper.autoplay.stop();
@@ -55,6 +57,7 @@ export default function Home() {
     }
     setManualScroll(false);
   };
+
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
 
@@ -103,15 +106,17 @@ export default function Home() {
       </SwiperSlide>,
     ];
   };
+
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     const activeIndex = swiper.activeIndex;
-    if (activeIndex === 0 && autoplayEnabled && !manualScroll) {
-      swiper.autoplay.start(); // Start autoplay only if it's the first slide (active category) and not manually scrolled
+
+    if (activeIndex === 0 && !manualScroll) {
+      swiper.autoplay.start();
     } else {
-      swiper.autoplay.stop(); // Stop autoplay if manually scrolled
+      swiper.autoplay.stop();
     }
-  }, [currentCategory, autoplayEnabled, manualScroll]);
+  }, [currentCategory, manualScroll]);
   const handleScroll = () => {
     setManualScroll(true);
     if (scrollTimeout) {
@@ -163,13 +168,13 @@ export default function Home() {
           <div>
             <IoIosArrowBack
               onClick={handlePrevCategory}
-              className="arrow-icon"
+              className="arrow-icon cursor-pointer"
             />
           </div>
           <div>
             <IoIosArrowForward
               onClick={handleNextCategory}
-              className="arrow-icon"
+              className="arrow-icon cursor-pointer"
             />
           </div>
         </div>

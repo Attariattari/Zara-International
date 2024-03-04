@@ -86,7 +86,6 @@ function Signup() {
         >
           {({
             values,
-            setFieldValue,
             handleChange,
             touched,
             errors,
