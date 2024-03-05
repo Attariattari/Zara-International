@@ -68,12 +68,16 @@ function Signup() {
   };
   return (
     <div>
-      <div className="sticky top-0 z-10">
+      <div className="sticky top-0 z-10"
+      style={{
+        marginTop:'-9px'
+      }}
+      >
         <div className="absolute w-full bg-white">
           <Navbar />
         </div>
       </div>
-      <div className="signup  pt-36">
+      <div className="signup">
         <div className="signuparea">
           <p className="signuptext font-extralight">PERSONAL DETAILS</p>
           <Formik

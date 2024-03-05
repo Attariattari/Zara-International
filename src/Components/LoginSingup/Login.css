@@ -2,11 +2,10 @@
     width: 100%;
     height: auto;
     display: flex;
-    padding: 0px 0px 0px 88px;
+    padding: 180px 0px 0px 88px;
     margin-top: 10px;
     flex-wrap: wrap;
     transition: all 0.6s ease;
-    /* Add transition for the .login class */
 }
 
 .loginarea {
@@ -25,7 +24,7 @@
 
 @media (max-width: 1279px) {
     .login {
-        padding: 0px 0px 0px 150px;
+        padding: 150px 0px 0px 150px;
     }
 
     .loginarea {
@@ -39,13 +38,13 @@
 
 @media (max-width: 1179px) {
     .login {
-        padding: 0px 0px 0px 130px;
+        padding: 140px 0px 0px 130px;
     }
 }
 
 @media (max-width: 1023px) {
     .login {
-        padding: 0px 0px 0px 100px;
+        padding: 130px 0px 0px 100px;
     }
 
     .loginarea {
@@ -62,7 +61,7 @@
         padding: 0px;
         width: 100%;
         flex-direction: column;
-        padding: 0px 20px 0px 20px; height: auto;
+        padding: 100px 20px 0px 20px; height: auto;
     }
 
     .loginarea,

@@ -4,7 +4,11 @@ import Navbar from "../Navbar/Navbar";
 function Help() {
   return (
     <div className="Help">
-      <div className="sticky top-0 z-10">
+      <div className="sticky top-0 z-10"
+      style={{
+        marginTop:'-9px'
+      }}
+      >
         <div className="absolute w-full bg-white">
           <Navbar />
         </div>

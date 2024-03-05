@@ -65,12 +65,17 @@ export default function Login() {
 
   return (
     <div className="">
-      <div className="sticky top-0 z-10">
+      <div
+        className="sticky top-0 z-10"
+        style={{
+          marginTop: "-9px",
+        }}
+      >
         <div className="absolute w-full bg-white">
           <Navbar />
         </div>
       </div>{" "}
-      <div className="login pt-36">
+      <div className="login">
         <Formik
           initialValues={{
             password: "",

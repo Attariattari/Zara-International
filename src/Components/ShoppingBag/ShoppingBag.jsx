@@ -15,7 +15,11 @@ function ShoppingBag() {
   }, []);
   return (
     <div>
-      <div className="sticky top-0 z-10">
+      <div className="sticky top-0 z-10"
+      style={{
+        marginTop:'-9px'
+      }}
+      >
         <div className="absolute w-full bg-white">
           <Navbar />
         </div>

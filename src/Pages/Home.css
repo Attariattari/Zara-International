@@ -11,6 +11,18 @@
   height: 100%;
   font-size: 34px;
 }
+.SubcategoryName{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  position: absolute;
+  height: 100%;
+  font-size: 34px;
+}
+.SubcategoryName p{
+  z-index: 5;
+}
 .NavigationButtons div{
   z-index: 5;
 }

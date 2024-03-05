@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { VscClose } from "react-icons/vsc";
 import { Link, NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
 import "./Sidepopup.css";
 import { userContext } from "../../../Context/UserContext";
 
@@ -66,13 +65,13 @@ const SidePopup = ({ showpopup }) => {
       <div className="acount-area">
         <NavLink to="/">Home</NavLink>
         <div>
-                <NavLink
-                  to={user.firstname ? "/User/Order" : "/Login"}
-                  activeClassName="active"
-                >
-                  {user.firstname ? `${user.firstname}` : "LOG IN"}
-                </NavLink>
-              </div>
+          <NavLink
+            to={user.firstname ? "/User/Order" : "/Login"}
+            activeClassName="active"
+          >
+            {user.firstname ? `${user.firstname}` : "LOG IN"}
+          </NavLink>
+        </div>
       </div>
     </div>
   );

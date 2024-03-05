@@ -9,38 +9,73 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import SocialSlidepage from "../Components/SocialPageforHome/SocialSlidepage";
 export default function Home() {
   const categories = {
-    women: [
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-08-3//w/1360/IMAGE-landscape-fill-58462023-91fd-4cd0-b4ee-9df9c4560aa1-default_0.jpg?ts=1708699752254",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-08-3//w/1360/IMAGE-landscape-fill-ec989a43-7be3-4053-b92f-4ba82ca485a1-default_0.jpg?ts=1708700575395",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-skirts/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-931c9f86-8e80-44e5-a3f5-5ea2d12dca34-default_0.jpg?ts=1708700146372",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-join-life/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-448ca1e2-eb34-4a8e-8a83-635531c66fc0-default_0.jpg?ts=1708507401221",
-    ],
-    men: [
-      "https://static.zara.net/photos///2024/V/T/1/p/0686/140/144/2/w/1097/0686140144_15_3_1.jpg?ts=1708528064312",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-coats/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-8254875b-8f3a-4892-9cbe-aaebd3704fbb-default_0.jpg?ts=1708606681952",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-shoes/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-d506e232-e46c-4a6b-b3a6-b825618a3d0e-default_0.jpg?ts=1708531602763",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-joinlife/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-e5f251d6-cf1a-4ea4-8980-4cbaa5b602c5-default_0.jpg?ts=1708507654789",
-    ],
-    kids: [
-      "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babygirl/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d55e6a7d-2adf-41fa-a2a7-a75d3aa73810-default_0.jpg?ts=1708674688839",
-      "https://static.zara.net/photos///2024/V/0/3/p/4551/601/400/102/w/680/4551601400_15_1_1.jpg?ts=1708333336700",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babyboy/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-cb411d26-25e5-48ec-8ea1-19b9cdf37824-default_0.jpg?ts=1708674772320",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-boy/subhome-xmedia-8//w/1360/IMAGE-landscape-default-fill-b7fed291-ba37-46d4-810e-72d79817116f-default_0.jpg?ts=1708674246835",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-newborn/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d87712bf-5c3f-4d5e-b062-8bf9539aa911-default_0.jpg?ts=1708675587550",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-baby/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-9096e347-f709-4820-b5de-4da08a298c6b-default_0.jpg?ts=1708674634462",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-shoes-bags/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-ebccf7f3-d14f-43cb-9f99-7732fab9ae36-default_0.jpg?ts=1708674252344",
-      "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-join-life/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-b9e660c9-aad1-46c7-ae19-1e2b1ac59952-default_0.jpg?ts=1708517450733",
-    ],
+    women: {
+      main: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-562e4cc7-7c05-45fb-99ad-58730d80dd2d-default_0.jpg?ts=1709378175316",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/752/IMAGE-portrait-ipad-fill-7f7c51d7-9bf5-4005-9035-52b7872fc209-default_0.jpg?ts=1709378175254",
+      ],
+      shirts: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-867eefad-386e-4097-acd2-68f66a2348b7-default_0.jpg?ts=1709377968225",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-09-3//w/752/IMAGE-portrait-ipad-fill-db02bd1f-c8ce-475e-bdb6-23cec7d89601-default_0.jpg?ts=1709377968843",
+      ],
+      Shose: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-jackets/subhome-xmedia-09//w/1360/IMAGE-landscape-fill-d4a646af-9c1d-4491-9777-82a3e0d3677e-default_0.jpg?ts=1709378834738",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-jackets/subhome-xmedia-09//w/752/IMAGE-portrait-ipad-fill-71f75e6b-3a79-4662-9127-4770c802d6c3-default_0.jpg?ts=1709378835559",
+      ],
+    },
+    men: {
+      main: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-new/subhome-xmedia-10//w/1360/IMAGE-landscape-fill-388c511e-0ae7-4fde-a636-e02f7e298861-default_0.jpg?ts=1709565857511",
+      ],
+      tshirt: [
+        "https://static.zara.net/photos///2024/V/T/1/p/0686/140/144/2/w/1097/0686140144_15_3_1.jpg?ts=1708528064312",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-coats/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-8254875b-8f3a-4892-9cbe-aaebd3704fbb-default_0.jpg?ts=1708606681952",
+      ],
+      halfpent: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-shoes/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-d506e232-e46c-4a6b-b3a6-b825618a3d0e-default_0.jpg?ts=1708531602763",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-joinlife/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-e5f251d6-cf1a-4ea4-8980-4cbaa5b602c5-default_0.jpg?ts=1708507654789",
+      ],
+    },
+    kids: {
+      main: [
+        "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-join-life/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-b9e660c9-aad1-46c7-ae19-1e2b1ac59952-default_0.jpg?ts=1708517450733",
+      ],
+      babysherts: [
+        "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babygirl/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d55e6a7d-2adf-41fa-a2a7-a75d3aa73810-default_0.jpg?ts=1708674688839",
+      ],
+      babypants: [
+        "https://static.zara.net/photos///2024/V/0/3/p/4551/601/400/102/w/680/4551601400_15_1_1.jpg?ts=1708333336700",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babyboy/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-cb411d26-25e5-48ec-8ea1-19b9cdf37824-default_0.jpg?ts=1708674772320",
+      ],
+      babyjaket: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-boy/subhome-xmedia-8//w/1360/IMAGE-landscape-default-fill-b7fed291-ba37-46d4-810e-72d79817116f-default_0.jpg?ts=1708674246835",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-newborn/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d87712bf-5c3f-4d5e-b062-8bf9539aa911-default_0.jpg?ts=1708675587550",
+      ],
+      babyShose: [
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-baby/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-9096e347-f709-4820-b5de-4da08a298c6b-default_0.jpg?ts=1708674634462",
+        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-shoes-bags/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-ebccf7f3-d14f-43cb-9f99-7732fab9ae36-default_0.jpg?ts=1708674252344",
+      ],
+    },
   };
+
   const [currentCategory, setCurrentCategory] = useState("women");
+  const [currentSubcategory, setCurrentSubcategory] = useState(null);
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
   const swiperRef = useRef(null);
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);
-    const firstSlide = categories[category];
+
+    const subcategories = categories[category];
+    const defaultSubcategory = subcategories
+      ? Object.keys(subcategories)[0]
+      : null;
+    setCurrentSubcategory(defaultSubcategory);
+
+    const firstSlide = subcategories ? subcategories[defaultSubcategory] : [];
     const firstSlideIsVideo = isVideo(firstSlide);
     const swiper = swiperRef.current?.swiper;
 
@@ -57,7 +92,6 @@ export default function Home() {
     }
     setManualScroll(false);
   };
-
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
 
@@ -94,19 +128,23 @@ export default function Home() {
   const isVideo = (url) => {
     return /\.(mp4|webm|ogg|ogv)$/i.test(url);
   };
+
   const getCategorySlides = () => {
-    const imageUrls = categories[currentCategory] || [];
+    const subcategories = categories[currentCategory];
 
-    return [
-      ...getSlides(currentCategory, imageUrls),
-      <SwiperSlide key={`${currentCategory}-social-slide`}>
-        <div className="social-slide-page w-full h-full flex justify-center items-center">
-          <SocialSlidepage />
-        </div>
-      </SwiperSlide>,
-    ];
+    return Object.keys(subcategories)
+      .flatMap((subcategory) => {
+        const imageUrls = subcategories[subcategory];
+        return getSlides(`${currentCategory}-${subcategory}`, imageUrls);
+      })
+      .concat([
+        <SwiperSlide key={`${currentCategory}-social-slide`}>
+          <div className="social-slide-page w-full h-full flex justify-center items-center">
+            <SocialSlidepage />
+          </div>
+        </SwiperSlide>,
+      ]);
   };
-
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     const activeIndex = swiper.activeIndex;
@@ -178,6 +216,7 @@ export default function Home() {
             />
           </div>
         </div>
+
         <Swiper
           ref={swiperRef}
           direction={"vertical"}
