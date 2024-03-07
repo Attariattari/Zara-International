@@ -6,6 +6,7 @@ import {
   Routes,
   Navigate,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import Welcome from "./Components/Welcome/Welcome";
 import Home from "./Pages/Home";
@@ -38,14 +39,14 @@ function App() {
             path="/Home"
             element={<ProtectedHomeRoute redirectTo="/welcome" />}
           />
-        
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/Help" element={<Help />} />
-            <Route path="/Shopping_Bag" element={<ShoppingBag />} />
-            <Route path="/User/Order" element={<UserOrder />} />
-            <Route path="/Search/Products" element={<Search />} />
-          
+
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Help" element={<Help />} />
+          <Route path="/Shopping_Bag" element={<ShoppingBag />} />
+          <Route path="/User/Order" element={<UserOrder />} />
+          <Route path="/Search/Products" element={<Search />} />
+
           <Route
             path="/welcome"
             element={<ProtectedRoute redirectTo="/Home" />}

@@ -216,7 +216,6 @@ export default function Home() {
             />
           </div>
         </div>
-
         <Swiper
           ref={swiperRef}
           direction={"vertical"}
