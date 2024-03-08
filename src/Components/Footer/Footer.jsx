@@ -225,6 +225,21 @@ function Footer() {
             </ul>
           </div>
         </div>
+        <div className="Footerlastarea">
+          <div>
+            <div>ZARA / WOMAN / ///NEW</div>
+            <div className="international">INTERNATIONAL</div>
+          </div>
+          <div>
+            <div>ENGLISH</div> |
+            <div>NEDERLANDS</div> |
+            <div>FRANÇAIS</div> |
+            <div>ESPAÑOL</div> |
+            <div>PORTUGUÊS</div> |
+            <div>UNITEDKINGDEN</div> |
+            <p>© ALL RIGHTS RESERVED</p>
+          </div>
+        </div>
       </div>
     </div>
   );
