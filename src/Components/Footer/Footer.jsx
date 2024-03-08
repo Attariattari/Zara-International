@@ -3,9 +3,65 @@ import "./Footer.css";
 
 function Footer() {
   const [showAdditionalData, setShowAdditionalData] = useState(false);
+  const [email, setEmail] = useState("");
+  const [privacyChecked, setPrivacyChecked] = useState(false);
+  const [womanChecked, setWomanChecked] = useState(false);
+  const [manChecked, setManChecked] = useState(false);
+  const [kidsChecked, setKidsChecked] = useState(false);
+  const [error, setError] = useState("");
 
   const handleInputClick = () => {
     setShowAdditionalData(true);
+  };
+
+  const handleCheckboxChange = (e) => {
+    setPrivacyChecked(e.target.checked);
+  };
+
+  const handleSectionCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setError(""); // Reset error message
+
+    switch (name) {
+      case "woman":
+        setWomanChecked(checked);
+        break;
+      case "man":
+        setManChecked(checked);
+        break;
+      case "kids":
+        setKidsChecked(checked);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const validateEmail = (email) => {
+    // Regular expression for a valid email address
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const handleSubscribeClick = () => {
+    if (!email) {
+      setError("Please enter your email address.");
+    } else if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+    } else if (!privacyChecked) {
+      setError("Please accept the Privacy and Cookies Policy.");
+    } else if (!womanChecked && !manChecked && !kidsChecked) {
+      setError("Please select at least one section.");
+    } else {
+      // All data is valid, you can now proceed to subscribe
+      console.log("Subscribing with data:", {
+        email,
+        privacyChecked,
+        womanChecked,
+        manChecked,
+        kidsChecked,
+      });
+    }
   };
 
   return (
@@ -18,6 +74,8 @@ function Footer() {
             <input
               type="text"
               placeholder="ENTER YOUR EMAIL"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               onClick={handleInputClick}
             />
           </div>
@@ -25,7 +83,13 @@ function Footer() {
           {showAdditionalData && (
             <>
               <div className="checkboxarea">
-                <input type="checkbox" name="" id="" />
+                <input
+                  type="checkbox"
+                  name="privacy"
+                  id=""
+                  checked={privacyChecked}
+                  onChange={handleCheckboxChange}
+                />
                 <p>
                   I have read and understand the Privacy and Cookies Policy and
                   agree to receive personalised commercial communications from
@@ -35,25 +99,131 @@ function Footer() {
               <div className="slectsection">
                 <p className="Section">SECTIONS</p>
                 <div>
-                  <input type="checkbox" name="" id="" />
+                  <input
+                    type="checkbox"
+                    name="woman"
+                    id=""
+                    checked={womanChecked}
+                    onChange={handleSectionCheckboxChange}
+                  />
                   <p>WOMAN</p>
                 </div>
                 <div>
-                  <input type="checkbox" name="" id="" />
+                  <input
+                    type="checkbox"
+                    name="man"
+                    id=""
+                    checked={manChecked}
+                    onChange={handleSectionCheckboxChange}
+                  />
                   <p>MAN</p>
                 </div>
                 <div>
-                  <input type="checkbox" name="" id="" />
+                  <input
+                    type="checkbox"
+                    name="kids"
+                    id=""
+                    checked={kidsChecked}
+                    onChange={handleSectionCheckboxChange}
+                  />
                   <p>KIDS</p>
                 </div>
               </div>
               <div className="SUBSCRIBEButton">
-                <button>
+                <button onClick={handleSubscribeClick}>
                   <span>SUBSCRIBE</span>
                 </button>
               </div>
+              {error && <p className="error-message">{error}</p>}
             </>
           )}
+        </div>
+        <div className="socialarea">
+          <a href="#" target="_blank">
+            TIKTOK
+          </a>
+          <a href="#" target="_blank">
+            FACEBOOK
+          </a>
+          <a href="#" target="_blank">
+            INSTAGRAM
+          </a>
+          <a href="#" target="_blank">
+            x
+          </a>
+          <a href="#" target="_blank">
+            PINTEREST
+          </a>
+          <a href="#" target="_blank">
+            YOUTUBE
+          </a>
+          <a href="#" target="_blank">
+            SPOTIFY
+          </a>
+          <a href="#" target="_blank">
+            LINKDIN
+          </a>
+        </div>
+        <div className="companyarea">
+          <div className="companyHelp">
+            <p>Help</p>
+            <ul>
+              <li>MY ZARA ACOUNT</li>
+              <li>ITEMS AND SIZES</li>
+              <li>SHIPPING</li>
+              <li>PAYMENT AND INVOICES</li>
+              <li>MY PURCHASES</li>
+              <li>EXCHANGES, RETURNS AND</li>
+              <li>REFUNDS</li>
+              <li>ZARA EXPERIENCIES</li>
+            </ul>
+          </div>
+          <div className="companyFollow_Us">
+            <p>Follow Us</p>
+            <a href="#" target="_blank">
+              TIKTOK
+            </a>
+            <a href="#" target="_blank">
+              FACEBOOK
+            </a>
+            <a href="#" target="_blank">
+              INSTAGRAM
+            </a>
+            <a href="#" target="_blank">
+              x
+            </a>
+            <a href="#" target="_blank">
+              PINTEREST
+            </a>
+            <a href="#" target="_blank">
+              YOUTUBE
+            </a>
+            <a href="#" target="_blank">
+              SPOTIFY
+            </a>
+            <a href="#" target="_blank">
+              LINKDIN
+            </a>
+          </div>
+          <div className="companyCompany">
+            <p>Company</p>
+            <ul>
+              <li>ABOUT US</li>
+              <li>JOIN LIFE</li>
+              <li>OFFICES</li>
+              <li>WORK WITH US</li>
+              <li>CONTACT</li>
+              <li>LEGAL NOTES</li>
+            </ul>
+          </div>
+          <div className="companyPolicies">
+            <p>Policies</p>
+            <ul>
+              <li>PRIVACY POLICY</li>
+              <li>PURCHASE CONDITIONS</li>
+              <li>COOKIES SETTINGS</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
