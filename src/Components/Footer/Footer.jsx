@@ -231,12 +231,12 @@ function Footer() {
             <div className="international">INTERNATIONAL</div>
           </div>
           <div>
-            <div>ENGLISH</div> |
-            <div>NEDERLANDS</div> |
-            <div>FRANÇAIS</div> |
-            <div>ESPAÑOL</div> |
-            <div>PORTUGUÊS</div> |
-            <div>UNITEDKINGDEN</div> |
+            <div>ENGLISH</div>
+            <div>NEDERLANDS</div>
+            <div>FRANÇAIS</div>
+            <div>ESPAÑOL</div>
+            <div>PORTUGUÊS</div>
+            <div>UNITEDKINGDEN</div>
             <p>© ALL RIGHTS RESERVED</p>
           </div>
         </div>
