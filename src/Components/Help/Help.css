@@ -1,4 +1,126 @@
-.Help{
+.Help {
     width: 100%;
     height: auto;
+    padding: 180px 0px 0px 0px;
+}
+
+.Help_Background_Image {
+    width: 100%;
+    height: 100vh;
+    background-image: url(https://static.zara.net/photos///contents/mkt/spots/ss24-help-customer/cover-xmedia-08-north//w/1343/IMAGE-landscape-web-b134792c-1d70-4807-930d-c8d308e4e602-default_0.jpg?ts=1708588328097);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.Help_Search {
+    width: 50%;
+    height: auto;
+    padding: 0px 0px 0px 0px;
+}
+
+.Help_Search input {
+    width: 100%;
+    height: 45px;
+    margin: 60px 0px 0px 95px;
+    outline: none;
+    border: 1px solid black;
+    padding-left: 25px;
+    font-size: 12px;
+}
+
+.Help_Search input::placeholder {
+    font-size: 12px;
+}
+
+.Help_Just_Scroll {
+    width: 100%;
+    height: auto;
+    padding: 0px 0px 0px 0px;
+}
+
+.Help_Question_area {
+    padding: 0px 83px 0px 95px;
+    margin: 60px 0px 0px 0px;
+}
+
+.Help_FREQUENTLY {
+    width: 100%;
+    height: 150px;
+
+}
+
+.Help_FREQUENTLY div {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.Help_Questions {
+    height: 50px;
+    margin: 20px 0px 0px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+.Help_Questions .Help_Links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    border: 1px solid black;
+    padding: 7px;
+    font-size: 10px;
+}
+
+.All-Topic_Question {
+    font-size: 13px;
+    padding: 0px 0px 40px 0px;
+}
+
+.Help-title {
+    font-weight: bold;
+}
+
+.Help_Question_Grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 25px;
+}
+
+.Help_Question_Grid p {
+    font-size: 15px;
+    margin: 0px 0px 15px 0px;
+    color: black;
+}
+
+.Help_Question_Grid div {
+    border: 1px solid black;
+    padding: 30px;
+    gap: 20px;
+    color: gray;
+}
+
+.QuestionArea .Link {
+    margin-bottom: 8px;
+    font-size: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+}
+
+.ShowAndlessButton {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    font-size: 11px;
+    flex-direction: column;
+    width: 68px;
+    height: 15px;
+    padding: 5px 5px 5px 0px;
+    border-bottom: 1px solid black;
 }

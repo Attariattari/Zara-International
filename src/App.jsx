@@ -6,7 +6,6 @@ import {
   Routes,
   Navigate,
   useNavigate,
-  useLocation,
 } from "react-router-dom";
 import Welcome from "./Components/Welcome/Welcome";
 import Home from "./Pages/Home";

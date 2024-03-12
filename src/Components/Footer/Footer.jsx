@@ -61,6 +61,7 @@ function Footer() {
         manChecked,
         kidsChecked,
       });
+      setError("");
     }
   };
 
