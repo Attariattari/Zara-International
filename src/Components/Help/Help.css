@@ -9,14 +9,16 @@
     height: 100vh;
     background-image: url(https://static.zara.net/photos///contents/mkt/spots/ss24-help-customer/cover-xmedia-08-north//w/1343/IMAGE-landscape-web-b134792c-1d70-4807-930d-c8d308e4e602-default_0.jpg?ts=1708588328097);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: 50% 50%;
+    position: relative;
 }
 
 .Help_Search {
     width: 50%;
     height: auto;
     padding: 0px 0px 0px 0px;
+    position: absolute;
 }
 
 .Help_Search input {
@@ -31,6 +33,31 @@
 
 .Help_Search input::placeholder {
     font-size: 12px;
+}
+
+.JustForScroll {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 20;
+    height: 100px;
+}
+
+.JustForScroll span {
+    display: inline-block;
+    transform-origin: bottom left;
+    transform: rotate(-90deg);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
 }
 
 .Help_Just_Scroll {
@@ -123,4 +150,132 @@
     height: 15px;
     padding: 5px 5px 5px 0px;
     border-bottom: 1px solid black;
+}
+/* Responcive Displays */
+@media (max-width: 1279px) {
+
+
+}
+/* Scroll Animation */
+#mouse-scroll {
+    style: block;
+}
+
+#mouse-scroll {
+    position: fixed;
+    margin: auto;
+    left: 50%;
+    bottom: 20px;
+    -webkit-transform: translateX(-50%);
+    z-index: 9999;
+}
+
+#mouse-scroll span {
+    display: block;
+    width: 5px;
+    height: 5px;
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    margin: 0 0 3px 5px;
+}
+
+#mouse-scroll .mouse {
+    height: 21px;
+    width: 14px;
+    border-radius: 10px;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    border: 2px solid #000000;
+    top: 170px;
+}
+
+#mouse-scroll .down-arrow-1 {
+    margin-top: 6px;
+}
+
+#mouse-scroll .down-arrow-1, #mouse-scroll .down-arrow-2, #mouse-scroll .down-arrow-3 {
+    -webkit-animation: mouse-scroll 1s infinite;
+    -moz-animation: mouse-scroll 1s infinite;
+    /* Note the semicolon here */
+}
+
+#mouse-croll .down-arrow-1 {
+    -webkit-animation-delay: .1s;
+    -moz-animation-delay: .1s;
+    -webkit-animation-direction: alternate;
+}
+
+#mouse-scroll .down-arrow-2 {
+    -webkit-animation-delay: .2s;
+    -moz-animation-delay: .2s;
+    -webkit-animation-direction: alternate;
+}
+
+#mouse-scroll .down-arrow-3 {
+    -webkit-animation-delay: .3s;
+    -moz-animation-dekay: .3s;
+    -webkit-animation-direction: alternate;
+}
+
+#mouse-scroll .mouse-in {
+    height: 5px;
+    width: 2px;
+    display: block;
+    margin: 5px auto;
+    background: #000000;
+    position: relative;
+}
+
+#mouse-scroll .mouse-in {
+    -webkit-animation: animated-mouse 1.2s ease infinite;
+    moz-animation: mouse-animated 1.2s ease infinite;
+}
+
+@-webkit-keyframes animated-mouse {
+    0% {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: translateY(6px);
+        -ms-transform: translateY(6px);
+        transform: translateY(6px);
+    }
+}
+
+@-webkit-keyframes mouse-scroll {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes mouse-scroll {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

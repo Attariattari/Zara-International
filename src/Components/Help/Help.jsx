@@ -1,9 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Help.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+function useScrollPosition() {
+  const [showScrollAnimation, setShowScrollAnimation] = useState(true);
+
+  useEffect(() => {
+      function handleScroll() {
+          const scrollPosition = window.pageYOffset;
+          setShowScrollAnimation(scrollPosition <= window.innerHeight * 0.1);
+      }
+
+      window.addEventListener('scroll', handleScroll);
+
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+      };
+  }, []);
+
+  return showScrollAnimation;
+}
 function Help() {
+  const showScrollAnimation = useScrollPosition();
   const topics = [
     {
       title: "MY ZARA ACCOUNT",
@@ -91,6 +110,18 @@ function Help() {
           <div className="Help_Search">
             <input type="text" placeholder="HOW WE CAN HELP YOU?" />
           </div>
+          {showScrollAnimation && (
+                <div id="mouse-scroll">
+                    <div className="mouse">
+                        <div className="mouse-in"></div>
+                    </div>
+                    <div>
+                        <span className="down-arrow-1"></span>
+                        <span className="down-arrow-2"></span>
+                        <span className="down-arrow-3"></span>
+                    </div>
+                </div>
+            )}
         </div>
         <div className="Help_Question_area">
           <div className="Help_FREQUENTLY">
