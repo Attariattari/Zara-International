@@ -2,29 +2,41 @@
     width: 100%;
     height: auto;
     padding: 180px 0px 0px 0px;
+    transition: all 0.6s ease;
+}
+
+.Help_Center {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.6s ease;
 }
 
 .Help_Background_Image {
     width: 100%;
     height: 100vh;
-    background-image: url(https://static.zara.net/photos///contents/mkt/spots/ss24-help-customer/cover-xmedia-08-north//w/1343/IMAGE-landscape-web-b134792c-1d70-4807-930d-c8d308e4e602-default_0.jpg?ts=1708588328097);
+    background-image: url(https://static.zara.net/photos///contents/mkt/spots/ss24-help-customer/cover-xmedia-11-north//w/483/IMAGE-landscape-web-3c452a17-07dc-4c3c-b233-7f276a5421cb-default_0.jpg?ts=1710160091855);
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: 50% 50%;
+    background-size: 100% auto;
+    background-position: center;
     position: relative;
+    transition: all 0.6s ease;
 }
 
 .Help_Search {
     width: 50%;
     height: auto;
     padding: 0px 0px 0px 0px;
+    margin: 60px 0px 0px 95px;
     position: absolute;
+    transition: all 0.6s ease;
 }
 
 .Help_Search input {
     width: 100%;
     height: 45px;
-    margin: 60px 0px 0px 95px;
     outline: none;
     border: 1px solid black;
     padding-left: 25px;
@@ -67,13 +79,14 @@
 }
 
 .Help_Question_area {
-    padding: 0px 83px 0px 95px;
+    transition: all 0.6s ease;
     margin: 60px 0px 0px 0px;
 }
 
 .Help_FREQUENTLY {
     width: 100%;
     height: 150px;
+    padding: 0px 83px 0px 95px;
 
 }
 
@@ -104,7 +117,7 @@
 
 .All-Topic_Question {
     font-size: 13px;
-    padding: 0px 0px 40px 0px;
+    padding: 0px 83px 40px 95px;
 }
 
 .Help-title {
@@ -151,11 +164,179 @@
     padding: 5px 5px 5px 0px;
     border-bottom: 1px solid black;
 }
+
 /* Responcive Displays */
 @media (max-width: 1279px) {
+    .Help {
+        padding: 160px 0px 0px 0px;
+    }
 
-
+    .Help_Search {
+        width: 50%;
+        height: auto;
+        padding: 0px 0px 0px 0px;
+        margin: 60px 0px 0px 155px;
+        position: absolute;
+    }
 }
+
+@media (max-width: 1179px) {
+    .Help {
+        padding: 140px 0px 0px 0px;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% auto;
+        height: 100vh;
+        max-width: 100%;
+    }
+
+    .Help_Search {
+        width: 50%;
+        height: auto;
+        padding: 0px 0px 0px 0px;
+        margin: 60px 0px 0px 130px;
+        position: absolute;
+    }
+}
+
+@media (max-width: 1023px) {
+    .Help {
+        padding: 120px 0px 0px 0px;
+    }
+
+    .Help_Center {
+        height: 84vh;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% 84vh;
+        height: 80vh;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 970px) {
+    .Help {
+        padding: 120px 0px 0px 0px;
+    }
+}
+
+@media (max-width: 856px) {
+    .Help {
+        padding: 100px 0px 0px 0px;
+    }
+
+    .Help_Center {
+        height: 80vh;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% 80vh;
+        height: 80vh;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .Help {
+        padding: 60px 0px 0px 0px;
+    }
+
+    .Help_Center {
+        height: 64vh;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% 64vh;
+        height: 64vh;
+        max-width: 100%;
+    }
+
+    .Help_Search {
+        width: 100%;
+        height: auto;
+        padding: 0px 30px 0px 30px;
+        margin: 40px 0px 0px 0px;
+        position: absolute;
+    }
+
+    .Help_FREQUENTLY {
+        padding: 0px 30px 0px 30px;
+        flex-wrap: wrap;
+    }
+    .Help_Questions .Help_Links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        border: 1px solid black;
+        padding: 7px;
+        font-size: 10px;
+    }
+    .Mouse-scroll {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .Help_FREQUENTLY {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Help_Questions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .Help_Center {
+        height: 54vh;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% 54vh;
+        height: 54vh;
+        max-width: 100%;
+    }
+
+    .Help_Search {
+        width: 100%;
+        height: auto;
+        padding: 0px 30px 0px 30px;
+        margin: 40px 0px 0px 0px;
+        position: absolute;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .Help_Center {
+        height: 45vh;
+    }
+
+    .Help_Background_Image {
+        background-size: 100% 45vh;
+        height: 45vh;
+        max-width: 100%;
+    }
+
+    .Help_Search {
+        width: 100%;
+        height: auto;
+        padding: 0px 30px 0px 30px;
+        margin: 40px 0px 0px 0px;
+        position: absolute;
+    }
+}
+
+
 /* Scroll Animation */
 #mouse-scroll {
     style: block;

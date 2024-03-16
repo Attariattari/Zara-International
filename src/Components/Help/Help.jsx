@@ -7,16 +7,16 @@ function useScrollPosition() {
   const [showScrollAnimation, setShowScrollAnimation] = useState(true);
 
   useEffect(() => {
-      function handleScroll() {
-          const scrollPosition = window.pageYOffset;
-          setShowScrollAnimation(scrollPosition <= window.innerHeight * 0.1);
-      }
+    function handleScroll() {
+      const scrollPosition = window.pageYOffset;
+      setShowScrollAnimation(scrollPosition <= window.innerHeight * 0.1);
+    }
 
-      window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-      return () => {
-          window.removeEventListener('scroll', handleScroll);
-      };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return showScrollAnimation;
@@ -106,22 +106,24 @@ function Help() {
         </div>
       </div>
       <div className="Help">
-        <div className="Help_Background_Image">
-          <div className="Help_Search">
-            <input type="text" placeholder="HOW WE CAN HELP YOU?" />
-          </div>
-          {showScrollAnimation && (
-                <div id="mouse-scroll">
-                    <div className="mouse">
-                        <div className="mouse-in"></div>
-                    </div>
-                    <div>
-                        <span className="down-arrow-1"></span>
-                        <span className="down-arrow-2"></span>
-                        <span className="down-arrow-3"></span>
-                    </div>
+        <div className="Help_Center">
+          <div className="Help_Background_Image">
+            <div className="Help_Search">
+              <input type="text" placeholder="HOW WE CAN HELP YOU?" />
+            </div>
+            {showScrollAnimation && (
+              <div id="mouse-scroll" className="Mouse-scroll">
+                <div className="mouse">
+                  <div className="mouse-in"></div>
                 </div>
+                <div>
+                  <span className="down-arrow-1"></span>
+                  <span className="down-arrow-2"></span>
+                  <span className="down-arrow-3"></span>
+                </div>
+              </div>
             )}
+          </div>
         </div>
         <div className="Help_Question_area">
           <div className="Help_FREQUENTLY">
@@ -133,7 +135,7 @@ function Help() {
               <Link className="Help_Links">REFUNDS</Link>
             </div>
           </div>
-          <div className="All-Topic_Question">
+          {/* <div className="All-Topic_Question">
             <p className="Help-title">ALL HELP TOPICS</p>
             <div className="Help_Question_Grid">
               {topics.map((topic, index) => (
@@ -153,7 +155,7 @@ function Help() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
