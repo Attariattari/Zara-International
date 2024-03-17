@@ -3,6 +3,12 @@ import "./Help.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 function useScrollPosition() {
   const [showScrollAnimation, setShowScrollAnimation] = useState(true);
 
@@ -23,6 +29,23 @@ function useScrollPosition() {
 }
 function Help() {
   const showScrollAnimation = useScrollPosition();
+  const [expandedAccordion, setExpandedAccordion] = useState(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpandedAccordion(isExpanded ? panel : null);
+  };
   const topics = [
     {
       title: "MY ZARA ACCOUNT",
@@ -135,27 +158,72 @@ function Help() {
               <Link className="Help_Links">REFUNDS</Link>
             </div>
           </div>
-          {/* <div className="All-Topic_Question">
+          <div className="All-Topic_Question">
             <p className="Help-title">ALL HELP TOPICS</p>
-            <div className="Help_Question_Grid">
-              {topics.map((topic, index) => (
-                <div className="QuestionArea" key={index}>
-                  <p>{topic.title}</p>
-                  {showAll || topic.links.length <= 3
-                    ? renderLinks(topic.links)
-                    : renderLinks(topic.links.slice(0, 3))}
-                  {topic.links.length > 3 && (
-                    <button
-                      className="ShowAndlessButton"
-                      onClick={toggleShowAll}
+            {screenWidth <= 768 ? (
+              <div className="accordionarea">
+                {topics.map((topic, index) => (
+                  <Accordion
+                    key={index}
+                    expanded={expandedAccordion === index}
+                    onChange={handleAccordionChange(index)}
+                    className="AccordionContainer"style={{ width: "100%" }}
+                  >
+                    <AccordionSummary
+                      expandIcon={
+                        expandedAccordion === index ? (
+                          <RemoveIcon sx={{ fontSize: 18 }} />
+                        ) : (
+                          <AddIcon sx={{ fontSize: 18 }} />
+                        )
+                      }
+                      aria-controls={`panel${index}bh-content`}
+                      id={`panel${index}bh-header`}
                     >
-                      {showAll ? "Show Less" : "Show More"}
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div> */}
+                      <Typography
+                        style={{
+                          fontSize: "10px",
+                        }}
+                      >
+                        {topic.title}
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div className="Accordiondetails">
+                        {topic.links.map((link, linkIndex) => (
+                          <Link
+                            key={linkIndex}
+                            className="Link"
+                          >
+                            {link}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
+              </div>
+            ) : (
+              <div className="Help_Question_Grid">
+                {topics.map((topic, index) => (
+                  <div className="QuestionArea" key={index}>
+                    <p>{topic.title}</p>
+                    {showAll || topic.links.length <= 3
+                      ? renderLinks(topic.links)
+                      : renderLinks(topic.links.slice(0, 3))}
+                    {topic.links.length > 3 && (
+                      <button
+                        className="ShowAndlessButton"
+                        onClick={toggleShowAll}
+                      >
+                        {showAll ? "Show Less" : "Show More"}
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <Footer />
