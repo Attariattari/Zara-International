@@ -13,7 +13,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.FlterView {
+  position: absolute;
+  z-index: 5;
+  margin-top: 150px;
+  width: 100%;
+  display: flex;
+  padding-right: 40px;
+  justify-content: flex-end;
+  transition: all 0.6s ease;
+  gap: 10px;
+}
+.FlterView div{
+  cursor: pointer;
+}
 /*
 a {
   font-weight: 500;
