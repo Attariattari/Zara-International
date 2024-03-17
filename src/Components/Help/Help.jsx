@@ -167,7 +167,8 @@ function Help() {
                     key={index}
                     expanded={expandedAccordion === index}
                     onChange={handleAccordionChange(index)}
-                    className="AccordionContainer"style={{ width: "100%" }}
+                    className="AccordionContainer"
+                    style={{ width: "100%" }}
                   >
                     <AccordionSummary
                       expandIcon={
@@ -179,6 +180,15 @@ function Help() {
                       }
                       aria-controls={`panel${index}bh-content`}
                       id={`panel${index}bh-header`}
+                      style={{
+                        fontSize: "10px",
+                        borderBottom:
+                          expandedAccordion === index
+                            ? "1px solid black"
+                            : "none",
+                        marginTop: expandedAccordion === index ? 0 : "0", 
+                        marginBottom: expandedAccordion === index ? 0 : "0",
+                      }}
                     >
                       <Typography
                         style={{
@@ -188,13 +198,12 @@ function Help() {
                         {topic.title}
                       </Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails
+                      style={{ margin: expandedAccordion === index ? 0 : "" }}
+                    >
                       <div className="Accordiondetails">
                         {topic.links.map((link, linkIndex) => (
-                          <Link
-                            key={linkIndex}
-                            className="Link"
-                          >
+                          <Link key={linkIndex} className="Link">
                             {link}
                           </Link>
                         ))}

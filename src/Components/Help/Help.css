@@ -176,7 +176,7 @@
 }
 .AccordionContainer {
     border: 1px solid rgb(79, 79, 79);
-    margin-bottom: 5px;
+    margin-bottom: -4px;
 }
 
 .Accordiondetails{
@@ -185,6 +185,8 @@
     align-items: start;
     flex-direction: column;
     width: 100%;
+    font-size: 10px;
+    color: rgb(91, 91, 91);
 }
 /* Responcive Displays */
 @media (max-width: 1279px) {
@@ -312,7 +314,7 @@
     }
 
     .All-Topic_Question {
-        padding: 0px 30px 40px 30px;
+        padding: 40px 30px 30px 30px;
     }
 
     .All-Topic_Question .Help-title {
