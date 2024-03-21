@@ -39,7 +39,7 @@ export default function Home() {
   const categories = {
     women: {
       main: [
-        "https://zarabackendserver-448d1df25aec.herokuapp.com/uploads/170168740057009.09.2023_22.00.09_REC.mp4",
+        "https://zarabackendserver-448d1df25aec.herokuapp.com/uploads/1710930500390Women's%20New%20In%20Clothes%20-%20ZARA%20International.mp4",
         "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-562e4cc7-7c05-45fb-99ad-58730d80dd2d-default_0.jpg?ts=1709378175316",
         "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/752/IMAGE-portrait-ipad-fill-7f7c51d7-9bf5-4005-9035-52b7872fc209-default_0.jpg?ts=1709378175254",
       ],

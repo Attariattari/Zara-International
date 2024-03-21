@@ -1,5 +1,41 @@
-.New{
+.New {
     width: 100%;
     height: 100%;
-    padding: 180px 0px 0px 0px;
+    padding: 200px 0px 0px 0px;
+}
+
+.multyimage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.multyimage img {
+    width: 50%;
+    height: auto;
+}
+
+.Fullimage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.Fullimage img {
+    width: 100%;
+    height: auto;
+}
+
+.activeIcon {
+    border-bottom: 1px solid black;
+    transform: scale(0.9);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
 }
