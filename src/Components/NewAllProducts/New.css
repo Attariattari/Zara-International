@@ -39,3 +39,8 @@
     -ms-transform: scale(0.9);
     -o-transform: scale(0.9);
 }
+@media (max-width: 768px) {
+    .New {
+        padding: 80px 0px 0px 0px;
+    }
+}

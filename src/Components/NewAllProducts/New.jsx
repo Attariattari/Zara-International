@@ -10,10 +10,26 @@ function New() {
     localStorage.getItem("selectedComponent") || "FullDisplay"
   );
 
+  const [isIconsVisible, setIsIconsVisible] = useState(true);
+  const [prevScrollPosition, setPrevScrollPosition] = useState(0);
+
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
     localStorage.setItem("selectedComponent", component);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.pageYOffset;
+      setIsIconsVisible(currentPosition < prevScrollPosition);
+      setPrevScrollPosition(currentPosition);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [prevScrollPosition]);
 
   useEffect(() => {
     const storedComponent = localStorage.getItem("selectedComponent");
@@ -22,13 +38,33 @@ function New() {
     }
   }, []);
 
+  useEffect(() => {
+    const flterViewElement = document.querySelector(".FlterView");
+
+    if (flterViewElement) {
+      if (!isIconsVisible) {
+        flterViewElement.style.transition = "opacity 0.2s ease";
+        flterViewElement.style.opacity = 0;
+      } else {
+        flterViewElement.style.transition = "opacity 0.2s ease";
+        flterViewElement.style.opacity = 1;
+      }
+    }
+  }, [isIconsVisible]);
+
   return (
     <div>
-      <div className="sticky top-0 z-10" style={{}}>
+      <div className="sticky top-0 z-10">
         <div className="absolute w-full">
           <Navbar />
         </div>
-        <div className="FlterView">
+      </div>
+      <div
+        className={`sticky top-0 z-10 FlterView ${
+          isIconsVisible ? "" : "hidden"
+        }`}
+      >
+        <div className="flex">
           <div>
             <svg
               className={`view-option-selector-button__icon ${

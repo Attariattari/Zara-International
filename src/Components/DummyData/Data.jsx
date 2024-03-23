@@ -118,7 +118,7 @@ export const ZaraProducts = {
       title: "ZW COLLECTION FITTED BLAZER",
       price: {
         RealPrice: "79.95 EUR",
-        discountprice: "-37% 49.99 EUR",
+        discountprice: "49.99 EUR",
       },
       collection: "ZARA WOMAN COLLECTION",
       stock: 20,
@@ -161,7 +161,10 @@ export const ZaraProducts = {
     },
     ASYMMETRIC_TULLE_DRESS: {
       title: "ASYMMETRIC TULLE DRESS",
-      price: "22.95 EUR",
+      price: {
+        RealPrice: "79.95 EUR",
+        discountprice: "49.99 EUR",
+      },
       collectiontype: "",
       discription:
         "Short dress with an asymmetric neckline. Draped fabric. Contrast lining.",
@@ -169,6 +172,7 @@ export const ZaraProducts = {
       color: "YELLOW | 5039/477",
       size: ["EU S / US S", "EU M / US M", "EU L / US L"],
       images: [
+        "https://static.zara.net/assets/public/310c/e306/928a4140af8f/01f292704375/05039477119-p/05039477119-p.jpg?ts=1710507059568&w=563",
         "https://static.zara.net/assets/public/35ad/3045/dbe64288b469/19f0dfffd75b/05039477119-h1/05039477119-h1.jpg?ts=1710507044187&w=1360",
         "https://static.zara.net/assets/public/310c/e306/928a4140af8f/01f292704375/05039477119-p/05039477119-p.jpg?ts=1710507059568&w=563",
         "https://static.zara.net/assets/public/6534/f4e7/37534d38aff5/628a8dde7b53/05039477119-a1/05039477119-a1.jpg?ts=1710507038251&w=750",
@@ -183,7 +187,10 @@ export const ZaraProducts = {
     },
     MINIMALIST_FITTED_BLAZER: {
       title: "ZW COLLECTION MINIMALIST FITTED BLAZER",
-      price: "69.95 EUR",
+      price: {
+        RealPrice: "79.95 EUR",
+        discountprice: "49.99 EUR",
+      },
       collectiontype: "ZARA WOMAN COLLECTION",
       discription:
         "Fitted blazer with a notched lapel collar and long sleeves. Front patch pockets. Matching lining. Button-up front.",
@@ -216,7 +223,10 @@ export const ZaraProducts = {
     },
     OVERSIZE_CRINKLE: {
       title: "ZW COLLECTION OVERSIZE CRINKLE-EFFECT FROCK COAT",
-      price: "129.00 EUR",
+      price: {
+        RealPrice: "79.95 EUR",
+        discountprice: "49.99 EUR",
+      },
       collectiontype: "ZARA WOMAN COLLECTION",
       discription:
         "Long frock coat in crinkle-effect fabric. Featuring a notched lapel collar, long sleeves, front welt pockets, lining and front button fastening. Fabrics with innovative textures take centre stage in this long coat made from a fabric designed to maintain its characteristic rough texture. An outerwear piece inspired by minimalism that adds to the current palette of earthy, ochre and bronze tones, perfect for creating mid-season looks. Matching trousers available.",
@@ -243,7 +253,10 @@ export const ZaraProducts = {
     },
     OVERSIZE_CRINKLE: {
       title: "ZW COLLECTION OVERSIZE CRINKLE-EFFECT FROCK COAT",
-      price: "129.00 EUR",
+      price: {
+        RealPrice: "79.95 EUR",
+        discountprice: "49.99 EUR",
+      },
       collectiontype: "ZARA WOMAN COLLECTION",
       discription:
         "Long frock coat in crinkle-effect fabric. Featuring a notched lapel collar, long sleeves, front welt pockets, lining and front button fastening. Fabrics with innovative textures take centre stage in this long coat made from a fabric designed to maintain its characteristic rough texture. An outerwear piece inspired by minimalism that adds to the current palette of earthy, ochre and bronze tones, perfect for creating mid-season looks. Matching trousers available.",
