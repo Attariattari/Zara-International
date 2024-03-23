@@ -17,6 +17,7 @@ import ShoppingBag from "./Components/ShoppingBag/ShoppingBag.jsx";
 import UserOrder from "./Components/UserOrder/UserOrder.jsx";
 import Search from "./Components/Search/Search.jsx";
 import New from "./Components/NewAllProducts/New.jsx";
+import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
 
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
@@ -47,6 +48,7 @@ function App() {
           <Route path="/User/Order" element={<UserOrder />} />
           <Route path="/Search/Products" element={<Search />} />
           <Route path="/New" element={<New />} />
+          <Route path="/SingleProduct" element={<SingleProduct />} />
 
           <Route
             path="/welcome"

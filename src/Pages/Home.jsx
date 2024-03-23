@@ -7,6 +7,7 @@ import "./Home.css";
 import Navbar from "../Components/Navbar/Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import SocialSlidepage from "../Components/SocialPageforHome/SocialSlidepage";
+import { Link, useNavigate } from "react-router-dom";
 
 // Helper function to check if the URL is a video
 const isVideo = (url) => {
@@ -18,18 +19,25 @@ const getSlides = (category, imageUrls) => {
   return imageUrls.map((imageUrl, index) => (
     <SwiperSlide key={`${category}-slide-${index}`}>
       {index === 0 && isVideo(imageUrl) ? (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          onEnded={() => handleVideoEnd()}
-          className="video"
-        >
-          <source src={imageUrl} type="video/mp4" />
-        </video>
+        <Link to="/New">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            onEnded={() => handleVideoEnd()}
+            className="video"
+            onClick={() => navigate("/New")}
+          >
+            <source src={imageUrl} type="video/mp4" />
+          </video>
+        </Link>
       ) : (
-        <img src={imageUrl} alt="" />
+        <img
+          src={imageUrl}
+          alt=""
+          onClick={() => navigate("/New")}
+        />
       )}
     </SwiperSlide>
   ));
@@ -94,7 +102,7 @@ export default function Home() {
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
   const swiperRef = useRef(null);
-
+  const navigate = useNavigate();
   const handleCategoryChange = (category) => {
     setCurrentCategory(category);
 

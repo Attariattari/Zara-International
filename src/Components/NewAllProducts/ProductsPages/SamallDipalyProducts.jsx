@@ -26,11 +26,19 @@ function SamallDipalyProducts() {
     }
     return null;
   };
+  const handleClick = (product) => {
+    console.log("Clicked product data:", product);
+    // You can perform further actions with the clicked product data here
+  };
   return (
     <div className="DetailedProducts">
-      <div className="ProductAreaSamllImages">
+      <div className="ProductAreaSamllImages cursor-pointer">
         {womenProducts.map((product, index) => (
-          <div className="ProductData" key={index}>
+          <div
+            className="ProductData"
+            key={index}
+            onClick={() => handleClick(product)}
+          >
             {renderMedia(product.images)}
           </div>
         ))}
