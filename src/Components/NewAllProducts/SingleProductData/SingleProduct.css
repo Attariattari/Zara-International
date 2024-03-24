@@ -1,23 +1,24 @@
 .SingleProduct {
     width: 100%;
     height: 100%;
-    padding: 150px 0px 0px 0px;
+    padding: 150px 89px 0px 89px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .Main_Area {
     width: 100%;
     height: 440px;
-    display: grid;
-    grid-template-columns: 280px 580px 300px;
-    padding: 0px 89px 0px 89px;
-    place-content: start;
-    align-items: start;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     font-size: 13px;
 }
 
 .COMPOSITIONAREA {
-    max-width: 100%;
-    width: 280px;
+    max-width: 280px;
+    width: 100%;
     overflow-y: auto;
     height: 100%;
     display: flex;
@@ -26,12 +27,10 @@
     border: 1px solid black;
     padding: 13px 19px 0px 19px;
     flex-direction: column;
-
 }
 
 .compact {
-    width: 100%;
-    height: 100%;
+    height: 55%;
     top: 198px;
     position: relative;
     padding: 13px 19px 20px 19px;
@@ -210,20 +209,219 @@
 }
 
 .CarosualArea {
-    max-width: 100%;
-    width: 580px;
+    max-width: 500px;
+    width: 100%;
+    height: auto;
     display: flex;
-    justify-content: start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 13px 0px 0px 10px;
 }
 
-.AllProductDataView {
-    max-width: 100%;
+.CarosualOverflow {
+    width: 305px;
+    height: 440px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scroll-behavior: smooth;
+}
+
+.CarosualOverflow::-webkit-scrollbar {
+    width: 4px;
+    height: 100%;
+}
+
+.CarosualOverflow::-webkit-scrollbar-thumb {
+    background-color: #828282;
+}
+
+.CarosualOverflow::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.ImagesCarosual {
     width: 300px;
+    height: 440px;
+
+}
+
+.ImagesCarosual img {
+    width: 100%;
+    height: 440px;
+}
+
+.swiper {
+    width: 300px;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+}
+
+.ImagesForCarsualUpdates {
+    width: 03%;
+    height: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: flex-end;
+    position: relative;
+    right: 120px;
+    top: 120px;
+    overflow-y: auto;
+}
+
+.UpdaterImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.UpdaterImage img {
+    width: 100%;
+    height: 2.7em;
+    object-fit: contain;
+}
+
+.UpdaterImage img {
+    transition: filter 0.3s ease;
+}
+
+.UpdaterImage.active img {
+    filter: brightness(100%);
+    /* Remove brightness filter for the active image */
+}
+
+.UpdaterImage:not(.active) img {
+    filter: blur(1px) brightness(70%);
+    -webkit-filter: blur(1px) brightness(70%);
+}
+
+
+.AllProductDataView {
+    max-width: 300px;
+    width: 100%;
+    height: 440px;
     display: flex;
     justify-content: start;
     align-items: center;
     border: 1px solid black;
-    padding: 13px 0px 0px 10px;
+    flex-direction: column;
 }
+
+.AllProductDataView div {
+    width: 100%;
+    height: 50%;
+    padding: 24px 20px 24px 20px;
+}
+
+.Productdetails {
+    border-bottom: 1px solid black;
+}
+
+.Productdetails :nth-child(1) {
+    font-size: 10px;
+}
+
+.Productdetails :nth-child(2) {
+    font-size: 10px;
+    margin: 01px 0px 0px 0px;
+}
+
+.Productdetails :nth-child(3) {
+    font-size: 11px;
+    margin: 20px 0px 30px 0px;
+}
+
+.Productdetails :nth-child(4) {
+    font-size: 10px;
+    margin: 20px 0px 0px 0px;
+}
+
+.Productdetails :nth-child(6) {
+    font-size: 10px;
+    margin: 20px 0px 0px 0px;
+}
+
+.Productdetails span {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Productdetails span :nth-child(2) {
+    cursor: pointer;
+}
+
+.productcolorsandsize :nth-child(1) {
+    font-size: 10px;
+}
+.productcolorsandsize :nth-child(4) {
+    font-size: 10px;
+    padding-top: 10px;
+}
+
+.productcolorsandsize .Colors {
+    font-size: 10px;
+    padding: 10px 0px 0px 0px;
+    height: 40px;
+}
+
+.productcolorsandsize .color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #919191;
+    padding: 0px;
+    vertical-align: middle; /* Align boxes vertically in the middle */
+}
+.product-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%; gap: 5px;
+  }
+  
+  .product-sizes button {
+    width: 49%;
+    height: 28px;
+    border: 1px solid #000000;
+    cursor: pointer;
+    font-size: 10px;
+   
+  }
+  
+  .product-sizes button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .product-sizes button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #007bff; /* Example focus style */
+  }
+  .AddButton{
+    width: 101%;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #000000;
+    cursor: pointer;
+    font-size: 12px;
+  }
