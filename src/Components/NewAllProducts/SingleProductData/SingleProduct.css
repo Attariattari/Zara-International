@@ -209,23 +209,33 @@
 }
 
 .CarosualArea {
-    max-width: 500px;
+    max-width: 360px;
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: end;
+
+}
+
+.ImagesCarusalall {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
 }
 
 .CarosualOverflow {
-    width: 305px;
+    width: 350px;
     height: 440px;
     overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     scroll-behavior: smooth;
+
 }
 
 .CarosualOverflow::-webkit-scrollbar {
@@ -252,9 +262,21 @@
     height: 440px;
 }
 
-.swiper {
-    width: 300px;
+.ImagesForCarsualUpdates {
+    width: 08%;
     height: 100%;
+    height: auto;
+    z-index: 20;
+    position: absolute;
+    overflow-y: auto;
+    padding-top: 123px;
+    position: absolute;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 .swiper-slide {
@@ -269,22 +291,9 @@
 .swiper-slide img {
     display: block;
     width: 100%;
-    height: 440px;
-    object-fit: cover;
-}
-
-.ImagesForCarsualUpdates {
-    width: 03%;
     height: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    justify-content: flex-end;
-    position: relative;
-    right: 120px;
-    top: 120px;
-    overflow-y: auto;
+    object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
 .UpdaterImage {
@@ -294,12 +303,13 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .UpdaterImage img {
     width: 100%;
     height: 2.7em;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .UpdaterImage img {
@@ -308,12 +318,10 @@
 
 .UpdaterImage.active img {
     filter: brightness(100%);
-    /* Remove brightness filter for the active image */
 }
 
 .UpdaterImage:not(.active) img {
     filter: blur(1px) brightness(70%);
-    -webkit-filter: blur(1px) brightness(70%);
 }
 
 
@@ -328,9 +336,15 @@
     flex-direction: column;
 }
 
-.AllProductDataView div {
+.Productdetails {
     width: 100%;
-    height: 50%;
+    height: 39%;
+    padding: 24px 20px 24px 20px;
+}
+
+.productcolorsandsize {
+    width: 100%;
+    height: 39%;
     padding: 24px 20px 24px 20px;
 }
 
@@ -349,7 +363,7 @@
 
 .Productdetails :nth-child(3) {
     font-size: 11px;
-    margin: 20px 0px 30px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 .Productdetails :nth-child(4) {
@@ -374,6 +388,7 @@
 .productcolorsandsize :nth-child(1) {
     font-size: 10px;
 }
+
 .productcolorsandsize :nth-child(4) {
     font-size: 10px;
     padding-top: 10px;
@@ -392,36 +407,56 @@
     margin-right: 10px;
     border: 1px solid #919191;
     padding: 0px;
-    vertical-align: middle; /* Align boxes vertically in the middle */
+    vertical-align: middle;
 }
+
 .product-sizes {
     display: flex;
     flex-wrap: wrap;
-    width: 100%; gap: 5px;
-  }
-  
-  .product-sizes button {
+    width: 100%;
+    gap: 5px;
+}
+
+.product-sizes button {
     width: 49%;
     height: 28px;
     border: 1px solid #000000;
     cursor: pointer;
     font-size: 10px;
-   
-  }
-  
-  .product-sizes button:hover {
+
+}
+
+.product-sizes button:hover {
     background-color: #e0e0e0;
-  }
-  
-  .product-sizes button:focus {
+}
+
+.product-sizes button:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #007bff; /* Example focus style */
-  }
-  .AddButton{
-    width: 101%;
-    height: 50px;
-    padding: 10px;
-    border: 1px solid #000000;
+    box-shadow: 0 0 0 1px #363636;
+}
+
+.AddButton {
+    width: 100%;
+    height: 40px;
+    border-top: 1px solid #000000;
     cursor: pointer;
     font-size: 12px;
-  }
+    margin-top: 16px;
+}
+
+.LikeSameWithProductData {
+    width: 100%;
+    height: auto;
+    padding: 150px 0px 0px 0px;
+}
+
+.LikeSameWithProductData p {
+    font-size: 10px;
+    padding: 0px 0px 0px 30px;
+}
+
+.ProdcutsDisplays {
+    width: 100%;
+    height: auto;
+    padding: 20px 0px 0px 0px;
+}

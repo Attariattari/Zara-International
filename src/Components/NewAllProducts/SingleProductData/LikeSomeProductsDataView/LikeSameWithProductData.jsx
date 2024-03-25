@@ -1,12 +1,7 @@
 import React from "react";
-import "./MainCss.css";
-import { ZaraProducts } from "../../DummyData/Data";
-import { useNavigate } from "react-router-dom";
+import { ZaraProducts } from "../../../DummyData/Data";
 import { GoPlus } from "react-icons/go";
-
-function DetailsDisplayProduct() {
-  const navigate = useNavigate();
-
+function LikeSameWithProductData() {
   const womenProducts = [
     ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
     ZaraProducts.Women.SATINY_BLAZER,
@@ -14,9 +9,7 @@ function DetailsDisplayProduct() {
     ZaraProducts.Women.ASYMMETRIC_TULLE_DRESS,
     ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
     ZaraProducts.Women.OVERSIZE_CRINKLE,
-    ZaraProducts.Women.OVERSIZE_CRINKLE,
   ];
-
   const renderMedia = (media) => {
     if (media.length > 0) {
       const firstMedia = media[0];
@@ -30,14 +23,11 @@ function DetailsDisplayProduct() {
     }
     return null;
   };
-
-  const handleClick = (product) => {
-    console.log("Clicked product data:", product);
-    navigate("/SingleProduct", { state: { product } }); // Navigate to SingleProduct with product data
-  };
-
   return (
-    <div className="DetailedProducts">
+    <div>
+      <p>YOU MAY ALSO LIKE</p>
+      <div className="ProdcutsDisplays"></div>
+      <div className="DetailedProducts">
       <div className="ProductArea cursor-pointer">
         {womenProducts.map((product, index) => (
           <div
@@ -82,7 +72,8 @@ function DetailsDisplayProduct() {
         ))}
       </div>
     </div>
+    </div>
   );
 }
 
-export default DetailsDisplayProduct;
+export default LikeSameWithProductData;
