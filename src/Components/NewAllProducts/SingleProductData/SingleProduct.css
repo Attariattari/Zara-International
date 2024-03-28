@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    transition: all 0.6s ease;
 }
 
 .Main_Area {
@@ -14,6 +15,7 @@
     justify-content: space-between;
     align-items: flex-start;
     font-size: 13px;
+    transition: all 0.6s ease;
 }
 
 .COMPOSITIONAREA {
@@ -27,6 +29,7 @@
     border: 1px solid black;
     padding: 13px 19px 0px 19px;
     flex-direction: column;
+    transition: all 0.6s ease;
 }
 
 .compact {
@@ -34,6 +37,7 @@
     top: 198px;
     position: relative;
     padding: 13px 19px 20px 19px;
+    transition: all 0.6s ease;
 }
 
 .COMPOSITIONAREA::-webkit-scrollbar {
@@ -216,6 +220,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
+    transition: all 0.6s ease;
 
 }
 
@@ -254,7 +259,6 @@
 .ImagesCarosual {
     width: 300px;
     height: 440px;
-
 }
 
 .ImagesCarosual img {
@@ -334,6 +338,7 @@
     align-items: center;
     border: 1px solid black;
     flex-direction: column;
+    transition: all 0.6s ease;
 }
 
 .Productdetails {
@@ -423,7 +428,6 @@
     border: 1px solid #000000;
     cursor: pointer;
     font-size: 10px;
-
 }
 
 .product-sizes button:hover {
@@ -459,4 +463,124 @@
     width: 100%;
     height: auto;
     padding: 20px 0px 0px 0px;
+}
+
+@media (max-width: 1279px) {
+    .SingleProduct {
+        padding: 135px 150px 0px 150px;
+    }
+
+    .COMPOSITIONAREA {
+        max-width: 240px;
+        width: 100%;
+        padding: 13px 19px 0px 19px;
+
+    }
+
+    .compact {
+        height: 58%;
+        top: 185px;
+        padding: 13px 19px 0px 19px;
+    }
+
+    .CarosualArea {}
+
+    .AllProductDataView {}
+}
+
+@media (max-width: 1179px) {
+    .SingleProduct {
+        padding: 120px 126px 0px 126px;
+    }
+
+    .COMPOSITIONAREA {
+        max-width: 240px;
+        width: 100%;
+        padding: 13px 19px 0px 19px;
+    }
+
+    .compact {
+        height: 58%;
+        top: 185px;
+        padding: 13px 19px 0px 19px;
+    }
+}
+
+@media (max-width: 1152px) {
+    .SingleProduct {
+        padding: 120px 126px 0px 126px;
+    }
+
+    .COMPOSITIONAREA {
+        max-width: 240px;
+        width: 100%;
+        padding: 13px 19px 0px 19px;
+
+    }
+
+    .compact {
+        height: 58%;
+        top: 185px;
+        padding: 13px 19px 0px 19px;
+    }
+
+    .AllProductDataView {
+        max-width: 240px;
+        width: 100%;
+        height: 440px;
+    }
+
+    .Productdetails,
+    .productcolorsandsize {
+        height: 41.5%;
+        padding: 18px 12px 18px 12px;
+    }
+
+    .product-sizes button {
+        width: 48.5%;
+        height: 28px;
+        border: 1px solid #000000;
+        cursor: pointer;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .COMPOSITIONAREA {
+        display: none;
+    }
+}
+
+@media (max-width: 852px) {
+    .SingleProduct {
+        padding: 120px 50px 0px 126px;
+    }
+}
+
+@media (max-width: 970px) {}
+
+@media (max-width: 768px) {
+    .SingleProduct {
+        padding: 0px 0px 0px 0px;
+    }
+
+    .Main_Area {
+        flex-direction: column;
+    }
+
+    .CarosualArea {
+        max-width: 100%;
+        height: 100vh;
+    }
+
+    .ImagesCarosual {
+        width: 100%;
+        height: 100%;
+    }
+    .ImagesForCarsualUpdates {
+        display: none;
+    }
+    .AllProductDataView{
+        display: none;
+    }
 }
