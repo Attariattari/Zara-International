@@ -52,31 +52,28 @@
     background-color: #ffffff;
 }
 
+.COMPOSITIONAREA :nth-child(19),
 .COMPOSITIONAREA :nth-child(2) {
     font-size: 11px;
     margin: 15px 0px 0px 0px;
 }
 
+.COMPOSITIONAREA :nth-child(11),
 .COMPOSITIONAREA :nth-child(3) {
     font-size: 11px;
     margin: 10px 30px 0px 0px;
 }
 
-.COMPOSITIONAREA :nth-child(4) {
-    font-size: 12px;
-    margin: 10px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(5) {
-    font-size: 11px;
-    margin: 0px 0px 0px 0px;
-}
-
+.COMPOSITIONAREA :nth-child(13),
+.COMPOSITIONAREA :nth-child(4),
 .COMPOSITIONAREA :nth-child(6) {
     font-size: 12px;
     margin: 10px 0px 0px 0px;
 }
 
+.COMPOSITIONAREA :nth-child(5),
+.COMPOSITIONAREA :nth-child(10),
+.COMPOSITIONAREA :nth-child(14),
 .COMPOSITIONAREA :nth-child(7) {
     font-size: 11px;
     margin: 0px 0px 0px 0px;
@@ -87,35 +84,15 @@
     margin: 40px 0px 0px 0px;
 }
 
+.COMPOSITIONAREA :nth-child(18),
 .COMPOSITIONAREA :nth-child(9) {
     font-size: 11px;
     margin: 10px 0px 0px 0px;
 }
 
-.COMPOSITIONAREA :nth-child(10) {
-    font-size: 11px;
-    margin: 0px 0px 0px 0px;
-}
-
 .COMPOSITIONAREA :nth-child(11) {
     font-size: 11px;
     margin: 40px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(12) {
-    font-size: 11px;
-    margin: 10px 30px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(13) {
-    font-size: 12px;
-    margin: 10px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(14) {
-    font-size: 11px;
-    margin: 0px 0px 0px 0px;
-    text-decoration: underline;
 }
 
 .COMPOSITIONAREA :nth-child(15) {
@@ -133,17 +110,10 @@
     margin: 30px 0px 0px 0px;
 }
 
-.COMPOSITIONAREA :nth-child(18) {
-    font-size: 11px;
-    margin: 10px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(19) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    text-decoration: underline;
-}
-
+.COMPOSITIONAREA :nth-child(24),
+.COMPOSITIONAREA :nth-child(23),
+.COMPOSITIONAREA :nth-child(22),
+.COMPOSITIONAREA :nth-child(21),
 .COMPOSITIONAREA :nth-child(20) {
     font-size: 11px;
     margin: 15px 0px 0px 0px;
@@ -152,55 +122,11 @@
     align-items: center;
 }
 
-.COMPOSITIONAREA :nth-child(20) p {
-    margin: 0px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(21) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.COMPOSITIONAREA :nth-child(21) p {
-    margin: 0px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(22) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
+.COMPOSITIONAREA :nth-child(20),
+.COMPOSITIONAREA :nth-child(21),
+.COMPOSITIONAREA :nth-child(23),
+.COMPOSITIONAREA :nth-child(24),
 .COMPOSITIONAREA :nth-child(22) p {
-    margin: 0px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(23) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.COMPOSITIONAREA :nth-child(23) p {
-    margin: 0px 0px 0px 0px;
-}
-
-.COMPOSITIONAREA :nth-child(24) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.COMPOSITIONAREA :nth-child(24) p {
     margin: 0px 0px 0px 0px;
 }
 
@@ -263,7 +189,7 @@
 
 .ImagesCarosual img {
     width: 100%;
-    height: 440px;
+    height: 100vh;
 }
 
 .ImagesForCarsualUpdates {
@@ -371,11 +297,7 @@
     margin: 20px 0px 20px 0px;
 }
 
-.Productdetails :nth-child(4) {
-    font-size: 10px;
-    margin: 20px 0px 0px 0px;
-}
-
+.Productdetails :nth-child(4),
 .Productdetails :nth-child(6) {
     font-size: 10px;
     margin: 20px 0px 0px 0px;
@@ -443,6 +365,7 @@
     width: 100%;
     height: 40px;
     border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
     cursor: pointer;
     font-size: 12px;
     margin-top: 16px;
@@ -468,6 +391,76 @@
 .JUST_SHOW_MOBILE {
     display: none;
     transition: all 0.6s ease;
+}
+
+.compoinmobile {
+    margin: 20px 0px 0px 0px;
+    padding: 0px 10px 0px 10px;
+}
+
+.compoinmobile :nth-child(1),
+.compoinmobile :nth-child(2) {
+    margin: 20px 0px 0px 0px;
+    font-size: 12px;
+}
+
+.compoinmobile :nth-child(3) {
+    margin: 10px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    font-size: 11px;
+}
+
+.compoinmobile :nth-child(4) {
+    margin: 15px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    font-size: 11px;
+}
+
+.compoinmobile :nth-child(5),
+.compoinmobile :nth-child(10),
+.compoinmobile :nth-child(7),
+.compoinmobile :nth-child(14) {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    font-size: 11px;
+}
+
+.compoinmobile :nth-child(6),
+.compoinmobile :nth-child(12),
+.compoinmobile :nth-child(13),
+.compoinmobile :nth-child(15),
+.compoinmobile :nth-child(17) {
+    margin: 20px 0px 0px 0px;
+    font-size: 11px;
+}
+
+.compoinmobile :nth-child(18) {
+    margin: 20px 0px 20px 0px;
+    font-size: 11px;
+}
+
+.compoinmobile :nth-child(8),
+.compoinmobile :nth-child(11) {
+    margin: 50px 0px 0px 0px;
+    font-size: 12px;
+}
+
+.compoinmobile :nth-child(9),
+.compoinmobile :nth-child(16),
+.compoinmobile :nth-child(19) {
+    margin: 30px 0px 0px 0px;
+    font-size: 12px;
+}
+
+.compoinmobile :nth-child(20),
+.compoinmobile :nth-child(21),
+.compoinmobile :nth-child(22),
+.compoinmobile :nth-child(23),
+.compoinmobile :nth-child(24) {
+    margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
 }
 
 @media (max-width: 1279px) {
@@ -578,6 +571,18 @@
         height: 100%;
     }
 
+    .ImagesCarosual img {
+        width: 100%;
+        height: 100dvh;
+        object-fit: cover;
+    }
+
+    .swiper-slide {
+        margin-bottom: 0px;
+        padding-bottom: 0%;
+        gap: 0%;
+    }
+
     .ImagesForCarsualUpdates {
         display: none;
     }
@@ -593,11 +598,13 @@
     .JUST_SHOW_MOBILE {
         width: 100%;
         height: 100vh;
-        top: 81dvh;
+        top: 5.3dvh;
         background-color: #ffffff;
         position: fixed;
         z-index: 1;
         display: block;
+        overflow-y: scroll;
+        padding-bottom: 4em;
     }
 
     .JUST_SHOW_MOBILE button {
@@ -614,16 +621,33 @@
         justify-content: space-between;
         align-items: center;
 
+
     }
 
     .JUST_SHOW_MOBILE span span {
         font-size: 11px;
         display: flex;
+        padding: 0px 10px 0px 10px;
     }
 
     .JUST_SHOW_MOBILE :nth-child(3) {
         font-size: 11px;
         display: flex;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .JUST_SHOW_MOBILE :nth-child(4) {
+        font-size: 11px;
+        display: flex;
+        padding: 0px 10px 0px 10px;
+        margin: 45px 0px 0px 0px;
+    }
+
+    .JUST_SHOW_MOBILE :nth-child(5) {
+        font-size: 10px;
+        display: flex;
+        padding: 0px 10px 0px 10px;
+        margin: 05px 0px 0px 0px;
     }
 
     .Colors {
@@ -638,4 +662,5 @@
         margin-right: 5px;
         border: 1px solid black;
     }
+
 }
