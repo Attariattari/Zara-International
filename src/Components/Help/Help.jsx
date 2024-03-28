@@ -43,6 +43,7 @@ function Help() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   const handleAccordionChange = (panel) => (event, isExpanded) => {
     setExpandedAccordion(isExpanded ? panel : null);
   };
@@ -186,7 +187,7 @@ function Help() {
                           expandedAccordion === index
                             ? "1px solid black"
                             : "none",
-                        marginTop: expandedAccordion === index ? 0 : "0", 
+                        marginTop: expandedAccordion === index ? 0 : "0",
                         marginBottom: expandedAccordion === index ? 0 : "0",
                       }}
                     >
