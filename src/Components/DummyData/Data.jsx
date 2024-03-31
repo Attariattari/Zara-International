@@ -205,7 +205,7 @@ export const ZaraProducts = {
         "EU XXL / US XXL",
       ],
       images: [
-        "https://zarabackendserver-448d1df25aec.herokuapp.com/uploads/1710930500390Women's%20New%20In%20Clothes%20-%20ZARA%20International.mp4",
+        "../../../public/My Web Data/YouCut_20240324_154952515.mp4",
         "https://static.zara.net/assets/public/f86c/7456/ae9b4f09a4de/93121f06d7ce/02247178632-015-p/02247178632-015-p.jpg?ts=1710496763696&w=563",
         "https://static.zara.net/assets/public/6dc2/ae27/a81946d9a5fb/2a0dded6038a/02247178632-015-a1/02247178632-015-a1.jpg?ts=1710496762414&w=563",
         "https://static.zara.net/assets/public/128a/4468/89a748738f93/bb1498845913/02247178632-015-a2/02247178632-015-a2.jpg?ts=1710496764086&w=563",

@@ -194,13 +194,36 @@
 
 .ImagesForCarsualUpdates {
     width: 08%;
-    height: 100%;
     height: auto;
     z-index: 20;
     position: absolute;
-    overflow-y: auto;
-    padding-top: 123px;
-    position: absolute;
+}
+
+.UpdaterImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.UpdaterImage img {
+    width: 100%;
+    height: 2.7em;
+    object-fit: cover;
+}
+
+.UpdaterImage img {
+    transition: filter 0.3s ease;
+}
+
+.UpdaterImage.active img {
+    filter: brightness(100%);
+}
+
+.UpdaterImage:not(.active) img {
+    filter: blur(1px) brightness(70%);
 }
 
 .swiper {
@@ -225,35 +248,6 @@
     object-fit: cover;
     transition: transform 0.6s ease;
 }
-
-.UpdaterImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.UpdaterImage img {
-    width: 100%;
-    height: 2.7em;
-    object-fit: cover;
-}
-
-.UpdaterImage img {
-    transition: filter 0.3s ease;
-}
-
-.UpdaterImage.active img {
-    filter: brightness(100%);
-}
-
-.UpdaterImage:not(.active) img {
-    filter: blur(1px) brightness(70%);
-}
-
 
 .AllProductDataView {
     max-width: 300px;
@@ -379,7 +373,7 @@
 
 .LikeSameWithProductData p {
     font-size: 10px;
-    padding: 0px 0px 0px 30px;
+    padding: 0px 0px 30px 30px;
 }
 
 .ProdcutsDisplays {
@@ -391,6 +385,19 @@
 .JUST_SHOW_MOBILE {
     display: none;
     transition: all 0.6s ease;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar {
+    width: 4px;
+    height: 100%;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar-thumb {
+    background-color: #828282;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar-track {
+    background-color: #ffffff;
 }
 
 .compoinmobile {
@@ -413,7 +420,7 @@
 .compoinmobile :nth-child(4) {
     margin: 15px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    font-size: 11px;
+    font-size: 21px;
 }
 
 .compoinmobile :nth-child(5),
@@ -598,7 +605,7 @@
     .JUST_SHOW_MOBILE {
         width: 100%;
         height: 100vh;
-        top: 5.3dvh;
+        top: 5dvh;
         background-color: #ffffff;
         position: fixed;
         z-index: 1;
@@ -607,12 +614,21 @@
         padding-bottom: 4em;
     }
 
+    .Noexpend {
+        width: 100%;
+        height: 110px;
+        top: 83vh;
+        overflow: hidden;
+    }
+
     .JUST_SHOW_MOBILE button {
-        border: 1px solid black;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
         width: 100%;
         height: 30px;
         font-size: 11px;
         margin-bottom: 10px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     }
 
     .JUST_SHOW_MOBILE span {
