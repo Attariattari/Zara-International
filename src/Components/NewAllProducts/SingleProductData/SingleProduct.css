@@ -185,6 +185,7 @@
 .ImagesCarosual {
     width: 300px;
     height: 440px;
+    cursor: pointer;
 }
 
 .ImagesCarosual img {

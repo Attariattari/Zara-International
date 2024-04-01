@@ -15,13 +15,13 @@ function SingleProduct() {
   const [expanded, setExpanded] = React.useState(false);
   const [isexpanded, setIsexpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [showOverflow, setShowOverflow] = useState(false);
 
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+  
   const toggleIsexpanded = () => {
     setIsexpanded(!isexpanded);
   };
@@ -34,22 +34,6 @@ function SingleProduct() {
       swiperRef.current.swiper.slideTo(index);
     }
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setShowOverflow(true);
-      } else {
-        setShowOverflow(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <div>
@@ -115,9 +99,7 @@ function SingleProduct() {
       </div>
       {/* Just Mobile Show */}
       <div
-        className={`JUST_SHOW_MOBILE ${
-          isexpanded ? "isexpanded" : "Noexpend"
-        } ${showOverflow ? "overflow" : ""}`}
+        className={`JUST_SHOW_MOBILE ${isexpanded ? "isexpanded" : "Noexpend"}`}
       >
         <MobileDeviceDisplaydetails
           womenProducts={womenProducts}
