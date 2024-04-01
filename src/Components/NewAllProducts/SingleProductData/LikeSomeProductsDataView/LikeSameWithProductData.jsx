@@ -27,7 +27,7 @@ function LikeSameWithProductData() {
     <div>
       <p>YOU MAY ALSO LIKE</p>
       <div className="DetailedProducts">
-        <div className="ProductArea cursor-pointer">
+        <div className="ProductArea  cursor-pointer">
           {womenProducts.map((product, index) => (
             <div
               className="ProductData"

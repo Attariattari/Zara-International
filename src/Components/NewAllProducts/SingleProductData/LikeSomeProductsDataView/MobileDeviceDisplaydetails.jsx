@@ -1,11 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { ZaraProducts } from "../../../DummyData/Data";
+import LikeSameWithProductData from "./LikeSameWithProductData";
 function MobileDeviceDisplaydetails({
   womenProducts,
   isexpanded,
   toggleIsexpanded,
 }) {
+  const womenProduct = [
+    ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
+    ZaraProducts.Women.SATINY_BLAZER,
+    ZaraProducts.Women.FITTED_BLAZER,
+    ZaraProducts.Women.ASYMMETRIC_TULLE_DRESS,
+    ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
+    ZaraProducts.Women.OVERSIZE_CRINKLE,
+  ];
+  const Media = (media) => {
+    if (media.length > 0) {
+      const firstMedia = media[0];
+      if (firstMedia.endsWith(".mp4")) {
+        return (
+          <video autoPlay loop muted src={firstMedia} alt="Product video" />
+        );
+      } else {
+        return <img width="300" src={firstMedia} alt="Product image" />;
+      }
+    }
+    return null;
+  };
   return (
     <div>
       <button className="sticky top-0 z-10 bg-white" onClick={toggleIsexpanded}>
@@ -38,15 +60,15 @@ function MobileDeviceDisplaydetails({
           <span className="color-box" style={{ backgroundColor: "blue" }} />
         </div>
       </span>
-      <p>{womenProducts[0].price.RealPrice}</p>
+      <p className="WomenRealPRice">{womenProducts[0].price.RealPrice}</p>
       {isexpanded && (
         <>
-          <p>{womenProducts[0].discription}</p>
-          <p>{womenProducts[0].color}</p>
+          <p className="Womendiscription">{womenProducts[0].discription}</p>
+          <p className="Womencolor">{womenProducts[0].color}</p>
           <div className="compoinmobile">
             <p>COMPOSITION & CARE</p>
             <p>COMPOSITION</p>
-            <span style={{ padding: "0px" }}>
+            <span style={{ padding: "0px 0px 20px 0px" }}>
               We work with monitoring programmes to ensure compliance with our
               social, environmental and health and safety standards for our
               products. To assess compliance, we have developed a programme of
@@ -57,7 +79,7 @@ function MobileDeviceDisplaydetails({
             <p>LINING</p>
             <p>100% acetate</p>
             <p>Which contains at least:</p>
-            <p>OUTER SHELL</p>
+            <p className="WomenOUTESHELL">OUTER SHELL</p>
             <p>100% RCS certified recycled cotton</p>
             <p>CERTIFIED MATERIALS</p>
             <p>
@@ -125,6 +147,9 @@ function MobileDeviceDisplaydetails({
               />
               <p>Do not tumble dry</p>
             </div>
+          </div>
+          <div className="LikeSameWithProductData">
+            <LikeSameWithProductData />
           </div>
         </>
       )}

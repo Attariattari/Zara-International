@@ -368,7 +368,7 @@
 .LikeSameWithProductData {
     width: 100%;
     height: auto;
-    padding: 150px 0px 0px 0px;
+    padding: 50px 0px 0px 0px;
 }
 
 .LikeSameWithProductData p {
@@ -417,11 +417,11 @@
     font-size: 11px;
 }
 
-.compoinmobile :nth-child(4) {
+/* .compoinmobile :nth-child(4) {
     margin: 15px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     font-size: 21px;
-}
+} */
 
 .compoinmobile :nth-child(5),
 .compoinmobile :nth-child(10),
@@ -469,6 +469,23 @@
     width: 100%;
     display: flex;
 }
+
+
+.YouMayLikeFor_Mobile {
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+}
+
+.YouMayLikeFor_Mobile p {
+    padding: 0px 0px 0px 40px;
+    font-size: 13px;
+}
+.Media{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
 
 @media (max-width: 1279px) {
     .SingleProduct {
@@ -646,24 +663,29 @@
         padding: 0px 10px 0px 10px;
     }
 
-    .JUST_SHOW_MOBILE :nth-child(3) {
+    .WomenRealPRice {
         font-size: 11px;
         display: flex;
         padding: 0px 10px 0px 10px;
     }
 
-    .JUST_SHOW_MOBILE :nth-child(4) {
+    .Womendiscription {
         font-size: 11px;
         display: flex;
         padding: 0px 10px 0px 10px;
         margin: 45px 0px 0px 0px;
     }
 
-    .JUST_SHOW_MOBILE :nth-child(5) {
-        font-size: 10px;
+    .Womencolor {
+        font-size: 11px;
         display: flex;
         padding: 0px 10px 0px 10px;
-        margin: 05px 0px 0px 0px;
+    }
+
+    .WomenOUTESHELL {
+        font-size: 11px;
+        display: flex;
+        padding: 0px 0px 0px 0px;
     }
 
     .Colors {
@@ -678,5 +700,4 @@
         margin-right: 5px;
         border: 1px solid black;
     }
-
 }
