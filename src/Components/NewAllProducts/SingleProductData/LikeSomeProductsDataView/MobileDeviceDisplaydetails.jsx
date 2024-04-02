@@ -8,14 +8,6 @@ function MobileDeviceDisplaydetails({
   isexpanded,
   toggleIsexpanded,
 }) {
-  const womenProduct = [
-    ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
-    ZaraProducts.Women.SATINY_BLAZER,
-    ZaraProducts.Women.FITTED_BLAZER,
-    ZaraProducts.Women.ASYMMETRIC_TULLE_DRESS,
-    ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
-    ZaraProducts.Women.OVERSIZE_CRINKLE,
-  ];
   const Media = (media) => {
     if (media.length > 0) {
       const firstMedia = media[0];

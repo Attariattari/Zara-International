@@ -11,13 +11,12 @@ import Navbar from "../../Navbar/Navbar";
 import "swiper/css/pagination";
 import "./SingleProduct.css";
 import "swiper/css";
+
 function SingleProduct() {
   const womenProducts = [ZaraProducts.Women.LINEN_BLEND_ROLL_UP];
-  const [activeImageData, setActiveImageData] = useState(null);
   const [isexpanded, setIsexpanded] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {
@@ -33,14 +32,6 @@ function SingleProduct() {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideTo(index);
     }
-  };
-  const ImageClick = (imageData) => {
-    setActiveImageData(imageData);
-    setShowPopup(true);
-    console.log("Active Image Data:", imageData);
-  };
-  const handleClosePopup = () => {
-    setShowPopup(false); // Close the popup
   };
   return (
     <div>
@@ -79,11 +70,7 @@ function SingleProduct() {
                 <SwiperSlide key={index}>
                   <div className="ImagesCarosual">
                     <div className="imageWrapper">
-                      <img
-                        src={imageUrl}
-                        alt=""
-                        onClick={() => ImageClick(imageUrl)}
-                      />
+                      <img src={imageUrl} alt="" />
                     </div>
                   </div>
                 </SwiperSlide>
@@ -122,11 +109,6 @@ function SingleProduct() {
       <div className="LikeSameWithProductData LikeProduct">
         <LikeSameWithProductData />
       </div>
-      {showPopup && (
-        <div className="imagePopup cursor-zoom-out">
-          <img src={activeImageData} alt="" onClick={handleClosePopup} />
-        </div>
-      )}
       <span className="One">
         <Footer />
       </span>
