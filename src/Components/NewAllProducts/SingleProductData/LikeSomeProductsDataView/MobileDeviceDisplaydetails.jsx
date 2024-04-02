@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ZaraProducts } from "../../../DummyData/Data";
 import LikeSameWithProductData from "./LikeSameWithProductData";
+import Footer from "../../../Footer/Footer";
 function MobileDeviceDisplaydetails({
   womenProducts,
   isexpanded,
@@ -150,7 +151,7 @@ function MobileDeviceDisplaydetails({
           </div>
           <div className="LikeSameWithProductData">
             <LikeSameWithProductData />
-          </div>
+          </div><Footer />
         </>
       )}
     </div>

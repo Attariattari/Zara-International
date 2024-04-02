@@ -1,6 +1,7 @@
 import React from "react";
 import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
+import Footer from "../../Footer/Footer";
 
 function SamallDipalyProducts() {
   const womenProducts = [
@@ -43,6 +44,7 @@ function SamallDipalyProducts() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -717,4 +717,10 @@
         margin-right: 5px;
         border: 1px solid black;
     }
+    .One{
+        display: none;
+    }
+    .footerFor{
+        display: block;
+    }
 }

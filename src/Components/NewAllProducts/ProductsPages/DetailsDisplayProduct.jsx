@@ -3,6 +3,7 @@ import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
 import { useNavigate } from "react-router-dom";
 import { GoPlus } from "react-icons/go";
+import Footer from "../../Footer/Footer";
 
 function DetailsDisplayProduct() {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ function DetailsDisplayProduct() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

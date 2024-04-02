@@ -1,6 +1,7 @@
 import React from "react";
 
 import { NewData } from "../../DummyData/Data";
+import Footer from "../../Footer/Footer";
 function FullDisplayWithOutDetails() {
   return (
     <div>
@@ -27,6 +28,7 @@ function FullDisplayWithOutDetails() {
       <div className="Fullimage">
         <img src={NewData.imgi} alt="NewData Image" />
       </div>
+      <Footer />
     </div>
   );
 }

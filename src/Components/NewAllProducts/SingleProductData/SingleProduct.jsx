@@ -6,6 +6,7 @@ import { Mousewheel, Autoplay } from "swiper/modules";
 import { ZaraProducts } from "../../DummyData/Data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import React, { useRef, useState } from "react";
+import Footer from "../../Footer/Footer.jsx";
 import Navbar from "../../Navbar/Navbar";
 import "swiper/css/pagination";
 import "./SingleProduct.css";
@@ -126,6 +127,9 @@ function SingleProduct() {
           <img src={activeImageData} alt="" onClick={handleClosePopup} />
         </div>
       )}
+      <span className="One">
+        <Footer />
+      </span>
     </div>
   );
 }
