@@ -151,7 +151,8 @@ function MobileDeviceDisplaydetails({
           </div>
           <div className="LikeSameWithProductData">
             <LikeSameWithProductData />
-          </div><Footer />
+          </div>
+          <Footer />
         </>
       )}
     </div>
