@@ -488,7 +488,54 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
-/*  */
+.offcanvas-container {
+    position: fixed;
+    top: 0;
+    right: -380px; /* Start offcanvas off the screen */
+    bottom: 0;
+    width: 380px;
+    z-index: 200;
+    background-color: white;
+    box-shadow: -4px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow-x: hidden; /* Ensure no horizontal overflow */
+    transition: right 0.3s ease; /* Smooth transition when opening and closing */
+  }
+  
+  .offcanvas.open {
+    right: 0; /* Slide in from the right when open */
+  }
+  
+  .offcanvas button.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .offcanvas-content {
+    padding: 20px; /* Adjust content padding as needed */
+  }
+  
+  .offcanvas-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    z-index: 100; /* Ensure overlay is behind offcanvas */
+    display: none; /* Initially hidden */
+  }
+  
+  .offcanvas.open + .offcanvas-overlay {
+    display: block; /* Show overlay when offcanvas is open */
+  }
+  
 
 @media (max-width: 1279px) {
     .SingleProduct {

@@ -1,5 +1,11 @@
 import React, { useContext, useState, useRef } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { VscClose } from "react-icons/vsc";
 import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
@@ -30,7 +36,9 @@ export default function Navbar() {
       <div className="navbarmain">
         <div className="firstsection">
           <div className="sidebaricon cursor-pointer" onClick={showpopup}>
-            {showSidePopup ? <VscClose /> : (
+            {showSidePopup ? (
+              <VscClose />
+            ) : (
               <svg
                 width="24"
                 height="24"

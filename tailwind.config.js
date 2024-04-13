@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
 // In your tailwind.config.js file
 module.exports = {
   theme: {
@@ -21,14 +22,18 @@ module.exports = {
         };
       }
 
-      addUtilities(newUtilities, ['responsive', 'hover']);
+      addUtilities(newUtilities, ["responsive", "hover"]);
     },
   ],
 };
 module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./public/index.html",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}", "./public/index.html"],
   // other configurations...
 };
+module.exports = withMT({
+  content: [],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+});

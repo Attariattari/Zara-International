@@ -1,16 +1,16 @@
+import React, { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Navbar from "../../Navbar/Navbar";
+import Footer from "../../Footer/Footer.jsx";
+import "swiper/css/pagination";
+import "./SingleProduct.css";
+import "swiper/css";
+import { Mousewheel, Autoplay } from "swiper/modules";
 import MobileDeviceDisplaydetails from "./LikeSomeProductsDataView/MobileDeviceDisplaydetails";
 import LikeSameWithProductData from "./LikeSomeProductsDataView/LikeSameWithProductData";
 import AllProductDataView from "./AllProductDataView/AllProductDataView";
 import Composetion from "./CompositionArea/Composetion";
-import { Mousewheel, Autoplay } from "swiper/modules";
 import { ZaraProducts } from "../../DummyData/Data";
-import { Swiper, SwiperSlide } from "swiper/react";
-import React, { useRef, useState } from "react";
-import Footer from "../../Footer/Footer.jsx";
-import Navbar from "../../Navbar/Navbar";
-import "swiper/css/pagination";
-import "./SingleProduct.css";
-import "swiper/css";
 
 function SingleProduct() {
   const womenProducts = [ZaraProducts.Women.LINEN_BLEND_ROLL_UP];
@@ -18,6 +18,7 @@ function SingleProduct() {
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const swiperRef = useRef(null);
+ 
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -95,7 +96,6 @@ function SingleProduct() {
           </div>
         </div>
       </div>
-      {/* Just Mobile Show */}
       <div
         className={`JUST_SHOW_MOBILE ${isexpanded ? "isexpanded" : "Noexpend"}`}
       >
@@ -105,7 +105,6 @@ function SingleProduct() {
           toggleIsexpanded={toggleIsexpanded}
         />
       </div>
-      {/* Just Mobile Show */}
       <div className="LikeSameWithProductData LikeProduct">
         <LikeSameWithProductData />
       </div>
