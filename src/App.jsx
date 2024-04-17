@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Welcome from "./Components/Welcome/Welcome";
 import Home from "./Pages/Home";
-import Navbar from "./Components/Navbar/Navbar.jsx";
 import Login from "./Components/LoginSingup/Login.jsx";
 import Help from "./Components/Help/Help.jsx";
 import Signup from "./Components/LoginSingup/Singup.jsx";

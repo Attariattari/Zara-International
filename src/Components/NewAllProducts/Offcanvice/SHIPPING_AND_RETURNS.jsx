@@ -7,6 +7,9 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import "./Css.css";
+import Shipping from "./Threeoffcanvice/Shipping";
+import Avalibilty from "./Threeoffcanvice/Avalibilty";
+import MEASUREMENT from "./Threeoffcanvice/MEASUREMENT";
 
 function SHIPPING_AND_RETURNS({
   open,
@@ -45,67 +48,19 @@ function SHIPPING_AND_RETURNS({
         className="p-4 Custom-Drawer bg-white"
       >
         {open && (
-          <div className="mb-6 flex items-center justify-between">
-            Shipping
-            <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </IconButton>
-          </div>
+          <>
+            <Shipping closeDrawer={closeDrawer} />
+          </>
         )}
         {Avail && (
-          <div className="mb-6 flex items-center justify-between">
-            AVAIL
-            <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </IconButton>
-          </div>
+          <>
+            <Avalibilty closeDrawer={closeDrawer} />
+          </>
         )}
         {MEASURE && (
-          <div className="mb-6 flex items-center justify-between">
-            measure
-            <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </IconButton>
-          </div>
+          <>
+            <MEASUREMENT closeDrawer={closeDrawer} />
+          </>
         )}
       </Drawer>
     </React.Fragment>

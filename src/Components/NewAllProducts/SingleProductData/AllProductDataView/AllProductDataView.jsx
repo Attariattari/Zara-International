@@ -38,11 +38,25 @@ function AllProductDataView({ womenProducts }) {
         </span>
         <p>{womenProducts[0].price.RealPrice}</p>
         <p>{womenProducts[0].discription}</p>
-        <Link onClick={(e) => { e.preventDefault(); openDrawer("avail"); window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); }}>
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            openDrawer("avail");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
+        >
           CHECK IN-STORE AVAILABILITY
         </Link>
         <br />
-        <Link onClick={(e) => { e.preventDefault(); openDrawer("shipping"); window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); }}>SHIPPING AND RETURNS</Link>
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            openDrawer("shipping");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
+        >
+          SHIPPING AND RETURNS
+        </Link>
       </div>
       <div className="productcolorsandsize">
         <p>{womenProducts[0].color}</p>
@@ -56,7 +70,15 @@ function AllProductDataView({ womenProducts }) {
             <button key={index}>{size}</button>
           ))}
         </span>
-        <Link onClick={(e) => { e.preventDefault(); openDrawer("measure"); window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); }}>MEASUREMENT GUIDE</Link>
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            openDrawer("measure");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          }}
+        >
+          MEASUREMENT GUIDE
+        </Link>
       </div>
       <button className="AddButton">ADD</button>
       <div className="offcanvaceparent">
