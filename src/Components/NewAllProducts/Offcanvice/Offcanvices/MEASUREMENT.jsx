@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import "../Css.css";
 
 function MEASUREMENT({ closeDrawer }) {
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("EU XS / US XS");
 
   const measurementData = {
     "EU XS / US XS": {
@@ -89,31 +89,41 @@ function MEASUREMENT({ closeDrawer }) {
           <div className="MeasureButtons">
             <Swiper slidesPerView={3} spaceBetween={0} className="mySwiper">
               <SwiperSlide
-                className="SlidesButtonsXS"
+                className={`SlidesButtonsXS ${
+                  selectedSize === "EU XS / US XS" ? "activeSize" : ""
+                }`}
                 onClick={() => handleSizeSelect("EU XS / US XS")}
               >
                 EU XS / US XS
               </SwiperSlide>
               <SwiperSlide
-                className="SlidesButtonsS"
+                className={`SlidesButtonsS ${
+                  selectedSize === "EU S / US S" ? "activeSize" : ""
+                }`}
                 onClick={() => handleSizeSelect("EU S / US S")}
               >
                 EU S / US S
               </SwiperSlide>
               <SwiperSlide
-                className="SlidesButtonsM"
+                className={`SlidesButtonsM ${
+                  selectedSize === "EU M / US M" ? "activeSize" : ""
+                }`}
                 onClick={() => handleSizeSelect("EU M / US M")}
               >
                 EU M / US M
               </SwiperSlide>
               <SwiperSlide
-                className="SlidesButtonsL"
+                className={`SlidesButtonsL ${
+                  selectedSize === "EU L / US L" ? "activeSize" : ""
+                }`}
                 onClick={() => handleSizeSelect("EU L / US L")}
               >
                 EU L / US L
               </SwiperSlide>
               <SwiperSlide
-                className="SlidesButtonsXL"
+                className={`SlidesButtonsXL ${
+                  selectedSize === "EU XL / US XL" ? "activeSize" : ""
+                }`}
                 onClick={() => handleSizeSelect("EU XL / US XL")}
               >
                 EU XL / US XL

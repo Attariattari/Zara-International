@@ -8,16 +8,28 @@ function AllProductDataView({ womenProducts }) {
   const [Avail, setAvail] = useState(false);
   const [MEASURE, setMEASURE] = useState(false);
   const [ADDTOCART, setADDTOCART] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [error, setError] = useState(false);
 
   const openDrawer = (drawerType) => {
     if (drawerType === "shipping") setOpen(true);
     else if (drawerType === "avail") setAvail(true);
     else if (drawerType === "measure") setMEASURE(true);
-    else if (drawerType === "AddToCart") setADDTOCART(true);
+    else if (drawerType === "AddToCart" && selectedSize) {
+      setADDTOCART(true);
+    } else {
+      setError(true);
+    }
+  };
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setError(false); // Reset error when a size is selected
   };
 
   return (
     <div>
+      
       <div className="Productdetails">
         <span>
           <p>{womenProducts[0].title.substring(0, 32)}</p>
@@ -69,7 +81,13 @@ function AllProductDataView({ womenProducts }) {
         </div>
         <span className="product-sizes">
           {womenProducts[0].size.map((size, index) => (
-            <button key={index}>{size}</button>
+            <button
+              key={index}
+              className={selectedSize === size ? "selectedSize" : ""}
+              onClick={() => handleSizeSelect(size)}
+            >
+              {size}
+            </button>
           ))}
         </span>
         <Link
@@ -103,7 +121,7 @@ function AllProductDataView({ womenProducts }) {
           ADDTOCART={ADDTOCART}
           setADDTOCART={setADDTOCART}
         />
-      </div>
+      </div>{error && <p>Please first select a size.</p>}
     </div>
   );
 }
