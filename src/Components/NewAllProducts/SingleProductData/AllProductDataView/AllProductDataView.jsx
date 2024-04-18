@@ -7,11 +7,13 @@ function AllProductDataView({ womenProducts }) {
   const [open, setOpen] = useState(false);
   const [Avail, setAvail] = useState(false);
   const [MEASURE, setMEASURE] = useState(false);
+  const [ADDTOCART, setADDTOCART] = useState(false);
 
   const openDrawer = (drawerType) => {
     if (drawerType === "shipping") setOpen(true);
     else if (drawerType === "avail") setAvail(true);
     else if (drawerType === "measure") setMEASURE(true);
+    else if (drawerType === "AddToCart") setADDTOCART(true);
   };
 
   return (
@@ -80,7 +82,16 @@ function AllProductDataView({ womenProducts }) {
           MEASUREMENT GUIDE
         </Link>
       </div>
-      <button className="AddButton">ADD</button>
+      <button
+        className="AddButton"
+        onClick={(e) => {
+          e.preventDefault();
+          openDrawer("AddToCart");
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
+      >
+        ADD
+      </button>
       <div className="offcanvaceparent">
         <SHIPPING_AND_RETURNS
           open={open}
@@ -89,6 +100,8 @@ function AllProductDataView({ womenProducts }) {
           setAvail={setAvail}
           MEASURE={MEASURE}
           setMEASURE={setMEASURE}
+          ADDTOCART={ADDTOCART}
+          setADDTOCART={setADDTOCART}
         />
       </div>
     </div>

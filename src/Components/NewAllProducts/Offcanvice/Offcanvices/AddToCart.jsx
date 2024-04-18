@@ -1,10 +1,10 @@
 import { IconButton } from '@material-tailwind/react'
 import React from 'react'
 
-function MEASUREMENT({closeDrawer}) {
+function AddToCart({closeDrawer}) {
   return (
     <div className="mb-6 flex items-center justify-between">
-    measure
+    Product Added To Yours Cart
     <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -25,4 +25,4 @@ function MEASUREMENT({closeDrawer}) {
   )
 }
 
-export default MEASUREMENT
+export default AddToCart

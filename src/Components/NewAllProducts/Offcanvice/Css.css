@@ -1,3 +1,85 @@
 .Custom-Drawer {
-    border-left: 1px solid black;
-  }
+  border-left: 1px solid black;
+}
+
+.circle-before,
+.circle-beforetwo {
+  position: relative;
+  font-size: 11px;
+  margin-left: 10px;
+  color: gray;
+}
+
+.circle-before::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 25%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.circle-beforetwo::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+/* Measurement Buttons */
+.MeasureButtons {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.SlidesButtons {
+  font-size: 12px;
+}
+
+.SlidesButtonsXS {
+  border: 1px solid black;
+}
+
+.SlidesButtonsS,
+.SlidesButtonsM, .SlidesButtonsL, .SlidesButtonsXL {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 11px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
