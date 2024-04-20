@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
 import Footer from "../Footer/Footer";
 import "./Css.css";
+import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
 
 function ShoppingBag() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function ShoppingBag() {
 
   return (
     <div>
-      <div className="sticky top-0 z-10" style={{ marginTop: "-9px" }}>
+      <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
         <div className="absolute w-full bg-white">
           <Navbar />
           <div className="text-black mt-6 ShippingFavoButton">
@@ -157,9 +158,30 @@ function ShoppingBag() {
           </div>
         </div>
       </div>
+      <div className="CartLikeProducts">
+        <LikeSameWithProductData />
+      </div>
       <Footer />
-      <div className="sticky bottom-0 z-10">
-        <div className="CartpropccessOrder">dsadad</div>
+      <div className="sticky bottom-0 z-50">
+        <div className="CartpropccessOrder">
+          <div className="CartProccesses">
+            <div>
+              <div>TOTAL</div>
+              <div className="flex-col">
+                <div className="pl-4">899.50 EUR</div>
+                <div
+                  className="text-gray-700"
+                  style={{
+                    fontSize: "9px",
+                  }}
+                >
+                  * BEFORE TAXES
+                </div>
+              </div>
+            </div>
+            <div className="Cartcontinuebutton">CONTINUE</div>
+          </div>
+        </div>
       </div>
     </div>
   );
