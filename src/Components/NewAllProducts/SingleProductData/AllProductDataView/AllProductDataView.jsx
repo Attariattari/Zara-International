@@ -31,10 +31,25 @@ function AllProductDataView({ womenProducts }) {
 
   const showErrorModal = () => {
     Swal.fire({
-      title: "Error!",
+      title: "NO ADD ITEM!",
       text: "Please first select a size.",
       icon: "error",
-      confirmButtonText: "OK",
+      buttons: {
+        confirm: {
+          className: "swal-btn",
+          text: "OK",
+          value: true,
+          button: true,
+          closeModal: true,
+        },
+      },
+      customClass: {
+        popup: "custom-size",
+        confirmButton: "custom-swal-btn",
+      },
+    }).then((value) => {
+      if (value) {
+      }
     });
   };
 

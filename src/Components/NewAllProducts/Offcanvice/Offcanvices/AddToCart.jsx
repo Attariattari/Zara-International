@@ -1,7 +1,13 @@
 import { IconButton, Typography } from "@material-tailwind/react";
 import React from "react";
 import "../Css.css";
+import { Link, useNavigate } from "react-router-dom";
 function AddToCart({ closeDrawer }) {
+  const navigate = useNavigate();
+
+  const Navigate = () => {
+    navigate("/Shopping_Bag"); // Navigate to the "/Shopping_Bag" route
+  };
   return (
     <>
       <div className="mb-6 flex items-center justify-between">
@@ -32,7 +38,13 @@ function AddToCart({ closeDrawer }) {
             <p className="mt-3">ECRU | 2764/637</p>
           </div>
         </div>
-        <button className="SEESHOPPINGBASKET">SEE SHOPPING BASKET</button>
+        <button
+          to="/Shopping_Bag"
+          className="SEESHOPPINGBASKET"
+          onClick={Navigate}
+        >
+          SEE SHOPPING BASKET
+        </button>
       </Typography>
     </>
   );

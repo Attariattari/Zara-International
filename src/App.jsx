@@ -12,11 +12,12 @@ import Home from "./Pages/Home";
 import Login from "./Components/LoginSingup/Login.jsx";
 import Help from "./Components/Help/Help.jsx";
 import Signup from "./Components/LoginSingup/Singup.jsx";
-import ShoppingBag from "./Components/ShoppingBag/ShoppingBag.jsx";
+import ShoppingBag from "./Components/ShoppingAndWishListBag/ShoppingBag.jsx";
 import UserOrder from "./Components/UserOrder/UserOrder.jsx";
 import Search from "./Components/Search/Search.jsx";
 import New from "./Components/NewAllProducts/New.jsx";
 import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
+import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
 
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Help" element={<Help />} />
           <Route path="/Shopping_Bag" element={<ShoppingBag />} />
+          <Route path="/Wishlist" element={<Wishlist />} />
           <Route path="/User/Order" element={<UserOrder />} />
           <Route path="/Search/Products" element={<Search />} />
           <Route path="/New" element={<New />} />
