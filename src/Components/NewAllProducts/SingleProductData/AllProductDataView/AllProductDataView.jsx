@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
 import "../SingleProduct.css";
 
@@ -17,6 +18,7 @@ function AllProductDataView({ womenProducts }) {
     else if (drawerType === "measure") setMEASURE(true);
     else if (drawerType === "AddToCart" && selectedSize) {
       setADDTOCART(true);
+      setSelectedSize(null); // Reset selectedSize after adding to cart
     } else {
       setError(true);
     }
@@ -27,9 +29,17 @@ function AllProductDataView({ womenProducts }) {
     setError(false); // Reset error when a size is selected
   };
 
+  const showErrorModal = () => {
+    Swal.fire({
+      title: "Error!",
+      text: "Please first select a size.",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  };
+
   return (
     <div>
-      
       <div className="Productdetails">
         <span>
           <p>{womenProducts[0].title.substring(0, 32)}</p>
@@ -104,8 +114,12 @@ function AllProductDataView({ womenProducts }) {
         className="AddButton"
         onClick={(e) => {
           e.preventDefault();
-          openDrawer("AddToCart");
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          if (selectedSize) {
+            openDrawer("AddToCart");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          } else {
+            showErrorModal();
+          }
         }}
       >
         ADD
@@ -121,7 +135,7 @@ function AllProductDataView({ womenProducts }) {
           ADDTOCART={ADDTOCART}
           setADDTOCART={setADDTOCART}
         />
-      </div>{error && <p>Please first select a size.</p>}
+      </div>
     </div>
   );
 }
