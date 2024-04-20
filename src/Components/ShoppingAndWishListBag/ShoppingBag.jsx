@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
+import { ZaraProducts } from "../../../src/Components/DummyData/Data";
 import Footer from "../Footer/Footer";
 import "./Css.css";
 import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
@@ -10,6 +11,14 @@ function ShoppingBag() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("shoppingBag");
   const [count, setCount] = useState(1);
+  const womenProducts = [
+    ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
+    ZaraProducts.Women.SATINY_BLAZER,
+    ZaraProducts.Women.FITTED_BLAZER,
+    ZaraProducts.Women.ASYMMETRIC_TULLE_DRESS,
+    ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
+    ZaraProducts.Women.OVERSIZE_CRINKLE,
+  ];
   const ShippingRoute = () => {
     setActiveButton("shoppingBag");
     navigate("/Shopping_Bag");
@@ -102,59 +111,60 @@ function ShoppingBag() {
       <div className="ShoppingBAg">
         <div className="CartProducts">
           <div className="Cartdata">
-            <div className="cartproductimage">
-              <img
-                src="https://static.zara.net/assets/public/8d6e/88db/ca8c42fbaf5b/3a757794edb1/02764637712-p/02764637712-p.jpg?ts=1711113921879&w=268"
-                alt=""
-              />
-            </div>
-            <div className="cartprdocutsdetailes">
-              <div className="cartseconds">
-                <div>
-                  <div>ROUND NECK PIQUÉ BLAZER</div>
-                  <div>349.65 EUR</div>
-                  <div className="mt-2">EU M / US M|ECRU</div>
+            {womenProducts.map((product, index) => (
+              <div className="CartGridView" key={index}>
+                <div className="cartproductimage">
+                  <img src={product.images} alt="" />
                 </div>
-                <div className="cartitemicons">
-                  <svg
-                    className="layout-shopping-lists-navigation__lists-icon wishlist-icon"
-                    preserveAspectRatio="xMidYMid slice"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="inherit"
-                    stroke="inherit"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
-                    ></path>
-                  </svg>
-                  <svg
-                    class="shop-cart-item-actions__action-icon"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="inherit"
-                    stroke="inherit"
-                  >
-                    <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
-                  </svg>
-                </div>
+                <div className="cartprdocutsdetailes">
+                  <div className="cartseconds">
+                    <div>
+                      <div>{product.title.length > 30 ? product.title.substring(0, 30) + '...' : product.title}</div>
+                      <div>{product.price.RealPrice}</div>
+                      <div className="mt-2">{Array.isArray(product.size) && product.size.length > 0 ? product.size[0] : product.size} | ECRU</div>
+                    </div>
+                    <div className="cartitemicons">
+                      <svg
+                        className="layout-shopping-lists-navigation__lists-icon wishlist-icon"
+                        preserveAspectRatio="xMidYMid slice"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="inherit"
+                        stroke="inherit"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+                        ></path>
+                      </svg>
+                      <svg
+                        class="shop-cart-item-actions__action-icon"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="inherit"
+                        stroke="inherit"
+                      >
+                        <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="cartitemquantity">
+                    <div className="cursor-pointer" onClick={handleCountMinus}>
+                      -
+                    </div>
+                    <div className="cursor-default">{count}</div>
+                    <div className="cursor-pointer" onClick={handleCountPlus}>
+                      +
+                    </div>
+                  </div>
+                </div>{" "}
               </div>
-              <div className="cartitemquantity">
-                <div className="cursor-pointer" onClick={handleCountMinus}>
-                  -
-                </div>
-                <div className="cursor-default">{count}</div>
-                <div className="cursor-pointer" onClick={handleCountPlus}>
-                  +
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -179,7 +189,9 @@ function ShoppingBag() {
                 </div>
               </div>
             </div>
-            <div className="Cartcontinuebutton">CONTINUE</div>
+            <div className="Cartcontinuebutton">
+              <button className="Contiun">CONTINUE</button>
+            </div>
           </div>
         </div>
       </div>
