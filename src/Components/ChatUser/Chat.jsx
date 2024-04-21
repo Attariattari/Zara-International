@@ -5,6 +5,7 @@ function Chat({ toggleChatUnVisibility }) {
   const [messages, setMessages] = useState([]);
   const [openUploader, setOpenUploader] = useState();
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -16,108 +17,65 @@ function Chat({ toggleChatUnVisibility }) {
 
   const handleSendMessage = () => {
     if (message.trim() !== "") {
-      setMessages([...messages, message]);
+      if (openUploader) {
+        setMessages([...messages, { image: message }]);
+      } else {
+        setMessages([...messages, { text: message }]);
+      }
       setMessage("");
     }
   };
 
-  const UploadImage = () => {
-    setOpenUploader(true); // Set openUploader to true when upload icon is clicked
-  };
-  const UploadUnImage = () => {
-    setOpenUploader(false); // Set openUploader to true when upload icon is clicked
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMessages([...messages, { image: reader.result }]);
+        setOpenUploader(false);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMessages([...messages, { image: reader.result }]);
+        setOpenUploader(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const UploadImage = () => {
+    setOpenUploader(true);
+  };
+
+  const UploadUnImage = () => {
+    setOpenUploader(false);
+  };
+
+  const openFileInput = () => {
+    fileInputRef.current.click();
+  };
   return (
     <div className="Chat">
-      <div className=" Chat_Header">
-        <svg
-          class="shop-cart-item-actions__action-icon cursor-pointer"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="inherit"
-          stroke="inherit"
-          onClick={toggleChatUnVisibility}
-        >
-          <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
-        </svg>
-        <div>Chat</div>
-        <svg
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="inherit"
-          stroke="inherit"
-          class="chat-panel__minimize-svg cursor-pointer"
-          aria-label="_minimize-icon_"
-          alt="Minimise chat"
-          onClick={toggleChatUnVisibility}
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
-          ></path>
-        </svg>
-      </div>
-      <div className="Chat_Message">
-        <div className="Chat_Date">
-          <span>Today</span>
-        </div>
-        <div className="Chat_MainSms">
-          {" "}
-          {messages.map((msg, index) => (
-            <div key={index} className="Chat_Message_Text">
-              {msg}
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        <div className="Chat_Policy_Cokkies">
-          By joining the Zara.com chat, you confirm that you have read and
-          understand our <span>Privacy and Cookies Policy</span>
-        </div>
-      </div>
-      <div className="Chat_Input">
-        <div>
-          <svg
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
-            stroke="inherit"
-            class="chat-writer__icon"
-            alt="More options"
-            onClick={UploadImage}
-          >
-            <path d="M12.5 11.5V5h-1v6.5H5v1h6.5V19h1v-6.5H19v-1h-6.5Z"></path>
-          </svg>
-        </div>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Enter Message"
-        />
-        <div>
-          <svg
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
-            stroke="inherit"
-            class="chat-writer__icon"
-            alt="Send"
-            onClick={handleSendMessage}
-          >
-            <path d="M20 11.487 12 4l-8 7.487.646.605 6.897-6.455V20h.914V5.637l6.897 6.455.646-.605Z"></path>
-          </svg>
-        </div>
-      </div>
-      {openUploader && (
-        <div>
+      <div className="Chat_Child">
+        <div className=" Chat_Header">
           <svg
             class="shop-cart-item-actions__action-icon cursor-pointer"
             width="24"
@@ -126,15 +84,150 @@ function Chat({ toggleChatUnVisibility }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="inherit"
             stroke="inherit"
-            onClick={UploadUnImage}
+            onClick={toggleChatUnVisibility}
           >
             <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
           </svg>
-          <input type="file" name="Image video" id="" />
+          <div>Chat</div>
+          <svg
+            width="24"
+            height="24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+            class="chat-panel__minimize-svg cursor-pointer"
+            aria-label="_minimize-icon_"
+            alt="Minimise chat"
+            onClick={toggleChatUnVisibility}
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+            ></path>
+          </svg>
         </div>
-      )}
+        <div className="Chat_Message">
+          <div className="Chat_Date">
+            <span>Today</span>
+          </div>
+          <div className="Chat_MainSms">
+            {" "}
+            {messages.map((msg, index) => (
+              <div key={index} className="Chat_Message_Text">
+                {msg.text ? (
+                  <div>{msg.text}</div>
+                ) : (
+                  <img src={msg.image} alt="Uploaded" className="chat-image" />
+                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          <div className="Chat_Policy_Cokkies">
+            By joining the Zara.com chat, you confirm that you have read and
+            understand our <span>Privacy and Cookies Policy</span>
+          </div>
+        </div>
+        <div className="Chat_Input">
+          <div>
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="chat-writer__icon"
+              alt="More options"
+              onClick={UploadImage}
+            >
+              <path d="M12.5 11.5V5h-1v6.5H5v1h6.5V19h1v-6.5H19v-1h-6.5Z"></path>
+            </svg>
+          </div>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Enter Message"
+            onKeyDown={handleKeyDown}
+          />
+          <div>
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              className="chat-writer__icon"
+              alt="Send"
+              onClick={handleSendMessage}
+              style={{
+                cursor: message.trim() !== "" ? "pointer" : "not-allowed",
+              }}
+              disabled={message.trim() === ""}
+            >
+              <path d="M20 11.487 12 4l-8 7.487.646.605 6.897-6.455V20h.914V5.637l6.897 6.455.646-.605Z"></path>
+            </svg>
+          </div>
+        </div>
+        {openUploader && (
+          <div className="imageuploader">
+            <svg
+              class="shop-cart-item-actions__action-icon cursor-pointer"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              onClick={UploadUnImage}
+            >
+              <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
+            </svg>
+            <div
+              className="inputArea"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              <svg
+                width="32"
+                height="32"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="inherit"
+                stroke="inherit"
+                alt="Drag and drop the file to upload it"
+                class="chat-upload-picture-action-std__image"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M9.6 10.7a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2Zm-1.1 2.1a1.1 1.1 0 1 1 2.2 0 1.1 1.1 0 0 1-2.2 0Z"
+                ></path>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.5 6.7h25v18.6h-25V6.7Zm1 1v15.893l6.7-6.7 3.2 3.2 8-8 5.1 5.1V7.7h-23Zm23 16.6H5.207l5.993-5.993 3.2 3.2 8-8 5.1 5.1V24.3Z"
+                ></path>
+              </svg>
+              <p>Drag and drop the file to upload it</p>
+              <button onClick={openFileInput}>SELECT FILE</button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 export default Chat;
+
+// <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="message-image-block__image-zoom-selector-icon" aria-hidden="true" alt="zoom"><path d="M9.7 10.7h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M3.7 10.2a6.5 6.5 0 1 1 11.436 4.23l5.018 5.017-.708.707-5.017-5.018A6.5 6.5 0 0 1 3.7 10.2Zm6.5-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"></path></svg>
+{
+  /* <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="message-image-block__download-image-icon" aria-hidden="true" alt="download"><path d="M11.8 14.298V4h1v10.298l3.97-3.474.66.752-5.13 4.488-5.13-4.488.66-.752 3.97 3.474Z"></path><path d="M5 19.7v-4.9H4v5.9h16.6v-5.9h-1v4.9H5Z"></path></svg> */
+}

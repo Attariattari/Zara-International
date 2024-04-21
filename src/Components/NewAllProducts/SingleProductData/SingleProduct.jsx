@@ -18,7 +18,6 @@ function SingleProduct() {
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const swiperRef = useRef(null);
- 
 
   const toggleExpanded = () => {
     setExpanded(!expanded);

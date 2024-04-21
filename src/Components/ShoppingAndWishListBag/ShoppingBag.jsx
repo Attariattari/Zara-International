@@ -142,8 +142,8 @@ function ShoppingBag() {
                   <div className="cartseconds">
                     <div>
                       <div>
-                        {product.title.length > 30
-                          ? product.title.substring(0, 30) + "..."
+                        {product.title.length > 20
+                          ? product.title.substring(0, 20) + "..."
                           : product.title}
                       </div>
                       <div>{product.price.RealPrice}</div>

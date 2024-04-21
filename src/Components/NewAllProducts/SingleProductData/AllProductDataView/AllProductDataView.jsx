@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
@@ -11,6 +11,29 @@ function AllProductDataView({ womenProducts }) {
   const [ADDTOCART, setADDTOCART] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const handleOverflow = () => {
+      const body = document.querySelector("body");
+      if (Swal.isVisible()) {
+        body.style.overflow = "hidden";
+      } else {
+        body.style.overflow = "auto";
+      }
+    };
+
+    handleOverflow();
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+      handleOverflow();
+    });
+
+    observer.observe(document.body, { attributes: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const openDrawer = (drawerType) => {
     if (drawerType === "shipping") setOpen(true);

@@ -85,7 +85,8 @@ function App() {
                 d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
               ></path>
             </svg>
-            Chat
+            <span className="text-gray-400">
+            Chat</span>
           </div>
         )}
       </Router>

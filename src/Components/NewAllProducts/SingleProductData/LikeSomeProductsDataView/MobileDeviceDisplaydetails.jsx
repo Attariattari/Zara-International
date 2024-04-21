@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ZaraProducts } from "../../../DummyData/Data";
 import LikeSameWithProductData from "./LikeSameWithProductData";
 import Footer from "../../../Footer/Footer";
 function MobileDeviceDisplaydetails({
@@ -8,22 +7,30 @@ function MobileDeviceDisplaydetails({
   isexpanded,
   toggleIsexpanded,
 }) {
-  const Media = (media) => {
-    if (media.length > 0) {
-      const firstMedia = media[0];
-      if (firstMedia.endsWith(".mp4")) {
-        return (
-          <video autoPlay loop muted src={firstMedia} alt="Product video" />
-        );
-      } else {
-        return <img width="300" src={firstMedia} alt="Product image" />;
-      }
+  const [initialY, setInitialY] = useState(null);
+  const mobileDisplayRef = useRef(null);
+
+  const handleDragStart = (e) => {
+    setInitialY(e.clientY);
+  };
+
+  const handleDragEnd = (e) => {
+    const deltaY = e.clientY - initialY;
+    if (deltaY < 0) {
+      toggleIsexpanded();
+    } else {
+      toggleIsexpanded();
     }
-    return null;
+    setInitialY(null);
   };
   return (
-    <div>
-      <button className="sticky top-0 z-10 bg-white" onClick={toggleIsexpanded}>
+    <div ref={mobileDisplayRef}>
+      <button
+        className="sticky top-0 z-10 bg-white"
+        draggable="true"
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      >
         {isexpanded ? "ADD" : "ADD"}
       </button>
       <span>
