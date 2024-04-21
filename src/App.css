@@ -1,7 +1,7 @@
 .ChatPopupshow {
     position: fixed;
     z-index: 200;
-    bottom: 136px;
+    bottom: 130px;
     right: 0;
     width: 120px;
     height: 40px;
