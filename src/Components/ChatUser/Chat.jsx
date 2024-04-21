@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
+import Swal from "sweetalert2";
 function Chat({ toggleChatUnVisibility }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [openUploader, setOpenUploader] = useState();
+  const [Image, setImage] = useState();
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -72,6 +74,20 @@ function Chat({ toggleChatUnVisibility }) {
   const openFileInput = () => {
     fileInputRef.current.click();
   };
+
+  const showImageModal = (imageData) => {
+    Swal.fire({
+      imageUrl: imageData,
+      imageAlt: "Selected Image",
+      showConfirmButton: false,
+      allowOutsideClick: true,
+      customClass: {
+        popup: "custom-size",
+        image: "custom-image",
+      },
+    });
+  };
+
   return (
     <div className="Chat">
       <div className="Chat_Child">
@@ -118,7 +134,33 @@ function Chat({ toggleChatUnVisibility }) {
                 {msg.text ? (
                   <div>{msg.text}</div>
                 ) : (
-                  <img src={msg.image} alt="Uploaded" className="chat-image" />
+                  <>
+                    <img
+                      src={msg.image}
+                      alt="Uploaded"
+                      className="chat-image"
+                    />
+                    <div className="message-icons">
+                      <svg
+                        width="24"
+                        height="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="inherit"
+                        stroke="inherit"
+                        class="message-image-block__image-zoom-selector-icon cursor-pointer"
+                        aria-hidden="true"
+                        alt="zoom"
+                        onClick={() => showImageModal(msg.image)}
+                      >
+                        <path d="M9.7 10.7h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3Z"></path>
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M3.7 10.2a6.5 6.5 0 1 1 11.436 4.23l5.018 5.017-.708.707-5.017-5.018A6.5 6.5 0 0 1 3.7 10.2Zm6.5-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </>
                 )}
               </div>
             ))}
@@ -220,14 +262,14 @@ function Chat({ toggleChatUnVisibility }) {
             </div>
           </div>
         )}
+        {Image && (
+          <div className="selected-image-container">
+            <img src={Image} alt="Selected" className="selected-image" />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 export default Chat;
-
-// <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="message-image-block__image-zoom-selector-icon" aria-hidden="true" alt="zoom"><path d="M9.7 10.7h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M3.7 10.2a6.5 6.5 0 1 1 11.436 4.23l5.018 5.017-.708.707-5.017-5.018A6.5 6.5 0 0 1 3.7 10.2Zm6.5-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"></path></svg>
-{
-  /* <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="message-image-block__download-image-icon" aria-hidden="true" alt="download"><path d="M11.8 14.298V4h1v10.298l3.97-3.474.66.752-5.13 4.488-5.13-4.488.66-.752 3.97 3.474Z"></path><path d="M5 19.7v-4.9H4v5.9h16.6v-5.9h-1v4.9H5Z"></path></svg> */
-}
