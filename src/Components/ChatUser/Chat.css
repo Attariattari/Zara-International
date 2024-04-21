@@ -1,0 +1,43 @@
+.Chat {
+    width: 320px;
+    height: 400px;
+    background-color: white;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    position: fixed;
+    bottom: 136px;
+    right: 0;
+    z-index: 55;
+
+}
+
+.Chat_Header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+
+.Chat_Message {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px 10px 0px 10px;
+    font-size: 12px;
+}
+
+.Chat_Input {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}

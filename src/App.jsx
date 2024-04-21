@@ -18,10 +18,18 @@ import Search from "./Components/Search/Search.jsx";
 import New from "./Components/NewAllProducts/New.jsx";
 import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
 import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
-
+import Chat from "./Components/ChatUser/Chat.jsx";
+import "./App.css";
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
+  const [isChatVisible, setIsChatVisible] = useState(false);
 
+  const toggleChatVisibility = () => {
+    setIsChatVisible((prevIsChatVisible) => !prevIsChatVisible);
+  };
+  const toggleChatUnVisibility = () => {
+    setIsChatVisible(false);
+  };
   return (
     <div>
       <Router>
@@ -56,6 +64,30 @@ function App() {
             element={<ProtectedRoute redirectTo="/Home" />}
           />
         </Routes>
+        {isChatVisible && (
+          <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
+        )}
+        {!isChatVisible && (
+          <div className="ChatPopupshow" onClick={toggleChatVisibility}>
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="tray__button-icon"
+              aria-label="_tray-icon_"
+              alt="tray-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
+              ></path>
+            </svg>
+            Chat
+          </div>
+        )}
       </Router>
     </div>
   );

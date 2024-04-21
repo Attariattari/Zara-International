@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
@@ -34,7 +34,29 @@ function ShoppingBag() {
       setCount(count - 1);
     }
   };
+  useEffect(() => {
+    const handleOverflow = () => {
+      const body = document.querySelector("body");
+      if (Swal.isVisible()) {
+        body.style.overflow = "hidden";
+      } else {
+        body.style.overflow = "auto";
+      }
+    };
 
+    handleOverflow();
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+      handleOverflow();
+    });
+
+    observer.observe(document.body, { attributes: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  
   const handleCountPlus = () => {
     if (count < 10) {
       setCount(count + 1);
@@ -119,9 +141,18 @@ function ShoppingBag() {
                 <div className="cartprdocutsdetailes">
                   <div className="cartseconds">
                     <div>
-                      <div>{product.title.length > 30 ? product.title.substring(0, 30) + '...' : product.title}</div>
+                      <div>
+                        {product.title.length > 30
+                          ? product.title.substring(0, 30) + "..."
+                          : product.title}
+                      </div>
                       <div>{product.price.RealPrice}</div>
-                      <div className="mt-2">{Array.isArray(product.size) && product.size.length > 0 ? product.size[0] : product.size} | ECRU</div>
+                      <div className="mt-2">
+                        {Array.isArray(product.size) && product.size.length > 0
+                          ? product.size[0]
+                          : product.size}{" "}
+                        | ECRU
+                      </div>
                     </div>
                     <div className="cartitemicons">
                       <svg
