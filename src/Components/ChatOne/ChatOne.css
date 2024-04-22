@@ -1,11 +1,11 @@
-.Chat {
+.ChatOne {
     background-color: rgb(255, 255, 255);
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     border-left: 1px solid black;
     position: fixed;
     top: 100px;
-    right: 0;
+    left: 0;
     z-index: 55;
 
 }
@@ -117,13 +117,10 @@
 
 .message-icons svg {
     width: 24px;
-    /* Adjust size as needed */
     height: 24px;
-    /* Adjust size as needed */
     margin-right: 8px;
-    /* Add spacing between icons */
     fill: #000000;
-    /* Change icon color */
+
 }
 
 .Chat_Input input {
@@ -133,7 +130,7 @@
     padding: 0px 05px 0px 05px;
 }
 
-/* Image uploader */
+
 .imageuploader {
     width: 100%;
     height: 210px;

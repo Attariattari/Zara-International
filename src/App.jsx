@@ -18,17 +18,27 @@ import Search from "./Components/Search/Search.jsx";
 import New from "./Components/NewAllProducts/New.jsx";
 import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
 import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
-import Chat from "./Components/ChatUser/Chat.jsx";
+import Chat from "./Components/Chat/Chat.jsx";
 import "./App.css";
+import ChatOne from "./Components/ChatOne/ChatOne.jsx";
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
   const [isChatVisible, setIsChatVisible] = useState(false);
+  const [isChatOneVisible, setIsChatOneVisible] = useState(false);
 
   const toggleChatVisibility = () => {
     setIsChatVisible((prevIsChatVisible) => !prevIsChatVisible);
+    // setIsChatOneVisible(false);
   };
   const toggleChatUnVisibility = () => {
     setIsChatVisible(false);
+  };
+  const toggleChatOneVisibility = () => {
+    setIsChatOneVisible((prevIsChatVisible) => !prevIsChatVisible);
+    // setIsChatVisible(false);
+  };
+  const toggleChatOneUnVisibility = () => {
+    setIsChatOneVisible(false);
   };
   return (
     <div>
@@ -85,8 +95,31 @@ function App() {
                 d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
               ></path>
             </svg>
-            <span className="text-gray-400">
-            Chat</span>
+            <span className="text-gray-400">Chat</span>
+          </div>
+        )}
+        {isChatOneVisible && (
+          <ChatOne toggleChatOneUnVisibility={toggleChatOneUnVisibility} />
+        )}
+        {!isChatOneVisible && (
+          <div className="ChatOnePopupshow" onClick={toggleChatOneVisibility}>
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="tray__button-icon"
+              aria-label="_tray-icon_"
+              alt="tray-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
+              ></path>
+            </svg>
+            <span className="text-gray-400">Chat One</span>
           </div>
         )}
       </Router>

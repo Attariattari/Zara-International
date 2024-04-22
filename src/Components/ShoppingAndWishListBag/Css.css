@@ -2,6 +2,7 @@
     width: 100%;
     height: auto;
     padding-top: 188.4px;
+    transition: all 0.6s ease;
 }
 
 .custom-size {
@@ -56,7 +57,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     max-width: 100%;
-    width: 100%;
+    width: 100%; transition: all 0.6s ease;
 }
 
 .CartGridView {
@@ -164,3 +165,28 @@
 
     background-color: rgb(40, 40, 40);
 }
+
+@media (max-width: 1279px) {
+    .ShoppingBAg {
+        padding-top: 175.4px;
+    }
+}
+
+@media (max-width: 1179px) {
+    .ShoppingBAg {
+        padding-top: 156px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .Cartdata {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 970px) {}
+
+@media (max-width: 768px) {}

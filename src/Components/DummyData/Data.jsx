@@ -205,7 +205,6 @@ export const ZaraProducts = {
         "EU XXL / US XXL",
       ],
       images: [
-        "../../../public/My Web Data/YouCut_20240324_154952515.mp4",
         "https://static.zara.net/assets/public/f86c/7456/ae9b4f09a4de/93121f06d7ce/02247178632-015-p/02247178632-015-p.jpg?ts=1710496763696&w=563",
         "https://static.zara.net/assets/public/6dc2/ae27/a81946d9a5fb/2a0dded6038a/02247178632-015-a1/02247178632-015-a1.jpg?ts=1710496762414&w=563",
         "https://static.zara.net/assets/public/128a/4468/89a748738f93/bb1498845913/02247178632-015-a2/02247178632-015-a2.jpg?ts=1710496764086&w=563",
@@ -219,6 +218,7 @@ export const ZaraProducts = {
         "https://static.zara.net/assets/public/498b/6c2e/0cad4eab9eea/2747a53fae6b/02247187632-e6/02247187632-e6.jpg?ts=1704975199100&w=563",
         "https://static.zara.net/assets/public/361e/185c/f8c849ac8262/f34d8751b4d1/02247178632-020-e25/02247178632-020-e25.jpg?ts=1706869404544&w=563",
         "https://static.zara.net/assets/public/0b67/cd11/5821442ca2ea/1b0eb32d71c7/02247178632-020-e26/02247178632-020-e26.jpg?ts=1706869407668&w=563",
+        "../../../public/My Web Data/YouCut_20240324_154952515.mp4",
       ],
     },
     OVERSIZE_CRINKLE: {

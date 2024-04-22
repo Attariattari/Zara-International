@@ -1,29 +1,50 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Chat.css";
+import "./ChatOne.css";
 import Swal from "sweetalert2";
-function Chat({ toggleChatUnVisibility }) {
+function ChatOne({ toggleChatOneUnVisibility }) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    const storedMessages = JSON.parse(localStorage.getItem("chatMessagesOne"));
+    return storedMessages || [];
+  });
+  const [receivedMessages, setReceivedMessages] = useState(() => {
+    const storedReceivedMessages = JSON.parse(
+      localStorage.getItem("chatMessages")
+    );
+    return storedReceivedMessages || [];
+  });
+
   const [openUploader, setOpenUploader] = useState();
   const [Image, setImage] = useState();
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  const senderName = "Moon";
+  const receiverName = "Muhyo Tech";
+
+  useEffect(() => {
+    // Load messages from local storage when component mounts
+    const storedMessages = JSON.parse(localStorage.getItem("chatMessagesOne"));
+    if (storedMessages) {
+      setMessages(storedMessages);
+    }
+    scrollToBottom();
+  }, []);
+
+  useEffect(() => {
+    // Save messages to local storage whenever messages state changes
+    localStorage.setItem("chatMessagesOne", JSON.stringify(messages));
+    scrollToBottom();
+  }, [messages]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const handleSendMessage = () => {
     if (message.trim() !== "") {
-      if (openUploader) {
-        setMessages([...messages, { image: message }]);
-      } else {
-        setMessages([...messages, { text: message }]);
-      }
+      const newMessage = { text: message, sender: senderName }; // Set sender
+      setMessages([...messages, newMessage]);
       setMessage("");
     }
   };
@@ -33,7 +54,8 @@ function Chat({ toggleChatUnVisibility }) {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setMessages([...messages, { image: reader.result }]);
+        const newMessage = { image: reader.result, sender: senderName }; // Set sender
+        setMessages([...messages, newMessage]);
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
@@ -50,12 +72,14 @@ function Chat({ toggleChatUnVisibility }) {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setMessages([...messages, { image: reader.result }]);
+        const newMessage = { image: reader.result, sender: senderName }; // Set sender
+        setMessages([...messages, newMessage]);
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -87,9 +111,11 @@ function Chat({ toggleChatUnVisibility }) {
       },
     });
   };
-
+  const allMessages = [...messages, ...receivedMessages].sort(
+    (a, b) => a.timestamp - b.timestamp
+  );
   return (
-    <div className="Chat">
+    <div className="ChatOne">
       <div className="Chat_Child">
         <div className=" Chat_Header">
           <svg
@@ -100,7 +126,7 @@ function Chat({ toggleChatUnVisibility }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="inherit"
             stroke="inherit"
-            onClick={toggleChatUnVisibility}
+            onClick={toggleChatOneUnVisibility}
           >
             <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
           </svg>
@@ -114,7 +140,7 @@ function Chat({ toggleChatUnVisibility }) {
             class="chat-panel__minimize-svg cursor-pointer"
             aria-label="_minimize-icon_"
             alt="Minimise chat"
-            onClick={toggleChatUnVisibility}
+            onClick={toggleChatOneUnVisibility}
           >
             <path
               fill-rule="evenodd"
@@ -128,16 +154,21 @@ function Chat({ toggleChatUnVisibility }) {
             <span>Today</span>
           </div>
           <div className="Chat_MainSms">
-            {" "}
-            {messages.map((msg, index) => (
-              <div key={index} className="Chat_Message_Text">
+          {allMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={`Chat_Message_Text ${
+                  msg.sender === senderName ? "sent" : "received"
+                }`}
+              >
+                <div className="message-sender">{msg.sender}</div>
                 {msg.text ? (
                   <div>{msg.text}</div>
                 ) : (
                   <>
                     <img
                       src={msg.image}
-                      alt="Uploaded"
+                      alt={msg.sender === senderName ? "Sent" : "Received"}
                       className="chat-image"
                     />
                     <div className="message-icons">
@@ -147,15 +178,15 @@ function Chat({ toggleChatUnVisibility }) {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="inherit"
                         stroke="inherit"
-                        class="message-image-block__image-zoom-selector-icon cursor-pointer"
+                        className="message-image-block__image-zoom-selector-icon cursor-pointer"
                         aria-hidden="true"
                         alt="zoom"
                         onClick={() => showImageModal(msg.image)}
                       >
                         <path d="M9.7 10.7h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3Z"></path>
                         <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                           d="M3.7 10.2a6.5 6.5 0 1 1 11.436 4.23l5.018 5.017-.708.707-5.017-5.018A6.5 6.5 0 0 1 3.7 10.2Zm6.5-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"
                         ></path>
                       </svg>
@@ -272,4 +303,4 @@ function Chat({ toggleChatUnVisibility }) {
   );
 }
 
-export default Chat;
+export default ChatOne;

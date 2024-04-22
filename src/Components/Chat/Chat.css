@@ -1,0 +1,376 @@
+.Chat {
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    position: fixed;
+    top: 100px;
+    right: 0;
+    z-index: 55;
+
+}
+
+.Chat_Child {
+    width: 320px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.Chat_Header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+
+.Chat_Message {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px 10px 0px 10px;
+    font-size: 12px;
+    flex-direction: column;
+}
+
+.Chat_MainSms {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding: 10px 10px 0px 10px;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.Chat_Date {
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Chat_Policy_Cokkies {
+    width: 100%;
+    height: 45px;
+    font-size: 11px;
+    color: rgb(157, 157, 157);
+    text-align: center;
+    font-size: 10px;
+}
+
+.Chat_Policy_Cokkies span {
+    text-decoration: underline;
+    font-size: 8px;
+    color: black;
+    cursor: pointer;
+    height: 10px;
+}
+
+.Chat_Date span {
+    width: auto;
+    padding: 3px 05px 3px 05px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(206, 206, 206);
+    color: rgb(157, 157, 157);
+    font-size: 10px;
+}
+
+.Chat_Input {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+    border-top: 1px solid black;
+}
+
+.Chat_Message_Text {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    margin-bottom: 10px;
+  }
+  
+  .sent {
+    align-self: flex-end;
+    background-color: #dcf8c6; /* Example background color for sent messages */
+  }
+  
+  .received {
+    align-self: flex-start;
+    background-color: #f0f0f0; /* Example background color for received messages */
+  }
+  
+  .message-sender {
+    display: none; /* Hide the message sender */
+  }
+  
+
+
+.message-icons {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+}
+
+.message-icons svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    fill: #000000;
+
+}
+
+.Chat_Input input {
+    width: 90%;
+    height: 90%;
+    outline: none;
+    padding: 0px 05px 0px 05px;
+}
+
+
+.imageuploader {
+    width: 100%;
+    height: 210px;
+    position: absolute;
+    z-index: 56;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-top: 1px solid black;
+    padding: 0px 10px 10px 10px;
+}
+
+.inputArea {
+    width: 300px;
+    height: 190px;
+    border: 1px dashed black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 20px 20px 20px;
+}
+
+.inputArea button {
+    font-size: 11px;
+    border: 1px solid black;
+}
+
+.selected-image-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 170;
+}
+/* .Chat {
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    position: fixed;
+    top: 100px;
+    right: 0;
+    z-index: 55;
+
+}
+
+.Chat_Child {
+    width: 320px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.Chat_Header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+}
+
+.Chat_Message {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px 10px 0px 10px;
+    font-size: 12px;
+    flex-direction: column;
+}
+
+.Chat_SMS_Recive_Send {
+    display: flex;
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+    flex-direction: column;
+}
+
+.Recive {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding: 10px 10px 0px 10px;
+    flex-direction: column;
+
+}
+
+.Chat_MainSms {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    padding: 10px 10px 0px 10px;
+    flex-direction: column;
+
+}
+
+.Chat_Date {
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Chat_Policy_Cokkies {
+    width: 100%;
+    height: 45px;
+    font-size: 11px;
+    color: rgb(157, 157, 157);
+    text-align: center;
+    font-size: 10px;
+}
+
+.Chat_Policy_Cokkies span {
+    text-decoration: underline;
+    font-size: 8px;
+    color: black;
+    cursor: pointer;
+    height: 10px;
+}
+
+.Chat_Date span {
+    width: auto;
+    padding: 3px 05px 3px 05px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(206, 206, 206);
+    color: rgb(157, 157, 157);
+    font-size: 10px;
+}
+
+.Chat_Input {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size: 12px;
+    border-top: 1px solid black;
+}
+
+.Chat_Message_Text {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 10px;
+}
+
+
+.message-icons {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    height: 30px;
+}
+
+.message-icons svg {
+    width: 24px;
+   
+    height: 24px;
+    
+    margin-right: 8px;
+   
+    fill: #000000;
+   
+}
+
+.Chat_Input input {
+    width: 90%;
+    height: 90%;
+    outline: none;
+    padding: 0px 05px 0px 05px;
+}
+
+.imageuploader {
+    width: 100%;
+    height: 210px;
+    position: absolute;
+    z-index: 56;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-top: 1px solid black;
+    padding: 0px 10px 10px 10px;
+}
+
+.inputArea {
+    width: 300px;
+    height: 190px;
+    border: 1px dashed black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 20px 20px 20px;
+}
+
+.inputArea button {
+    font-size: 11px;
+    border: 1px solid black;
+}
+
+.selected-image-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 170;
+} */

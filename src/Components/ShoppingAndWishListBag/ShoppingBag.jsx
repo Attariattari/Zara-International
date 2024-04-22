@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
+import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
 import { ZaraProducts } from "../../../src/Components/DummyData/Data";
 import Footer from "../Footer/Footer";
 import "./Css.css";
-import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
 
 function ShoppingBag() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ function ShoppingBag() {
       observer.disconnect();
     };
   }, []);
-  
+
   const handleCountPlus = () => {
     if (count < 10) {
       setCount(count + 1);
@@ -142,8 +142,8 @@ function ShoppingBag() {
                   <div className="cartseconds">
                     <div>
                       <div>
-                        {product.title.length > 20
-                          ? product.title.substring(0, 20) + "..."
+                        {product.title.length > 19
+                          ? product.title.substring(0, 19) + "..."
                           : product.title}
                       </div>
                       <div>{product.price.RealPrice}</div>
