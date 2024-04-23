@@ -6,6 +6,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import axios from "axios";
 import { userContext } from "../../Context/UserContext.jsx";
 import Navbar from "../Navbar/Navbar.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 function validateEmail(value) {
   let error;
@@ -194,6 +195,7 @@ export default function Login() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

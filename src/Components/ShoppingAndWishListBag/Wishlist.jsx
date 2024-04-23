@@ -1,66 +1,90 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import "./Css.css";
+import "./WishList.css";
+import WishListDrawer from "./WishListDrawers/WishListDrawer";
 
 function Wishlist() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("wishlist");
+  const [createList, setCreateList] = useState(false);
+  const [share, setShare] = useState(false);
+  const [settings, setSettings] = useState(false);
 
-  const ShippingRoute = () => {
+  const shippingRoute = () => {
     setActiveButton("shoppingBag");
     navigate("/Shopping_Bag");
   };
 
-  const WishListRoute = () => {
+  const wishListRoute = () => {
     setActiveButton("wishlist");
     navigate("/Wishlist");
   };
-  const [inputValue1, setInputValue1] = useState("");
-  const [inputValue2, setInputValue2] = useState("");
 
-  const handleSubmit1 = (event) => {
-    event.preventDefault();
-    if (inputValue1) {
-      const messageObject = {
-        sender: "Sender One",
-        message: inputValue1,
-      };
-      const messages = JSON.parse(localStorage.getItem("messages")) || [];
-      messages.push(messageObject);
-      localStorage.setItem("messages", JSON.stringify(messages));
-      setInputValue1("");
-    }
+  const navigateLogIn = () => {
+    navigate("/Login");
   };
 
-  const handleSubmit2 = (event) => {
-    event.preventDefault();
-    if (inputValue2) {
-      const messageObject = {
-        sender: "Sender Two",
-        message: inputValue2,
-      };
-      const messages = JSON.parse(localStorage.getItem("messages")) || [];
-      messages.push(messageObject);
-      localStorage.setItem("messages", JSON.stringify(messages));
-      setInputValue2("");
-    }
+  function getToken() {
+    return localStorage.getItem("token") || null;
+  }
+
+  const token = getToken();
+  localStorage.setItem("token", "Ghulam Muhyo Din");
+
+  const openDrawer = (drawerType) => {
+    if (drawerType === "create_list") setCreateList(true);
+    else if (drawerType === "share") setShare(true);
+    else if (drawerType === "setting") setSettings(true);
   };
+
   return (
     <div>
       <div className="sticky top-0 z-10" style={{ marginTop: "-9px" }}>
         <div className="absolute w-full bg-white">
           <Navbar />
-          <div className="text-black mt-6 ShippingFavoButton">
+          <div className="Wishlist_Buttons_For_Controls mt-6">
+            <p
+              onClick={(e) => {
+                e.preventDefault();
+                openDrawer("create_list");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }}
+            >
+              CREATE LIST
+            </p>
+            .<p>SELECT</p>.
+            <p
+              onClick={(e) => {
+                e.preventDefault();
+                openDrawer("share");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }}
+            >
+              SHARE
+            </p>
+            .
+            <p
+              onClick={(e) => {
+                e.preventDefault();
+                openDrawer("setting");
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }}
+            >
+              SETTINGS
+            </p>
+          </div>
+          <div className="text-black ShippingFavoButton">
             <button
               className={
                 activeButton === "shoppingBag"
                   ? "activeButton ShippingButton"
                   : "ShippingButton"
               }
-              onClick={ShippingRoute}
+              onClick={shippingRoute}
             >
-              SHOPPING BAG (2)
+              SHOPPING BAG (2)s
             </button>
             <button
               className={
@@ -68,7 +92,7 @@ function Wishlist() {
                   ? "activeButton WishListButton"
                   : "WishListButton"
               }
-              onClick={WishListRoute}
+              onClick={wishListRoute}
             >
               FAVOURITES
               <svg
@@ -91,27 +115,37 @@ function Wishlist() {
           </div>
         </div>
       </div>
-      <div className="pt-48">
-        <div>
-          <form onSubmit={handleSubmit1}>
-            <input
-              type="text"
-              value={inputValue1}
-              onChange={(e) => setInputValue1(e.target.value)}
-              placeholder="Enter message for Sender One"
-            />
-            <button type="submit">Send</button>
-          </form>
-          <form onSubmit={handleSubmit2}>
-            <input
-              type="text"
-              value={inputValue2}
-              onChange={(e) => setInputValue2(e.target.value)}
-              placeholder="Enter message for Sender Two"
-            />
-            <button type="submit">Send</button>
-          </form>
-        </div>
+      <div className="WishList">
+        {token ? (
+          <div>
+            <div>WishList</div>
+          </div>
+        ) : (
+          <div className="WishListNoLogin">
+            <div className="NoLogindata">
+              <p>
+                YOU MUST LOG IN TO VIEW AND SAVE ITEMS TO YOUR FAVOURITES LISTS.
+              </p>
+              <button onClick={navigateLogIn}>LOG IN</button>
+              <p>
+                Don’t have an account?{" "}
+                <Link to="/Signup" className="LinkRig">
+                  Register
+                </Link>
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div>
+        <WishListDrawer
+          createList={createList}
+          setCreateList={setCreateList}
+          share={share}
+          setShare={setShare}
+          settings={settings}
+          setSettings={setSettings}
+        />
       </div>
     </div>
   );

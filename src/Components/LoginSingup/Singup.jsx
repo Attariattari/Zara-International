@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Singup.css";
 import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -296,7 +297,8 @@ function Signup() {
             )}
           </Formik>
         </div>
-      </div>
+      </div>\
+        <Footer />
     </div>
   );
 }

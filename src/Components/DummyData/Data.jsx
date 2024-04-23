@@ -218,7 +218,7 @@ export const ZaraProducts = {
         "https://static.zara.net/assets/public/498b/6c2e/0cad4eab9eea/2747a53fae6b/02247187632-e6/02247187632-e6.jpg?ts=1704975199100&w=563",
         "https://static.zara.net/assets/public/361e/185c/f8c849ac8262/f34d8751b4d1/02247178632-020-e25/02247178632-020-e25.jpg?ts=1706869404544&w=563",
         "https://static.zara.net/assets/public/0b67/cd11/5821442ca2ea/1b0eb32d71c7/02247178632-020-e26/02247178632-020-e26.jpg?ts=1706869407668&w=563",
-        "../../../public/My Web Data/YouCut_20240324_154952515.mp4",
+        // "../../../public/My Web Data/YouCut_20240324_154952515.mp4",
       ],
     },
     OVERSIZE_CRINKLE: {

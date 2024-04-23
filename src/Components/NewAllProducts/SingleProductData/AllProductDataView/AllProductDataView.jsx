@@ -162,7 +162,7 @@ function AllProductDataView({ womenProducts }) {
       >
         ADD
       </button>
-      <div className="offcanvaceparent">
+      <div>
         <SHIPPING_AND_RETURNS
           open={open}
           setOpen={setOpen}
