@@ -4,12 +4,13 @@ import Swal from "sweetalert2";
 function ChatOne({ toggleChatOneUnVisibility }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(() => {
-    const storedMessages = JSON.parse(localStorage.getItem("chatMessagesOne"));
+    const storedMessages = JSON.parse(localStorage.getItem("chatMessages"));
     return storedMessages || [];
   });
+  const [Close, setClose] = useState();
   const [receivedMessages, setReceivedMessages] = useState(() => {
     const storedReceivedMessages = JSON.parse(
-      localStorage.getItem("chatMessages")
+      localStorage.getItem("chatMessagesOne")
     );
     return storedReceivedMessages || [];
   });
@@ -23,8 +24,7 @@ function ChatOne({ toggleChatOneUnVisibility }) {
   const receiverName = "Muhyo Tech";
 
   useEffect(() => {
-    // Load messages from local storage when component mounts
-    const storedMessages = JSON.parse(localStorage.getItem("chatMessagesOne"));
+    const storedMessages = JSON.parse(localStorage.getItem("chatMessages"));
     if (storedMessages) {
       setMessages(storedMessages);
     }
@@ -32,8 +32,7 @@ function ChatOne({ toggleChatOneUnVisibility }) {
   }, []);
 
   useEffect(() => {
-    // Save messages to local storage whenever messages state changes
-    localStorage.setItem("chatMessagesOne", JSON.stringify(messages));
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
     scrollToBottom();
   }, [messages]);
 
@@ -43,8 +42,14 @@ function ChatOne({ toggleChatOneUnVisibility }) {
 
   const handleSendMessage = () => {
     if (message.trim() !== "") {
-      const newMessage = { text: message, sender: senderName }; // Set sender
+      const currentDate = new Date(); // Get current date and time
+      const newMessage = { 
+        text: message, 
+        sender: senderName,
+        date: currentDate.toISOString() // Convert date to ISO string for storage
+      }; 
       setMessages([...messages, newMessage]);
+      localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
       setMessage("");
     }
   };
@@ -53,9 +58,15 @@ function ChatOne({ toggleChatOneUnVisibility }) {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
+      const currentDate = new Date();
       reader.onload = () => {
-        const newMessage = { image: reader.result, sender: senderName }; // Set sender
+        const newMessage = { 
+          image: reader.result, 
+          sender: senderName,
+          date: currentDate.toLocaleString() // Include date in the message
+        };
         setMessages([...messages, newMessage]);
+        localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
@@ -70,10 +81,16 @@ function ChatOne({ toggleChatOneUnVisibility }) {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) {
+      const currentDate = new Date();
       const reader = new FileReader();
       reader.onload = () => {
-        const newMessage = { image: reader.result, sender: senderName }; // Set sender
+        const newMessage = { 
+          image: reader.result, 
+          sender: senderName,
+          date: currentDate.toLocaleString() // Include date in the message
+        };
         setMessages([...messages, newMessage]);
+        localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
@@ -111,9 +128,17 @@ function ChatOne({ toggleChatOneUnVisibility }) {
       },
     });
   };
-  const allMessages = [...messages, ...receivedMessages].sort(
-    (a, b) => a.timestamp - b.timestamp
-  );
+  const handleConfirmClose = () => {
+    setClose(true);
+  };
+  const handleConfirmFalse = () => {
+    setClose(false);
+  };
+  const handleConfirmFalseAndDlete = () => {
+    setClose(false); // Step 2: Hide confirmation dialog
+    localStorage.removeItem("chatMessages"); // Remove chat messages from local storage
+    toggleChatOneUnVisibility(); // Hide the chat
+  };
   return (
     <div className="ChatOne">
       <div className="Chat_Child">
@@ -126,11 +151,11 @@ function ChatOne({ toggleChatOneUnVisibility }) {
             xmlns="http://www.w3.org/2000/svg"
             fill="inherit"
             stroke="inherit"
-            onClick={toggleChatOneUnVisibility}
+            onClick={handleConfirmClose}
           >
             <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
           </svg>
-          <div>Chat</div>
+          <div>ChatOne</div>
           <svg
             width="24"
             height="24"
@@ -154,7 +179,7 @@ function ChatOne({ toggleChatOneUnVisibility }) {
             <span>Today</span>
           </div>
           <div className="Chat_MainSms">
-          {allMessages.map((msg, index) => (
+            {messages.map((msg, index) => (
               <div
                 key={index}
                 className={`Chat_Message_Text ${
@@ -169,6 +194,42 @@ function ChatOne({ toggleChatOneUnVisibility }) {
                     <img
                       src={msg.image}
                       alt={msg.sender === senderName ? "Sent" : "Received"}
+                      className="chat-image"
+                    />
+                    <div className="message-icons">
+                      <svg
+                        width="24"
+                        height="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="inherit"
+                        stroke="inherit"
+                        className="message-image-block__image-zoom-selector-icon cursor-pointer"
+                        aria-hidden="true"
+                        alt="zoom"
+                        onClick={() => showImageModal(msg.image)}
+                      >
+                        <path d="M9.7 10.7h-3v-1h3v-3h1v3h3v1h-3v3h-1v-3Z"></path>
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M3.7 10.2a6.5 6.5 0 1 1 11.436 4.23l5.018 5.017-.708.707-5.017-5.018A6.5 6.5 0 0 1 3.7 10.2Zm6.5-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+            {receivedMessages.map((msg, index) => (
+              <div key={index} className={`Chat_Message_Text left`}>
+                <div className="message-sender">{receiverName}</div>
+                {msg.text ? (
+                  <div>{msg.text}</div>
+                ) : (
+                  <>
+                    <img
+                      src={msg.image}
+                      alt="Received"
                       className="chat-image"
                     />
                     <div className="message-icons">
@@ -296,6 +357,20 @@ function ChatOne({ toggleChatOneUnVisibility }) {
         {Image && (
           <div className="selected-image-container">
             <img src={Image} alt="Selected" className="selected-image" />
+          </div>
+        )}
+        {Close && (
+          <div className="ConformationClose">
+            <div className="closepopup">
+              <div className="Heading_title"> 
+                <p>DO YOU WANT TO CLOSE THE CHAT?</p>
+                <p>If you close it, you will lose this conversation</p>
+              </div>
+              <div className="CloseButtons">
+                <button onClick={handleConfirmFalse}>Cancel</button>
+                <button onClick={handleConfirmFalseAndDlete}>Close</button>
+              </div>
+            </div>
           </div>
         )}
       </div>

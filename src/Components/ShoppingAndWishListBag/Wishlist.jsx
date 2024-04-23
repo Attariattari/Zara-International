@@ -16,7 +16,36 @@ function Wishlist() {
     setActiveButton("wishlist");
     navigate("/Wishlist");
   };
+  const [inputValue1, setInputValue1] = useState("");
+  const [inputValue2, setInputValue2] = useState("");
 
+  const handleSubmit1 = (event) => {
+    event.preventDefault();
+    if (inputValue1) {
+      const messageObject = {
+        sender: "Sender One",
+        message: inputValue1,
+      };
+      const messages = JSON.parse(localStorage.getItem("messages")) || [];
+      messages.push(messageObject);
+      localStorage.setItem("messages", JSON.stringify(messages));
+      setInputValue1("");
+    }
+  };
+
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+    if (inputValue2) {
+      const messageObject = {
+        sender: "Sender Two",
+        message: inputValue2,
+      };
+      const messages = JSON.parse(localStorage.getItem("messages")) || [];
+      messages.push(messageObject);
+      localStorage.setItem("messages", JSON.stringify(messages));
+      setInputValue2("");
+    }
+  };
   return (
     <div>
       <div className="sticky top-0 z-10" style={{ marginTop: "-9px" }}>
@@ -24,13 +53,21 @@ function Wishlist() {
           <Navbar />
           <div className="text-black mt-6 ShippingFavoButton">
             <button
-              className={activeButton === "shoppingBag" ? "activeButton ShippingButton" : "ShippingButton"}
+              className={
+                activeButton === "shoppingBag"
+                  ? "activeButton ShippingButton"
+                  : "ShippingButton"
+              }
               onClick={ShippingRoute}
             >
               SHOPPING BAG (2)
             </button>
             <button
-              className={activeButton === "wishlist" ? "activeButton WishListButton" : "WishListButton"}
+              className={
+                activeButton === "wishlist"
+                  ? "activeButton WishListButton"
+                  : "WishListButton"
+              }
               onClick={WishListRoute}
             >
               FAVOURITES
@@ -54,7 +91,28 @@ function Wishlist() {
           </div>
         </div>
       </div>
-      <div className="pt-48">Wishlist</div>
+      <div className="pt-48">
+        <div>
+          <form onSubmit={handleSubmit1}>
+            <input
+              type="text"
+              value={inputValue1}
+              onChange={(e) => setInputValue1(e.target.value)}
+              placeholder="Enter message for Sender One"
+            />
+            <button type="submit">Send</button>
+          </form>
+          <form onSubmit={handleSubmit2}>
+            <input
+              type="text"
+              value={inputValue2}
+              onChange={(e) => setInputValue2(e.target.value)}
+              placeholder="Enter message for Sender Two"
+            />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
