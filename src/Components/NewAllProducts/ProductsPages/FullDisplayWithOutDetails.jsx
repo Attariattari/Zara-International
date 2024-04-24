@@ -4,7 +4,7 @@ import { NewData } from "../../DummyData/Data";
 import Footer from "../../Footer/Footer";
 function FullDisplayWithOutDetails() {
   return (
-    <div>
+    <div >
       <div>
         <img src={NewData.img} alt="NewData Image" />
       </div>

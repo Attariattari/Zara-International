@@ -108,7 +108,7 @@ function Signup() {
                   <label
                     className={
                       "absolute mb-3 text-xs transition-all duration-150 " +
-                      (!focusedEmail ? "-z-10 top-5" : "top-1")
+                      (!focusedEmail ? "-z-10 top-5" : "")
                     }
                   >
                     Email
@@ -146,7 +146,7 @@ function Signup() {
                   <label
                     className={
                       "absolute mb-3 text-xs transition-all duration-150 " +
-                      (!focusedPassword ? "-z-10 top-5" : "top-1")
+                      (!focusedPassword ? "-z-10 top-5" : "")
                     }
                   >
                     Password
@@ -195,7 +195,7 @@ function Signup() {
                   <label
                     className={
                       "absolute mb-3 text-xs transition-all duration-150 " +
-                      (!focusedfirstname ? "-z-10 top-5" : "top-1")
+                      (!focusedfirstname ? "-z-10 top-5" : "")
                     }
                   >
                     First Name
@@ -233,7 +233,7 @@ function Signup() {
                   <label
                     className={
                       "absolute mb-3 text-xs transition-all duration-150 " +
-                      (!focusedlastname ? "-z-10 top-5" : "top-1")
+                      (!focusedlastname ? "-z-10 top-5" : "")
                     }
                   >
                     Last Name

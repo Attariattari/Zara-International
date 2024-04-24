@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Drawer, IconButton, Typography } from "@material-tailwind/react";
-import { Field } from "formik";
+import "./Css.css";
 
 function WishListDrawer({
   createList,
   setCreateList,
-  share,
-  setShare,
   settings,
   setSettings,
 }) {
   const closeDrawer = () => {
     setCreateList(false);
-    setShare(false);
+    
     setSettings(false);
   };
   const [focusedName, setFocusedName] = useState(false);
   const [errors, setErrors] = useState({ Name: "" });
   useEffect(() => {
     const body = document.querySelector("body");
-    if (createList || share || settings) {
+    if (createList ||  settings) {
       body.style.overflow = "hidden";
     } else {
       body.style.overflow = "auto";
@@ -28,12 +26,12 @@ function WishListDrawer({
     return () => {
       body.style.overflow = "auto";
     };
-  }, [createList, share, settings]);
+  }, [createList,  settings]);
 
   return (
     <React.Fragment>
       <Drawer
-        open={createList || share || settings}
+        open={createList ||  settings}
         size={384}
         onClose={closeDrawer}
         placement="right"
@@ -103,12 +101,11 @@ function WishListDrawer({
                     </div>
                   )}
                 </div>
-                <button>CREATE</button>
+                <button className="CraeteButton">CREATE</button>
               </div>
             </Typography>
           </div>
         )}
-        {share && <div>SHARE</div>}
         {settings && (
           <div>
             <div className="mb-6 flex items-center justify-between">
@@ -131,6 +128,58 @@ function WishListDrawer({
                 </svg>
               </IconButton>
             </div>
+            <Typography>
+              <div>LIST SETTINGS</div>
+            </Typography>
+            <Typography>
+              <div className="mt-16 ">
+                <div
+                  className={`mb-4 relative ${
+                    errors.Name ? "border-b-1 border-red-500" : "border-b-1"
+                  }`}
+                >
+                  <label
+                    className={
+                      "absolute mb-3 text-xs transition-all duration-150 " +
+                      (!focusedName ? "-z-10 top-5" : "")
+                    }
+                  >
+                    NAME
+                  </label>
+                  <input
+                    className="pt-5 pb-2 outline-none w-full text-xs"
+                    name="Name"
+                    type="Name"
+                    placeholder={!focusedName ? "Name" : ""}
+                    onFocus={() => setFocusedName(true)}
+                    onBlur={(ev) => {
+                      if (ev.target.value.length === 0) setFocusedName(false);
+                      setErrors({
+                        ...errors,
+                      });
+                    }}
+                    style={{
+                      borderBottom: errors.Name
+                        ? "1px solid red"
+                        : "1px solid black",
+                    }}
+                  />
+                  {errors.Name && (
+                    <div className="text-red-500 text-xs absolute">
+                      {errors.Name}
+                    </div>
+                  )}
+                </div>
+                <div className="Privacyslect">
+                  <label>PRIVACY</label>
+                  <select>
+                    <option value="someOption">PUBLIC</option>
+                    <option value="otherOption">PRIVATE</option>
+                  </select>
+                </div>
+                <button className="CraeteButton">SAVE</button>
+              </div>
+            </Typography>
           </div>
         )}
       </Drawer>

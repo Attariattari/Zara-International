@@ -100,7 +100,7 @@ export default function Login() {
                 <label
                   className={
                     "absolute mb-3 text-xs transition-all duration-150 " +
-                    (!focusedEmail ? "-z-10 top-5" : "top-1")
+                    (!focusedEmail ? "-z-10 top-5" : "")
                   }
                 >
                   Email
@@ -138,7 +138,7 @@ export default function Login() {
                 <label
                   className={
                     "absolute mb-3 text-xs transition-all duration-150 " +
-                    (!focusedPassword ? "-z-10 top-5" : "top-1")
+                    (!focusedPassword ? "-z-10 top-5" : "")
                   }
                 >
                   Password

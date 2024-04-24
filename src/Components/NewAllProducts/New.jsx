@@ -58,13 +58,7 @@ function New() {
         <div className="absolute w-full">
           <Navbar />
         </div>
-      </div>
-      <div
-        className={`sticky top-0 z-10 FlterView ${
-          isIconsVisible ? "" : "hidden"
-        }`}
-      >
-        <div className="flex">
+        <div className="Productfilterveiw">
           <div>
             <svg
               className={`view-option-selector-button__icon ${
