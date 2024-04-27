@@ -1,0 +1,75 @@
+.Address_Conform {
+    width: 100%;
+    height: auto;
+    padding: 136px 90px 0px 90px;
+}
+
+.BillingArea {
+    margin: 30px 0px 0px 0px;
+    width: 100%;
+    height: 700px;
+}
+
+.Billingtitle {
+    width: 100%;
+    height: 70px;
+    padding: 0px 0px 0px 0px;
+}
+
+.Billingtitle :nth-child(2) {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.BillingInputArea {
+    width: 70%;
+    height: auto;
+    padding: 0px 0px 0px 0px;
+    height: 90%;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.BillingInputArea div {
+    width: 50%;
+    height: 96.7%;
+    margin: 20px 0px 0px 0px;
+}
+
+.BillingInputAreaFisrt {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.Privacyslect{
+    width: 100%;
+    height: 40px;
+}
+
+.BillingInputAreaFisrt div {
+    width: 100%;
+    height: 40px;
+
+}
+
+.BillingAndnumberarea {
+    display: flex;
+    gap: 15px;
+}
+
+.BillingAndnumberarea :nth-child(1) {
+    width: 20%;
+}
+.BillingInputAreaSecond {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.BillingInputAreaSecond div {
+    width: 100%;
+    height: 40px;
+}

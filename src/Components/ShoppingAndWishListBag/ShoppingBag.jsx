@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
 import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
@@ -220,9 +220,9 @@ function ShoppingBag() {
                 </div>
               </div>
             </div>
-            <div className="Cartcontinuebutton">
+            <Link className="Cartcontinuebutton" to='/Address_Conform'>
               <button className="Contiun">CONTINUE</button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
