@@ -73,3 +73,26 @@
     width: 100%;
     height: 40px;
 }
+.select-container {
+    position: relative;
+  }
+  
+  .search-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #000000;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  
+  .search-container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+  }
+  

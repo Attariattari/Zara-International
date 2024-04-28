@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
 import { Link } from "react-router-dom";
-import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import "./Css.css";
+import { countries } from "./../DummyData/Data";
 function validateName(value) {
   let error;
   if (!value) {
@@ -43,6 +43,27 @@ function Address_Conform() {
     PhoneNumber: "",
     ZIPCODE: "",
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const selectRef = useRef(null);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      // Reset search term when opening the dropdown
+      setSearchTerm("");
+    }
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSelect = (event) => {
+    setSelectedCountry(event.target.value);
+    setIsOpen(false);
+  };
   return (
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
@@ -111,16 +132,21 @@ function Address_Conform() {
                 </div>
                 <div className="Privacyslect">
                   <label htmlFor="countrySelect">SEND TO</label>
-                  <select id="countrySelect" autoComplete="country">
-                    <option value="someOption">Aland Islands</option>
-                    <option value="otherOption">Angola</option>
-                    <option value="otherOption">Pakistan</option>
-                    <option value="otherOption">India</option>
-                    <option value="otherOption">Iran</option>
-                    <option value="otherOption">Afghanistan</option>
-                    <option value="otherOption">China</option>
-                    <option value="otherOption">Bangladesh</option>
-                  </select>
+                  <span className="select-container" onClick={handleToggle}>
+                    <select
+                      ref={selectRef}
+                      id="country"
+                      value={selectedCountry}
+                      onChange={handleSelect}
+                    >
+                      {/* Render options for each country */}
+                      {countries.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
                 </div>
                 <div
                   className={`mb-4 relative ${
@@ -362,13 +388,13 @@ function Address_Conform() {
                       (!focusedLastName ? "-z-10 top-5" : "")
                     }
                   >
-                    Lastname
+                    LASTNAME
                   </label>
                   <input
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
                     name="lastname"
                     type="text"
-                    placeholder={!focusedLastName ? "Lastname" : ""}
+                    placeholder={!focusedLastName ? "LASTNAME" : ""}
                     onFocus={() => setFocusedLastName(true)}
                     onBlur={(ev) => {
                       if (ev.target.value.length === 0)
