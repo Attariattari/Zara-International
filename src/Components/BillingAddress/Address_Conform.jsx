@@ -43,26 +43,10 @@ function Address_Conform() {
     PhoneNumber: "",
     ZIPCODE: "",
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const selectRef = useRef(null);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      // Reset search term when opening the dropdown
-      setSearchTerm("");
-    }
-  };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   const handleSelect = (event) => {
     setSelectedCountry(event.target.value);
-    setIsOpen(false);
   };
   return (
     <div>
@@ -132,9 +116,8 @@ function Address_Conform() {
                 </div>
                 <div className="Privacyslect">
                   <label htmlFor="countrySelect">SEND TO</label>
-                  <span className="select-container" onClick={handleToggle}>
+                  <span className="select-container">
                     <select
-                      ref={selectRef}
                       id="country"
                       value={selectedCountry}
                       onChange={handleSelect}
