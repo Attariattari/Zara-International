@@ -48,3 +48,6 @@
   -ms-border-radius: 1px;
   -o-border-radius: 1px;
 }
+::-webkit-autofill {
+  background-color: #5c5712 !important; /* Light blue background color */
+}

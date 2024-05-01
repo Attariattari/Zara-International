@@ -219,7 +219,6 @@ function Address_Conform() {
                         ? "1px solid black"
                         : "1px solid black",
                     }}
-                    
                   />
                   {!focusedFields.address && errors.address && (
                     <div
@@ -381,7 +380,9 @@ function Address_Conform() {
                       className="pt-5 pb-2 outline-none w-full text-[11px]"
                       name="PhoneNumber"
                       type="phone"
-                      placeholder={!focusedFields.phoneNumber ? "TELEPHONE" : ""}
+                      placeholder={
+                        !focusedFields.phoneNumber ? "TELEPHONE" : ""
+                      }
                       onFocus={() => handleInputFocus("phoneNumber")}
                       onChange={handleInputChange}
                       onBlur={(ev) =>
@@ -408,7 +409,7 @@ function Address_Conform() {
                 </span>
               </div>
               <div className="BillingInputAreaSecond">
-              <div
+                <div
                   className={`mb-4 relative ${
                     focusedFields.lastName
                       ? "border-b-1"
@@ -421,7 +422,7 @@ function Address_Conform() {
                       (!focusedFields.lastName ? "-z-10 top-5" : "")
                     }
                   >
-                    FIRSTNAME
+                   LASTNAME
                   </label>
                   <input
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
@@ -452,7 +453,7 @@ function Address_Conform() {
                     </div>
                   )}
                 </div>
-                <div className="Privacyslect opacity-0">
+                <div className="Privacyslecttwo opacity-0">
                   <label>SEND TO</label>
                   <select>
                     <option value="someOption">Aland Islands</option>
@@ -484,10 +485,14 @@ function Address_Conform() {
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
                     name="addressSecond"
                     type="text"
-                    placeholder={!focusedFields.addressSecond ? "ADDRESS 2" : ""}
+                    placeholder={
+                      !focusedFields.addressSecond ? "ADDRESS 2" : ""
+                    }
                     value={formData.addressSecond}
                     onFocus={() => handleInputFocus("addressSecond")}
-                    onBlur={(ev) => handleInputBlur("addressSecond", ev.target.value)}
+                    onBlur={(ev) =>
+                      handleInputBlur("addressSecond", ev.target.value)
+                    }
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.addressSecond
