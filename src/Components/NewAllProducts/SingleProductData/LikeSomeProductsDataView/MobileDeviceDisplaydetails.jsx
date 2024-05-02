@@ -2,27 +2,46 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import LikeSameWithProductData from "./LikeSameWithProductData";
 import Footer from "../../../Footer/Footer";
+import {
+  Drawer,
+  Button,
+  Typography,
+  IconButton,
+} from "@material-tailwind/react";
+
 function MobileDeviceDisplaydetails({
   womenProducts,
   isexpanded,
   toggleIsexpanded,
 }) {
   const [initialY, setInitialY] = useState(null);
+  const [openBottom, setOpenBottom] = useState(false);
   const mobileDisplayRef = useRef(null);
+
+  const openDrawerBottom = () => {
+    if (isexpanded) {
+      toggleIsexpanded();
+    }
+    setOpenBottom(true);
+  };
+
+  const closeDrawerBottom = () => setOpenBottom(false);
 
   const handleDragStart = (e) => {
     setInitialY(e.clientY);
+    if (isexpanded) {
+      toggleIsexpanded();
+    }
   };
 
   const handleDragEnd = (e) => {
     const deltaY = e.clientY - initialY;
     if (deltaY < 0) {
       toggleIsexpanded();
-    } else {
-      toggleIsexpanded();
     }
     setInitialY(null);
   };
+
   return (
     <div ref={mobileDisplayRef}>
       <button
@@ -30,8 +49,9 @@ function MobileDeviceDisplaydetails({
         draggable="true"
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onClick={openDrawerBottom}
       >
-        {isexpanded ? "ADD" : "ADD"}
+        ADD
       </button>
       <span>
         <span>
@@ -153,6 +173,40 @@ function MobileDeviceDisplaydetails({
           </div>
           <Footer />
         </>
+      )}
+      {openBottom && (
+        <Drawer
+          placement="bottom"
+          open={openBottom}
+          onClose={closeDrawerBottom}
+          className="p-4"
+        >
+          <div className="mb-6 flex items-center justify-between">
+            <Typography variant="h5" color="blue-gray">
+              Material Tailwind
+            </Typography>
+            <IconButton
+              variant="text"
+              color="blue-gray"
+              onClick={closeDrawerBottom}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </IconButton>
+          </div>
+        </Drawer>
       )}
     </div>
   );

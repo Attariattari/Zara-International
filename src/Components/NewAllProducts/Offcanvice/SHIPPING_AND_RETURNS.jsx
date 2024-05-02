@@ -44,7 +44,7 @@ function SHIPPING_AND_RETURNS({
     if (Avail) return 300;
     if (MEASURE) return 384;
     if (ADDTOCART) return 435;
-    return lastDrawerSize; // Default size for Shipping drawer
+    return lastDrawerSize;
   };
 
   useEffect(() => {
