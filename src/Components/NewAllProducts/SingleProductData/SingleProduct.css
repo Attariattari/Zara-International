@@ -350,11 +350,20 @@
 .product-sizes button:hover {
     background-color: #e0e0e0;
 }
-
-.product-sizes button:focus {
+.Size{
+    background-color: #000000;
+    color: #fff;
+    border: none;
+}
+.selected{
+    background-color: #000000;
+    border: none;
+    color: white;
+}
+/* .product-sizes button:focus {
     outline: none;
     box-shadow: 0 0 0 1px #363636;
-}
+} */
 
 .AddButton {
     width: 100%;
