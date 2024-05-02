@@ -17,6 +17,7 @@ function MobileDeviceDisplaydetails({
 }) {
   const [initialY, setInitialY] = useState(null);
   const [openBottom, setOpenBottom] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
   const mobileDisplayRef = useRef(null);
 
   const openDrawerBottom = () => {
@@ -42,7 +43,12 @@ function MobileDeviceDisplaydetails({
     }
     setInitialY(null);
   };
-
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size, () => {
+      // Callback function to execute after state update
+      setError(false); // Reset error when a size is selected
+    });
+  };
   return (
     <div ref={mobileDisplayRef}>
       <button
@@ -189,12 +195,17 @@ function MobileDeviceDisplaydetails({
               Hello
              </Typography>
              <Typography className="Drawer_Size_Data">
-             <div>hello</div>
-             <div>hekllo</div>
-             <div></div>
-             <div></div>
-             <div></div>
-             <div></div>
+             <span className="product-sizes">
+          {womenProducts[0].size.map((size, index) => (
+            <button
+              key={index}
+              className={selectedSize === size ? "Size" : ""}
+              onClick={() => handleSizeSelect(size)}
+            >
+              {size}
+            </button>
+          ))}
+        </span>
              </Typography>
              <Typography className="Drawer_Size_Measure">
               Hello

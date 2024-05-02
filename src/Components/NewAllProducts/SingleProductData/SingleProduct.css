@@ -805,8 +805,10 @@
 .Drawer_Size_Data {
     width: 100%;
     height: 229px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 5px;
     background-color: rgb(255, 0, 111);
 }
 
