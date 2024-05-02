@@ -7,8 +7,8 @@ import "./Welcome.css";
 import Welcomecookiepopup from "./Welcomecookiepopup";
 function Welcome() {
   const navigate = useNavigate();
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("Pakistan");
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [countryError, setCountryError] = useState("");
   const [languageError, setLanguageError] = useState("");
   const [backgroundImage, setBackgroundImage] = useState(
