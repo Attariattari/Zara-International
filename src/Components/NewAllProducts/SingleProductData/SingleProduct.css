@@ -350,16 +350,19 @@
 .product-sizes button:hover {
     background-color: #e0e0e0;
 }
-.Size{
+
+.Size {
     background-color: #000000;
     color: #fff;
     border: none;
 }
-.selected{
+
+.selected {
     background-color: #000000;
     border: none;
     color: white;
 }
+
 /* .product-sizes button:focus {
     outline: none;
     box-shadow: 0 0 0 1px #363636;
@@ -493,7 +496,8 @@
 .offcanvas-container {
     position: fixed;
     top: 0;
-    right: -380px; /* Start offcanvas off the screen */
+    right: -380px;
+    /* Start offcanvas off the screen */
     bottom: 0;
     width: 380px;
     z-index: 200;
@@ -502,42 +506,50 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    overflow-x: hidden; /* Ensure no horizontal overflow */
-    transition: right 0.3s ease; /* Smooth transition when opening and closing */
-  }
-  
-  .offcanvas.open {
-    right: 0; /* Slide in from the right when open */
-  }
-  
-  .offcanvas button.close-button {
+    overflow-x: hidden;
+    /* Ensure no horizontal overflow */
+    transition: right 0.3s ease;
+    /* Smooth transition when opening and closing */
+}
+
+.offcanvas.open {
+    right: 0;
+    /* Slide in from the right when open */
+}
+
+.offcanvas button.close-button {
     position: absolute;
     top: 10px;
     right: 10px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-  }
-  
-  .offcanvas-content {
-    padding: 20px; /* Adjust content padding as needed */
-  }
-  
-  .offcanvas-overlay {
+}
+
+.offcanvas-content {
+    padding: 20px;
+    /* Adjust content padding as needed */
+}
+
+.offcanvas-overlay {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-    z-index: 100; /* Ensure overlay is behind offcanvas */
-    display: none; /* Initially hidden */
-  }
-  
-  .offcanvas.open + .offcanvas-overlay {
-    display: block; /* Show overlay when offcanvas is open */
-  }
-  
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    z-index: 100;
+    /* Ensure overlay is behind offcanvas */
+    display: none;
+    /* Initially hidden */
+}
+
+.offcanvas.open+.offcanvas-overlay {
+    display: block;
+    /* Show overlay when offcanvas is open */
+}
+
 
 @media (max-width: 1279px) {
     .SingleProduct {
@@ -770,4 +782,37 @@
     left: 0;
     background-color: 666666;
     z-index: 999;
-  }
+}
+
+.BottomDraver {
+    border-top: 1px solid;
+}
+
+.DrawerSizeData {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Drawer_Size_Title {
+    width: 100%;
+    height: 70px;
+    background-color: deepskyblue;
+    border-bottom: 1px solid black;
+}
+
+.Drawer_Size_Data {
+    width: 100%;
+    height: 229px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: rgb(255, 0, 111);
+}
+
+.Drawer_Size_Measure {
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid black;
+    background-color: rgb(162, 0, 255);
+}

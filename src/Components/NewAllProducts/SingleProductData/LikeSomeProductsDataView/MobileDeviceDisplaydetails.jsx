@@ -180,33 +180,25 @@ function MobileDeviceDisplaydetails({
           <Drawer
             placement="bottom"
             open={openBottom}
+            size={360}
             onClose={closeDrawerBottom}
-            className="p-4"
+            className="BottomDraver"
           >
-            <div className="mb-6 flex items-center justify-between">
-              <Typography variant="h5" color="blue-gray">
-                Material Tailwind
-              </Typography>
-              <IconButton
-                variant="text"
-                color="blue-gray"
-                onClick={closeDrawerBottom}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconButton>
+            <div className="DrawerSizeData">
+             <Typography className="Drawer_Size_Title">
+              Hello
+             </Typography>
+             <Typography className="Drawer_Size_Data">
+             <div>hello</div>
+             <div>hekllo</div>
+             <div></div>
+             <div></div>
+             <div></div>
+             <div></div>
+             </Typography>
+             <Typography className="Drawer_Size_Measure">
+              Hello
+             </Typography>
             </div>
           </Drawer>
         </span>
