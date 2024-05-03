@@ -182,34 +182,28 @@ function MobileDeviceDisplaydetails({
         </>
       )}
       {openBottom && (
-        <span className="JustmobileSize">
+        <span className="JustmobileSize p-0">
           <Drawer
             placement="bottom"
             open={openBottom}
             size={360}
             onClose={closeDrawerBottom}
-            className="BottomDraver"
+            className="BottomDraver p-0"
           >
             <div className="DrawerSizeData">
-             <Typography className="Drawer_Size_Title">
-              Hello
-             </Typography>
-             <Typography className="Drawer_Size_Data">
-             <span className="product-sizes">
-          {womenProducts[0].size.map((size, index) => (
-            <button
-              key={index}
-              className={selectedSize === size ? "Size" : ""}
-              onClick={() => handleSizeSelect(size)}
-            >
-              {size}
-            </button>
-          ))}
-        </span>
-             </Typography>
-             <Typography className="Drawer_Size_Measure">
-              Hello
-             </Typography>
+              <Typography className="Drawer_Size_Title">Hello</Typography>
+              <div className="Drawer_Size_Data">
+                {womenProducts[0].size.map((size, index) => (
+                  <button
+                    key={index}
+                    className={selectedSize === size ? "Size" : ""}
+                    onClick={() => handleSizeSelect(size)}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+              <Typography className="Drawer_Size_Measure">Hello</Typography>
             </div>
           </Drawer>
         </span>

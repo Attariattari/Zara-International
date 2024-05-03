@@ -786,6 +786,7 @@
 
 .BottomDraver {
     border-top: 1px solid;
+    padding: 0%;
 }
 
 .DrawerSizeData {
@@ -793,28 +794,35 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+
 }
 
 .Drawer_Size_Title {
     width: 100%;
     height: 70px;
-    background-color: deepskyblue;
     border-bottom: 1px solid black;
 }
 
 .Drawer_Size_Data {
     width: 100%;
-    height: 229px;
+    max-height: 229px;
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    gap: 5px;
-    background-color: rgb(255, 0, 111);
+    border: none;
+}
+
+.Drawer_Size_Data button {
+    flex-basis: calc(50%);
+    height: 70px;
+    border-right: 1px solid black;
+    border-top: none;
+    border-left: none;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    margin: 0;
 }
 
 .Drawer_Size_Measure {
     width: 100%;
     height: 60px;
-    border-top: 1px solid black;
-    background-color: rgb(162, 0, 255);
 }

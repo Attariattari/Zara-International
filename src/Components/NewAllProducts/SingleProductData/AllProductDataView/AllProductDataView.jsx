@@ -129,7 +129,7 @@ function AllProductDataView({ womenProducts }) {
           <span className="color-box" style={{ backgroundColor: "black" }} />
           <span className="color-box" style={{ backgroundColor: "blue" }} />
         </div>
-        <span className="product-sizes">
+        <span className="Drawer_Size_Data">
           {womenProducts[0].size.map((size, index) => (
             <button
               key={index}
