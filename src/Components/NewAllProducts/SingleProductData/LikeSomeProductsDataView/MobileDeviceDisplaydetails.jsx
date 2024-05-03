@@ -191,7 +191,10 @@ function MobileDeviceDisplaydetails({
             className="BottomDraver p-0"
           >
             <div className="DrawerSizeData">
-              <Typography className="Drawer_Size_Title">Hello</Typography>
+              <div className="Drawer_Size_Title">
+                <div>SELECT A SIZE</div>
+                <div>This product is longer than usual.</div>
+              </div>
               <div className="Drawer_Size_Data">
                 {womenProducts[0].size.map((size, index) => (
                   <button
@@ -203,7 +206,11 @@ function MobileDeviceDisplaydetails({
                   </button>
                 ))}
               </div>
-              <Typography className="Drawer_Size_Measure">Hello</Typography>
+              <div className="Drawer_Size_Measure">
+                <div> MEASUREMENT GUIDE</div>
+                <div></div>
+               
+              </div>
             </div>
           </Drawer>
         </span>
