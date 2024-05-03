@@ -789,14 +789,6 @@
     padding: 0%;
 }
 
-.DrawerSizeData {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-
-}
-
 .Drawer_Size_Title {
     width: 100%;
     height: 70px;
@@ -812,7 +804,7 @@
 
 .Drawer_Size_Data {
     width: 100%;
-    height: 229px;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     border: none;
@@ -835,17 +827,16 @@
 .Drawer_Size_Measure {
     width: 100%;
     height: 60px;
-    
     font-size: 12px;
     display: flex;
-    justify-content: space-between;
+    margin-top: 55px;
+border-top: 1px solid black;
 }
-.Drawer_Size_Measure div{
+
+.Drawer_Size_Measure div {
     width: 50%;
 }
-.Drawer_Size_Measure :nth-child(1){
+
+.Drawer_Size_Measure :nth-child(1) {
     padding: 10px 0px 10px 20px;
-}
-.Drawer_Size_Measure :nth-child(2){
-   border-top: 1px solid black;
 }

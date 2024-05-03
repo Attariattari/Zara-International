@@ -100,30 +100,6 @@ function App() {
             <span className="text-gray-400">Chat</span>
           </div>
         )}
-        {isChatOneVisible && (
-          <ChatOne toggleChatOneUnVisibility={toggleChatOneUnVisibility} />
-        )}
-        {!isChatOneVisible && (
-          <div className="ChatOnePopupshow" onClick={toggleChatOneVisibility}>
-            <svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
-              stroke="inherit"
-              class="tray__button-icon"
-              aria-label="_tray-icon_"
-              alt="tray-icon"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
-              ></path>
-            </svg>
-            <span className="text-gray-400">Chat One</span>
-          </div>
-        )}
       </Router>
     </div>
   );
@@ -156,3 +132,29 @@ function ProtectedHomeRoute({ redirectTo }) {
 }
 
 export default App;
+{
+  /* {isChatOneVisible && (
+          <ChatOne toggleChatOneUnVisibility={toggleChatOneUnVisibility} />
+        )}
+        {!isChatOneVisible && (
+          <div className="ChatOnePopupshow" onClick={toggleChatOneVisibility}>
+            <svg
+              width="24"
+              height="24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="tray__button-icon"
+              aria-label="_tray-icon_"
+              alt="tray-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
+              ></path>
+            </svg>
+            <span className="text-gray-400">Chat One</span>
+          </div>
+        )} */
+}

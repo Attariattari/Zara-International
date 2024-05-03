@@ -14,6 +14,8 @@ function SHIPPING_AND_RETURNS({
   setAvail,
   MEASURE,
   setMEASURE,
+  MEASUREPENS,
+  setMEASUREPENS,
   ADDTOCART,
   setADDTOCART,
 }) {
@@ -22,13 +24,14 @@ function SHIPPING_AND_RETURNS({
     setAvail(false);
     setMEASURE(false);
     setADDTOCART(false);
+    setMEASUREPENS(false);
   };
 
   const [lastDrawerSize, setLastDrawerSize] = useState(560);
 
   useEffect(() => {
     const body = document.querySelector("body");
-    if (open || Avail || MEASURE || ADDTOCART) {
+    if (open || Avail || MEASURE || ADDTOCART || MEASUREPENS) {
       body.style.overflow = "hidden";
     } else {
       body.style.overflow = "auto";
@@ -37,12 +40,15 @@ function SHIPPING_AND_RETURNS({
     return () => {
       body.style.overflow = "auto";
     };
-  }, [open, Avail, MEASURE, ADDTOCART]);
+  }, [open, Avail, MEASURE, ADDTOCART, MEASUREPENS]);
 
   const getDrawerSize = () => {
     if (open) return 560;
     if (Avail) return 300;
     if (MEASURE) return 384;
+    if (MEASUREPENS) {
+      return "100%";
+    }
     if (ADDTOCART) return 435;
     return lastDrawerSize;
   };
@@ -50,7 +56,8 @@ function SHIPPING_AND_RETURNS({
   useEffect(() => {
     if (open) setLastDrawerSize(560);
     if (Avail || MEASURE || ADDTOCART) setLastDrawerSize(300);
-  }, [open, Avail, MEASURE, ADDTOCART]);
+    if (MEASUREPENS) setLastDrawerSize("100%");
+  }, [open, Avail, MEASURE, ADDTOCART, MEASUREPENS]);
 
   return (
     <React.Fragment>
@@ -81,9 +88,25 @@ function SHIPPING_AND_RETURNS({
             <AddToCart closeDrawer={closeDrawer} />
           </>
         )}
+        {MEASUREPENS && (
+          <div className="">
+            <MEASUREMENT closeDrawer={closeDrawer} />
+          </div>
+        )}
       </Drawer>
     </React.Fragment>
   );
 }
 
 export default SHIPPING_AND_RETURNS;
+{
+  /* <Drawer
+        open={MEASUREPENS}
+        size={"100%"}
+        onClose={closeDrawer}
+        placement="bottom"
+        className="p-4 Custom-Drawer bg-white overflow-y-scroll"
+      >
+        
+      </Drawer> */
+}

@@ -3,12 +3,8 @@ import { Link } from "react-router-dom";
 import LikeSameWithProductData from "./LikeSameWithProductData";
 import Footer from "../../../Footer/Footer";
 import "../SingleProduct.css";
-import {
-  Drawer,
-  Button,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Drawer } from "@material-tailwind/react";
+import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
 
 function MobileDeviceDisplaydetails({
   womenProducts,
@@ -17,6 +13,7 @@ function MobileDeviceDisplaydetails({
 }) {
   const [initialY, setInitialY] = useState(null);
   const [openBottom, setOpenBottom] = useState(false);
+  const { MEASUREPENS, setMEASUREPENS } = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const mobileDisplayRef = useRef(null);
 
@@ -207,14 +204,28 @@ function MobileDeviceDisplaydetails({
                 ))}
               </div>
               <div className="Drawer_Size_Measure">
-                <div> MEASUREMENT GUIDE</div>
+                <div
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMEASUREPENS(true);
+                    closeDrawerBottom();
+                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                  }}
+                >
+                  MEASUREMENT GUIDE
+                </div>
+
                 <div></div>
-               
               </div>
             </div>
           </Drawer>
         </span>
       )}
+      <SHIPPING_AND_RETURNS
+        MEASUREPENS={MEASUREPENS}
+        setMEASUREPENS={setMEASUREPENS}
+      />
     </div>
   );
 }

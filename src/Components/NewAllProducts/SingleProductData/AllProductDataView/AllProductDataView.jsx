@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
 import "../SingleProduct.css";
+import { useMeasureContext } from "../../../../Context/Drawer_state_controller";
 
 function AllProductDataView({ womenProducts }) {
   const [open, setOpen] = useState(false);
   const [Avail, setAvail] = useState(false);
-  const [MEASURE, setMEASURE] = useState(false);
+  const { MEASURE, setMEASURE } = useMeasureContext(false);
   const [ADDTOCART, setADDTOCART] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [error, setError] = useState(false);
@@ -129,7 +130,7 @@ function AllProductDataView({ womenProducts }) {
           <span className="color-box" style={{ backgroundColor: "black" }} />
           <span className="color-box" style={{ backgroundColor: "blue" }} />
         </div>
-        <span className="Drawer_Size_Data">
+        <span className="product-sizes">
           {womenProducts[0].size.map((size, index) => (
             <button
               key={index}
