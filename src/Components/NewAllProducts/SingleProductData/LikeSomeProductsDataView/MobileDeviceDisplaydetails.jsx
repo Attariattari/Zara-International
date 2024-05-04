@@ -13,7 +13,7 @@ function MobileDeviceDisplaydetails({
 }) {
   const [initialY, setInitialY] = useState(null);
   const [openBottom, setOpenBottom] = useState(false);
-  const { MEASUREPENS, setMEASUREPENS } = useState(false);
+  const [MEASUREPENS, setMEASUREPENS] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const mobileDisplayRef = useRef(null);
 
@@ -42,8 +42,7 @@ function MobileDeviceDisplaydetails({
   };
   const handleSizeSelect = (size) => {
     setSelectedSize(size, () => {
-      // Callback function to execute after state update
-      setError(false); // Reset error when a size is selected
+      setError(false);
     });
   };
   return (

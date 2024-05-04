@@ -8,7 +8,7 @@ import { useMeasureContext } from "../../../../Context/Drawer_state_controller";
 function AllProductDataView({ womenProducts }) {
   const [open, setOpen] = useState(false);
   const [Avail, setAvail] = useState(false);
-  const { MEASURE, setMEASURE } = useMeasureContext(false);
+  const [MEASURE, setMEASURE] = useState(false);
   const [ADDTOCART, setADDTOCART] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [error, setError] = useState(false);

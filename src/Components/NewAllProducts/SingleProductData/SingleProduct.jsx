@@ -19,7 +19,6 @@ function SingleProduct() {
   const [isexpanded, setIsexpanded] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const { MEASURE, setMEASURE } = useMeasureContext(false);
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {

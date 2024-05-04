@@ -65,7 +65,7 @@
   font-weight: bold;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 12px;
-  border: 1px dotted green;
+  border: 1px dotted rgb(41, 41, 41);
   transform: scale(1.1);
 }
 
@@ -78,7 +78,13 @@
   display: flex;
 
 }
-
+.imageareameasurement{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
 .cartproductinfo img {
   border-right: 1px solid black;
 }
@@ -98,4 +104,9 @@
 
 .SEESHOPPINGBASKET:hover {
   color: rgb(129, 129, 129);
+}
+@media (max-width: 768px) {
+  .cartproductinfo img {
+    
+  }
 }
