@@ -46,10 +46,10 @@ function MobileDeviceDisplaydetails({
   };
 
   const handleSizeSelect = (size) => {
-    setSelectedSize(size, () => {
-      setError(false);
-      setSuccessaddtocart(true);
-    });
+    setSelectedSize(size);
+    setProductSizeBottom(false); // Close the product size button
+    setSuccessaddtocart(true); // Show the success cart
+    setSelectedSize(null); // Reset the selected size
   };
 
   const openDrawers = (drawerType) => {
@@ -201,7 +201,7 @@ function MobileDeviceDisplaydetails({
         <span className="JustmobileSize p-0">
           <Drawer
             placement="bottom"
-            open={openDrawers}
+            open={ProductSizeBottom}
             size={360}
             onClose={closedrawers}
             className="BottomDraver p-0"
