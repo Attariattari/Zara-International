@@ -1,6 +1,7 @@
 .DetailedProducts {
     width: 100%;
     height: auto;
+    transition: all 0.6s ease;
 }
 
 .ProductArea {
@@ -8,6 +9,7 @@
     height: auto;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+    transition: all 0.6s ease;
 }
 
 .ProductAreaSamllImages {
@@ -15,14 +17,48 @@
     height: auto;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    transition: all 0.6s ease;
 }
 
+/* New Data */
+.ProductGridView {
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    position: relative;
+}
+
+.Productproductimage img {
+    width: 100%;
+    height: 420px;
+    border-bottom: 1px solid black;
+}
+
+.Productprdocutsdetailes {
+    display: flex;
+    padding: 6px 6px 0px 6px;
+    font-size: 11px;
+    height: 54px;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.Productseconds {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Productitemicons {
+    display: flex;
+    cursor: pointer;
+}
+
+/* New Data */
 .FlterView {
     margin-top: 150px;
 }
 
-.ProductArea .ProductData {
-    border: 1px solid black;
+.ProductData {
     margin: -1px;
     position: relative;
 }
@@ -37,15 +73,15 @@
     height: 30px;
     background-color: rgba(240, 240, 255, 0.6);
     backdrop-filter: blur(1px);
-    bottom: 60px;
-    right: 50%;
+    left: 45%;
     z-index: 20;
+    bottom: 70px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .Detailed {
     width: 100%;
-    height: auto;
+    height: 54px;
     padding: 10px;
 }
 
@@ -67,6 +103,28 @@
     font-size: 10px;
 }
 
+@media (max-width: 1179px) {
+    .ProductArea {
+        width: 99.9%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .ProductGridView {
+        border-top: none;
+    }
+}
+@media (max-width: 983px) {
+    .ProductArea {
+        width: 99.9%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .ProductGridView {
+        border-top: none;
+    }
+}
 @media (max-width: 768px) {
     .FlterView {
         margin-top: 40px;
@@ -77,6 +135,10 @@
         height: auto;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ProductGridView {
+        border-top: none;
     }
 
     .ProductAreaSamllImages {

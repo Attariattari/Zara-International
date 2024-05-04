@@ -12,7 +12,8 @@ function MobileDeviceDisplaydetails({
   toggleIsexpanded,
 }) {
   const [initialY, setInitialY] = useState(null);
-  const [openBottom, setOpenBottom] = useState(false);
+  const [ProductSizeBottom, setProductSizeBottom] = useState(false);
+  const [Successaddtocart, setSuccessaddtocart] = useState(false);
   const [MEASUREPENS, setMEASUREPENS] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const mobileDisplayRef = useRef(null);
@@ -21,10 +22,13 @@ function MobileDeviceDisplaydetails({
     if (isexpanded) {
       toggleIsexpanded();
     }
-    setOpenBottom(true);
+    setProductSizeBottom(true);
   };
 
-  const closeDrawerBottom = () => setOpenBottom(false);
+  const closedrawers = () => {
+    setProductSizeBottom(false);
+    setSuccessaddtocart(false);
+  };
 
   const handleDragStart = (e) => {
     setInitialY(e.clientY);
@@ -40,11 +44,22 @@ function MobileDeviceDisplaydetails({
     }
     setInitialY(null);
   };
+
   const handleSizeSelect = (size) => {
     setSelectedSize(size, () => {
       setError(false);
+      setSuccessaddtocart(true);
     });
   };
+
+  const openDrawers = (drawerType) => {
+    if (drawerType === "SizeDrawer") {
+      setProductSizeBottom(true);
+    } else if (drawerType === "AddtocartSucces") {
+      setSuccessaddtocart(true);
+    }
+  };
+
   return (
     <div ref={mobileDisplayRef}>
       <button
@@ -52,7 +67,11 @@ function MobileDeviceDisplaydetails({
         draggable="true"
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        onClick={openDrawerBottom}
+        onClick={(e) => {
+          e.preventDefault();
+          openDrawers("SizeDrawer");
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
       >
         ADD
       </button>
@@ -177,13 +196,14 @@ function MobileDeviceDisplaydetails({
           <Footer />
         </>
       )}
-      {openBottom && (
+
+      {ProductSizeBottom && (
         <span className="JustmobileSize p-0">
           <Drawer
             placement="bottom"
-            open={openBottom}
+            open={openDrawers}
             size={360}
-            onClose={closeDrawerBottom}
+            onClose={closedrawers}
             className="BottomDraver p-0"
           >
             <div className="DrawerSizeData">
@@ -218,6 +238,19 @@ function MobileDeviceDisplaydetails({
                 <div></div>
               </div>
             </div>
+          </Drawer>
+        </span>
+      )}
+      {Successaddtocart && (
+        <span className="JustmobileSize p-0">
+          <Drawer
+            placement="bottom"
+            open={Successaddtocart}
+            size={360}
+            onClose={closedrawers}
+            className="BottomDraver p-0"
+          >
+            Hello
           </Drawer>
         </span>
       )}
