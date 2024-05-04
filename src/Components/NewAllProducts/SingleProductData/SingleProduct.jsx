@@ -11,8 +11,6 @@ import LikeSameWithProductData from "./LikeSomeProductsDataView/LikeSameWithProd
 import AllProductDataView from "./AllProductDataView/AllProductDataView";
 import Composetion from "./CompositionArea/Composetion";
 import { ZaraProducts } from "../../DummyData/Data";
-import { useMeasureContext } from "../../../Context/Drawer_state_controller.jsx";
-import { Link } from "react-router-dom";
 
 function SingleProduct() {
   const womenProducts = [ZaraProducts.Women.LINEN_BLEND_ROLL_UP];

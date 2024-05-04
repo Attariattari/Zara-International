@@ -397,6 +397,7 @@
 .JUST_SHOW_MOBILE {
     display: none;
     transition: all 0.6s ease;
+    z-index: 100;
 }
 
 .JUST_SHOW_MOBILE::-webkit-scrollbar {
@@ -780,7 +781,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: 666666;
+    background-color: 66666;
     z-index: 999;
 }
 
@@ -830,7 +831,7 @@
     font-size: 12px;
     display: flex;
     margin-top: 55px;
-border-top: 1px solid black;
+    border-top: 1px solid black;
 }
 
 .Drawer_Size_Measure div {
