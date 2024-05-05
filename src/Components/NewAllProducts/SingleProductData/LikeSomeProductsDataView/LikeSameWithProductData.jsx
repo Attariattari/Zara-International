@@ -10,21 +10,7 @@ function LikeSameWithProductData() {
     ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
     ZaraProducts.Women.OVERSIZE_CRINKLE,
   ];
-  const renderMedia = (media) => {
-    if (media.length > 0) {
-      const firstMedia = media[0];
-      if (firstMedia.endsWith(".mp4")) {
-        return (
-          <video autoPlay loop muted src={firstMedia} alt="Product video" />
-        );
-      } else {
-        return (
-          <img src={firstMedia} className="Productimage" alt="Product image" />
-        );
-      }
-    }
-    return null;
-  };
+ 
   return (
     <div>
       <p>YOU MAY ALSO LIKE</p>
@@ -35,8 +21,10 @@ function LikeSameWithProductData() {
               <div className="Productproductimage">
                 <img src={product.images} alt="" />
               </div>
-              <div className="AddToCartIcon">
-                <GoPlus />
+              <div className="CartButtonArea">
+                <div className="AddToCartIcon">
+                  <GoPlus />
+                </div>
               </div>
               <div className="Detailed">
                 <div className="DetailedTitleandSVG">
@@ -120,3 +108,18 @@ export default LikeSameWithProductData;
 // {
 //   /*  */
 // }
+// const renderMedia = (media) => {
+//   //   if (media.length > 0) {
+//   //     const firstMedia = media[0];
+//   //     if (firstMedia.endsWith(".mp4")) {
+//   //       return (
+//   //         <video autoPlay loop muted src={firstMedia} alt="Product video" />
+//   //       );
+//   //     } else {
+//   //       return (
+//   //         <img src={firstMedia} className="Productimage" alt="Product image" />
+//   //       );
+//   //     }
+//   //   }
+//   //   return null;
+//   // };

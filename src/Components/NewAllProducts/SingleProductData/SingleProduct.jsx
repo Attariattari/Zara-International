@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer.jsx";
@@ -13,7 +13,7 @@ import Composetion from "./CompositionArea/Composetion";
 import { ZaraProducts } from "../../DummyData/Data";
 
 function SingleProduct() {
-  const womenProducts = [ZaraProducts.Women.LINEN_BLEND_ROLL_UP];
+  const womenProducts = [ZaraProducts.Women.SATINY_BLAZER];
   const [isexpanded, setIsexpanded] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -33,10 +33,22 @@ function SingleProduct() {
       swiperRef.current.swiper.slideTo(index);
     }
   };
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div>
       <div className="sticky top-0 z-10">
-        <div className="absolute w-full">
+        <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
           <Navbar />
         </div>
       </div>

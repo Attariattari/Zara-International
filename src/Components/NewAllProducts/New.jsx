@@ -9,27 +9,11 @@ function New() {
   const [selectedComponent, setSelectedComponent] = useState(
     localStorage.getItem("selectedComponent") || "FullDisplay"
   );
-
-  const [isIconsVisible, setIsIconsVisible] = useState(true);
-  const [prevScrollPosition, setPrevScrollPosition] = useState(0);
-
+  const [isScrolled, setIsScrolled] = useState(false);
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
     localStorage.setItem("selectedComponent", component);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentPosition = window.pageYOffset;
-      setIsIconsVisible(currentPosition < prevScrollPosition);
-      setPrevScrollPosition(currentPosition);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScrollPosition]);
 
   useEffect(() => {
     const storedComponent = localStorage.getItem("selectedComponent");
@@ -39,22 +23,18 @@ function New() {
   }, []);
 
   useEffect(() => {
-    const flterViewElement = document.querySelector(".FlterView");
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    if (flterViewElement) {
-      if (!isIconsVisible) {
-        flterViewElement.style.transition = "opacity 0.2s ease";
-        flterViewElement.style.opacity = 0;
-      } else {
-        flterViewElement.style.transition = "opacity 0.2s ease";
-        flterViewElement.style.opacity = 1;
-      }
-    }
-  }, [isIconsVisible]);
-
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div>
-      <div className="sticky top-0 z-10">
+      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
         <div className="absolute w-full">
           <Navbar />
         </div>

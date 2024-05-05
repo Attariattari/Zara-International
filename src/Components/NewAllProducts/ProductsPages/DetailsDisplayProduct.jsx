@@ -41,11 +41,13 @@ function DetailsDisplayProduct() {
       <div className="ProductArea cursor-pointer">
         {womenProducts.map((product, index) => (
           <div className="ProductGridView" key={index}>
-            <div className="Productproductimage" >
+            <div className="Productproductimage">
               <img src={product.images} alt="" />
             </div>
-            <div className="AddToCartIcon" onClick={Navigate}>
-              <GoPlus />
+            <div className="CartButtonArea">
+              <div className="AddToCartIcon" onClick={Navigate}>
+                <GoPlus />
+              </div>
             </div>
             <div className="Detailed">
               <div className="DetailedTitleandSVG">
