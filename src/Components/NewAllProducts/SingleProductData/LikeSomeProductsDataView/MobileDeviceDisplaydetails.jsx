@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import LikeSameWithProductData from "./LikeSameWithProductData";
 import Footer from "../../../Footer/Footer";
 import "../SingleProduct.css";
 import { Drawer } from "@material-tailwind/react";
 import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
+import LikeSomeproducts from "./LikeSomeproducts";
 
 function MobileDeviceDisplaydetails({
   womenProducts,
@@ -17,7 +18,7 @@ function MobileDeviceDisplaydetails({
   const [MEASUREPENS, setMEASUREPENS] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const mobileDisplayRef = useRef(null);
-
+  const Navigate = useNavigate();
   const openDrawerBottom = () => {
     if (isexpanded) {
       toggleIsexpanded();
@@ -58,6 +59,10 @@ function MobileDeviceDisplaydetails({
     } else if (drawerType === "AddtocartSucces") {
       setSuccessaddtocart(true);
     }
+  };
+
+  const Navigatetocart = () => {
+    Navigate("/Shopping_Bag");
   };
 
   return (
@@ -248,9 +253,17 @@ function MobileDeviceDisplaydetails({
             open={Successaddtocart}
             size={360}
             onClose={closedrawers}
-            className="BottomDraver p-0"
+            className="BottomDraver p-0 overflow-y-auto"
           >
-            Hello
+            <div className="SucccessAddTocartArea">
+              <div className="details">
+                <div>SIZE EU 36 / US 4 ADDED TO YOUR SHOPPING BAG</div>
+                <div onClick={Navigatetocart}>VIEW</div>
+              </div>
+              <div>
+                <LikeSomeproducts />
+              </div>
+            </div>
           </Drawer>
         </span>
       )}

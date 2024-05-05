@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Css.css";
 import { countries } from "./../DummyData/Data";
 
@@ -40,7 +40,7 @@ function Address_Conform() {
     phoneNumber: "",
     zipCode: "",
   });
-
+  
   useEffect(() => {
     const handleAutoFill = () => {
       const form = document.getElementById("billingForm");
@@ -110,6 +110,7 @@ function Address_Conform() {
   const handleSelect = (event) => {
     setSelectedCountry(event.target.value);
   };
+
   return (
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
@@ -422,7 +423,7 @@ function Address_Conform() {
                       (!focusedFields.lastName ? "-z-10 top-5" : "")
                     }
                   >
-                   LASTNAME
+                    LASTNAME
                   </label>
                   <input
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
@@ -577,7 +578,7 @@ function Address_Conform() {
                 </div>
               </div>
             </div>
-            <Link className="Cartcontinuebutton" to="/Address_Conform">
+            <Link className="Cartcontinuebutton" to="/method-selection">
               <button className="Contiun">CONTINUE</button>
             </Link>
           </div>

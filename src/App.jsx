@@ -22,6 +22,7 @@ import Chat from "./Components/Chat/Chat.jsx";
 import "./App.css";
 import ChatOne from "./Components/ChatOne/ChatOne.jsx";
 import Address_Conform from "./Components/BillingAddress/Address_Conform";
+import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -70,6 +71,7 @@ function App() {
           <Route path="/New" element={<New />} />
           <Route path="/SingleProduct" element={<SingleProduct />} />
           <Route path="/Address_Conform" element={<Address_Conform />} />
+          <Route path="/method-selection" element={<FinalCartProductView />} />
 
           <Route
             path="/welcome"
