@@ -1,0 +1,247 @@
+.FinalCartProductView {
+    width: 100%;
+    height: auto;
+    padding: 126px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.6s ease;
+}
+
+.FinalView {
+    width: 90%;
+    height: auto;
+    margin: 20px 89px 0px 89px;
+    padding: 20px 0px 0px 0px;
+    transition: all 0.6s ease;
+}
+
+.FinalViewTitleSecond {
+    display: none;
+}
+
+.FinalViewTitleForMobile svg {
+    display: none;
+}
+
+.FinalAdrees {
+    width: 410px;
+    height: 80px;
+    border: 1px solid black;
+    padding: 15px 20px 15px 20px;
+    margin: 20px 0px 0px 0px;
+    font-size: 11px;
+    place-content: center;
+}
+
+.FinalAdrees p {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.FinalAdrees :nth-child(2) {
+    border-bottom: 1px solid black;
+}
+
+.FinalDataAndDate {
+    width: 410px;
+    height: 380px;
+    border: 1px solid black;
+    padding: 25px 0px 25px 0px;
+    margin: 30px 0px 0px 0px;
+    font-size: 11px;
+    place-content: center;
+}
+
+.FinalData {
+    width: 100%;
+    height: 100%;
+}
+
+.FinalData p {
+    margin: 0px 20px 20px 20px;
+    font-size: 12px;
+}
+
+.Finalslides {
+    width: 100%;
+    height: 200px;
+}
+
+.FinalSlidesImg {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.FinalDelevryTime {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-right: 10px;
+    border-top: 1px solid black;
+}
+
+.Detailsfinal {
+    width: 80%;
+    height: 60px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    padding-left: 10px;
+    justify-content: start;
+
+}
+
+.Detailsfinal input[type="checkbox"] {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.Detailsfinal input[type="checkbox"]:checked {
+    background-color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+}
+
+@media (max-width: 1279px) {
+    .FinalCartProductView {
+        padding: 116px 0px 0px 0px;
+    }
+
+    .FinalView {
+        margin: 20px 149px 0px 149px;
+    }
+}
+
+@media (max-width: 1179px) {
+    .FinalCartProductView {
+        padding: 96px 0px 0px 0px;
+    }
+
+    .FinalView {
+        margin: 20px 126px 0px 126px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .FinalCartProductView {
+        padding: 86px 0px 0px 0px;
+    }
+
+    .FinalView {
+        margin: 20px 126px 0px 126px;
+    }
+}
+
+@media (max-width: 970px) {
+    .FinalCartProductView {
+        padding: 76px 0px 0px 0px;
+    }
+
+    .FinalView {
+        margin: 20px 126px 0px 126px;
+    }
+}
+
+@media (max-width: 768px) {
+    .FinalCartProductView {
+        padding: 26px 0px 0px 0px;
+    }
+
+    .FinalViewTitleFist {
+        display: none;
+    }
+
+    .FinalViewTitleForMobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 30px 0px 30px;
+    }
+
+    .FinalViewTitleForMobile svg {
+        display: block;
+    }
+
+    .FinalViewTitleSecond {
+        display: block;
+        padding: 0px 30px 0px 30px;
+    }
+
+    .FinalAdrees :nth-child(2) {
+        display: none;
+    }
+
+    .Finalslides {
+        width: 100%;
+        height: 250px;
+    }
+
+    .Swipe img {
+        object-position: top;
+    }
+
+    .FinalView {
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .FinalAdrees {
+        width: 100%;
+        height: 40px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        border-right: none;
+        border-left: none;
+        padding: 15px 20px 15px 20px;
+        font-size: 11px;
+        place-content: center;
+    }
+
+    .FinalDataAndDate {
+        width: 100%;
+        height: auto;
+    }
+
+    .Detailsfinal {
+        display: flex;
+        gap: 10px;
+        font-weight: bold;
+    }
+
+    .Detailsfinal :nth-child(3) {
+        margin-left: 0px;
+    }
+
+    .FinalDelevryTime {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        padding-right: 10px;
+        border-top: 1px solid black;
+    }
+
+    .Detailsfinal {
+        width: 80%;
+        height: 60px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+        padding-left: 10px;
+        justify-content: start;
+
+    }
+}
