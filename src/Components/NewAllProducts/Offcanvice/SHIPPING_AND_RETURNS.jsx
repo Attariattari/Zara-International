@@ -7,6 +7,7 @@ import Avalibilty from "./Offcanvices/Avalibilty";
 import MEASUREMENT from "./Offcanvices/MEASUREMENT";
 import AddToCart from "./Offcanvices/AddToCart";
 import MEASUREMENTBOTTOM from "./Offcanvices/MEASUREMENTBOTTOM";
+import SizeViewDrawer from "./Offcanvices/SizeViewDrawer";
 
 function SHIPPING_AND_RETURNS({
   open,
@@ -19,6 +20,8 @@ function SHIPPING_AND_RETURNS({
   setADDTOCART,
   MEASUREPENS,
   setMEASUREPENS,
+  SizeView,
+  setSizeView,
 }) {
   const closeDrawer = () => {
     setOpen(false);
@@ -31,7 +34,12 @@ function SHIPPING_AND_RETURNS({
     setMEASUREPENS(false);
   };
 
+  const CloseSizeView = () => {
+    setSizeView(false);
+  };
+
   const [lastDrawerSize, setLastDrawerSize] = useState(560);
+  const [DrawerSize, setDrawerSize] = useState(435);
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -53,13 +61,30 @@ function SHIPPING_AND_RETURNS({
     if (ADDTOCART) return 435;
     return lastDrawerSize;
   };
+
   const getBottomDrawerSize = () => {
     if (MEASUREPENS) return "100%";
   };
+  const DrawerSizeView = () => {
+    if (SizeView) {
+      if (window.innerWidth <= 768) {
+        return "100%";
+      } else {
+        return 435;
+      }
+    } else {
+      return DrawerSize;
+    }
+  };
+
   useEffect(() => {
     if (open) setLastDrawerSize(560);
     if (Avail || MEASURE || ADDTOCART) setLastDrawerSize(300);
   }, [open, Avail, MEASURE, ADDTOCART]);
+
+  useEffect(() => {
+    if (SizeView) setDrawerSize(435);
+  }, [SizeView]);
 
   return (
     <React.Fragment>
@@ -85,6 +110,19 @@ function SHIPPING_AND_RETURNS({
         {MEASUREPENS && (
           <>
             <MEASUREMENTBOTTOM closebottomdrawer={closebottomdrawer} />
+          </>
+        )}
+      </Drawer>
+      <Drawer
+        open={SizeView}
+        size={DrawerSizeView()}
+        onClose={CloseSizeView}
+        placement="right"
+        className="Custom-Drawer bg-white overflow-y-scroll"
+      >
+        {SizeView && (
+          <>
+            <SizeViewDrawer CloseSizeView={CloseSizeView} />
           </>
         )}
       </Drawer>

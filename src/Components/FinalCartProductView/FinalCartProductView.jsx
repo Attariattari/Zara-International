@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { ZaraProducts } from "../DummyData/Data";
+import SHIPPING_AND_RETURNS from "../NewAllProducts/Offcanvice/SHIPPING_AND_RETURNS";
 const FinalCartProductView = () => {
   const womenProducts = [
     ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
@@ -30,6 +31,11 @@ const FinalCartProductView = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const [SizeView, setSizeView] = useState(false);
+
+  const openSizeViewDrawer = () => setSizeView(true);
+
   return (
     <div>
       <div className="sticky top-0 z-10">
@@ -46,22 +52,24 @@ const FinalCartProductView = () => {
           <div className="FinalAdrees">
             <div className="FinalViewTitleForMobile">
               <p>THEME PARK VIEW LAHORE CHUNG</p>
-              <Link>EDIT</Link>
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="inherit"
-                stroke="inherit"
-                class="zds-selection-cell__selection-icon--default cursor-pointer"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
-                ></path>
-              </svg>
+              <Link onClick={openSizeViewDrawer}>EDIT</Link>
+              <span onClick={openSizeViewDrawer}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="inherit"
+                  stroke="inherit"
+                  class="zds-selection-cell__selection-icon--default cursor-pointer"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+                  ></path>
+                </svg>
+              </span>
             </div>
           </div>
           <div className="FinalDataAndDate">
@@ -71,8 +79,6 @@ const FinalCartProductView = () => {
                 <Swiper slidesPerView={3} spaceBetween={0} className="mySwiper">
                   {womenProducts.map((product, index) => (
                     <SwiperSlide key={index} className="Swipe">
-                      {" "}
-                      {/* Ensure each slide has a unique key */}
                       <img
                         className="FinalSlidesImg"
                         src={product.images}
@@ -117,6 +123,10 @@ const FinalCartProductView = () => {
           </div>
         </div>
       </div>
+      <SHIPPING_AND_RETURNS
+        SizeView={SizeView} // Pass SizeView state to control drawer visibility
+        setSizeView={setSizeView} // Pass setSizeView to control drawer state
+      />
     </div>
   );
 };
