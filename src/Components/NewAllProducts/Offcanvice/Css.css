@@ -51,14 +51,16 @@
 }
 
 .SlidesButtonsXS {
-  border: 1px solid black;font-size: 12px;
+  border: 1px solid black;
+  font-size: 12px;
 }
 
 .SlidesButtonsS,
 .SlidesButtonsM, .SlidesButtonsL, .SlidesButtonsXL {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  border-right: 1px solid black;font-size: 12px;
+  border-right: 1px solid black;
+  font-size: 12px;
 }
 
 .activeSize {
@@ -66,7 +68,7 @@
   font-weight: bold;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 12px;
-  
+
   transform: scale(1.1);
 }
 
@@ -79,13 +81,15 @@
   display: flex;
 
 }
-.imageareameasurement{
+
+.imageareameasurement {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
 }
+
 .cartproductinfo img {
   border-right: 1px solid black;
 }
@@ -107,10 +111,11 @@
   color: rgb(129, 129, 129);
 }
 
-.Adreestitle{
+.Adreestitle {
   margin-top: 48px;
-padding-left: 16px;
+  padding-left: 16px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -118,7 +123,7 @@ padding-left: 16px;
 }
 
 .addressfeild {
-  
+
   width: 100%;
   height: 250px;
   padding: 16px;
@@ -137,37 +142,16 @@ padding-left: 16px;
 }
 
 .addresbutton {
-  padding: 8px 16px; /* Adding some padding for better appearance */
+  padding: 8px 16px;
+  /* Adding some padding for better appearance */
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   font-size: 11px;
   margin-top: 40px;
   height: 40px;
 }
-.addresbutton:hover{
+
+.addresbutton:hover {
   color: rgb(58, 58, 58);
   background-color: rgb(243, 243, 243);
 }
-
-/* .addressfeild{
-  width: 100%;
-  height: 250px;
-  padding: 16px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  margin-top: 40px;
-  font-size: 12px;
-  color: rgb(59, 59, 59);
-}
-.addressfeild :nth-child(9){
- margin-top: 5px;
- text-decoration: underline;
- color: black;
- cursor: pointer;
-}
-.addresbutton{
- place-content: end;
- place-items: end;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-} */
