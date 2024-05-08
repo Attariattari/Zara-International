@@ -10,7 +10,7 @@ const SizeViewDrawer = ({ CloseSizeView }) => {
           variant="text"
           color="blue-gray"
           onClick={CloseSizeView}
-          className="sticky top-0 "
+          className="sticky top-0 pr-4"
         >
           <svg
             width="24"

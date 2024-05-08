@@ -1,5 +1,5 @@
 // SHIPPING_AND_RETURNS.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Drawer } from "@material-tailwind/react";
 import "./Css.css";
 import Shipping from "./Offcanvices/Shipping";
@@ -43,7 +43,7 @@ function SHIPPING_AND_RETURNS({
 
   useEffect(() => {
     const body = document.querySelector("body");
-    if (open || Avail || MEASURE || ADDTOCART) {
+    if (open || Avail || MEASURE || ADDTOCART || MEASUREPENS || SizeView) {
       body.style.overflow = "hidden";
     } else {
       body.style.overflow = "auto";
@@ -52,7 +52,7 @@ function SHIPPING_AND_RETURNS({
     return () => {
       body.style.overflow = "auto";
     };
-  }, [open, Avail, MEASURE, ADDTOCART]);
+  }, [open, Avail, MEASURE, ADDTOCART, MEASUREPENS, SizeView]);
 
   const getDrawerSize = () => {
     if (open) return 560;
@@ -93,7 +93,7 @@ function SHIPPING_AND_RETURNS({
         size={getDrawerSize()}
         onClose={closeDrawer}
         placement="right"
-        className="p-4 Custom-Drawer bg-white overflow-y-scroll"
+        className="p-4 Custom-Drawer bg-white"
       >
         {open && <Shipping closeDrawer={closeDrawer} />}
         {Avail && <Avalibilty closeDrawer={closeDrawer} />}
@@ -105,7 +105,7 @@ function SHIPPING_AND_RETURNS({
         size={getBottomDrawerSize()}
         onClose={closebottomdrawer}
         placement="bottom"
-        className="p-4 Custom-Drawer bg-white overflow-y-scroll"
+        className="p-4 Custom-Drawer bg-white"
       >
         {MEASUREPENS && (
           <>
@@ -118,11 +118,13 @@ function SHIPPING_AND_RETURNS({
         size={DrawerSizeView()}
         onClose={CloseSizeView}
         placement="right"
-        className="Custom-Drawer bg-white overflow-y-scroll"
+        className="Custom-Drawer overflow-hidden"
       >
         {SizeView && (
           <>
-            <SizeViewDrawer CloseSizeView={CloseSizeView} />
+            <div className="contentWrapper">
+              <SizeViewDrawer CloseSizeView={CloseSizeView} />
+            </div>
           </>
         )}
       </Drawer>

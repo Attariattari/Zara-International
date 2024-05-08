@@ -84,6 +84,7 @@ const FinalCartProductView = () => {
                         src={product.images}
                         alt=""
                       />
+                      <div className="FinalSHowItemQuantity">10</div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -117,16 +118,18 @@ const FinalCartProductView = () => {
                 </div>
               </div>
             </div>
-            <Link className="Cartcontinuebutton" to="/method-selection">
+            <Link className="Cartcontinuebutton" to="/SelectCardsForPay">
               <button className="Contiun">CONTINUE</button>
             </Link>
           </div>
         </div>
       </div>
-      <SHIPPING_AND_RETURNS
-        SizeView={SizeView} // Pass SizeView state to control drawer visibility
-        setSizeView={setSizeView} // Pass setSizeView to control drawer state
-      />
+      <div style={{ overflow: SizeView ? "hidden" : "auto" }}>
+        <SHIPPING_AND_RETURNS
+          SizeView={SizeView} // Pass SizeView state to control drawer visibility
+          setSizeView={setSizeView} // Pass setSizeView to control drawer state
+        />
+      </div>
     </div>
   );
 };

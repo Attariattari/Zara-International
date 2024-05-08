@@ -1,7 +1,6 @@
 .Custom-Drawer {
   border-left: 1px solid black;
 }
-
 .circle-before,
 .circle-beforetwo {
   position: relative;
@@ -155,3 +154,15 @@
   color: rgb(58, 58, 58);
   background-color: rgb(243, 243, 243);
 }
+.contentWrapper {
+  width: auto;
+}
+
+@media (max-width: 769px) {
+  .contentWrapper {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
+
