@@ -33,7 +33,7 @@ const SelectCardsForPay = () => {
       </div>
       <div className="SelectCardsForPay">
         <div className="CardDataArea">
-          <p>CHOOSE A PAYMENT METHOD</p>
+          <p className="TitleCard">CHOOSE A PAYMENT METHOD</p>
           <div className="CardAbout">
             <p>
               If import costs are not included in your order, you will need to

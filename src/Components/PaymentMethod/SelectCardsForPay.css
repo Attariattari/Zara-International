@@ -49,10 +49,52 @@
     border-left: none;
     border-right: none;
 }
+
 .CardArea :nth-child(3) {
     border-right: none;
 }
 
 .CardArea p {
     margin-top: 5px;
+}
+
+@media (max-width: 1279px) {
+    .SelectCardsForPay {
+        padding: 113px 0px 0px 0px;
+    }
+
+    .CardDataArea {
+        margin: 20px 151px 0px 151px;
+    }
+}
+
+@media (max-width: 1179px) {
+    .SelectCardsForPay {
+        padding: 93px 0px 0px 0px;
+    }
+
+    .CardDataArea {
+        margin: 20px 125px 0px 125px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .SelectCardsForPay {
+        padding: 78px 0px 0px 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    .SelectCardsForPay {
+        padding: 11px 0px 0px 0px;
+    }
+
+    .CardDataArea {
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .TitleCard {
+        padding-left: 15px;
+    }
 }
