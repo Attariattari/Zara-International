@@ -48,7 +48,7 @@ const FinalCartProductView = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  
+
   return (
     <div>
       <div className="sticky top-0 z-10">
@@ -115,7 +115,9 @@ const FinalCartProductView = () => {
       </div>
       <Footer />
       <div className="sticky bottom-0 z-50">
-        <div className={isMobile ? "formobile" : "CartpropccessOrder"}>
+        <div
+          className={isMobile ? "formobile" : "CartpropccessOrder"}
+        >
           <div className="CartPropssesstitle opacity-0">
             *By continuing, I declare that I have read and accept the Purchase
             Conditions and understand Zara's Privacy and Cookie Policy.

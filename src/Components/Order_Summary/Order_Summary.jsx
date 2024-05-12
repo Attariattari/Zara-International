@@ -71,8 +71,9 @@ const Order_Summary = () => {
                       <Link>EDIT</Link>
                     </div>
                   </div>
-
-                  <div></div>
+                  <div className="Order_Summary_DELIVERY_Child_Two">
+                   
+                  </div>
                 </div>
               </div>
               <div>PAYMENT</div>

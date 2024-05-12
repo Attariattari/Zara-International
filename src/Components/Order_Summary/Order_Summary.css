@@ -50,7 +50,9 @@
 .Order_Summary_DELIVERY_Child_one {
     padding: 15px 20px 15px 20px;
 }
-
+.Order_Summary_DELIVERY_Child_Two{
+    padding: 15px 20px 15px 20px;
+}
 .Order_Summart_Edit {
     text-decoration: underline;
     margin-top: 08px;
