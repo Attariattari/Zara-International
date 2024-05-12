@@ -1,0 +1,61 @@
+.Order_Summary {
+    width: 100%;
+    height: auto;
+    padding: 136px 89px 0px 89px;
+}
+
+.Order_Summary_Title_Main {
+    width: 100%;
+}
+
+.Order_Summary_Title {
+    font-size: 12px;
+    width: 390px;
+    margin: 40px 0px 0px 0px;
+    padding: 10px 15px 10px 15px;
+    background-color: #f7f7f7;
+}
+
+.Order_Summary_Main {
+    width: 100%;
+    height: auto;
+}
+
+.Order_Summary_Data {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    margin: 40px 0px 0px 0px;
+    justify-content: space-between;
+    align-content: center;
+    gap: 20px;
+}
+
+.Order_Summary_DELIVERY_Payment {
+    width: 390px;
+}
+
+.Order_Summary_DELIVERY {
+    width: 100%;
+}
+
+.Order_Summary_DELIVERY_Child {
+    width: 100%;
+    height: 350px;
+    border: 1px solid black;
+    margin: 20px 0px 0px 0px;
+    font-size: 12px;
+}
+
+.Order_Summary_DELIVERY_Child_one {
+    padding: 15px 20px 15px 20px;
+}
+
+.Order_Summart_Edit {
+    text-decoration: underline;
+    margin-top: 08px;
+}
+
+.Order_Summary_Shipping {
+    width: 780px;
+}

@@ -155,7 +155,7 @@ const SelectCardsForPay = () => {
               )}
               <Link
                 className="Cartcontinuebutton"
-                to="/SelectCardsForPay"
+                to="/Order_Summary"
                 style={{ width: "100%" }}
               >
                 <button className="Contiun">CONTINUE</button>

@@ -225,7 +225,8 @@
     width: 90%;
     display: flex;
     justify-content: end;
-    padding-left: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .Justshowinpayconform {
@@ -240,11 +241,13 @@
     align-items: center;
     color: grey;
 }
-.Justshowinpayconform :nth-child(3){
+
+.Justshowinpayconform :nth-child(3) {
     font-weight: bold;
     color: black;
 
 }
+
 .Cartcontinuebutton {
     width: 146px;
     color: white;
@@ -331,6 +334,10 @@
 
     .CartPropssesstitle {
         display: none;
+    }
+
+    .CartProccesses div {
+        padding-right: 20px;
     }
 
     .CartProccesses {

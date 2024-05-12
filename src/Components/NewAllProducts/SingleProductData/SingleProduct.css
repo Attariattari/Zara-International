@@ -331,11 +331,11 @@
 }
 
 .Color {
-   display: flex;
-   font-size: 09px;
-   justify-content: center;
-   align-items: center;
-   width: 45px;
+    display: flex;
+    font-size: 09px;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
 }
 
 .box_COLOR {
@@ -555,16 +555,12 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black overlay */
     z-index: 100;
-    /* Ensure overlay is behind offcanvas */
     display: none;
-    /* Initially hidden */
 }
 
 .offcanvas.open+.offcanvas-overlay {
     display: block;
-    /* Show overlay when offcanvas is open */
 }
 
 .SucccessAddTocartArea {
