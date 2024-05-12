@@ -129,13 +129,27 @@ const SelectCardsForPay = () => {
               </svg>
             </div>
           </div>
-          {expendview && <div>hello</div>}
-
+          {expendview && (
+            <div className="Justshowinpayconform">
+              <div>
+                <p>22 Items</p>
+                <p>718.98 EUR</p>
+              </div>
+              <div>
+                <p>SHIPPING</p>
+                <p>19.95 EUR</p>
+              </div>
+              <div>
+                <p>TOTAL</p>
+                <p>738.85 EUR</p>
+              </div>
+            </div>
+          )}
           <div className="CartMobileDataCountinues">
             <div className="CartProccesses">
               {!expendview && (
                 <div className="CartProccessesTotal">
-                  <p>TOTAL</p>
+                  <p>SHIPPING</p>
                   <p>19.95 EUR</p>
                 </div>
               )}

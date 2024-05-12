@@ -222,9 +222,29 @@
 }
 
 .CartProccessesTotal {
-    width: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: end;
+    padding-left: 50px;
 }
 
+.Justshowinpayconform {
+    width: 100%;
+    height: 80px;
+    border-top: 1px solid;
+    padding: 10px 15px 10px 15px;
+    background-color: white;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: grey;
+}
+.Justshowinpayconform :nth-child(3){
+    font-weight: bold;
+    color: black;
+
+}
 .Cartcontinuebutton {
     width: 146px;
     color: white;
