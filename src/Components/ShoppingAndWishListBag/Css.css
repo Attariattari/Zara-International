@@ -122,8 +122,74 @@
     background-color: white;
     border-top: 1px solid black;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.6s ease;
+}
+
+.CartMobileDataCountinues {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-top: 1px solid black;
+}
+
+.ExpendSVGButtonForCart {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ExpendSVGButtonForCart div {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.CartProccessView {
+    width: 100%;
+    height: 78px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.totalitems {
+    opacity: 0;
+    transition: all 0s ease;
+    -webkit-transition: all 0s ease;
+    -moz-transition: all 0s ease;
+    -ms-transition: all 0s ease;
+    -o-transition: all 0s ease;
+}
+
+.show-totalitems {
+    opacity: 1;
+    width: 100%;
+    height: 40px;
+    display: flex;
     justify-content: end;
     align-items: center;
+    padding: 0px 300px 0px 0px;
+    font-size: 10px;
+    gap: 20px;
+    transition: all 0.6s ease;
+}
+
+.CartPropssesstitle {
+    font-size: 12px;
+    padding-left: 20px;
+    width: 70%;
+    transition: all 0.6s ease;
 }
 
 .CartProccesses {
@@ -134,6 +200,7 @@
     align-items: center;
     padding: 0px 0px 0px 0px;
     font-size: 11px;
+    transition: all 0.6s ease;
 }
 
 .CartProccesses div {
@@ -141,17 +208,29 @@
     justify-content: space-between;
     align-items: start;
     gap: 15px;
+    transition: all 0.6s ease;
+}
+
+.CardFinalViewDataanditem {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
 }
 
 .CartProccesses div :nth-child(2) {
     gap: 0px;
 }
 
+.CartProccessesTotal {
+    width: 100%;
+}
+
 .Cartcontinuebutton {
     width: 146px;
     color: white;
     height: 100%;
-    background-color: black;
+    background-color: rgb(225, 41, 41);
+    transition: all 0.6s ease;
 }
 
 .Contiun {
@@ -189,10 +268,11 @@
         object-fit: contain;
         border-bottom: 1px solid black;
     }
+
     .CartProducts {
-       border: none; 
+        border: none;
     }
-    
+
     .Cartdata {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -206,6 +286,7 @@
         padding-top: 144px;
     }
 }
+
 @media (max-width: 850px) {
     .ShoppingBAg {
         padding-top: 134px;
@@ -216,13 +297,35 @@
     .ShoppingBAg {
         padding-top: 94px;
     }
+
     .CartGridView {
         border-right: 1px solid black;
     }
+
     .Cartdata {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         max-width: 100%;
         width: 100%;
+    }
+
+    .CartPropssesstitle {
+        display: none;
+    }
+
+    .CartProccesses {
+        width: 100%;
+        flex-direction: row-reverse;
+    }
+
+    .formobile {
+        width: 100%;
+        height: 50px;
+        flex-direction: row-reverse;
+        background-color: white;
+    }
+
+    .Cartcontinuebutton {
+        width: 50%;
     }
 }

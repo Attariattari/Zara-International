@@ -40,7 +40,7 @@ function Address_Conform() {
     phoneNumber: "",
     zipCode: "",
   });
-  
+
   useEffect(() => {
     const handleAutoFill = () => {
       const form = document.getElementById("billingForm");
@@ -131,11 +131,10 @@ function Address_Conform() {
             <div className="BillingInputArea" id="billingForm">
               <div className="BillingInputAreaFisrt">
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.firstName
+                  className={`mb-4 relative ${focusedFields.firstName
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -192,11 +191,10 @@ function Address_Conform() {
                   </span>
                 </div>
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.address
+                  className={`mb-4 relative ${focusedFields.address
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -233,11 +231,10 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.cityTown
+                  className={`mb-4 relative ${focusedFields.cityTown
                       ? "border-b-1 border-red-500"
                       : "border-b-1"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -275,11 +272,10 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.stateProvince
+                  className={`mb-4 relative ${focusedFields.stateProvince
                       ? "border-b-1 border-red-500"
                       : "border-b-1"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -320,11 +316,10 @@ function Address_Conform() {
                 </div>
                 <span className="BillingAndnumberarea">
                   <div
-                    className={`mb-4 relative ${
-                      focusedFields.prefix
+                    className={`mb-4 relative ${focusedFields.prefix
                         ? "border-b-1 border-red-500"
                         : "border-b-1"
-                    }`}
+                      }`}
                   >
                     <label
                       className={
@@ -363,11 +358,10 @@ function Address_Conform() {
                     )}
                   </div>
                   <div
-                    className={`mb-4 relative ${
-                      focusedFields.phoneNumber
+                    className={`mb-4 relative ${focusedFields.phoneNumber
                         ? "border-b-1 border-red-500"
                         : "border-b-1"
-                    }`}
+                      }`}
                   >
                     <label
                       className={
@@ -411,11 +405,10 @@ function Address_Conform() {
               </div>
               <div className="BillingInputAreaSecond">
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.lastName
+                  className={`mb-4 relative ${focusedFields.lastName
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -468,11 +461,10 @@ function Address_Conform() {
                   </select>
                 </div>
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.addressSecond
+                  className={`mb-4 relative ${focusedFields.addressSecond
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -514,11 +506,10 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${
-                    focusedFields.zipCode
+                  className={`mb-4 relative ${focusedFields.zipCode
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                  }`}
+                    }`}
                 >
                   <label
                     className={
@@ -563,20 +554,11 @@ function Address_Conform() {
       <Footer />
       <div className="sticky bottom-0 z-50">
         <div className="CartpropccessOrder">
+          <div className="CartPropssesstitle opacity-0">*By continuing, I declare that I have read and accept the Purchase Conditions and understand Zara's Privacy and Cookie Policy.</div>
           <div className="CartProccesses">
             <div>
-              <div>TOTAL</div>
-              <div className="flex-col">
-                <div className="pl-4">899.50 EUR</div>
-                <div
-                  className="text-gray-700"
-                  style={{
-                    fontSize: "9px",
-                  }}
-                >
-                  * BEFORE TAXES
-                </div>
-              </div>
+              <p>SHIPPING</p>
+              <p>19.95 EUR</p>
             </div>
             <Link className="Cartcontinuebutton" to="/method-selection">
               <button className="Contiun">CONTINUE</button>

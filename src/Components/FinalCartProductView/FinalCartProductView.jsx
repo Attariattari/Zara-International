@@ -21,6 +21,7 @@ const FinalCartProductView = () => {
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -36,6 +37,18 @@ const FinalCartProductView = () => {
 
   const openSizeViewDrawer = () => setSizeView(true);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
   return (
     <div>
       <div className="sticky top-0 z-10">
@@ -102,21 +115,15 @@ const FinalCartProductView = () => {
       </div>
       <Footer />
       <div className="sticky bottom-0 z-50">
-        <div className="CartpropccessOrder">
+        <div className={isMobile ? "formobile" : "CartpropccessOrder"}>
+          <div className="CartPropssesstitle opacity-0">
+            *By continuing, I declare that I have read and accept the Purchase
+            Conditions and understand Zara's Privacy and Cookie Policy.
+          </div>
           <div className="CartProccesses">
             <div>
-              <div>TOTAL</div>
-              <div className="flex-col">
-                <div className="pl-4">899.50 EUR</div>
-                <div
-                  className="text-gray-700"
-                  style={{
-                    fontSize: "9px",
-                  }}
-                >
-                  * BEFORE TAXES
-                </div>
-              </div>
+              <p>TOTAL</p>
+              <p>19.95 EUR</p>
             </div>
             <Link className="Cartcontinuebutton" to="/SelectCardsForPay">
               <button className="Contiun">CONTINUE</button>

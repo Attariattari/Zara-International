@@ -205,8 +205,9 @@ function ShoppingBag() {
       <Footer />
       <div className="sticky bottom-0 z-50">
         <div className="CartpropccessOrder">
+          <div className="CartPropssesstitle">*By continuing, I declare that I have read and accept the Purchase Conditions and understand Zara's Privacy and Cookie Policy.</div>
           <div className="CartProccesses">
-            <div>
+            <div className="CardTotalShow">
               <div>TOTAL</div>
               <div className="flex-col">
                 <div className="pl-4">899.50 EUR</div>
