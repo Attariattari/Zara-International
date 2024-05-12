@@ -41,7 +41,7 @@
 
 .Order_Summary_DELIVERY_Child {
     width: 100%;
-    height: 350px;
+    height: 300px;
     border: 1px solid black;
     margin: 20px 0px 0px 0px;
     font-size: 12px;
@@ -50,9 +50,12 @@
 .Order_Summary_DELIVERY_Child_one {
     padding: 15px 20px 15px 20px;
 }
-.Order_Summary_DELIVERY_Child_Two{
+
+.Order_Summary_DELIVERY_Child_Two {
     padding: 15px 20px 15px 20px;
+    font-size: 11px;
 }
+
 .Order_Summart_Edit {
     text-decoration: underline;
     margin-top: 08px;
@@ -60,4 +63,29 @@
 
 .Order_Summary_Shipping {
     width: 780px;
+}
+
+.Order_Summary_Payment_Method {
+    width: 100%;
+    height: auto;
+    margin: 25px 0px 0px 0px;
+}
+
+.Order_Summary_Payment_Main {
+    width: 100%;
+    height: auto;
+    margin: 20px 0px 0px 0px;
+    border: 1px solid black;
+    padding: 15px 20px 15px 20px;
+    font-size: 11px;
+}
+.Order_Summary_Payment_Data{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+.Order_Summary_Payment_Image{
+    width: 20%;
+    border: 1px solid black;
 }

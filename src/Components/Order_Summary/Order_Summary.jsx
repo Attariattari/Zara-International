@@ -72,11 +72,46 @@ const Order_Summary = () => {
                     </div>
                   </div>
                   <div className="Order_Summary_DELIVERY_Child_Two">
-                   
+                    <p>GHULAM MUHYO DIN</p>
+                    <p>
+                      Theme park view lahore chung Adalat shah road theme park
+                      view lahore
+                    </p>
+                    <p>chung</p>
+                    <p>53720</p>
+                    <p>Lahore</p>
+                    <p>Punjab</p>
+                    <p>Pakistan</p>
+                    <p>+92 03224458481</p>
+                    <div className="Order_Summart_Edit">
+                      <Link>EDIT</Link>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div>PAYMENT</div>
+              <div className="Order_Summary_Payment_Method">
+                <p>PAYMENT</p>
+                <div className="Order_Summary_Payment_Main">
+                  <div className="Order_Summary_Payment_Data">
+                    <div className="Order_Summary_Payment_Image">
+                      <img
+                        src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <p>PAYPAL</p>
+                      <p>
+                        You will be redirected to the PayPal website, where you
+                        can finalise payment.
+                      </p>
+                    </div>
+                  </div>{" "}
+                  <div className="Order_Summart_Edit">
+                    <Link>EDIT</Link>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="Order_Summary_Shipping">SHIPPING DETAILS </div>
           </div>
