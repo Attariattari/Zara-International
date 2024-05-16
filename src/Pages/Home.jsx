@@ -17,7 +17,7 @@ const isVideo = (url) => {
 // Helper function to generate slides based on image URLs
 const getSlides = (category, imageUrls) => {
   return imageUrls.map((imageUrl, index) => (
-    <SwiperSlide key={`${category}-slide-${index}`}>
+    <SwiperSlide className="Swiper__Slide" key={`${category}-slide-${index}`}>
       {index === 0 && isVideo(imageUrl) ? (
         <Link to="/New">
           <video
@@ -32,7 +32,12 @@ const getSlides = (category, imageUrls) => {
           </video>
         </Link>
       ) : (
-        <img src={imageUrl} alt="" onClick={() => navigate("/New")} />
+        <img
+          src={imageUrl}
+          alt=""
+          className="Swiper_Slider_Images"
+          onClick={() => navigate("/New")}
+        />
       )}
     </SwiperSlide>
   ));
@@ -75,7 +80,7 @@ export default function Home() {
     },
     kids: {
       main: [
-        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png",
+        "https://wallpapercave.com/wp/wp8575693.jpg",
         "https://previews.123rf.com/images/olgagi/olgagi1805/olgagi180500032/101295477-collection-of-child-s-clothes-kid-s-summerclothing-set-isolated.jpg",
       ],
       babyshirts: [
@@ -88,7 +93,7 @@ export default function Home() {
       ],
       babyjacket: [
         "https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
-        "https://wallpapercave.com/wp/wp8575693.jpg",
+        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png"
       ],
       babyshoes: [
         "https://images.pexels.com/photos/1094084/pexels-photo-1094084.jpeg?cs=srgb&dl=pexels-vika-glitter-392079-1094084.jpg&fm=jpg",
