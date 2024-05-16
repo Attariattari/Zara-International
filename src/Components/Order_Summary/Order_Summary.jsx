@@ -96,7 +96,19 @@ const Order_Summary = () => {
                 <p>22 products</p>
               </div>
               <div className="Order_Summary_Data_Mobile_Product_Swiper">
-                <Swiper slidesPerView={6} spaceBetween={0} className="mySwiper">
+                <Swiper
+                  slidesPerView={6}
+                  breakpoints={{
+                    320: { slidesPerView: 2 },
+                    480: { slidesPerView: 4 },
+                    640: { slidesPerView: 4 },
+                    768: { slidesPerView: 4 },
+                    1024: { slidesPerView: 5 },
+                    1200: { slidesPerView: 6 },
+                  }}
+                  spaceBetween={0}
+                  className="mySwiper"
+                >
                   {womenProducts.map((product, index) => (
                     <SwiperSlide key={index}>
                       <img
