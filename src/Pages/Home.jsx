@@ -43,8 +43,8 @@ export default function Home() {
     women: {
       main: [
         "https://images.pexels.com/photos/1126993/pexels-photo-1126993.jpeg?cs=srgb&dl=pexels-kowalievska-1126993.jpg&fm=jpg",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-562e4cc7-7c05-45fb-99ad-58730d80dd2d-default_0.jpg?ts=1709378175316",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-09-3//w/752/IMAGE-portrait-ipad-fill-7f7c51d7-9bf5-4005-9035-52b7872fc209-default_0.jpg?ts=1709378175254",
+        "https://images.pexels.com/photos/1198178/pexels-photo-1198178.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/1034859/pexels-photo-1034859.jpeg",
       ],
       shirts: [
         "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-867eefad-386e-4097-acd2-68f66a2348b7-default_0.jpg?ts=1709377968225",

@@ -223,7 +223,7 @@
 }
 
 .CartProccessesTotal {
-    width: 90%;
+    width: 83%;
     display: flex;
     justify-content: end;
     padding-left: 20px;
@@ -344,6 +344,12 @@
     .CartProccesses {
         width: 100%;
         flex-direction: row-reverse;
+        padding: 0px;
+    }
+
+    .CartProccessesTotal {
+        padding-left: 0px;
+        padding-right: 0px;
     }
 
     .formobile {

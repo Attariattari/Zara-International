@@ -104,37 +104,37 @@ const Order_Summary = () => {
                         src={product.images}
                         alt=""
                       />
-                      <div className="Order_Summary_Shipping_Product_Quantity">
+                      <div className="Order_Summary_Data_Mobile_Product_Quantity">
                         10
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
-              <div className="Order_Summary_DELIVERY_Child_one">
+              <div className="Order_Summary_Data_Mobile_Delivery_Type">
                 <div>
                   <p>EXPRESS HOME DELIVERY</p>
-                  <p>THURSDAY 23, MAY - TUESDAY 28, MAY</p>
-                  <div>
-                    <svg
-                      class="order-summary-block__link-icon"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="inherit"
-                      stroke="inherit"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
-                      ></path>
-                    </svg>
-                  </div>
+                  <p>THURSDAY 23, MAY - TUESDAY 28, MAY</p>{" "}
+                </div>
+                <div>
+                  <svg
+                    class="order-summary-block__link-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="inherit"
+                    stroke="inherit"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+                    ></path>
+                  </svg>
                 </div>
               </div>
-              <div>
+              <div className="Order_Summary_Data_Mobile_Address_View">
                 <div>
                   <p>GHULAM MUHYO DIN</p>
                   <p>
@@ -147,47 +147,56 @@ const Order_Summary = () => {
                   <p>Punjab</p>
                   <p>Pakistan</p>
                   <p>+92 03224458481</p>
-                  <div>
-                    <svg
-                      class="order-summary-block__link-icon"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="inherit"
-                      stroke="inherit"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
-                      ></path>
-                    </svg>
-                  </div>
+                </div>
+                <div className="Order_Summary_Data_Mobile_Address_View_SVG">
+                  <svg
+                    class="order-summary-block__link-icon cursor-pointer"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="inherit"
+                    stroke="inherit"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+                    ></path>
+                  </svg>
                 </div>
               </div>
-              <div className="Order_Summary_Payment_Method">
-                <p>PAYMENT</p>
-                <div className="Order_Summary_Payment_Main">
-                  <div className="Order_Summary_Payment_Data">
-                    <div className="Order_Summary_Payment_Image">
-                      <img
-                        src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p>PAYPAL</p>
-                      <p>
-                        You will be redirected to the PayPal website, where you
-                        can finalise payment.
-                      </p>
-                    </div>
-                  </div>{" "}
-                  <div className="Order_Summart_Edit">
-                    <Link>EDIT</Link>
+              <div className="Order_Summary_Data_Mobile_Payment_Method">
+                <div className="Order_Summary_Payment_Data">
+                  <div className="Order_Summary_Payment_Image">
+                    <img
+                      src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
+                      alt=""
+                    />
                   </div>
-                </div>
+                  <div>
+                    <p>PAYPAL</p>
+                    <p>
+                      You will be redirected to the PayPal website, where you
+                      can finalise payment.
+                    </p>
+                  </div>
+                </div>{" "}
+                <svg
+                  class="order-summary-block__link-icon cursor-pointer"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="inherit"
+                  stroke="inherit"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+                  ></path>
+                </svg>
               </div>
             </div>
           </div>
