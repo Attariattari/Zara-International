@@ -145,6 +145,37 @@
     bottom: 0;
 }
 
+/* Just Dis[lay for mobile */
+.Order_Summary_Data_Mobile {
+    width: 100%;
+    height: auto;
+    background-color: cornflowerblue;
+}
+
+.Order_Summary_Data_Mobile_Delivery {
+    width: 100%;
+    height: 30px;
+    gap: 5px;
+    font-size: 11px;
+    margin-top: 25px;
+    padding: 0px 0px 0px 20px;
+    background-color: darkgreen;
+}
+
+.Order_Summary_Data_Mobile_Product_Swiper {
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+}
+
+.Order_Summary_Data_Mobile_Product_Swiper_Slide {
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    position: relative;
+}
+
+
 @media (max-width: 1279px) {
     .Order_Summary {
         width: 100%;
@@ -252,6 +283,7 @@
     .Order_Summary {
         padding: 31px 0px 0px 0px;
     }
+
     .Order_Summary_Title_Main {
 
         width: 100%;
@@ -260,7 +292,7 @@
     }
 
     .Order_Summary_Title {
-        font-size: 12px;
+        font-size: 11px;
         width: 100%;
         margin: 40px 0px 0px 0px;
         padding: 10px 15px 10px 15px;

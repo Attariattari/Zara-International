@@ -90,106 +90,102 @@ const Order_Summary = () => {
                 pay them locally.
               </p>
             </div>
-            <div className="Order_Summary_Data">
-              <div className="Order_Summary_DELIVERY_Payment">
-                <div className="Order_Summary_DELIVERY">
-                  <p>DELIVERY</p>
-                  <div className="Order_Summary_DELIVERY_Child">
-                    <div className="Order_Summary_DELIVERY_Child_one">
-                      <p>
-                        EXPRESS HOME DELIVERY · THURSDAY 16, MAY - TUESDAY 21,
-                        MAY
-                      </p>
-                      <div className="Order_Summart_Edit">
-                        <Link>EDIT</Link>
+            <div className="Order_Summary_Data_Mobile">
+              <div className="Order_Summary_Data_Mobile_Delivery">
+                <p>DELIVERY THURSDAY 23, MAY - TUESDAY 28, MAY</p>
+                <p>22 products</p>
+              </div>
+              <div className="Order_Summary_Data_Mobile_Product_Swiper">
+                <Swiper slidesPerView={6} spaceBetween={0} className="mySwiper">
+                  {womenProducts.map((product, index) => (
+                    <SwiperSlide key={index}>
+                      <img
+                        className="Order_Summary_Data_Mobile_Product_Swiper_Slide"
+                        src={product.images}
+                        alt=""
+                      />
+                      <div className="Order_Summary_Shipping_Product_Quantity">
+                        10
                       </div>
-                    </div>
-                    <div className="Order_Summary_DELIVERY_Child_Two">
-                      <p>GHULAM MUHYO DIN</p>
-                      <p>
-                        Theme park view lahore chung Adalat shah road theme park
-                        view lahore
-                      </p>
-                      <p>chung</p>
-                      <p>53720</p>
-                      <p>Lahore</p>
-                      <p>Punjab</p>
-                      <p>Pakistan</p>
-                      <p>+92 03224458481</p>
-                      <div className="Order_Summart_Edit">
-                        <Link>EDIT</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="Order_Summary_Payment_Method">
-                  <p>PAYMENT</p>
-                  <div className="Order_Summary_Payment_Main">
-                    <div className="Order_Summary_Payment_Data">
-                      <div className="Order_Summary_Payment_Image">
-                        <img
-                          src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div>
-                        <p>PAYPAL</p>
-                        <p>
-                          You will be redirected to the PayPal website, where
-                          you can finalise payment.
-                        </p>
-                      </div>
-                    </div>{" "}
-                    <div className="Order_Summart_Edit">
-                      <Link>EDIT</Link>
-                    </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+              <div className="Order_Summary_DELIVERY_Child_one">
+                <div>
+                  <p>EXPRESS HOME DELIVERY</p>
+                  <p>THURSDAY 23, MAY - TUESDAY 28, MAY</p>
+                  <div>
+                    <svg
+                      class="order-summary-block__link-icon"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="inherit"
+                      stroke="inherit"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+                      ></path>
+                    </svg>
                   </div>
                 </div>
               </div>
-              <div className="Order_Summary_Shipping">
-                <div className="Order_Summary_Shipping_Main">
-                  <p> SHIPPING DETAILS</p>
-                  <div className="Order_Summary_Shipping_Data">
-                    <div className="Order_Summary_Shipping_Child">
-                      <p>DELIVERY THURSDAY 16, MAY - TUESDAY 21, MAY</p>
-                      <p>22 products</p>
+              <div>
+                <div>
+                  <p>GHULAM MUHYO DIN</p>
+                  <p>
+                    Theme park view lahore chung Adalat shah road theme park
+                    view lahore
+                  </p>
+                  <p>chung</p>
+                  <p>53720</p>
+                  <p>Lahore</p>
+                  <p>Punjab</p>
+                  <p>Pakistan</p>
+                  <p>+92 03224458481</p>
+                  <div>
+                    <svg
+                      class="order-summary-block__link-icon"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="inherit"
+                      stroke="inherit"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div className="Order_Summary_Payment_Method">
+                <p>PAYMENT</p>
+                <div className="Order_Summary_Payment_Main">
+                  <div className="Order_Summary_Payment_Data">
+                    <div className="Order_Summary_Payment_Image">
+                      <img
+                        src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
+                        alt=""
+                      />
                     </div>
-                    <div className="Order_Summary_Shipping_Product_Swiper">
-                      <Swiper
-                        breakpoints={{
-                          320: {
-                            slidesPerView: 1,
-                          },
-                          480: {
-                            slidesPerView: 2,
-                          },
-                          640: {
-                            slidesPerView: 3,
-                          },
-                          768: {
-                            slidesPerView: 4,
-                          },
-                          1024: {
-                            slidesPerView: 6,
-                          },
-                        }}
-                        spaceBetween={0}
-                        className="mySwiper"
-                      >
-                        {womenProducts.map((product, index) => (
-                          <SwiperSlide key={index}>
-                            <img
-                              className="Order_Summary_Shipping_Product_Swiper_Slide"
-                              src={product.images}
-                              alt=""
-                            />
-                            <div className="Order_Summary_Shipping_Product_Quantity">
-                              10
-                            </div>
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
+                    <div>
+                      <p>PAYPAL</p>
+                      <p>
+                        You will be redirected to the PayPal website, where you
+                        can finalise payment.
+                      </p>
                     </div>
+                  </div>{" "}
+                  <div className="Order_Summart_Edit">
+                    <Link>EDIT</Link>
                   </div>
                 </div>
               </div>
