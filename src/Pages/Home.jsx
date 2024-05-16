@@ -47,12 +47,17 @@ export default function Home() {
         "https://images.pexels.com/photos/1034859/pexels-photo-1034859.jpeg",
       ],
       shirts: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-09-3//w/1360/IMAGE-landscape-fill-867eefad-386e-4097-acd2-68f66a2348b7-default_0.jpg?ts=1709377968225",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-collection/subhome-xmedia-09-3//w/752/IMAGE-portrait-ipad-fill-db02bd1f-c8ce-475e-bdb6-23cec7d89601-default_0.jpg?ts=1709377968843",
+        "https://c0.wallpaperflare.com/preview/710/671/653/people-girl-female-lady.jpg",
+        "https://w0.peakpx.com/wallpaper/114/476/HD-wallpaper-gorgeous-girl-outdoors-wearing-sport-clothes-girls-model.jpg",
       ],
       shoes: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-jackets/subhome-xmedia-09//w/1360/IMAGE-landscape-fill-d4a646af-9c1d-4491-9777-82a3e0d3677e-default_0.jpg?ts=1709378834738",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-jackets/subhome-xmedia-09//w/752/IMAGE-portrait-ipad-fill-71f75e6b-3a79-4662-9127-4770c802d6c3-default_0.jpg?ts=1709378835559",
+        "https://images3.alphacoders.com/117/1174056.jpg",
+        "https://www.hdwallpapers.in/download/girl_model_is_wearing_red_dress_4k_hd_girls-2560x1440.jpg",
+      ],
+      Blaouse: [
+        "https://www.hdwallpapers.in/download/women_model_black_dress_4k_5k_hd-HD.jpg",
+        "https://rare-gallery.com/mocahbig/82116-dress-girls-model-hd-4k-5k.jpg",
+        "https://www.pixel4k.com/wp-content/uploads/2019/12/black-dress-clothing-girl_1575665766.jpg",
       ],
     },
     men: {
@@ -70,24 +75,24 @@ export default function Home() {
     },
     kids: {
       main: [
-        "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-join-life/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-b9e660c9-aad1-46c7-ae19-1e2b1ac59952-default_0.jpg?ts=1708517450733",
+        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png",
+        "https://previews.123rf.com/images/olgagi/olgagi1805/olgagi180500032/101295477-collection-of-child-s-clothes-kid-s-summerclothing-set-isolated.jpg",
       ],
       babyshirts: [
-        "https://static.zara.net/photos///2024/V/0/3/p/1381/555/250/202/w/680/1381555250_15_1_1.jpg?ts=1707404521869",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babygirl/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d55e6a7d-2adf-41fa-a2a7-a75d3aa73810-default_0.jpg?ts=1708674688839",
+        "https://t4.ftcdn.net/jpg/04/64/71/65/360_F_464716593_LD9IBzIJwlRMwQzjqVwHLL7XeupROIlS.jpg",
+        "https://images.unsplash.com/photo-1604467794349-0b74285de7e7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
       ],
       babypants: [
-        "https://static.zara.net/photos///2024/V/0/3/p/4551/601/400/102/w/680/4551601400_15_1_1.jpg?ts=1708333336700",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-babyboy/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-cb411d26-25e5-48ec-8ea1-19b9cdf37824-default_0.jpg?ts=1708674772320",
+        "https://e1.pxfuel.com/desktop-wallpaper/760/61/desktop-wallpaper-kids-fashion-baby-clothes.jpg",
+        "https://e1.pxfuel.com/desktop-wallpaper/500/124/desktop-wallpaper-kids%EE%80%81-fashion-clothes-clothing-cute-pinterest-kids-fashion.jpg",
       ],
       babyjacket: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-boy/subhome-xmedia-8//w/1360/IMAGE-landscape-default-fill-b7fed291-ba37-46d4-810e-72d79817116f-default_0.jpg?ts=1708674246835",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-newborn/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-d87712bf-5c3f-4d5e-b062-8bf9539aa911-default_0.jpg?ts=1708675587550",
+        "https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
+        "https://wallpapercave.com/wp/wp8575693.jpg",
       ],
       babyshoes: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-mini-baby/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-9096e347-f709-4820-b5de-4da08a298c6b-default_0.jpg?ts=1708674634462",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-kids-shoes-bags/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-ebccf7f3-d14f-43cb-9f99-7732fab9ae36-default_0.jpg?ts=1708674252344",
+        "https://images.pexels.com/photos/1094084/pexels-photo-1094084.jpeg?cs=srgb&dl=pexels-vika-glitter-392079-1094084.jpg&fm=jpg",
+        "https://static.yfswebstatic.com/desktop/assets/img/better-product2.11a83cab.jpg",
       ],
     },
   };
