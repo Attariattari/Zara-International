@@ -3,12 +3,20 @@ import Navbar from "../Navbar/Navbar";
 import "./Order_Summary.css";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
-
+import { ZaraProducts } from "../DummyData/Data";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
 const Order_Summary = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [FullDisplayData, setFullDisplayData] = useState(
+    window.innerWidth < 768
+  );
   const [expendview, setExpendview] = useState();
   const [Totoalitemshow, setTotoalitemshow] = useState(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -32,6 +40,18 @@ const Order_Summary = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleDataView = () => {
+      setFullDisplayData(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleDataView);
+
+    return () => {
+      window.removeEventListener("resize", handleDataView);
+    };
+  }, []);
+
   const Totalviewshow = () => {
     setTotoalitemshow(true);
   };
@@ -43,80 +63,249 @@ const Order_Summary = () => {
     setExpendview(!expendview);
   };
 
+  const womenProducts = [
+    ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
+    ZaraProducts.Women.SATINY_BLAZER,
+    ZaraProducts.Women.FITTED_BLAZER,
+    ZaraProducts.Women.ASYMMETRIC_TULLE_DRESS,
+    ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
+    ZaraProducts.Women.OVERSIZE_CRINKLE,
+    ZaraProducts.Women.OVERSIZE_CRINKLE,
+  ];
+
   return (
     <div>
-      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
-        <div className="absolute w-full">
+      <div className="sticky top-0 z-10 ">
+        <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
           <Navbar />
         </div>
       </div>
-      <div className="Order_Summary">
-        <div className="Order_Summary_Main">
-          <div className="Order_Summary_Title_Main">
-            <p className="Order_Summary_Title">
-              If import costs are not included in your order, you will need to
-              pay them locally.
-            </p>
-          </div>
-          <div className="Order_Summary_Data">
-            <div className="Order_Summary_DELIVERY_Payment">
-              <div className="Order_Summary_DELIVERY">
-                <p>DELIVERY</p>
-                <div className="Order_Summary_DELIVERY_Child">
-                  <div className="Order_Summary_DELIVERY_Child_one">
-                    <p>
-                      EXPRESS HOME DELIVERY · THURSDAY 16, MAY - TUESDAY 21, MAY
-                    </p>
-                    <div className="Order_Summart_Edit">
-                      <Link>EDIT</Link>
+
+      {FullDisplayData ? (
+        <div className="Order_Summary">
+          <div className="Order_Summary_Main">
+            <div className="Order_Summary_Title_Main">
+              <p className="Order_Summary_Title">
+                If import costs are not included in your order, you will need to
+                pay them locally.
+              </p>
+            </div>
+            <div className="Order_Summary_Data">
+              <div className="Order_Summary_DELIVERY_Payment">
+                <div className="Order_Summary_DELIVERY">
+                  <p>DELIVERY</p>
+                  <div className="Order_Summary_DELIVERY_Child">
+                    <div className="Order_Summary_DELIVERY_Child_one">
+                      <p>
+                        EXPRESS HOME DELIVERY · THURSDAY 16, MAY - TUESDAY 21,
+                        MAY
+                      </p>
+                      <div className="Order_Summart_Edit">
+                        <Link>EDIT</Link>
+                      </div>
+                    </div>
+                    <div className="Order_Summary_DELIVERY_Child_Two">
+                      <p>GHULAM MUHYO DIN</p>
+                      <p>
+                        Theme park view lahore chung Adalat shah road theme park
+                        view lahore
+                      </p>
+                      <p>chung</p>
+                      <p>53720</p>
+                      <p>Lahore</p>
+                      <p>Punjab</p>
+                      <p>Pakistan</p>
+                      <p>+92 03224458481</p>
+                      <div className="Order_Summart_Edit">
+                        <Link>EDIT</Link>
+                      </div>
                     </div>
                   </div>
-                  <div className="Order_Summary_DELIVERY_Child_Two">
-                    <p>GHULAM MUHYO DIN</p>
-                    <p>
-                      Theme park view lahore chung Adalat shah road theme park
-                      view lahore
-                    </p>
-                    <p>chung</p>
-                    <p>53720</p>
-                    <p>Lahore</p>
-                    <p>Punjab</p>
-                    <p>Pakistan</p>
-                    <p>+92 03224458481</p>
+                </div>
+                <div className="Order_Summary_Payment_Method">
+                  <p>PAYMENT</p>
+                  <div className="Order_Summary_Payment_Main">
+                    <div className="Order_Summary_Payment_Data">
+                      <div className="Order_Summary_Payment_Image">
+                        <img
+                          src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <p>PAYPAL</p>
+                        <p>
+                          You will be redirected to the PayPal website, where
+                          you can finalise payment.
+                        </p>
+                      </div>
+                    </div>{" "}
                     <div className="Order_Summart_Edit">
                       <Link>EDIT</Link>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="Order_Summary_Payment_Method">
-                <p>PAYMENT</p>
-                <div className="Order_Summary_Payment_Main">
-                  <div className="Order_Summary_Payment_Data">
-                    <div className="Order_Summary_Payment_Image">
-                      <img
-                        src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
-                        alt=""
-                      />
+              <div className="Order_Summary_Shipping">
+                <div className="Order_Summary_Shipping_Main">
+                  <p> SHIPPING DETAILS</p>
+                  <div className="Order_Summary_Shipping_Data">
+                    <div className="Order_Summary_Shipping_Child">
+                      <p>DELIVERY THURSDAY 16, MAY - TUESDAY 21, MAY</p>
+                      <p>22 products</p>
                     </div>
-                    <div>
-                      <p>PAYPAL</p>
-                      <p>
-                        You will be redirected to the PayPal website, where you
-                        can finalise payment.
-                      </p>
+                    <div className="Order_Summary_Shipping_Product_Swiper">
+                      <Swiper
+                        breakpoints={{
+                          320: {
+                            slidesPerView: 1,
+                          },
+                          480: {
+                            slidesPerView: 2,
+                          },
+                          640: {
+                            slidesPerView: 3,
+                          },
+                          768: {
+                            slidesPerView: 4,
+                          },
+                          1024: {
+                            slidesPerView: 6,
+                          },
+                        }}
+                        spaceBetween={0}
+                        className="mySwiper"
+                      >
+                        {womenProducts.map((product, index) => (
+                          <SwiperSlide key={index}>
+                            <img
+                              className="Order_Summary_Shipping_Product_Swiper_Slide"
+                              src={product.images}
+                              alt=""
+                            />
+                            <div className="Order_Summary_Shipping_Product_Quantity">
+                              10
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
                     </div>
-                  </div>{" "}
-                  <div className="Order_Summart_Edit">
-                    <Link>EDIT</Link>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="Order_Summary_Shipping">SHIPPING DETAILS </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="Order_Summary">
+          <div className="Order_Summary_Main">
+            <div className="Order_Summary_Data">
+              <div className="Order_Summary_DELIVERY_Payment">
+                <div className="Order_Summary_DELIVERY">
+                  <p>DELIVERY</p>
+                  <div className="Order_Summary_DELIVERY_Child">
+                    <div className="Order_Summary_DELIVERY_Child_one">
+                      <p>
+                        EXPRESS HOME DELIVERY · THURSDAY 16, MAY - TUESDAY 21,
+                        MAY
+                      </p>
+                      <div className="Order_Summart_Edit">
+                        <Link>EDIT</Link>
+                      </div>
+                    </div>
+                    <div className="Order_Summary_DELIVERY_Child_Two">
+                      <p>GHULAM MUHYO DIN</p>
+                      <p>
+                        Theme park view lahore chung Adalat shah road theme park
+                        view lahore
+                      </p>
+                      <p>chung</p>
+                      <p>53720</p>
+                      <p>Lahore</p>
+                      <p>Punjab</p>
+                      <p>Pakistan</p>
+                      <p>+92 03224458481</p>
+                      <div className="Order_Summart_Edit">
+                        <Link>EDIT</Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="Order_Summary_Payment_Method">
+                  <p>PAYMENT</p>
+                  <div className="Order_Summary_Payment_Main">
+                    <div className="Order_Summary_Payment_Data">
+                      <div className="Order_Summary_Payment_Image">
+                        <img
+                          src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-paypal_new.svg"
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <p>PAYPAL</p>
+                        <p>
+                          You will be redirected to the PayPal website, where
+                          you can finalise payment.
+                        </p>
+                      </div>
+                    </div>{" "}
+                    <div className="Order_Summart_Edit">
+                      <Link>EDIT</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="Order_Summary_Shipping">
+                <div className="Order_Summary_Shipping_Main">
+                  <p> SHIPPING DETAILS</p>
+                  <div className="Order_Summary_Shipping_Data">
+                    <div className="Order_Summary_Shipping_Child">
+                      <p>DELIVERY THURSDAY 16, MAY - TUESDAY 21, MAY</p>
+                      <p>22 products</p>
+                    </div>
+                    <div className="Order_Summary_Shipping_Product_Swiper">
+                      <Swiper
+                        breakpoints={{
+                          320: {
+                            slidesPerView: 1,
+                          },
+                          480: {
+                            slidesPerView: 2,
+                          },
+                          640: {
+                            slidesPerView: 3,
+                          },
+                          768: {
+                            slidesPerView: 4,
+                          },
+                          1024: {
+                            slidesPerView: 6,
+                          },
+                        }}
+                        spaceBetween={0}
+                        className="mySwiper"
+                      >
+                        {womenProducts.map((product, index) => (
+                          <SwiperSlide key={index}>
+                            <img
+                              className="Order_Summary_Shipping_Product_Swiper_Slide"
+                              src={product.images}
+                              alt=""
+                            />
+                            <div className="Order_Summary_Shipping_Product_Quantity">
+                              10
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
       {isMobile ? (
         <div className="sticky bottom-0 z-50">

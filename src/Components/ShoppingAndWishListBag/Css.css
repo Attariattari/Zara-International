@@ -193,7 +193,7 @@
 }
 
 .CartProccesses {
-    width: 300px;
+    width: 370px;
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -201,6 +201,7 @@
     padding: 0px 0px 0px 0px;
     font-size: 11px;
     transition: all 0.6s ease;
+    gap: 30px;
 }
 
 .CartProccesses div {
