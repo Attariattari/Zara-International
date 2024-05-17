@@ -43,6 +43,99 @@ const InterCardData = () => {
     };
   }, []);
 
+  // // Input Code Functions
+  // const handleInputFocus = (fieldName) => {
+  //   setFocusedFields((prev) => ({
+  //     ...prev,
+  //     [fieldName]: true,
+  //   }));
+  //   setErrors((prev) => ({
+  //     ...prev,
+  //     [fieldName]: "",
+  //   }));
+  // };
+
+  // const handleInputBlur = (fieldName, value) => {
+  //   if (!value) {
+  //     setErrors((prev) => ({
+  //       ...prev,
+  //       [fieldName]: "Required!",
+  //     }));
+  //     setFocusedFields((prev) => ({
+  //       ...prev,
+  //       [fieldName]: false,
+  //     }));
+  //   }
+  // };
+
+  // const [focusedFields, setFocusedFields] = useState({
+  //   cardNumber: false,
+  //   cardName: false,
+  //   cardCVC: false,
+  //   email: false,
+  // });
+
+  // useEffect(() => {
+  //   const handleAutoFill = () => {
+  //     const form = document.getElementById("billingForm");
+  //     const inputs = form.querySelectorAll("input, select");
+
+  //     const allFieldsFilled = Array.from(inputs).every(
+  //       (input) => input.value !== ""
+  //     );
+
+  //     if (allFieldsFilled) {
+  //       setFocusedFields({
+  //         cardNumber: true,
+  //         cardName: true,
+  //         cardCVC: true,
+  //         email: true,
+  //       });
+  //     }
+  //   };
+
+  //   const form = document.getElementById("billingForm");
+  //   form.addEventListener("change", handleAutoFill);
+
+  //   return () => {
+  //     form.removeEventListener("change", handleAutoFill);
+  //   };
+  // }, []);
+
+  // const [formData, setFormData] = useState({
+  //   cardNumber: "",
+  //   cardCVC: "",
+  //   email: "",
+  //   cardMonth: "",
+  //   cardYear: "",
+  // });
+
+  // const [errors, setErrors] = useState({
+  //   cardNumber: "",
+  //   cardCVC: "",
+  //   email: "",
+  //   cardMonth: "",
+  //   cardYear: "",
+  // });
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const months = Array.from({ length: 12 }, (_, i) => {
+  //   const month = (i + 1).toString().padStart(2, "0");
+  //   return { value: month, label: month };
+  // });
+
+  // const currentYear = new Date().getFullYear();
+  // const years = Array.from({ length: 10 }, (_, i) => {
+  //   const year = (currentYear + i).toString();
+  //   return { value: year, label: year };
+  // });
   // Input Code Functions
   const handleInputFocus = (fieldName) => {
     setFocusedFields((prev) => ({
@@ -55,22 +148,70 @@ const InterCardData = () => {
     }));
   };
 
+  const validateCardNumber = (number) => {
+    const cardNumberRegex = /^[0-9]{16}$/;
+    return cardNumberRegex.test(number);
+  };
+
+  const validateCardHolder = (name) => {
+    return name.trim().length > 0;
+  };
+
+  const validateCVC = (cvc) => {
+    const cvcRegex = /^[0-9]{3,4}$/;
+    return cvcRegex.test(cvc);
+  };
+
+  const validateExpiryDate = (month, year) => {
+    if (!month || !year) return false;
+    const currentDate = new Date();
+    const selectedDate = new Date(year, month);
+    return selectedDate > currentDate;
+  };
+
   const handleInputBlur = (fieldName, value) => {
-    if (!value) {
-      setErrors((prev) => ({
-        ...prev,
-        [fieldName]: "Required!",
-      }));
-      setFocusedFields((prev) => ({
-        ...prev,
-        [fieldName]: false,
-      }));
+    let error = "";
+    switch (fieldName) {
+      case "cardNumber":
+        if (!validateCardNumber(value)) {
+          error = "Invalid card number!";
+        }
+        break;
+      case "cardHolder":
+        if (!validateCardHolder(value)) {
+          error = "Card holder name is required!";
+        }
+        break;
+      case "cardCVC":
+        if (!validateCVC(value)) {
+          error = "Invalid CVC!";
+        }
+        break;
+      case "cardMonth":
+      case "cardYear":
+        if (!validateExpiryDate(formData.cardMonth, formData.cardYear)) {
+          error = "Invalid expiry date!";
+        }
+        break;
+      default:
+        if (!value) {
+          error = "Required!";
+        }
     }
+
+    setErrors((prev) => ({
+      ...prev,
+      [fieldName]: error,
+    }));
+    setFocusedFields((prev) => ({
+      ...prev,
+      [fieldName]: false,
+    }));
   };
 
   const [focusedFields, setFocusedFields] = useState({
     cardNumber: false,
-    cardName: false,
+    cardHolder: false,
     cardCVC: false,
     email: false,
   });
@@ -87,7 +228,7 @@ const InterCardData = () => {
       if (allFieldsFilled) {
         setFocusedFields({
           cardNumber: true,
-          cardName: true,
+          cardHolder: true,
           cardCVC: true,
           email: true,
         });
@@ -104,7 +245,6 @@ const InterCardData = () => {
 
   const [formData, setFormData] = useState({
     cardNumber: "",
-    cardName: "",
     cardCVC: "",
     email: "",
     cardMonth: "",
@@ -113,7 +253,6 @@ const InterCardData = () => {
 
   const [errors, setErrors] = useState({
     cardNumber: "",
-    cardName: "",
     cardCVC: "",
     email: "",
     cardMonth: "",
@@ -152,99 +291,75 @@ const InterCardData = () => {
           </div>
           <div className="InterCardData_Main_Area_Card">
             <div className="InterCardData_Main_Area_Card_Data" id="billingForm">
-              <div
-                className={`mb-4 relative ${
-                  focusedFields.cardNumber
-                    ? "border-b-1"
-                    : "border-b-1 border-red-500"
-                }`}
-              >
-                <label
-                  className={
-                    "absolute mb-3 text-[11px] transition-all duration-150 " +
-                    (!focusedFields.cardNumber ? "-z-10 top-5" : "")
-                  }
-                >
-                  CARD NUMBER
-                </label>
-                <input
-                  className="pt-5 pb-2 outline-none w-full text-[11px]"
-                  name="cardNumber"
-                  type="text"
-                  autoComplete="cc-number"
-                  placeholder={!focusedFields.cardNumber ? "CARD NUMBER" : ""}
-                  value={formData.cardNumber}
-                  onFocus={() => handleInputFocus("cardNumber")}
-                  onBlur={(ev) =>
-                    handleInputBlur("cardNumber", ev.target.value)
-                  }
-                  onChange={handleInputChange}
-                  style={{
-                    borderBottom: focusedFields.cardNumber
-                      ? "1px solid black"
-                      : "1px solid black",
-                  }}
-                />
-                {!focusedFields.cardNumber && errors.cardNumber && (
-                  <div
-                    className="text-red-500 text-[11px]"
-                    style={{
-                      marginTop: "1px",
-                    }}
-                  >
-                    {errors.cardNumber}
-                  </div>
-                )}
-              </div>
-              <div
-                className={`mb-4 relative ${
-                  focusedFields.cardName
-                    ? "border-b-1"
-                    : "border-b-1 border-red-500"
-                }`}
-              >
-                <label
-                  className={
-                    "absolute mb-3 text-[11px] transition-all duration-150 " +
-                    (!focusedFields.cardName ? "-z-10 top-5" : "")
-                  }
-                >
-                  CARDHOLDER NAME
-                </label>
-                <input
-                  className="pt-5 pb-2 outline-none w-full text-[11px]"
-                  name="cardName"
-                  type="text"
-                  autoComplete="cc-name"
-                  placeholder={!focusedFields.cardName ? "CARDHOLDER NAME" : ""}
-                  value={formData.cardName}
-                  onFocus={() => handleInputFocus("cardName")}
-                  onBlur={(ev) => handleInputBlur("cardName", ev.target.value)}
-                  onChange={handleInputChange}
-                  style={{
-                    borderBottom: focusedFields.cardName
-                      ? "1px solid black"
-                      : "1px solid black",
-                  }}
-                />
-                {!focusedFields.cardName && errors.cardName && (
-                  <div
-                    className="text-red-500 text-[11px]"
-                    style={{
-                      marginTop: "1px",
-                    }}
-                  >
-                    {errors.cardName}
-                  </div>
-                )}
-              </div>
-              <div className="mb-4 flex justify-between">
+              <div className="InterCardData_Main_Area_Card_Data_First_Inputs">
                 <div
-                  className={`relative w-1/2 ${
+                  className={`mb-4 relative CARDNUMBER_INPUT ${
+                    focusedFields.cardNumber
+                      ? "border-b-1"
+                      : "border-b-1 border-red-500"
+                  }`}
+                >
+                  <label
+                    className={
+                      "absolute mb-3 text-[11px] transition-all duration-150 " +
+                      (!focusedFields.cardNumber ? "-z-10 top-5" : "")
+                    }
+                  >
+                    CARD NUMBER
+                  </label>
+                  <input
+                    className="pt-5 pb-2 outline-none w-full text-[11px]"
+                    name="cardNumber"
+                    type="text"
+                    autoComplete="cc-number"
+                    placeholder={!focusedFields.cardNumber ? "CARD NUMBER" : ""}
+                    value={formData.cardNumber}
+                    onFocus={() => handleInputFocus("cardNumber")}
+                    onBlur={(ev) =>
+                      handleInputBlur("cardNumber", ev.target.value)
+                    }
+                    onChange={handleInputChange}
+                    style={{
+                      borderBottom: focusedFields.cardNumber
+                        ? "1px solid black"
+                        : "1px solid black",
+                    }}
+                  />
+
+                  {!focusedFields.cardNumber && errors.cardNumber && (
+                    <div
+                      className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
+                      style={{
+                        marginTop: "1px",
+                      }}
+                    >
+                      <svg
+                        class="form-input-error__icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="red"
+                        stroke="inherit"
+                      >
+                        <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+                        ></path>
+                      </svg>
+                      {errors.cardNumber}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`relative CARDMONTH_INPUT${
                     focusedFields.cardMonth
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
                   }`}
+                  style={{ width: "140px", marginTop: "3px" }}
                 >
                   <label
                     className={
@@ -258,8 +373,6 @@ const InterCardData = () => {
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
                     name="cardMonth"
                     value={formData.cardMonth}
-                    onFocus={() => handleInputFocus("cardMonth")}
-                    onBlur={(ev) => handleInputBlur("cardMonth", ev.target.value)}
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.cardMonth
@@ -286,11 +399,12 @@ const InterCardData = () => {
                   )}
                 </div>
                 <div
-                  className={`relative w-1/2 ${
+                  className={`relative CARDYEAR_INPUT${
                     focusedFields.cardYear
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
                   }`}
+                  style={{ width: "140px", marginTop: "3px" }}
                 >
                   <label
                     className={
@@ -304,8 +418,6 @@ const InterCardData = () => {
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
                     name="cardYear"
                     value={formData.cardYear}
-                    onFocus={() => handleInputFocus("cardYear")}
-                    onBlur={(ev) => handleInputBlur("cardYear", ev.target.value)}
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.cardYear
@@ -332,89 +444,128 @@ const InterCardData = () => {
                   )}
                 </div>
               </div>
-              <div
-                className={`mb-4 relative ${
-                  focusedFields.cardCVC
-                    ? "border-b-1"
-                    : "border-b-1 border-red-500"
-                }`}
-              >
-                <label
-                  className={
-                    "absolute mb-3 text-[11px] transition-all duration-150 " +
-                    (!focusedFields.cardCVC ? "-z-10 top-5" : "")
-                  }
+              <div className="InterCardData_Main_Area_Card_Data_First_Inputs_Second">
+                <div
+                  className={`mb-4 relative ${
+                    focusedFields.email
+                      ? "border-b-1"
+                      : "border-b-1 border-red-500"
+                  }`}
+                  style={{ width: "50%" }}
                 >
-                  CVC
-                </label>
-                <input
-                  className="pt-5 pb-2 outline-none w-full text-[11px]"
-                  name="cardCVC"
-                  type="text"
-                  autoComplete="cc-csc"
-                  placeholder={!focusedFields.cardCVC ? "CVC" : ""}
-                  value={formData.cardCVC}
-                  onFocus={() => handleInputFocus("cardCVC")}
-                  onBlur={(ev) => handleInputBlur("cardCVC", ev.target.value)}
-                  onChange={handleInputChange}
-                  style={{
-                    borderBottom: focusedFields.cardCVC
-                      ? "1px solid black"
-                      : "1px solid black",
-                  }}
-                />
-                {!focusedFields.cardCVC && errors.cardCVC && (
-                  <div
-                    className="text-red-500 text-[11px]"
-                    style={{
-                      marginTop: "1px",
-                    }}
+                  <label
+                    className={
+                      "absolute mb-3 text-[11px] transition-all duration-150 " +
+                      (!focusedFields.email ? "-z-10 top-5" : "")
+                    }
                   >
-                    {errors.cardCVC}
-                  </div>
-                )}
-              </div>
-              <div
-                className={`mb-4 relative ${
-                  focusedFields.email
-                    ? "border-b-1"
-                    : "border-b-1 border-red-500"
-                }`}
-              >
-                <label
-                  className={
-                    "absolute mb-3 text-[11px] transition-all duration-150 " +
-                    (!focusedFields.email ? "-z-10 top-5" : "")
-                  }
+                    CARD HOLDER
+                  </label>
+                  <input
+                    className="pt-5 pb-2 outline-none w-full text-[11px]"
+                    name="email" // Set a unique name for the input field
+                    autoComplete="email"
+                    type="email"
+                    placeholder={!focusedFields.email ? "CARD HOLDER" : ""}
+                    value={formData.email}
+                    onFocus={() => handleInputFocus("email")}
+                    onBlur={(ev) => handleInputBlur("email", ev.target.value)}
+                    onChange={handleInputChange}
+                    style={{
+                      borderBottom: focusedFields.email
+                        ? "1px solid black"
+                        : "1px solid black",
+                    }}
+                  />
+
+                  {!focusedFields.email && errors.email && (
+                    <div
+                      className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
+                      style={{
+                        marginTop: "1px",
+                      }}
+                    >
+                      <svg
+                        class="form-input-error__icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="red"
+                        stroke="inherit"
+                      >
+                        <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+                        ></path>
+                      </svg>
+                      {errors.email}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`mb-4 relative ${
+                    focusedFields.cardCVC
+                      ? "border-b-1"
+                      : "border-b-1 border-red-500"
+                  }`}
                 >
-                  EMAIL
-                </label>
-                <input
-                  className="pt-5 pb-2 outline-none w-full text-[11px]"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder={!focusedFields.email ? "EMAIL" : ""}
-                  value={formData.email}
-                  onFocus={() => handleInputFocus("email")}
-                  onBlur={(ev) => handleInputBlur("email", ev.target.value)}
-                  onChange={handleInputChange}
-                  style={{
-                    borderBottom: focusedFields.email
-                      ? "1px solid black"
-                      : "1px solid black",
-                  }}
-                />
-                {!focusedFields.email && errors.email && (
-                  <div
-                    className="text-red-500 text-[11px]"
-                    style={{
-                      marginTop: "1px",
-                    }}
+                  <label
+                    className={
+                      "absolute mb-3 text-[11px] transition-all duration-150 " +
+                      (!focusedFields.cardCVC ? "-z-10 top-5" : "")
+                    }
                   >
-                    {errors.email}
-                  </div>
-                )}
+                    CVV2 SECURITY CODE
+                  </label>
+                  <input
+                    className="pt-5 pb-2 outline-none w-full text-[11px]"
+                    name="cardCVC"
+                    type="text"
+                    autoComplete="cc-csc"
+                    placeholder={
+                      !focusedFields.cardCVC ? "CVV2 SECURITY CODE" : ""
+                    }
+                    value={formData.cardCVC}
+                    onFocus={() => handleInputFocus("cardCVC")}
+                    onBlur={(ev) => handleInputBlur("cardCVC", ev.target.value)}
+                    onChange={handleInputChange}
+                    style={{
+                      borderBottom: focusedFields.cardCVC
+                        ? "1px solid black"
+                        : "1px solid black",
+                    }}
+                  />
+
+                  {!focusedFields.cardCVC && errors.cardCVC && (
+                    <div
+                      className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
+                      style={{
+                        marginTop: "1px",
+                      }}
+                    >
+                      <svg
+                        class="form-input-error__icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="red"
+                        stroke="inherit"
+                      >
+                        <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+                        ></path>
+                      </svg>
+                      {errors.cardCVC}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
