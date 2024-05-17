@@ -52,7 +52,6 @@ function LikeSameWithProductData() {
                 </div>
                 <div className="PriceSection space-x-3">
                   <span>{product.price.RealPrice}</span>
-                  <span>{product.price.discountprice}</span>
                 </div>
               </div>
             </div>
