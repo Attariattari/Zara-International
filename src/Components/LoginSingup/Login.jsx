@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -64,6 +64,31 @@ export default function Login() {
       });
   }
 
+  useEffect(() => {
+    const handleAutoFill = () => {
+      const form = document.getElementById("LoginForm");
+      const inputs = form.querySelectorAll("input");
+
+      const allFieldsFilled = Array.from(inputs).every(
+        (input) => input.value !== ""
+      );
+
+      if (allFieldsFilled) {
+        setFocusedEmail("true")
+        setFocusedPassword("true")
+      }
+    };
+
+    // Listen for changes in the form
+    const form = document.getElementById("LoginForm");
+    form.addEventListener("change", handleAutoFill);
+
+    // Clean up event listener
+    return () => {
+      form.removeEventListener("change", handleAutoFill);
+    };
+  }, []);
+
   return (
     <div className="">
       <div
@@ -87,7 +112,7 @@ export default function Login() {
           }}
         >
           <Form>
-            <div className="loginarea">
+            <div className="loginarea" id="LoginForm">
               <p className="logintext font-extralight">
                 LOG IN TO YOUR ACCOUNT
               </p>

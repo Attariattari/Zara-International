@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -67,12 +67,41 @@ function Signup() {
       }));
     }
   };
+
+  useEffect(() => {
+    const handleAutoFill = () => {
+      const form = document.getElementById("SingupForm");
+      const inputs = form.querySelectorAll("input");
+
+      const allFieldsFilled = Array.from(inputs).every(
+        (input) => input.value !== ""
+      );
+
+      if (allFieldsFilled) {
+        setFocusedEmail("true");
+        setFocusedPassword("true");
+        setFocusedfirstname("true");
+        setFocusedlastname("true");
+      }
+    };
+
+    // Listen for changes in the form
+    const form = document.getElementById("SingupForm");
+    form.addEventListener("change", handleAutoFill);
+
+    // Clean up event listener
+    return () => {
+      form.removeEventListener("change", handleAutoFill);
+    };
+  }, []);
+
   return (
     <div>
-      <div className="sticky top-0 z-10"
-      style={{
-        marginTop:'-9px'
-      }}
+      <div
+        className="sticky top-0 z-10"
+        style={{
+          marginTop: "-9px",
+        }}
       >
         <div className="absolute w-full bg-white">
           <Navbar />
@@ -95,6 +124,7 @@ function Signup() {
               handleSignup(values);
               resetForm(); // This line resets the form
             }}
+           
           >
             {({ values, handleChange, touched, errors, setFieldTouched }) => (
               <Form>
@@ -103,7 +133,7 @@ function Signup() {
                     errors.email && touched.email
                       ? "border-b-1 border-red-500"
                       : "border-b-1"
-                  }`}
+                  }`} id="SingupForm"
                 >
                   <label
                     className={
@@ -297,8 +327,9 @@ function Signup() {
             )}
           </Formik>
         </div>
-      </div>\
-        <Footer />
+      </div>
+      \
+      <Footer />
     </div>
   );
 }
