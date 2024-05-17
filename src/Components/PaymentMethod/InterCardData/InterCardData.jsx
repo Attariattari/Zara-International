@@ -1,0 +1,552 @@
+import React, { useEffect, useState } from "react";
+import Navbar from "../../Navbar/Navbar";
+import "./InterCardData.css";
+import Footer from "../../Footer/Footer";
+import { Link } from "react-router-dom";
+
+const InterCardData = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [Totoalitemshow, setTotoalitemshow] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [expendview, setExpendview] = useState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const Totalviewshow = () => {
+    setTotoalitemshow(true);
+  };
+
+  const Totalviewfalse = () => {
+    setTotoalitemshow(false);
+  };
+  const Expendfortotal = () => {
+    setExpendview(!expendview);
+  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Input Code Functions
+  const handleInputFocus = (fieldName) => {
+    setFocusedFields((prev) => ({
+      ...prev,
+      [fieldName]: true,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [fieldName]: "",
+    }));
+  };
+
+  const handleInputBlur = (fieldName, value) => {
+    if (!value) {
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: "Required!",
+      }));
+      setFocusedFields((prev) => ({
+        ...prev,
+        [fieldName]: false,
+      }));
+    }
+  };
+
+  const [focusedFields, setFocusedFields] = useState({
+    cardNumber: false,
+    cardName: false,
+    cardCVC: false,
+    email: false,
+  });
+
+  useEffect(() => {
+    const handleAutoFill = () => {
+      const form = document.getElementById("billingForm");
+      const inputs = form.querySelectorAll("input, select");
+
+      const allFieldsFilled = Array.from(inputs).every(
+        (input) => input.value !== ""
+      );
+
+      if (allFieldsFilled) {
+        setFocusedFields({
+          cardNumber: true,
+          cardName: true,
+          cardCVC: true,
+          email: true,
+        });
+      }
+    };
+
+    const form = document.getElementById("billingForm");
+    form.addEventListener("change", handleAutoFill);
+
+    return () => {
+      form.removeEventListener("change", handleAutoFill);
+    };
+  }, []);
+
+  const [formData, setFormData] = useState({
+    cardNumber: "",
+    cardName: "",
+    cardCVC: "",
+    email: "",
+    cardMonth: "",
+    cardYear: "",
+  });
+
+  const [errors, setErrors] = useState({
+    cardNumber: "",
+    cardName: "",
+    cardCVC: "",
+    email: "",
+    cardMonth: "",
+    cardYear: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const month = (i + 1).toString().padStart(2, "0");
+    return { value: month, label: month };
+  });
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 10 }, (_, i) => {
+    const year = (currentYear + i).toString();
+    return { value: year, label: year };
+  });
+  return (
+    <div>
+      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
+        <div className="absolute w-full">
+          <Navbar />
+        </div>
+      </div>
+      <div className="InterCardData">
+        <div className="InterCardData_Main_Area">
+          <div className="InterCardData_Main_Area_Title">
+            ENTER YOUR CARD DETAILS
+          </div>
+          <div className="InterCardData_Main_Area_Card">
+            <div className="InterCardData_Main_Area_Card_Data" id="billingForm">
+              <div
+                className={`mb-4 relative ${
+                  focusedFields.cardNumber
+                    ? "border-b-1"
+                    : "border-b-1 border-red-500"
+                }`}
+              >
+                <label
+                  className={
+                    "absolute mb-3 text-[11px] transition-all duration-150 " +
+                    (!focusedFields.cardNumber ? "-z-10 top-5" : "")
+                  }
+                >
+                  CARD NUMBER
+                </label>
+                <input
+                  className="pt-5 pb-2 outline-none w-full text-[11px]"
+                  name="cardNumber"
+                  type="text"
+                  autoComplete="cc-number"
+                  placeholder={!focusedFields.cardNumber ? "CARD NUMBER" : ""}
+                  value={formData.cardNumber}
+                  onFocus={() => handleInputFocus("cardNumber")}
+                  onBlur={(ev) =>
+                    handleInputBlur("cardNumber", ev.target.value)
+                  }
+                  onChange={handleInputChange}
+                  style={{
+                    borderBottom: focusedFields.cardNumber
+                      ? "1px solid black"
+                      : "1px solid black",
+                  }}
+                />
+                {!focusedFields.cardNumber && errors.cardNumber && (
+                  <div
+                    className="text-red-500 text-[11px]"
+                    style={{
+                      marginTop: "1px",
+                    }}
+                  >
+                    {errors.cardNumber}
+                  </div>
+                )}
+              </div>
+              <div
+                className={`mb-4 relative ${
+                  focusedFields.cardName
+                    ? "border-b-1"
+                    : "border-b-1 border-red-500"
+                }`}
+              >
+                <label
+                  className={
+                    "absolute mb-3 text-[11px] transition-all duration-150 " +
+                    (!focusedFields.cardName ? "-z-10 top-5" : "")
+                  }
+                >
+                  CARDHOLDER NAME
+                </label>
+                <input
+                  className="pt-5 pb-2 outline-none w-full text-[11px]"
+                  name="cardName"
+                  type="text"
+                  autoComplete="cc-name"
+                  placeholder={!focusedFields.cardName ? "CARDHOLDER NAME" : ""}
+                  value={formData.cardName}
+                  onFocus={() => handleInputFocus("cardName")}
+                  onBlur={(ev) => handleInputBlur("cardName", ev.target.value)}
+                  onChange={handleInputChange}
+                  style={{
+                    borderBottom: focusedFields.cardName
+                      ? "1px solid black"
+                      : "1px solid black",
+                  }}
+                />
+                {!focusedFields.cardName && errors.cardName && (
+                  <div
+                    className="text-red-500 text-[11px]"
+                    style={{
+                      marginTop: "1px",
+                    }}
+                  >
+                    {errors.cardName}
+                  </div>
+                )}
+              </div>
+              <div className="mb-4 flex justify-between">
+                <div
+                  className={`relative w-1/2 ${
+                    focusedFields.cardMonth
+                      ? "border-b-1"
+                      : "border-b-1 border-red-500"
+                  }`}
+                >
+                  <label
+                    className={
+                      "absolute mb-3 text-[11px] transition-all duration-150 " +
+                      (!focusedFields.cardMonth ? "-z-10 top-5" : "")
+                    }
+                  >
+                    EXPIRY MONTH
+                  </label>
+                  <select
+                    className="pt-5 pb-2 outline-none w-full text-[11px]"
+                    name="cardMonth"
+                    value={formData.cardMonth}
+                    onFocus={() => handleInputFocus("cardMonth")}
+                    onBlur={(ev) => handleInputBlur("cardMonth", ev.target.value)}
+                    onChange={handleInputChange}
+                    style={{
+                      borderBottom: focusedFields.cardMonth
+                        ? "1px solid black"
+                        : "1px solid black",
+                    }}
+                  >
+                    <option value="">Select Month</option>
+                    {months.map((month) => (
+                      <option key={month.value} value={month.value}>
+                        {month.label}
+                      </option>
+                    ))}
+                  </select>
+                  {!focusedFields.cardMonth && errors.cardMonth && (
+                    <div
+                      className="text-red-500 text-[11px]"
+                      style={{
+                        marginTop: "1px",
+                      }}
+                    >
+                      {errors.cardMonth}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className={`relative w-1/2 ${
+                    focusedFields.cardYear
+                      ? "border-b-1"
+                      : "border-b-1 border-red-500"
+                  }`}
+                >
+                  <label
+                    className={
+                      "absolute mb-3 text-[11px] transition-all duration-150 " +
+                      (!focusedFields.cardYear ? "-z-10 top-5" : "")
+                    }
+                  >
+                    EXPIRY YEAR
+                  </label>
+                  <select
+                    className="pt-5 pb-2 outline-none w-full text-[11px]"
+                    name="cardYear"
+                    value={formData.cardYear}
+                    onFocus={() => handleInputFocus("cardYear")}
+                    onBlur={(ev) => handleInputBlur("cardYear", ev.target.value)}
+                    onChange={handleInputChange}
+                    style={{
+                      borderBottom: focusedFields.cardYear
+                        ? "1px solid black"
+                        : "1px solid black",
+                    }}
+                  >
+                    <option value="">Select Year</option>
+                    {years.map((year) => (
+                      <option key={year.value} value={year.value}>
+                        {year.label}
+                      </option>
+                    ))}
+                  </select>
+                  {!focusedFields.cardYear && errors.cardYear && (
+                    <div
+                      className="text-red-500 text-[11px]"
+                      style={{
+                        marginTop: "1px",
+                      }}
+                    >
+                      {errors.cardYear}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div
+                className={`mb-4 relative ${
+                  focusedFields.cardCVC
+                    ? "border-b-1"
+                    : "border-b-1 border-red-500"
+                }`}
+              >
+                <label
+                  className={
+                    "absolute mb-3 text-[11px] transition-all duration-150 " +
+                    (!focusedFields.cardCVC ? "-z-10 top-5" : "")
+                  }
+                >
+                  CVC
+                </label>
+                <input
+                  className="pt-5 pb-2 outline-none w-full text-[11px]"
+                  name="cardCVC"
+                  type="text"
+                  autoComplete="cc-csc"
+                  placeholder={!focusedFields.cardCVC ? "CVC" : ""}
+                  value={formData.cardCVC}
+                  onFocus={() => handleInputFocus("cardCVC")}
+                  onBlur={(ev) => handleInputBlur("cardCVC", ev.target.value)}
+                  onChange={handleInputChange}
+                  style={{
+                    borderBottom: focusedFields.cardCVC
+                      ? "1px solid black"
+                      : "1px solid black",
+                  }}
+                />
+                {!focusedFields.cardCVC && errors.cardCVC && (
+                  <div
+                    className="text-red-500 text-[11px]"
+                    style={{
+                      marginTop: "1px",
+                    }}
+                  >
+                    {errors.cardCVC}
+                  </div>
+                )}
+              </div>
+              <div
+                className={`mb-4 relative ${
+                  focusedFields.email
+                    ? "border-b-1"
+                    : "border-b-1 border-red-500"
+                }`}
+              >
+                <label
+                  className={
+                    "absolute mb-3 text-[11px] transition-all duration-150 " +
+                    (!focusedFields.email ? "-z-10 top-5" : "")
+                  }
+                >
+                  EMAIL
+                </label>
+                <input
+                  className="pt-5 pb-2 outline-none w-full text-[11px]"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder={!focusedFields.email ? "EMAIL" : ""}
+                  value={formData.email}
+                  onFocus={() => handleInputFocus("email")}
+                  onBlur={(ev) => handleInputBlur("email", ev.target.value)}
+                  onChange={handleInputChange}
+                  style={{
+                    borderBottom: focusedFields.email
+                      ? "1px solid black"
+                      : "1px solid black",
+                  }}
+                />
+                {!focusedFields.email && errors.email && (
+                  <div
+                    className="text-red-500 text-[11px]"
+                    style={{
+                      marginTop: "1px",
+                    }}
+                  >
+                    {errors.email}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+      {isMobile ? (
+        <div className="sticky bottom-0 z-50">
+          <div className="ExpendSVGButtonForCart">
+            <div onClick={Expendfortotal}>
+              <svg
+                class="layout-shop-footer__swipe-icon"
+                width="40"
+                height="1"
+                viewBox="0 0 40 0.5"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0 0h40v1H0V0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          {expendview && (
+            <div className="Justshowinpayconform">
+              <div>
+                <p>22 Items</p>
+                <p>718.98 EUR</p>
+              </div>
+              <div>
+                <p>SHIPPING</p>
+                <p>19.95 EUR</p>
+              </div>
+              <div>
+                <p>TOTAL</p>
+                <p>738.85 EUR</p>
+              </div>
+            </div>
+          )}
+          <div className="CartMobileDataCountinues">
+            <div className="CartProccesses">
+              {!expendview && (
+                <div className="CartProccessesTotal">
+                  <p>SHIPPING</p>
+                  <p>19.95 EUR</p>
+                </div>
+              )}
+              <Link
+                className="Cartcontinuebutton"
+                to="/Order_Summary"
+                style={{ width: "100%" }}
+              >
+                <button className="Contiun">CONTINUE</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="sticky bottom-0 z-50">
+          <div
+            className={`totalitems ${Totoalitemshow ? "show-totalitems" : ""}`}
+            style={{ borderTop: Totoalitemshow ? "1px solid black" : "" }}
+          >
+            <div>
+              {" "}
+              <p>22 ITEMS</p>
+              <p>SHIPPING</p>
+            </div>
+            <div>
+              {" "}
+              <p>718.90 EUR</p>
+              <p>19.95 EUR</p>
+            </div>
+          </div>
+          <div
+            className={`CartProccessView`}
+            style={{ borderTop: !Totoalitemshow ? "1px solid black" : "" }}
+          >
+            <div className="CartPropssesstitle opacity-0"></div>
+            <div className="CartProccesses">
+              <div>
+                <p>SHIPPING</p>
+                <div>
+                  <p>19.95 EUR</p>
+                  <div className="CardFinalViewDataanditem">
+                    {!Totoalitemshow && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-2 h-2 cursor-pointer"
+                        onClick={Totalviewshow}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M11.47 7.72a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06L12 9.31l-6.97 6.97a.75.75 0 0 1-1.06-1.06l7.5-7.5Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                    {Totoalitemshow && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-2 h-2 cursor-pointer"
+                        onClick={Totalviewfalse}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <Link className="Cartcontinuebutton" to="/Order_Summary">
+                <button className="Contiun">CONTINUE</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default InterCardData;
+{
+  /*  */
+}

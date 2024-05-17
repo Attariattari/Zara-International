@@ -369,7 +369,7 @@ const Order_Summary = () => {
               )}
               <Link
                 className="Cartcontinuebutton"
-                to="/Order_Summary"
+                to="/InterCardData"
                 style={{ width: "100%" }}
               >
                 <button className="Contiun">CONTINUE</button>
@@ -438,7 +438,7 @@ const Order_Summary = () => {
                   </div>
                 </div>
               </div>
-              <Link className="Cartcontinuebutton" to="/Order_Summary">
+              <Link className="Cartcontinuebutton" to="/InterCardData">
                 <button className="Contiun">CONTINUE</button>
               </Link>
             </div>

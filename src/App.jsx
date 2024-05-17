@@ -25,6 +25,7 @@ import Address_Conform from "./Components/BillingAddress/Address_Conform";
 import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
 import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
 import Order_Summary from './Components/Order_Summary/Order_Summary';
+import InterCardData from './Components/PaymentMethod/InterCardData/InterCardData';
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -75,6 +76,7 @@ function App() {
           <Route path="/Address_Conform" element={<Address_Conform />} />
           <Route path="/method-selection" element={<FinalCartProductView />} />
           <Route path="/SelectCardsForPay" element={<SelectCardsForPay />} />
+          <Route path="/InterCardData" element={<InterCardData />} />
           <Route path="/Order_Summary" element={<Order_Summary />} />
 
           <Route
