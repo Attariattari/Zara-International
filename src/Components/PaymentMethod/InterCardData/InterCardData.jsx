@@ -55,23 +55,6 @@ const InterCardData = () => {
     }));
   };
 
-  const validateCardNumber = (number) => {
-    const cardNumberRegex = /^[0-9]{16}$/;
-    return cardNumberRegex.test(number);
-  };
-
-  const validateCVC = (cvc) => {
-    const cvcRegex = /^[0-9]{3,4}$/;
-    return cvcRegex.test(cvc);
-  };
-
-  const validateExpiryDate = (month, year) => {
-    if (!month || !year) return false;
-    const currentDate = new Date();
-    const selectedDate = new Date(year, month);
-    return selectedDate > currentDate;
-  };
-
   const handleInputBlur = (fieldName, value) => {
     if (!value) {
       setErrors((prev) => ({
@@ -84,13 +67,13 @@ const InterCardData = () => {
       }));
     }
   };
+
   const [focusedFields, setFocusedFields] = useState({
     cardNumber: false,
     cardHolder: false,
     cardCVC: false,
-    email: false,
   });
-  
+
   useEffect(() => {
     // Other useEffect code...
 
@@ -117,7 +100,6 @@ const InterCardData = () => {
           cardNumber: true,
           cardHolder: true,
           cardCVC: true,
-          email: true,
         });
       }
     };
@@ -133,7 +115,7 @@ const InterCardData = () => {
   const [formData, setFormData] = useState({
     cardNumber: "",
     cardCVC: "",
-    email: "",
+    cardHolder: "",
     cardMonth: "",
     cardYear: "",
   });
@@ -141,8 +123,8 @@ const InterCardData = () => {
   const [errors, setErrors] = useState({
     cardNumber: "",
     cardCVC: "",
-    email: "",
     cardMonth: "",
+    cardHolder: "",
     cardYear: "",
   });
 
@@ -180,7 +162,7 @@ const InterCardData = () => {
             <div className="InterCardData_Main_Area_Card_Data" id="billingForm">
               <div className="InterCardData_Main_Area_Card_Data_First_Inputs">
                 <div
-                  className={`relative CARDNUMBER_INPUT ${
+                  className={`relative CARDNUMBER_INPUT  i${
                     errors.cardNumber ? "border-red-500" : "border-b-1"
                   }`}
                 >
@@ -192,8 +174,8 @@ const InterCardData = () => {
                     CARD NUMBER
                   </label>
                   <input
-                    className="pt-5 pb-2 outline-none w-full text-[11px]"
-                    name="cardNumber"
+                    className="pt-5 pb-2 outline-none w-full text-[11px] CARDNUMBERINPUT"
+                    name="card_number"
                     type="text"
                     autoComplete="cc-number"
                     placeholder={focusedFields.cardNumber ? "" : "CARD NUMBER"}
@@ -323,7 +305,7 @@ const InterCardData = () => {
               <div className="InterCardData_Main_Area_Card_Data_Inputs_Second">
                 <div
                   className={`relative Inputs_Seconds i${
-                    focusedFields.email
+                    focusedFields.cardHolder
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
                   }`}
@@ -331,29 +313,31 @@ const InterCardData = () => {
                   <label
                     className={
                       "absolute mb-3 text-[11px] transition-all duration-150 " +
-                      (!focusedFields.email ? "-z-10 top-5" : "")
+                      (!focusedFields.cardHolder ? "-z-10 top-5" : "")
                     }
                   >
                     CARD HOLDER
                   </label>
                   <input
                     className="pt-5 pb-2 outline-none w-full text-[11px]"
-                    name="email" // Set a unique name for the input field
+                    name="cardHolder" // Set a unique name for the input field
                     autoComplete="email"
                     type="email"
-                    placeholder={!focusedFields.email ? "CARD HOLDER" : ""}
-                    value={formData.email}
-                    onFocus={() => handleInputFocus("email")}
-                    onBlur={(ev) => handleInputBlur("email", ev.target.value)}
+                    placeholder={!focusedFields.cardHolder ? "CARD HOLDER" : ""}
+                    value={formData.cardHolder}
+                    onFocus={() => handleInputFocus("cardHolder")}
+                    onBlur={(ev) =>
+                      handleInputBlur("cardHolder", ev.target.value)
+                    }
                     onChange={handleInputChange}
                     style={{
-                      borderBottom: focusedFields.email
+                      borderBottom: focusedFields.cardHolder
                         ? "1px solid black"
                         : "1px solid black",
                     }}
                   />
 
-                  {!focusedFields.email && errors.email && (
+                  {!focusedFields.cardHolder && errors.cardHolder && (
                     <div
                       className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
                       style={{
@@ -376,7 +360,7 @@ const InterCardData = () => {
                           d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
                         ></path>
                       </svg>
-                      {errors.email}
+                      {errors.cardHolder}
                     </div>
                   )}
                 </div>
