@@ -43,99 +43,6 @@ const InterCardData = () => {
     };
   }, []);
 
-  // // Input Code Functions
-  // const handleInputFocus = (fieldName) => {
-  //   setFocusedFields((prev) => ({
-  //     ...prev,
-  //     [fieldName]: true,
-  //   }));
-  //   setErrors((prev) => ({
-  //     ...prev,
-  //     [fieldName]: "",
-  //   }));
-  // };
-
-  // const handleInputBlur = (fieldName, value) => {
-  //   if (!value) {
-  //     setErrors((prev) => ({
-  //       ...prev,
-  //       [fieldName]: "Required!",
-  //     }));
-  //     setFocusedFields((prev) => ({
-  //       ...prev,
-  //       [fieldName]: false,
-  //     }));
-  //   }
-  // };
-
-  // const [focusedFields, setFocusedFields] = useState({
-  //   cardNumber: false,
-  //   cardName: false,
-  //   cardCVC: false,
-  //   email: false,
-  // });
-
-  // useEffect(() => {
-  //   const handleAutoFill = () => {
-  //     const form = document.getElementById("billingForm");
-  //     const inputs = form.querySelectorAll("input, select");
-
-  //     const allFieldsFilled = Array.from(inputs).every(
-  //       (input) => input.value !== ""
-  //     );
-
-  //     if (allFieldsFilled) {
-  //       setFocusedFields({
-  //         cardNumber: true,
-  //         cardName: true,
-  //         cardCVC: true,
-  //         email: true,
-  //       });
-  //     }
-  //   };
-
-  //   const form = document.getElementById("billingForm");
-  //   form.addEventListener("change", handleAutoFill);
-
-  //   return () => {
-  //     form.removeEventListener("change", handleAutoFill);
-  //   };
-  // }, []);
-
-  // const [formData, setFormData] = useState({
-  //   cardNumber: "",
-  //   cardCVC: "",
-  //   email: "",
-  //   cardMonth: "",
-  //   cardYear: "",
-  // });
-
-  // const [errors, setErrors] = useState({
-  //   cardNumber: "",
-  //   cardCVC: "",
-  //   email: "",
-  //   cardMonth: "",
-  //   cardYear: "",
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const months = Array.from({ length: 12 }, (_, i) => {
-  //   const month = (i + 1).toString().padStart(2, "0");
-  //   return { value: month, label: month };
-  // });
-
-  // const currentYear = new Date().getFullYear();
-  // const years = Array.from({ length: 10 }, (_, i) => {
-  //   const year = (currentYear + i).toString();
-  //   return { value: year, label: year };
-  // });
   // Input Code Functions
   const handleInputFocus = (fieldName) => {
     setFocusedFields((prev) => ({
@@ -293,7 +200,7 @@ const InterCardData = () => {
             <div className="InterCardData_Main_Area_Card_Data" id="billingForm">
               <div className="InterCardData_Main_Area_Card_Data_First_Inputs">
                 <div
-                  className={`mb-4 relative CARDNUMBER_INPUT ${
+                  className={`relative CARDNUMBER_INPUT ${
                     focusedFields.cardNumber
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
@@ -353,105 +260,104 @@ const InterCardData = () => {
                     </div>
                   )}
                 </div>
-                <div
-                  className={`relative CARDMONTH_INPUT${
-                    focusedFields.cardMonth
-                      ? "border-b-1"
-                      : "border-b-1 border-red-500"
-                  }`}
-                  style={{ width: "140px", marginTop: "3px" }}
-                >
-                  <label
-                    className={
-                      "absolute mb-3 text-[11px] transition-all duration-150 " +
-                      (!focusedFields.cardMonth ? "-z-10 top-5" : "")
-                    }
+                <div className="InterCardData_Main_Area_Card_Data_MONTH_YEAR">
+                  <div
+                    className={`relative CARDMONTH_INPUT C${
+                      focusedFields.cardMonth
+                        ? "border-b-1"
+                        : "border-b-1 border-red-500"
+                    }`}
                   >
-                    EXPIRY MONTH
-                  </label>
-                  <select
-                    className="pt-5 pb-2 outline-none w-full text-[11px]"
-                    name="cardMonth"
-                    value={formData.cardMonth}
-                    onChange={handleInputChange}
-                    style={{
-                      borderBottom: focusedFields.cardMonth
-                        ? "1px solid black"
-                        : "1px solid black",
-                    }}
-                  >
-                    <option value="">Select Month</option>
-                    {months.map((month) => (
-                      <option key={month.value} value={month.value}>
-                        {month.label}
-                      </option>
-                    ))}
-                  </select>
-                  {!focusedFields.cardMonth && errors.cardMonth && (
-                    <div
-                      className="text-red-500 text-[11px]"
+                    <label
+                      className={
+                        "absolute mb-3 text-[11px] transition-all duration-150 " +
+                        (!focusedFields.cardMonth ? "-z-10 top-5" : "")
+                      }
+                    >
+                      EXPIRY MONTH
+                    </label>
+                    <select
+                      className="pt-5 pb-2 outline-none w-full text-[11px]"
+                      name="cardMonth"
+                      value={formData.cardMonth}
+                      onChange={handleInputChange}
                       style={{
-                        marginTop: "1px",
+                        borderBottom: focusedFields.cardMonth
+                          ? "1px solid black"
+                          : "1px solid black",
                       }}
                     >
-                      {errors.cardMonth}
-                    </div>
-                  )}
-                </div>
-                <div
-                  className={`relative CARDYEAR_INPUT${
-                    focusedFields.cardYear
-                      ? "border-b-1"
-                      : "border-b-1 border-red-500"
-                  }`}
-                  style={{ width: "140px", marginTop: "3px" }}
-                >
-                  <label
-                    className={
-                      "absolute mb-3 text-[11px] transition-all duration-150 " +
-                      (!focusedFields.cardYear ? "-z-10 top-5" : "")
-                    }
+                      <option value="">Select Month</option>
+                      {months.map((month) => (
+                        <option key={month.value} value={month.value}>
+                          {month.label}
+                        </option>
+                      ))}
+                    </select>
+                    {!focusedFields.cardMonth && errors.cardMonth && (
+                      <div
+                        className="text-red-500 text-[11px]"
+                        style={{
+                          marginTop: "1px",
+                        }}
+                      >
+                        {errors.cardMonth}
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className={`relative CARDMONTH_INPUT C${
+                      focusedFields.cardYear
+                        ? "border-b-1"
+                        : "border-b-1 border-red-500"
+                    }`}
                   >
-                    EXPIRY YEAR
-                  </label>
-                  <select
-                    className="pt-5 pb-2 outline-none w-full text-[11px]"
-                    name="cardYear"
-                    value={formData.cardYear}
-                    onChange={handleInputChange}
-                    style={{
-                      borderBottom: focusedFields.cardYear
-                        ? "1px solid black"
-                        : "1px solid black",
-                    }}
-                  >
-                    <option value="">Select Year</option>
-                    {years.map((year) => (
-                      <option key={year.value} value={year.value}>
-                        {year.label}
-                      </option>
-                    ))}
-                  </select>
-                  {!focusedFields.cardYear && errors.cardYear && (
-                    <div
-                      className="text-red-500 text-[11px]"
+                    <label
+                      className={
+                        "absolute mb-3 text-[11px] transition-all duration-150 " +
+                        (!focusedFields.cardYear ? "-z-10 top-5" : "")
+                      }
+                    >
+                      EXPIRY YEAR
+                    </label>
+                    <select
+                      className="pt-5 pb-2 outline-none w-full text-[11px]"
+                      name="cardYear"
+                      value={formData.cardYear}
+                      onChange={handleInputChange}
                       style={{
-                        marginTop: "1px",
+                        borderBottom: focusedFields.cardYear
+                          ? "1px solid black"
+                          : "1px solid black",
                       }}
                     >
-                      {errors.cardYear}
-                    </div>
-                  )}
+                      <option value="">Select Year</option>
+                      {years.map((year) => (
+                        <option key={year.value} value={year.value}>
+                          {year.label}
+                        </option>
+                      ))}
+                    </select>
+                    {!focusedFields.cardYear && errors.cardYear && (
+                      <div
+                        className="text-red-500 text-[11px]"
+                        style={{
+                          marginTop: "1px",
+                        }}
+                      >
+                        {errors.cardYear}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="InterCardData_Main_Area_Card_Data_First_Inputs_Second">
+              <div className="InterCardData_Main_Area_Card_Data_Inputs_Second">
                 <div
-                  className={`mb-4 relative ${
+                  className={`relative Inputs_Seconds i${
                     focusedFields.email
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
                   }`}
-                  style={{ width: "50%" }}
                 >
                   <label
                     className={
@@ -506,7 +412,7 @@ const InterCardData = () => {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${
+                  className={`relative Inputs_Second i${
                     focusedFields.cardCVC
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
@@ -538,8 +444,7 @@ const InterCardData = () => {
                         : "1px solid black",
                     }}
                   />
-
-                  {!focusedFields.cardCVC && errors.cardCVC && (
+                  {!focusedFields.email && errors.email && (
                     <div
                       className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
                       style={{
