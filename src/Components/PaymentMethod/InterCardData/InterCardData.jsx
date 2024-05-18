@@ -60,10 +60,6 @@ const InterCardData = () => {
     return cardNumberRegex.test(number);
   };
 
-  const validateCardHolder = (name) => {
-    return name.trim().length > 0;
-  };
-
   const validateCVC = (cvc) => {
     const cvcRegex = /^[0-9]{3,4}$/;
     return cvcRegex.test(cvc);
@@ -77,51 +73,35 @@ const InterCardData = () => {
   };
 
   const handleInputBlur = (fieldName, value) => {
-    let error = "";
-    switch (fieldName) {
-      case "cardNumber":
-        if (!validateCardNumber(value)) {
-          error = "Invalid card number!";
-        }
-        break;
-      case "cardHolder":
-        if (!validateCardHolder(value)) {
-          error = "Card holder name is required!";
-        }
-        break;
-      case "cardCVC":
-        if (!validateCVC(value)) {
-          error = "Invalid CVC!";
-        }
-        break;
-      case "cardMonth":
-      case "cardYear":
-        if (!validateExpiryDate(formData.cardMonth, formData.cardYear)) {
-          error = "Invalid expiry date!";
-        }
-        break;
-      default:
-        if (!value) {
-          error = "Required!";
-        }
+    if (!value) {
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: "Required!",
+      }));
+      setFocusedFields((prev) => ({
+        ...prev,
+        [fieldName]: false,
+      }));
     }
-
-    setErrors((prev) => ({
-      ...prev,
-      [fieldName]: error,
-    }));
-    setFocusedFields((prev) => ({
-      ...prev,
-      [fieldName]: false,
-    }));
   };
-
   const [focusedFields, setFocusedFields] = useState({
     cardNumber: false,
     cardHolder: false,
     cardCVC: false,
     email: false,
   });
+  
+  useEffect(() => {
+    // Other useEffect code...
+
+    // Set a default value for cardYear if it's not already set
+    if (!formData.cardYear) {
+      setFormData((prev) => ({
+        ...prev,
+        cardYear: "", // Set an empty string as default to show "Select Year"
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     const handleAutoFill = () => {
@@ -201,16 +181,13 @@ const InterCardData = () => {
               <div className="InterCardData_Main_Area_Card_Data_First_Inputs">
                 <div
                   className={`relative CARDNUMBER_INPUT ${
-                    focusedFields.cardNumber
-                      ? "border-b-1"
-                      : "border-b-1 border-red-500"
+                    errors.cardNumber ? "border-red-500" : "border-b-1"
                   }`}
                 >
                   <label
-                    className={
-                      "absolute mb-3 text-[11px] transition-all duration-150 " +
-                      (!focusedFields.cardNumber ? "-z-10 top-5" : "")
-                    }
+                    className={`absolute mb-3 text-[11px] transition-all duration-150 ${
+                      focusedFields.cardNumber ? "" : "-z-10 top-5"
+                    }`}
                   >
                     CARD NUMBER
                   </label>
@@ -219,7 +196,7 @@ const InterCardData = () => {
                     name="cardNumber"
                     type="text"
                     autoComplete="cc-number"
-                    placeholder={!focusedFields.cardNumber ? "CARD NUMBER" : ""}
+                    placeholder={focusedFields.cardNumber ? "" : "CARD NUMBER"}
                     value={formData.cardNumber}
                     onFocus={() => handleInputFocus("cardNumber")}
                     onBlur={(ev) =>
@@ -227,21 +204,13 @@ const InterCardData = () => {
                     }
                     onChange={handleInputChange}
                     style={{
-                      borderBottom: focusedFields.cardNumber
-                        ? "1px solid black"
-                        : "1px solid black",
+                      borderBottom: "1px solid black",
                     }}
                   />
-
                   {!focusedFields.cardNumber && errors.cardNumber && (
-                    <div
-                      className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
-                      style={{
-                        marginTop: "1px",
-                      }}
-                    >
+                    <div className="text-red-500 text-[11px] flex gap-1 justify-start items-center mt-1">
                       <svg
-                        class="form-input-error__icon"
+                        className="form-input-error__icon"
                         width="16"
                         height="16"
                         viewBox="0 0 24 24"
@@ -251,8 +220,8 @@ const InterCardData = () => {
                       >
                         <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
                         <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                           d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
                         ></path>
                       </svg>
@@ -444,7 +413,7 @@ const InterCardData = () => {
                         : "1px solid black",
                     }}
                   />
-                  {!focusedFields.email && errors.email && (
+                  {!focusedFields.cardCVC && errors.cardCVC && (
                     <div
                       className="text-red-500 text-[11px] flex gap-1 justify-start items-center"
                       style={{
@@ -522,7 +491,7 @@ const InterCardData = () => {
               )}
               <Link
                 className="Cartcontinuebutton"
-                to="/Order_Summary"
+                to="#"
                 style={{ width: "100%" }}
               >
                 <button className="Contiun">CONTINUE</button>
@@ -591,7 +560,7 @@ const InterCardData = () => {
                   </div>
                 </div>
               </div>
-              <Link className="Cartcontinuebutton" to="/Order_Summary">
+              <Link className="Cartcontinuebutton" to="#">
                 <button className="Contiun">CONTINUE</button>
               </Link>
             </div>
@@ -603,6 +572,3 @@ const InterCardData = () => {
 };
 
 export default InterCardData;
-{
-  /*  */
-}
