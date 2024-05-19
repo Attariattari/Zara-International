@@ -44,7 +44,7 @@ const NavBar_Show_After_Cart = () => {
           </Link>
         </div>
       </div>
-      <div className="secondsection">
+      <div className="secondsections">
         <div className="navlhs">
           <div>
             <NavLink
