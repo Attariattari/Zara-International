@@ -24,8 +24,8 @@ import ChatOne from "./Components/ChatOne/ChatOne.jsx";
 import Address_Conform from "./Components/BillingAddress/Address_Conform";
 import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
 import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
-import Order_Summary from './Components/Order_Summary/Order_Summary';
-import InterCardData from './Components/PaymentMethod/InterCardData/InterCardData';
+import Order_Summary from "./Components/Order_Summary/Order_Summary";
+import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
 function App() {
   const hasVisited = localStorage.getItem("visited") === "true";
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -63,7 +63,6 @@ function App() {
             path="/Home"
             element={<ProtectedHomeRoute redirectTo="/welcome" />}
           />
-
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Help" element={<Help />} />

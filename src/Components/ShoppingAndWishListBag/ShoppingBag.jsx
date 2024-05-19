@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import Swal from "sweetalert2";
 import LikeSameWithProductData from "../NewAllProducts/SingleProductData/LikeSomeProductsDataView/LikeSameWithProductData";
 import { ZaraProducts } from "../../../src/Components/DummyData/Data";
 import Footer from "../Footer/Footer";
 import "./Css.css";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 
 function ShoppingBag() {
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ function ShoppingBag() {
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
         <div className="absolute w-full bg-white">
-          <Navbar />
+          <NavBar_Show_After_Cart />
           <div className="text-black mt-6 ShippingFavoButton">
             <button
               className={

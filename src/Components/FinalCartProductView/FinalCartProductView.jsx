@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
 import "./FinalCartProductView.css";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
@@ -9,6 +8,7 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { ZaraProducts } from "../DummyData/Data";
 import SHIPPING_AND_RETURNS from "../NewAllProducts/Offcanvice/SHIPPING_AND_RETURNS";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 const FinalCartProductView = () => {
   const womenProducts = [
     ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
@@ -53,7 +53,7 @@ const FinalCartProductView = () => {
     <div>
       <div className="sticky top-0 z-10">
         <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
-          <Navbar />
+          <NavBar_Show_After_Cart />
         </div>
       </div>
       <div className="FinalCartProductView">

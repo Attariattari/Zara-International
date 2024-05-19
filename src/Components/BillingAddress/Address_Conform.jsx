@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Navbar from "./../Navbar/Navbar";
 import Footer from "./../Footer/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import "./Css.css";
 import { countries } from "./../DummyData/Data";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 
 function Address_Conform() {
   const [focusedFields, setFocusedFields] = useState({
@@ -115,7 +115,7 @@ function Address_Conform() {
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
         <div className="absolute w-full bg-white">
-          <Navbar />
+          <NavBar_Show_After_Cart />
         </div>
       </div>
       <div>

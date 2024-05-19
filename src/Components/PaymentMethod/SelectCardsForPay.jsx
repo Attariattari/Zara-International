@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
 import "./SelectCardsForPay.css";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 
 const SelectCardsForPay = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,9 +34,11 @@ const SelectCardsForPay = () => {
   const Totalviewfalse = () => {
     setTotoalitemshow(false);
   };
+  
   const Expendfortotal = () => {
     setExpendview(!expendview);
   };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -51,9 +53,9 @@ const SelectCardsForPay = () => {
 
   return (
     <div>
-      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
-        <div className="absolute w-full">
-          <Navbar />
+      <div className="sticky top-0 z-10">
+      <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
+          <NavBar_Show_After_Cart />
         </div>
       </div>
       <div className="SelectCardsForPay">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
 import "./Order_Summary.css";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
@@ -8,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 const Order_Summary = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -77,7 +77,7 @@ const Order_Summary = () => {
     <div>
       <div className="sticky top-0 z-10 ">
         <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
-          <Navbar />
+          <NavBar_Show_After_Cart />
         </div>
       </div>
 

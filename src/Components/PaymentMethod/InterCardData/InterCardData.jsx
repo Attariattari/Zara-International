@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../Navbar/Navbar";
 import "./InterCardData.css";
 import Footer from "../../Footer/Footer";
 import { Link } from "react-router-dom";
+import NavBar_Show_After_Cart from "../../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 
 const InterCardData = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -148,9 +148,9 @@ const InterCardData = () => {
   });
   return (
     <div>
-      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
-        <div className="absolute w-full">
-          <Navbar />
+      <div className="sticky top-0 z-10">
+      <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
+          <NavBar_Show_After_Cart />
         </div>
       </div>
       <div className="InterCardData">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import "./WishList.css";
 import "./Css.css";
 import WishListDrawer from "./WishListDrawers/WishListDrawer";
@@ -10,6 +9,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import WishlistProducts from "./WishlistProducts/WishlistProducts";
+import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show_After_Cart";
 function truncateText(text, maxLength) {
   if (text.length <= maxLength) {
     return text;
@@ -87,7 +87,7 @@ function Wishlist() {
     <div>
       <div className="sticky top-0 z-10" style={{ marginTop: "-9px" }}>
         <div className="absolute w-full bg-white">
-          <Navbar />
+          <NavBar_Show_After_Cart />
           <div className="Wishlist_Buttons_For_Controls mt-6">
             <p
               onClick={(e) => {
