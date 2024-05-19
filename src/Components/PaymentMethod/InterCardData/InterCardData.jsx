@@ -162,7 +162,7 @@ const InterCardData = () => {
             <div className="InterCardData_Main_Area_Card_Data" id="billingForm">
               <div className="InterCardData_Main_Area_Card_Data_First_Inputs">
                 <div
-                  className={`relative CARDNUMBER_INPUT  i${
+                  className={`relative CARDNUMBER_INPUT i${
                     errors.cardNumber ? "border-red-500" : "border-b-1"
                   }`}
                 >
@@ -174,7 +174,7 @@ const InterCardData = () => {
                     CARD NUMBER
                   </label>
                   <input
-                    className="pt-5 pb-2 outline-none w-full text-[11px] CARDNUMBERINPUT"
+                    className="pt-5 pb-2 outline-none w-full text-[11px] CARDNUMBERINPUT pr-10"
                     name="card_number"
                     type="text"
                     autoComplete="cc-number"
@@ -210,6 +210,13 @@ const InterCardData = () => {
                       {errors.cardNumber}
                     </div>
                   )}
+                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                    <img
+                      src="https://static.zara.net/static/images/payment/NewIcon/Icons_Payment_Methods/Payments/SVG/icon-payment-visa_new.svg"
+                      alt="Visa"
+                      className="w-6 h-6"
+                    />
+                  </div>
                 </div>
                 <div className="InterCardData_Main_Area_Card_Data_MONTH_YEAR">
                   <div
