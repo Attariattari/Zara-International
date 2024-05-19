@@ -175,7 +175,7 @@ const InterCardData = () => {
                   </label>
                   <input
                     className="pt-5 pb-2 outline-none w-full text-[11px] CARDNUMBERINPUT pr-10"
-                    name="card_number"
+                    name="cardNumber"
                     type="text"
                     autoComplete="cc-number"
                     placeholder={focusedFields.cardNumber ? "" : "CARD NUMBER"}
