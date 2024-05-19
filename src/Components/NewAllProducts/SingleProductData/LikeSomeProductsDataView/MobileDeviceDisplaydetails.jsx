@@ -32,14 +32,17 @@ function MobileDeviceDisplaydetails({
   };
 
   const handleDragStart = (e) => {
-    setInitialY(e.clientY);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
+    setInitialY(clientY);
     if (isexpanded) {
       toggleIsexpanded();
     }
   };
 
   const handleDragEnd = (e) => {
-    const deltaY = e.clientY - initialY;
+    const clientY =
+      e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
+    const deltaY = clientY - initialY;
     if (deltaY < 0) {
       toggleIsexpanded();
     }
@@ -70,6 +73,8 @@ function MobileDeviceDisplaydetails({
       <button
         className="sticky top-0 z-10 bg-white"
         draggable="true"
+        onTouchStart={handleDragStart} // Handle touch start event
+        onTouchEnd={handleDragEnd} // Handle touch end event
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onClick={(e) => {
