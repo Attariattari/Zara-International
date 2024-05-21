@@ -6,7 +6,7 @@
 
 .Wishdata {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     max-width: 100%;
     width: 100%;
     transition: all 0.6s ease;
@@ -21,12 +21,14 @@
     width: 100%;
     height: 350px;
     border-bottom: 1px solid black;
+    transition: all 0.6s ease;
 }
 
 .Wishprdocutsdetailes {
     display: flex;
     padding: 6px 6px 0px 6px;
     font-size: 11px;
+    font: 0.0625em;
     height: 50px;
     justify-content: space-between;
     flex-direction: column;
@@ -61,7 +63,6 @@
     width: 98%;
     height: 20px;
     border: 1px solid black
-    
 }
 
 ;
@@ -85,11 +86,12 @@
 
 }
 
-@media (max-width: 1279px) {}
+@media (max-width: 1279px) {
+}
 
 @media (max-width: 1179px) {}
 
-@media (max-width: 1024px) {
+@media (max-width: 1149px) {
 
 
     .Wishproductimage img {
@@ -105,13 +107,20 @@
 
     .Wishdata {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         max-width: 100%;
         width: 100%;
     }
 }
 
-@media (max-width: 983px) {}
+@media (max-width: 872px) {
+    .Wishdata {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 100%;
+        width: 100%;
+    }
+}
 
 @media (max-width: 850px) {}
 
@@ -122,7 +131,7 @@
 
     .Wishdata {
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         max-width: 100%;
         width: 100%;
     }
