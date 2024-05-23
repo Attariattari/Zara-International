@@ -80,6 +80,10 @@
     gap: 5px;
 }
 
+.WhistlistcrateButtonin_mobile {
+    display: none;
+}
+
 @media (max-width: 1279px) {
     .WishList {
         padding-top: 255px;
@@ -97,21 +101,54 @@
         padding-top: 227px;
     }
 }
+
 @media (max-width:950px) {
     .WishList {
         padding-top: 222px;
     }
 }
+
 @media (max-width: 872px) {
     .WishList {
         padding-top: 217px;
     }
 }
+
 @media (max-width: 768px) {
     .WishList {
         padding-top: 129px;
     }
+
     .Wishlist_Buttons_For_Controls {
         display: none;
+    }
+
+    .WhistlistcrateButtonin_mobile {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 53px;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .WhistlistcrateButtonin_mobile div {
+        width: 100%;
+        height: 40px;
+        font-size: 11px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .WhistlistcrateButtonin_mobile div button {
+        width: 50%;
+        height: 100%;
+    }
+
+    .WhistlistcrateButtonin_mobile div button:nth-child(1) {
+        border-right: 1px solid black;
     }
 }

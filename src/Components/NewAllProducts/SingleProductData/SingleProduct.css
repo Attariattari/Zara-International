@@ -728,9 +728,9 @@
         top: 5dvh;
         background-color: #ffffff;
         position: fixed;
-        z-index: 1;
+        z-index: 100;
         display: block;
-        overflow-y: scroll;
+        overflow-y: auto;
         padding-bottom: 4em;
     }
 

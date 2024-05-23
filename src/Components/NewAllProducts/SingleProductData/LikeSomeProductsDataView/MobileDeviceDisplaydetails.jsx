@@ -238,7 +238,7 @@ function MobileDeviceDisplaydetails({
                   onClick={(e) => {
                     e.preventDefault();
                     setMEASUREPENS(true);
-                    closeDrawerBottom();
+                    closeDrawerBottom(false);
                     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
                   }}
                 >

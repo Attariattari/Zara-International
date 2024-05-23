@@ -31,3 +31,19 @@
     cursor: pointer;
     font-size: 12px;
 }
+
+@media (max-width: 768px) {
+    .ChatPopupshow {
+        display: none;
+    }
+
+    .chat-component {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .chat-component {
+        display: block;
+    }
+}

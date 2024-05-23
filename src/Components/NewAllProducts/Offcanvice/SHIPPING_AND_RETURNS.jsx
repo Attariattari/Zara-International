@@ -1,5 +1,4 @@
-// SHIPPING_AND_RETURNS.js
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer } from "@material-tailwind/react";
 import "./Css.css";
 import Shipping from "./Offcanvices/Shipping";
@@ -10,61 +9,35 @@ import MEASUREMENTBOTTOM from "./Offcanvices/MEASUREMENTBOTTOM";
 import SizeViewDrawer from "./Offcanvices/SizeViewDrawer";
 
 function SHIPPING_AND_RETURNS({
-  open,
-  setOpen,
-  Avail,
-  setAvail,
-  MEASURE,
-  setMEASURE,
-  ADDTOCART,
-  setADDTOCART,
+  drawerType,
+  closeDrawer,
   MEASUREPENS,
   setMEASUREPENS,
   SizeView,
   setSizeView,
 }) {
-  const closeDrawer = () => {
-    setOpen(false);
-    setAvail(false);
-    setMEASURE(false);
-    setADDTOCART(false);
-  };
-
-  const closebottomdrawer = () => {
-    setMEASUREPENS(false);
-  };
-
-  const CloseSizeView = () => {
-    setSizeView(false);
-  };
-
   const [lastDrawerSize, setLastDrawerSize] = useState(560);
   const [DrawerSize, setDrawerSize] = useState(435);
 
-  useEffect(() => {
-    const body = document.querySelector("body");
-    if (open || Avail || MEASURE || ADDTOCART || MEASUREPENS || SizeView) {
-      body.style.overflow = "hidden";
-    } else {
-      body.style.overflow = "auto";
-    }
-
-    return () => {
-      body.style.overflow = "auto";
-    };
-  }, [open, Avail, MEASURE, ADDTOCART, MEASUREPENS, SizeView]);
-
   const getDrawerSize = () => {
-    if (open) return 560;
-    if (Avail) return 300;
-    if (MEASURE) return 384;
-    if (ADDTOCART) return 435;
-    return lastDrawerSize;
+    switch (drawerType) {
+      case "shipping":
+        return 560;
+      case "avail":
+        return 300;
+      case "measure":
+        return 384;
+      case "AddToCart":
+        return 435;
+      default:
+        return lastDrawerSize;
+    }
   };
 
   const getBottomDrawerSize = () => {
     if (MEASUREPENS) return "100%";
   };
+
   const DrawerSizeView = () => {
     if (SizeView) {
       if (window.innerWidth <= 768) {
@@ -77,10 +50,34 @@ function SHIPPING_AND_RETURNS({
     }
   };
 
+  const CloseSizeView = () => {
+    setSizeView(false);
+  };
+
+  const closebottomdrawer = () => {
+    setMEASUREPENS(false);
+  };
+
   useEffect(() => {
-    if (open) setLastDrawerSize(560);
-    if (Avail || MEASURE || ADDTOCART) setLastDrawerSize(300);
-  }, [open, Avail, MEASURE, ADDTOCART]);
+    if (["shipping", "avail", "measure", "AddToCart"].includes(drawerType)) {
+      setLastDrawerSize(300);
+    } else if (drawerType === "SizeView") {
+      setLastDrawerSize(435);
+    }
+  }, [drawerType]);
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    if (drawerType) {
+      body.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "auto";
+    }
+
+    return () => {
+      body.style.overflow = "auto";
+    };
+  }, [drawerType]);
 
   useEffect(() => {
     if (SizeView) setDrawerSize(435);
@@ -89,23 +86,26 @@ function SHIPPING_AND_RETURNS({
   return (
     <React.Fragment>
       <Drawer
-        open={open || Avail || MEASURE || ADDTOCART}
+        open={
+          drawerType &&
+          ["shipping", "avail", "measure", "AddToCart"].includes(drawerType)
+        }
         size={getDrawerSize()}
         onClose={closeDrawer}
         placement="right"
-        className="p-4 Custom-Drawer bg-white"
+        className="p-4 Custom-Drawer bg-white overflow-y-auto"
       >
-        {open && <Shipping closeDrawer={closeDrawer} />}
-        {Avail && <Avalibilty closeDrawer={closeDrawer} />}
-        {MEASURE && <MEASUREMENT closeDrawer={closeDrawer} />}
-        {ADDTOCART && <AddToCart closeDrawer={closeDrawer} />}
+        {drawerType === "shipping" && <Shipping closeDrawer={closeDrawer} />}
+        {drawerType === "avail" && <Avalibilty closeDrawer={closeDrawer} />}
+        {drawerType === "measure" && <MEASUREMENT closeDrawer={closeDrawer} />}
+        {drawerType === "AddToCart" && <AddToCart closeDrawer={closeDrawer} />}
       </Drawer>
       <Drawer
         open={MEASUREPENS}
         size={getBottomDrawerSize()}
         onClose={closebottomdrawer}
         placement="bottom"
-        className="p-4 Custom-Drawer bg-white"
+        className="p-4 Custom-Drawer bg-white overflow-y-auto"
       >
         {MEASUREPENS && (
           <>

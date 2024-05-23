@@ -84,7 +84,9 @@ function App() {
           />
         </Routes>
         {isChatVisible && (
-          <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
+          <div className="chat-component">
+            <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
+          </div>
         )}
         {!isChatVisible && (
           <div className="ChatPopupshow" onClick={toggleChatVisibility}>
@@ -94,13 +96,13 @@ function App() {
               xmlns="http://www.w3.org/2000/svg"
               fill="inherit"
               stroke="inherit"
-              class="tray__button-icon"
+              className="tray__button-icon"
               aria-label="_tray-icon_"
               alt="tray-icon"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
               ></path>
             </svg>

@@ -3,20 +3,16 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import SHIPPING_AND_RETURNS from "../../Offcanvice/SHIPPING_AND_RETURNS";
 import "../SingleProduct.css";
-import { useMeasureContext } from "../../../../Context/Drawer_state_controller";
 
 function AllProductDataView({ womenProducts }) {
-  const [open, setOpen] = useState(false);
-  const [Avail, setAvail] = useState(false);
-  const [MEASURE, setMEASURE] = useState(false);
-  const [ADDTOCART, setADDTOCART] = useState(false);
+  const [drawerType, setDrawerType] = useState(null); // State to manage which drawer is open
   const [selectedSize, setSelectedSize] = useState(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const handleOverflow = () => {
       const body = document.querySelector("body");
-      if (Swal.isVisible()) {
+      if (drawerType) {
         body.style.overflow = "hidden";
       } else {
         body.style.overflow = "auto";
@@ -25,27 +21,17 @@ function AllProductDataView({ womenProducts }) {
 
     handleOverflow();
 
-    const observer = new MutationObserver((mutationsList, observer) => {
-      handleOverflow();
-    });
-
-    observer.observe(document.body, { attributes: true, subtree: true });
-
     return () => {
-      observer.disconnect();
+      document.body.style.overflow = "auto"; // Ensure overflow is reset on unmount
     };
-  }, []);
+  }, [drawerType]);
 
-  const openDrawer = (drawerType) => {
-    if (drawerType === "shipping") setOpen(true);
-    else if (drawerType === "avail") setAvail(true);
-    else if (drawerType === "measure") setMEASURE(true);
-    else if (drawerType === "AddToCart" && selectedSize) {
-      setADDTOCART(true);
-      setSelectedSize(null); // Reset selectedSize after adding to cart
-    } else {
-      setError(true);
-    }
+  const openDrawer = (drawer) => {
+    setDrawerType(drawer);
+  };
+
+  const closeDrawer = () => {
+    setDrawerType(null);
   };
 
   const handleSizeSelect = (size) => {
@@ -75,6 +61,7 @@ function AllProductDataView({ womenProducts }) {
       },
     }).then((value) => {
       if (value) {
+        // Handle confirmation if needed
       }
     });
   };
@@ -166,16 +153,7 @@ function AllProductDataView({ womenProducts }) {
         ADD
       </button>
       <div>
-        <SHIPPING_AND_RETURNS
-          open={open}
-          setOpen={setOpen}
-          Avail={Avail}
-          setAvail={setAvail}
-          MEASURE={MEASURE}
-          setMEASURE={setMEASURE}
-          ADDTOCART={ADDTOCART}
-          setADDTOCART={setADDTOCART}
-        />
+        <SHIPPING_AND_RETURNS drawerType={drawerType} closeDrawer={closeDrawer} />
       </div>
     </div>
   );

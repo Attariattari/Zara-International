@@ -33,7 +33,7 @@ function SingleProduct() {
       swiperRef.current.swiper.slideTo(index);
     }
   };
-  
+
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
