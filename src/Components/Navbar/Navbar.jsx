@@ -100,9 +100,6 @@ export default function Navbar() {
                 </NavLink>
               </div>
             )}
-            <div className="searchicon" onClick={handleInputClick}>
-              <div>Search</div>
-            </div>
             {shouldShowShoppingBag && (
               <div>
                 <NavLink

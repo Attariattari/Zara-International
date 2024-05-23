@@ -84,6 +84,10 @@
     cursor: pointer;
 }
 
+.Searhinsidepopup {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .sidePopup {
         width: 100%;
@@ -119,14 +123,43 @@
     .Sub-Catgeory-area {
         width: 100%;
         height: 100%;
-        background-color: aquamarine;
     }
 
+    .Search_Acountarea {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        bottom: 0;
+    }
+
+    .Searhinsidepopup {
+        width: 100%;
+        height: auto;
+        padding: 25px 15px 25px 15px;
+        background-color: rgb(255, 255, 255);
+        display: block;
+    }
+    .SearchInput {
+        width: 100%;
+        height: 27%;
+        position: relative;
+        border: 1px solid black;
+        cursor: pointer;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }
+    
+    .SearchInput {
+        padding-right: 30px;
+    }
     .acount-area {
         display: flex;
         justify-content: end;
         align-items: center;
-        height: 100px;
+        height: 60px;
         width: 100%;
         gap: 30px;
         padding-right: 20px;

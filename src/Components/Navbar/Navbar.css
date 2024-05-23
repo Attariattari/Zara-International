@@ -150,20 +150,7 @@
     .navsearch {
         display: none;
     }
-
-    .searchicon {
-        width: 50%;
-        position: relative;
-        border: 1px solid black;
-        cursor: pointer;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        padding: 0px 0px 0px 0px;
-        margin-right: 10px;
-        display: block;
-    }
-
+    
     .navlhs div {
         display: block;
     }

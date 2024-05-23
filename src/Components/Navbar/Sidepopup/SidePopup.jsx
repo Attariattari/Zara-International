@@ -7,6 +7,7 @@ import { userContext } from "../../../Context/UserContext";
 const SidePopup = ({ showpopup }) => {
   const popupRef = useRef();
   const { user, setUser } = useContext(userContext);
+  const isInputDisabled = true;
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       showpopup(false);
@@ -20,7 +21,9 @@ const SidePopup = ({ showpopup }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showpopup]);
-
+  const handleInputClick = () => {
+    navigate("/Search/Products");
+  };
   return (
     <div className="sidePopup" ref={popupRef}>
       <div className="popupclose">
@@ -62,6 +65,12 @@ const SidePopup = ({ showpopup }) => {
       <div className="Sub-Catgeory-area">
         kljfdkflsdhfklsdfsdklfjsdlkfjsdklfjdsklf
       </div>
+      <div className="Search_Acountarea">
+      <div className={`Searhinsidepopup ${isInputDisabled ? "disabled" : ""}`}>
+        <div className="SearchInput" onClick={handleInputClick}>
+          <div className="">Search</div>
+        </div>
+      </div>
       <div className="acount-area">
         <NavLink to="/">Home</NavLink>
         <div>
@@ -72,7 +81,7 @@ const SidePopup = ({ showpopup }) => {
             {user.firstname ? `${user.firstname}` : "LOG IN"}
           </NavLink>
         </div>
-      </div>
+      </div></div>
     </div>
   );
 };
