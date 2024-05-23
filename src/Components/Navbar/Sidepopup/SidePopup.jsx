@@ -6,8 +6,9 @@ import { userContext } from "../../../Context/UserContext";
 
 const SidePopup = ({ showpopup }) => {
   const popupRef = useRef();
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser } = useContext(userContext)
   const isInputDisabled = true;
+
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       showpopup(false);
@@ -20,9 +21,11 @@ const SidePopup = ({ showpopup }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showpopup]);
+  }, [showpopup])
+
   const handleInputClick = () => {
     navigate("/Search/Products");
+    showpopup()
   };
   return (
     <div className="sidePopup" ref={popupRef}>
@@ -66,22 +69,25 @@ const SidePopup = ({ showpopup }) => {
         kljfdkflsdhfklsdfsdklfjsdlkfjsdklfjdsklf
       </div>
       <div className="Search_Acountarea">
-      <div className={`Searhinsidepopup ${isInputDisabled ? "disabled" : ""}`}>
-        <div className="SearchInput" onClick={handleInputClick}>
-          <div className="">Search</div>
+        <div
+          className={`Searhinsidepopup ${isInputDisabled ? "disabled" : ""}`}
+        >
+          <div className="SearchInput" onClick={handleInputClick}>
+            <div className="">Search</div>
+          </div>
+        </div>
+        <div className="acount-area">
+          <NavLink to="/">Home</NavLink>
+          <div>
+            <NavLink
+              to={user.firstname ? "/User/Order" : "/Login"}
+              activeClassName="active"
+            >
+              {user.firstname ? `${user.firstname}` : "LOG IN"}
+            </NavLink>
+          </div>
         </div>
       </div>
-      <div className="acount-area">
-        <NavLink to="/">Home</NavLink>
-        <div>
-          <NavLink
-            to={user.firstname ? "/User/Order" : "/Login"}
-            activeClassName="active"
-          >
-            {user.firstname ? `${user.firstname}` : "LOG IN"}
-          </NavLink>
-        </div>
-      </div></div>
     </div>
   );
 };

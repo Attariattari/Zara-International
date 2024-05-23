@@ -17,6 +17,8 @@ function SingleProduct() {
   const [isexpanded, setIsexpanded] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [showSidePopup, setShowSidePopup] = useState(false);
+  const [showMobileDisplay, setShowMobileDisplay] = useState(true);
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {
@@ -46,11 +48,34 @@ function SingleProduct() {
     };
   }, []);
 
+  const toggleSidePopup = () => {
+    setShowSidePopup(!showSidePopup);
+  };
+  useEffect(() => {
+    // Update showMobileDisplay based on showSidePopup state and screen width
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShowMobileDisplay(!showSidePopup);
+      } else {
+        setShowMobileDisplay(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [showSidePopup]);
   return (
     <div>
       <div className="sticky top-0 z-10">
         <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
-          <Navbar />
+          <Navbar
+            showSidePopup={showSidePopup}
+            toggleSidePopup={toggleSidePopup}
+          />
         </div>
       </div>
       <div className="SingleProduct">
@@ -108,15 +133,19 @@ function SingleProduct() {
           </div>
         </div>
       </div>
-      <div
-        className={`JUST_SHOW_MOBILE ${isexpanded ? "isexpanded" : "Noexpend"}`}
-      >
-        <MobileDeviceDisplaydetails
-          womenProducts={womenProducts}
-          isexpanded={isexpanded}
-          toggleIsexpanded={toggleIsexpanded}
-        />
-      </div>
+      {showMobileDisplay && (
+        <div
+          className={`JUST_SHOW_MOBILE ${
+            isexpanded ? "isexpanded" : "Noexpend"
+          }`}
+        >
+          <MobileDeviceDisplaydetails
+            womenProducts={womenProducts}
+            isexpanded={isexpanded}
+            toggleIsexpanded={toggleIsexpanded}
+          />
+        </div>
+      )}
       <div className="LikeSameWithProductData LikeProduct">
         <LikeSameWithProductData />
       </div>

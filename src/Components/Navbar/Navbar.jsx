@@ -11,8 +11,8 @@ import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
 import { userContext } from "./../../Context/UserContext";
 
-export default function Navbar() {
-  const [showSidePopup, setShowSidePopup] = useState(false);
+export default function Navbar({ showSidePopup, toggleSidePopup }) {
+  // const [showSidePopup, setShowSidePopup] = useState(false);
   const { user } = useContext(userContext);
   const navbarRef = useRef(null);
   const navigate = useNavigate();
@@ -23,9 +23,9 @@ export default function Navbar() {
   const shouldShowShoppingBag = currentPath !== "/Shopping_Bag";
   const isInputDisabled = true;
 
-  const showpopup = () => {
-    setShowSidePopup(!showSidePopup);
-  };
+  // const showpopup = () => {
+  //   setShowSidePopup(!showSidePopup);
+  // };
 
   const handleInputClick = () => {
     navigate("/Search/Products");
@@ -35,7 +35,7 @@ export default function Navbar() {
     <div ref={navbarRef} className="">
       <div className="navbarmain">
         <div className="firstsection">
-          <div className="sidebaricon cursor-pointer" onClick={showpopup}>
+          <div className="sidebaricon cursor-pointer" onClick={toggleSidePopup}>
             {showSidePopup ? (
               <VscClose />
             ) : (
@@ -117,7 +117,7 @@ export default function Navbar() {
       <Outlet />
       {showSidePopup && (
         <div className="sidePopup">
-          <SidePopup showpopup={showpopup} />
+          <SidePopup showpopup={toggleSidePopup} />
         </div>
       )}
     </div>
