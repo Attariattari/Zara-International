@@ -1,18 +1,12 @@
 import React, { useContext, useState, useRef } from "react";
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { VscClose } from "react-icons/vsc";
 import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
 import { userContext } from "./../../Context/UserContext";
 
 export default function Navbar({ showSidePopup, toggleSidePopup }) {
-  // const [showSidePopup, setShowSidePopup] = useState(false);
+  const [isLocalPopupVisible, setIsLocalPopupVisible] = useState(false);
   const { user } = useContext(userContext);
   const navbarRef = useRef(null);
   const navigate = useNavigate();
@@ -23,9 +17,10 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
   const shouldShowShoppingBag = currentPath !== "/Shopping_Bag";
   const isInputDisabled = true;
 
-  // const showpopup = () => {
-  //   setShowSidePopup(!showSidePopup);
-  // };
+  const handleTogglePopup = () => {
+    setIsLocalPopupVisible(!isLocalPopupVisible);
+    toggleSidePopup();
+  };
 
   const handleInputClick = () => {
     navigate("/Search/Products");
@@ -35,8 +30,8 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
     <div ref={navbarRef} className="">
       <div className="navbarmain">
         <div className="firstsection">
-          <div className="sidebaricon cursor-pointer" onClick={toggleSidePopup}>
-            {showSidePopup ? (
+          <div className="sidebaricon cursor-pointer" onClick={handleTogglePopup}>
+            {(showSidePopup || isLocalPopupVisible) ? (
               <VscClose />
             ) : (
               <svg
@@ -115,9 +110,9 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
         </div>
       </div>
       <Outlet />
-      {showSidePopup && (
+      {(showSidePopup || isLocalPopupVisible) && (
         <div className="sidePopup">
-          <SidePopup showpopup={toggleSidePopup} />
+          <SidePopup showpopup={handleTogglePopup} />
         </div>
       )}
     </div>
