@@ -68,6 +68,7 @@
     padding: 10px 20px 10px 20px;
     border-bottom: 1px solid black;
     overflow-x: auto;
+    transition: all 0.6s ease;
 }
 
 .Swiperslidebutton {
@@ -84,15 +85,31 @@
     display: none;
 }
 
+.padding-0 {
+    margin-top: 0 !important;
+}
+
+.padding-top-20 {
+    margin-top: 20px !important;
+}
+
 @media (max-width: 1279px) {
     .WishList {
         padding-top: 255px;
+    }
+
+    .NoLogindata {
+        margin-left: 147px;
     }
 }
 
 @media (max-width: 1179px) {
     .WishList {
         padding-top: 235px;
+    }
+
+    .NoLogindata {
+        margin-left: 123px;
     }
 }
 
@@ -117,6 +134,12 @@
 @media (max-width: 768px) {
     .WishList {
         padding-top: 129px;
+    }
+
+    .NoLogindata {
+        width: 100%;
+        padding: 0px 20px 0px 20px;
+        margin-left: 0px;
     }
 
     .Wishlist_Buttons_For_Controls {

@@ -40,6 +40,10 @@ function Chat({ toggleChatUnVisibility }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       const currentDate = new Date(); // Get current date and time

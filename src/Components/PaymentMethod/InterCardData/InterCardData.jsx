@@ -68,6 +68,10 @@ const InterCardData = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [focusedFields, setFocusedFields] = useState({
     cardNumber: false,
     cardHolder: false,

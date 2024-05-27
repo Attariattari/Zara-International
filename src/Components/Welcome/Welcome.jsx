@@ -62,6 +62,10 @@ function Welcome() {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleCookieClose = () => {
     // Set a flag in local storage to indicate that the user has closed the cookie policy
     localStorage.setItem("cookiePolicyClosed", "true");

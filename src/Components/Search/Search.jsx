@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 
 function Search() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   return (
     <div>
       <div className="sticky top-0 z-10"

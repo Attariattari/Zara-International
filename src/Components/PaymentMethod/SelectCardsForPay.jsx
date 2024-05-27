@@ -51,6 +51,10 @@ const SelectCardsForPay = () => {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <div className="sticky top-0 z-10">

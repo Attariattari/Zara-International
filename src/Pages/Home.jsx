@@ -222,6 +222,10 @@ export default function Home() {
       ]);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="Home">
       <div className="sticky top-0 z-10">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
 import Footer from "../../Footer/Footer";
@@ -31,6 +31,11 @@ function SamallDipalyProducts() {
     console.log("Clicked product data:", product);
     // You can perform further actions with the clicked product data here
   };
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="DetailedProducts">
       <div className="ProductAreaSamllImages cursor-pointer">

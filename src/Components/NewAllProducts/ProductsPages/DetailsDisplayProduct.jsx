@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,10 @@ function DetailsDisplayProduct() {
   const Navigate = () => {
     navigate("/SingleProduct");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="DetailedProducts">

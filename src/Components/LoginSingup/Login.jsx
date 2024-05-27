@@ -78,6 +78,10 @@ export default function Login() {
         setFocusedPassword("true")
       }
     };
+    
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
     // Listen for changes in the form
     const form = document.getElementById("LoginForm");

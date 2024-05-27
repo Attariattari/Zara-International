@@ -57,6 +57,11 @@ function ShoppingBag() {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
   const handleCountPlus = () => {
     if (count < 10) {
       setCount(count + 1);

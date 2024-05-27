@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { NewData } from "../../DummyData/Data";
 import Footer from "../../Footer/Footer";
 function FullDisplayWithOutDetails() {
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div >
       <div>
