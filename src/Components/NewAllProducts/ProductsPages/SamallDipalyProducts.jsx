@@ -31,7 +31,7 @@ function SamallDipalyProducts() {
     console.log("Clicked product data:", product);
     // You can perform further actions with the clicked product data here
   };
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
