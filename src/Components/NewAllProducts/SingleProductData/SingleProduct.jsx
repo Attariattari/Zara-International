@@ -19,6 +19,7 @@ function SingleProduct() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [showSidePopup, setShowSidePopup] = useState(false);
   const [showMobileDisplay, setShowMobileDisplay] = useState(true);
+  const [initialY, setInitialY] = useState(null);
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {
@@ -72,6 +73,24 @@ function SingleProduct() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleDragStart = (e) => {
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
+    setInitialY(clientY);
+    if (isexpanded) {
+      toggleIsexpanded();
+    }
+  };
+
+  const handleDragEnd = (e) => {
+    const clientY =
+      e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
+    const deltaY = clientY - initialY;
+    if (deltaY < 0) {
+      toggleIsexpanded();
+    }
+    setInitialY(null);
+  };
 
   return (
     <div>
@@ -143,6 +162,10 @@ function SingleProduct() {
           className={`JUST_SHOW_MOBILE ${
             isexpanded ? "isexpanded" : "Noexpend"
           }`}
+          onTouchStart={handleDragStart} // Handle touch start event
+          onTouchEnd={handleDragEnd} // Handle touch end event
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
         >
           <MobileDeviceDisplaydetails
             womenProducts={womenProducts}

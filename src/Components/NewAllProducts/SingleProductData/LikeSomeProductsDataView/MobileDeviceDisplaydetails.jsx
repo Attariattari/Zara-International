@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LikeSameWithProductData from "./LikeSameWithProductData";
 import Footer from "../../../Footer/Footer";
 import "../SingleProduct.css";
@@ -31,23 +31,23 @@ function MobileDeviceDisplaydetails({
     setSuccessaddtocart(false);
   };
 
-  const handleDragStart = (e) => {
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
-    setInitialY(clientY);
-    if (isexpanded) {
-      toggleIsexpanded();
-    }
-  };
+  // const handleDragStart = (e) => {
+  //   const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
+  //   setInitialY(clientY);
+  //   if (isexpanded) {
+  //     toggleIsexpanded();
+  //   }
+  // };
 
-  const handleDragEnd = (e) => {
-    const clientY =
-      e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
-    const deltaY = clientY - initialY;
-    if (deltaY < 0) {
-      toggleIsexpanded();
-    }
-    setInitialY(null);
-  };
+  // const handleDragEnd = (e) => {
+  //   const clientY =
+  //     e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
+  //   const deltaY = clientY - initialY;
+  //   if (deltaY < 0) {
+  //     toggleIsexpanded();
+  //   }
+  //   setInitialY(null);
+  // };
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
@@ -70,49 +70,45 @@ function MobileDeviceDisplaydetails({
 
   return (
     <div ref={mobileDisplayRef}>
-      <button
-        className="sticky top-0 z-10 bg-white"
-        draggable="true"
-        onTouchStart={handleDragStart} // Handle touch start event
-        onTouchEnd={handleDragEnd} // Handle touch end event
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onClick={(e) => {
-          e.preventDefault();
-          openDrawers("SizeDrawer");
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }}
-      >
-        ADD
-      </button>
-      <span>
-        <span>
-          <p>{womenProducts[0].title.substring(0, 32)}</p>
-          <svg
-            class="wishlist-icon wishlist-icon--productDetail"
-            preserveAspectRatio="xMidYMid slice"
-            width="16"
-            heigth="16"
-            height="16"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
-            stroke="inherit"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
-            ></path>
-          </svg>
-        </span>
-        <div className="Colors">
-          <span className="color-box" style={{ backgroundColor: "white" }} />
-          <span className="color-box" style={{ backgroundColor: "black" }} />
-          <span className="color-box" style={{ backgroundColor: "blue" }} />
+      <div className="NoExpendArea">
+        <div className="NoExpendArea_Title">
+          <p>{womenProducts[0].title}</p>
+          <p className="WomenRealPRice">{womenProducts[0].price.RealPrice}</p>
         </div>
-      </span>
-      <p className="WomenRealPRice">{womenProducts[0].price.RealPrice}</p>
+        <div className="NoExpendArea_Buttons">
+          <button
+            className="sticky top-0 z-10 bg-white NoExpendArea_Add"
+            draggable="true"
+            onClick={(e) => {
+              e.preventDefault();
+              openDrawers("SizeDrawer");
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            }}
+          >
+            ADD
+          </button>
+          <button className="sticky top-0 z-10 bg-white NoExpendArea_Wishlist">
+            <svg
+              class="wishlist-icon wishlist-icon--productDetail"
+              preserveAspectRatio="xMidYMid slice"
+              width="24"
+              heigth="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       {isexpanded && (
         <>
           <p className="Womendiscription">{womenProducts[0].discription}</p>
@@ -208,7 +204,7 @@ function MobileDeviceDisplaydetails({
       )}
 
       {ProductSizeBottom && (
-        <span className="JustmobileSize p-0">
+        <span className="JustmobileSize p-0 text=[11px]">
           <Drawer
             placement="bottom"
             open={ProductSizeBottom}
@@ -221,7 +217,7 @@ function MobileDeviceDisplaydetails({
                 <div>SELECT A SIZE</div>
                 <div>This product is longer than usual.</div>
               </div>
-              <div className="Drawer_Size_Data">
+              <div className="Drawer_Size_Data" style={{ fontSize: "11px" }}>
                 {womenProducts[0].size.map((size, index) => (
                   <button
                     key={index}

@@ -1,7 +1,7 @@
 .Search {
     width: 100%;
     height: auto;
-    padding: 136px 0px 0px 0px;
+    padding: 5px 0px 0px 0px;
 }
 
 .SearchCatagory {
@@ -26,6 +26,9 @@
     padding: 0px 40px 0px 40px;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .SearchInput input {
@@ -34,6 +37,7 @@
     outline: none;
     border-radius: 0%;
     text-transform: uppercase;
+    font-size: 12px;
 }
 
 .SearchInput input::placeholder {
