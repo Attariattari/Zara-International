@@ -414,6 +414,11 @@
     display: none;
     transition: all 0.6s ease;
     z-index: 100;
+    -webkit-user-select: none; /* Chrome, Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;  
+    cursor: pointer; 
 }
 
 .JUST_SHOW_MOBILE::-webkit-scrollbar {
@@ -736,17 +741,17 @@
 
     .Noexpend {
         width: 100%;
-        height: 140px;
-        top: 78.3vh;
+        height:124px;
+        top: 81vh;
         overflow: hidden;
     }
 
     .NoExpendArea_Buttons {
         width: 100%;
-        height: auto;
         display: flex;
         gap: 20px;
         align-items: center;
+        margin-top: 15px;
     }
 
     .NoExpendArea_Add {
@@ -772,7 +777,7 @@
 
     .NoExpendArea {
         width: 100%;
-        height: 140px;
+        height: 100%;
         border-top: 1px solid black;
         padding: 20px 10px 20px 10px;
         display: flex;

@@ -73,8 +73,16 @@ function SingleProduct() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const disableTextSelection = () => {
+    document.body.style.userSelect = "none";
+  };
+
+  const enableTextSelection = () => {
+    document.body.style.userSelect = "auto";
+  };
 
   const handleDragStart = (e) => {
+    disableTextSelection();
     const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
     setInitialY(clientY);
     if (isexpanded) {
@@ -83,6 +91,7 @@ function SingleProduct() {
   };
 
   const handleDragEnd = (e) => {
+    enableTextSelection();
     const clientY =
       e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
     const deltaY = clientY - initialY;
@@ -91,6 +100,27 @@ function SingleProduct() {
     }
     setInitialY(null);
   };
+
+  useEffect(() => {
+    const handleTouchMove = (e) => {
+      // Update the state or perform any action based on the drag movement
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      if (clientY && initialY !== null) {
+        // Real-time update logic here, if necessary
+        const deltaY = clientY - initialY;
+        console.log('Real-time deltaY:', deltaY); // Example: log deltaY for debugging
+      }
+    };
+
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('mousemove', handleTouchMove);
+
+    return () => {
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('mousemove', handleTouchMove);
+    };
+  }, [initialY]);
+
 
   return (
     <div>
