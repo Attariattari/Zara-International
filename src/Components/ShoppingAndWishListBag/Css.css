@@ -3,6 +3,10 @@
     height: auto;
     padding-top: 188.4px;
     transition: all 0.6s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .custom-size {
@@ -365,11 +369,12 @@
     .Cartcontinuebutton {
         width: 50%;
     }
-    
+
     .ShippingFavoButton {
-       margin-top: 10px;
+        margin-top: 10px;
     }
+
     .ShippingFavoButton button {
-    width: 50%;
-}
+        width: 50%;
+    }
 }

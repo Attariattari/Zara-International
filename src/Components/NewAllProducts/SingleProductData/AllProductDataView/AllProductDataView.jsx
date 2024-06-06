@@ -28,6 +28,7 @@ function AllProductDataView({ womenProducts }) {
 
   const openDrawer = (drawer) => {
     setDrawerType(drawer);
+    setSelectedSize(null)
   };
 
   const closeDrawer = () => {
