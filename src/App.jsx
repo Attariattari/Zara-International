@@ -20,7 +20,6 @@ import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleP
 import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
 import Chat from "./Components/Chat/Chat.jsx";
 import "./App.css";
-import ChatOne from "./Components/ChatOne/ChatOne.jsx";
 import Address_Conform from "./Components/BillingAddress/Address_Conform";
 import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
 import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";

@@ -29,6 +29,7 @@
     border: 1px solid black;
     padding: 13px 19px 0px 19px;
     flex-direction: column;
+    transition: all 0.6s ease;
 }
 
 .compact {
@@ -414,11 +415,46 @@
     display: none;
     transition: all 0.6s ease;
     z-index: 100;
-    -webkit-user-select: none; /* Chrome, Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;  
-    cursor: pointer; 
+    /* -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; */
+    cursor: pointer;
+}
+.JUST_SHOW_MOBILE_Button_visible_hide {
+    display: none;
+    transition: all 0.6s ease;
+}
+.NoExpendArea {
+    display: none;
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid black;
+    padding: 20px 10px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    background-color: #ffffff;
+    transition: all 0.6s ease;
+}
+.Noexpend {
+    display: none;
+    width: 100%;
+    height: 124px;
+    top: 81.2vh;
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+.isexpanded {
+    height: auto;
+    top: 0;
+    transition: all 0.6s ease;
+}
+.ExpendArea {
+    display: none;
+    transition: all 0.6s ease;
+    background-color: white;
 }
 
 .JUST_SHOW_MOBILE::-webkit-scrollbar {
@@ -450,6 +486,11 @@
     padding: 0px 0px 0px 0px;
     font-size: 11px;
 }
+.compoinmobile :nth-child(4) {
+    margin: 10px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    font-size: 11px;
+}
 
 .compoinmobile :nth-child(5),
 .compoinmobile :nth-child(10),
@@ -458,6 +499,7 @@
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     font-size: 11px;
+    
 }
 
 .compoinmobile :nth-child(6),
@@ -519,7 +561,6 @@
     position: fixed;
     top: 0;
     right: -380px;
-    /* Start offcanvas off the screen */
     bottom: 0;
     width: 380px;
     z-index: 200;
@@ -731,18 +772,35 @@
         width: 100%;
         height: 100vh;
         top: 5dvh;
-        background-color: #ffffff;
         position: fixed;
         z-index: 100;
         display: block;
         overflow-y: auto;
-        padding-bottom: 4em;
+    }
+
+    .JUST_SHOW_MOBILE_Button_visible_hide {
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 4px;
+        
+    }
+    .JUST_SHOW_MOBILE_Button_visible_hide div{
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 4px;
+           width: auto;
+           padding: 0px 0px 10px 0px;
     }
 
     .Noexpend {
+        display: block;
         width: 100%;
-        height:124px;
-        top: 81vh;
+        height: 134px;
+        top: 79vh;
         overflow: hidden;
     }
 
@@ -776,6 +834,7 @@
     }
 
     .NoExpendArea {
+        display: block;
         width: 100%;
         height: 100%;
         border-top: 1px solid black;
@@ -784,6 +843,12 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: start;
+        background-color: #ffffff;
+    }
+
+    .ExpendArea {
+        display: block;
+        background-color: white;
     }
 
     .NoExpendArea_Title {
@@ -796,8 +861,8 @@
     .Womendiscription {
         font-size: 11px;
         display: flex;
-        padding: 0px 10px 0px 10px;
-        margin: 45px 0px 0px 0px;
+        padding: 45px 10px 0px 10px;
+        margin: 0px 0px 0px;
     }
 
     .Womencolor {

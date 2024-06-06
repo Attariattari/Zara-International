@@ -19,7 +19,6 @@ function SingleProduct() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [showSidePopup, setShowSidePopup] = useState(false);
   const [showMobileDisplay, setShowMobileDisplay] = useState(true);
-  const [initialY, setInitialY] = useState(null);
   const swiperRef = useRef(null);
 
   const toggleExpanded = () => {
@@ -73,54 +72,13 @@ function SingleProduct() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const disableTextSelection = () => {
-    document.body.style.userSelect = "none";
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    toggleIsexpanded();
   };
-
-  const enableTextSelection = () => {
-    document.body.style.userSelect = "auto";
-  };
-
-  const handleDragStart = (e) => {
-    disableTextSelection();
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY); // Handle touch events
-    setInitialY(clientY);
-    if (isexpanded) {
-      toggleIsexpanded();
-    }
-  };
-
-  const handleDragEnd = (e) => {
-    enableTextSelection();
-    const clientY =
-      e.clientY || (e.changedTouches && e.changedTouches[0].clientY); // Handle touch events
-    const deltaY = clientY - initialY;
-    if (deltaY < 0) {
-      toggleIsexpanded();
-    }
-    setInitialY(null);
-  };
-
-  useEffect(() => {
-    const handleTouchMove = (e) => {
-      // Update the state or perform any action based on the drag movement
-      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-      if (clientY && initialY !== null) {
-        // Real-time update logic here, if necessary
-        const deltaY = clientY - initialY;
-        console.log('Real-time deltaY:', deltaY); // Example: log deltaY for debugging
-      }
-    };
-
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('mousemove', handleTouchMove);
-
-    return () => {
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('mousemove', handleTouchMove);
-    };
-  }, [initialY]);
-
 
   return (
     <div>
@@ -192,11 +150,24 @@ function SingleProduct() {
           className={`JUST_SHOW_MOBILE ${
             isexpanded ? "isexpanded" : "Noexpend"
           }`}
-          onTouchStart={handleDragStart} // Handle touch start event
-          onTouchEnd={handleDragEnd} // Handle touch end event
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
         >
+          <div className="JUST_SHOW_MOBILE_Button_visible_hide">
+            <div onClick={handleClick}>
+              <svg
+                class="layout-shop-footer__swipe-icon"
+                width="80"
+                height="3"
+                viewBox="0 0 40 0.5"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0 0h40v1H0V0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
           <MobileDeviceDisplaydetails
             womenProducts={womenProducts}
             isexpanded={isexpanded}
