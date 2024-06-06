@@ -61,7 +61,6 @@ function ShoppingBag() {
     window.scrollTo(0, 0);
   }, []);
 
-
   const handleCountPlus = () => {
     if (count < 10) {
       setCount(count + 1);
@@ -210,12 +209,15 @@ function ShoppingBag() {
       <Footer />
       <div className="sticky bottom-0 z-50">
         <div className="CartpropccessOrder">
-          <div className="CartPropssesstitle">*By continuing, I declare that I have read and accept the Purchase Conditions and understand Zara's Privacy and Cookie Policy.</div>
+          <div className="CartPropssesstitle">
+            *By continuing, I declare that I have read and accept the Purchase
+            Conditions and understand Zara's Privacy and Cookie Policy.
+          </div>
           <div className="CartProccesses">
-            <div className="CardTotalShow">
+            <div className="CardTotalShow" style={{ padding: "0px" }}>
               <div>TOTAL</div>
               <div className="flex-col">
-                <div className="pl-4">899.50 EUR</div>
+                <div className="">899.50 EUR</div>
                 <div
                   className="text-gray-700"
                   style={{
@@ -226,7 +228,7 @@ function ShoppingBag() {
                 </div>
               </div>
             </div>
-            <Link className="Cartcontinuebutton" to='/Address_Conform'>
+            <Link className="Cartcontinuebutton" to="/Address_Conform">
               <button className="Contiun">CONTINUE</button>
             </Link>
           </div>
