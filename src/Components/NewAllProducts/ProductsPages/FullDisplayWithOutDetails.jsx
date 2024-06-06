@@ -12,7 +12,7 @@ function FullDisplayWithOutDetails() {
     navigate("/SingleProduct");
   };
   return (
-    <div onClick={Navigate}>
+    <div onClick={Navigate} className="cursor-pointer">
       <div>
         <img src={NewData.img} alt="NewData Image" />
       </div>

@@ -46,7 +46,7 @@ function New() {
         <div className="Productfilterveiw">
           <div>
             <svg
-              className={`view-option-selector-button__icon ${
+              className={`view-option-selector-button__icon cursor-pointer ${
                 selectedComponent === "FullDisplay" ? "activeIcon" : ""
               }`}
               width="24"
@@ -66,7 +66,7 @@ function New() {
           </div>
           <div>
             <svg
-              className={`view-option-selector-button__icon ${
+              className={`view-option-selector-button__icon cursor-pointer ${
                 selectedComponent === "DetailsDisplay" ? "activeIcon" : ""
               }`}
               width="24"
@@ -86,7 +86,7 @@ function New() {
           </div>
           <div>
             <svg
-              className={`view-option-selector-button__icon ${
+              className={`view-option-selector-button__icon cursor-pointer ${
                 selectedComponent === "SamallDipaly" ? "activeIcon" : ""
               }`}
               width="24"

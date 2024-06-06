@@ -45,7 +45,7 @@ function SamallDipalyProducts() {
       <div className="ProductAreaSamllImages cursor-pointer">
         {womenProducts.map((product, index) => (
           <div
-            className="ProductData"
+            className="ProductData cursor-pointer"
             key={index}
             // onClick={() => handleClick(product)}
             onClick={Navigate}
