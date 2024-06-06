@@ -2,14 +2,17 @@ import React, { useEffect } from "react";
 
 import { NewData } from "../../DummyData/Data";
 import Footer from "../../Footer/Footer";
+import { useNavigate } from "react-router-dom";
 function FullDisplayWithOutDetails() {
-  
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  const Navigate = () => {
+    navigate("/SingleProduct");
+  };
   return (
-    <div >
+    <div onClick={Navigate}>
       <div>
         <img src={NewData.img} alt="NewData Image" />
       </div>

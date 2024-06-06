@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
 import Footer from "../../Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 function SamallDipalyProducts() {
   const womenProducts = [
@@ -13,7 +14,10 @@ function SamallDipalyProducts() {
     ZaraProducts.Women.OVERSIZE_CRINKLE,
     ZaraProducts.Women.OVERSIZE_CRINKLE,
   ];
-
+  const navigate = useNavigate();
+  const Navigate = () => {
+     navigate("/SingleProduct");
+   };
   const renderMedia = (media) => {
     if (media.length > 0) {
       const firstMedia = media[0];
@@ -43,7 +47,8 @@ function SamallDipalyProducts() {
           <div
             className="ProductData"
             key={index}
-            onClick={() => handleClick(product)}
+            // onClick={() => handleClick(product)}
+            onClick={Navigate}
           >
             {renderMedia(product.images)}
           </div>
