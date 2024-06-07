@@ -39,9 +39,11 @@ function MobileDeviceDisplaydetails({ womenProducts }) {
   const Navigatetocart = () => {
     Navigate("/Shopping_Bag");
   };
+
   const toggleWishlist = () => {
     setIsInWishlist((prev) => !prev);
   };
+  
   return (
     <div ref={mobileDisplayRef}>
       <div className="NoExpendArea">

@@ -10,6 +10,7 @@ import NavBar_Show_After_Cart from "../Navbar/NavBar_Show_After_Cart/NavBar_Show
 function ShoppingBag() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("shoppingBag");
+  const [wishlistStatus, setWishlistStatus] = useState({});
   const [count, setCount] = useState(1);
   const womenProducts = [
     ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
@@ -89,6 +90,13 @@ function ShoppingBag() {
     }
   };
 
+  const toggleWishlist = (index) => {
+    setWishlistStatus((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
   return (
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
@@ -159,22 +167,43 @@ function ShoppingBag() {
                       </div>
                     </div>
                     <div className="cartitemicons">
-                      <svg
-                        className="layout-shopping-lists-navigation__lists-icon wishlist-icon"
-                        preserveAspectRatio="xMidYMid slice"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="inherit"
-                        stroke="inherit"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
-                        ></path>
-                      </svg>
+                    {wishlistStatus[index] ? (
+                        <svg
+                          className="wishlist-icon wishlist-icon--productDetail"
+                          preserveAspectRatio="xMidYMid slice"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="inherit"
+                          stroke="inherit"
+                          onClick={() => toggleWishlist(index)}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M12 15.238L17 20V4H7v16l5-4.762z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <svg
+                          className="wishlist-icon wishlist-icon--productDetail"
+                          preserveAspectRatio="xMidYMid slice"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="inherit"
+                          stroke="inherit"
+                          onClick={() => toggleWishlist(index)}
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+                          ></path>
+                        </svg>
+                      )}
                       <svg
                         class="shop-cart-item-actions__action-icon"
                         width="24"
