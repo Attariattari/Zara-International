@@ -11,7 +11,6 @@ function ShoppingBag() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("shoppingBag");
   const [wishlistStatus, setWishlistStatus] = useState({});
-  
 
   const womenProducts = [
     ZaraProducts.Women.LINEN_BLEND_ROLL_UP,
@@ -21,7 +20,7 @@ function ShoppingBag() {
     ZaraProducts.Women.MINIMALIST_FITTED_BLAZER,
     ZaraProducts.Women.OVERSIZE_CRINKLE,
   ];
-const [quantities, setQuantities] = useState(
+  const [quantities, setQuantities] = useState(
     Array(womenProducts.length).fill(1)
   );
   const ShippingRoute = () => {
@@ -228,13 +227,19 @@ const [quantities, setQuantities] = useState(
                     </div>
                   </div>
                   <div className="cartitemquantity">
-                    <div className="cursor-pointer" onClick={() => handleCountMinus(index)}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => handleCountMinus(index)}
+                    >
                       -
                     </div>
                     <div className="cursor-default">
                       {quantities[index] || 1}
                     </div>
-                    <div className="cursor-pointer" onClick={() => handleCountPlus(index)}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => handleCountPlus(index)}
+                    >
                       +
                     </div>
                   </div>
