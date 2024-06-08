@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainCss.css";
 import { ZaraProducts } from "../../DummyData/Data";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { GoPlus } from "react-icons/go";
 import Footer from "../../Footer/Footer";
 
 function DetailsDisplayProduct() {
+  const [wishlistStatus, setWishlistStatus] = useState({});
   const navigate = useNavigate();
 
   const womenProducts = [
@@ -40,6 +41,13 @@ function DetailsDisplayProduct() {
     window.scrollTo(0, 0);
   }, []);
 
+  const toggleWishlist = (index) => {
+    setWishlistStatus((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
   return (
     <div className="DetailedProducts">
       <div className="ProductArea cursor-pointer">
@@ -60,22 +68,43 @@ function DetailsDisplayProduct() {
                     ? `${product.title.substring(0, 25)}...`
                     : product.title}
                 </h4>
-                <svg
-                  className="wishlist-icon wishlist-icon--grid"
-                  preserveAspectRatio="xMidYMid slice"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="inherit"
-                  stroke="inherit"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
-                  ></path>
-                </svg>
+                {wishlistStatus[index] ? (
+                  <svg
+                    className="wishlist-icon wishlist-icon--productDetail"
+                    preserveAspectRatio="xMidYMid slice"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="inherit"
+                    stroke="inherit"
+                    onClick={() => toggleWishlist(index)}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12 15.238L17 20V4H7v16l5-4.762z"
+                    ></path>
+                  </svg>
+                ) : (
+                  <svg
+                    className="wishlist-icon wishlist-icon--productDetail"
+                    preserveAspectRatio="xMidYMid slice"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="inherit"
+                    stroke="inherit"
+                    onClick={() => toggleWishlist(index)}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+                    ></path>
+                  </svg>
+                )}
               </div>
               <div className="PriceSection space-x-3">
                 <span>{product.price.RealPrice}</span>

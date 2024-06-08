@@ -64,34 +64,34 @@ export default function Login() {
       });
   }
 
-  useEffect(() => {
-    const handleAutoFill = () => {
-      const form = document.getElementById("LoginForm");
-      const inputs = form.querySelectorAll("input");
+  // useEffect(() => {
+  //   const handleAutoFill = () => {
+  //     const form = document.getElementById("LoginForm");
+  //     const inputs = form.querySelectorAll("input");
 
-      const allFieldsFilled = Array.from(inputs).every(
-        (input) => input.value !== ""
-      );
+  //     const allFieldsFilled = Array.from(inputs).every(
+  //       (input) => input.value !== ""
+  //     );
 
-      if (allFieldsFilled) {
-        setFocusedEmail("true")
-        setFocusedPassword("true")
-      }
-    };
+  //     if (allFieldsFilled) {
+  //       setFocusedEmail("true")
+  //       setFocusedPassword("true")
+  //     }
+  //   };
     
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  //   useEffect(() => {
+  //     window.scrollTo(0, 0);
+  //   }, []);
 
-    // Listen for changes in the form
-    const form = document.getElementById("LoginForm");
-    form.addEventListener("change", handleAutoFill);
+  //   // Listen for changes in the form
+  //   const form = document.getElementById("LoginForm");
+  //   form.addEventListener("change", handleAutoFill);
 
-    // Clean up event listener
-    return () => {
-      form.removeEventListener("change", handleAutoFill);
-    };
-  }, []);
+  //   // Clean up event listener
+  //   return () => {
+  //     form.removeEventListener("change", handleAutoFill);
+  //   };
+  // }, []);
 
   return (
     <div className="">

@@ -47,17 +47,19 @@ function Chat({ toggleChatUnVisibility }) {
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       const currentDate = new Date(); // Get current date and time
-      const newMessage = { 
-        text: message, 
+      const newMessage = {
+        text: message,
         sender: senderName,
-        date: currentDate.toISOString() // Convert date to ISO string for storage
-      }; 
+        date: currentDate.toISOString(), // Convert date to ISO string for storage
+      };
       setMessages([...messages, newMessage]);
-      localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
+      localStorage.setItem(
+        "chatMessages",
+        JSON.stringify([...messages, newMessage])
+      ); // Save to localStorage
       setMessage("");
     }
   };
-  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -65,24 +67,26 @@ function Chat({ toggleChatUnVisibility }) {
       const reader = new FileReader();
       const currentDate = new Date();
       reader.onload = () => {
-        const newMessage = { 
-          image: reader.result, 
+        const newMessage = {
+          image: reader.result,
           sender: senderName,
-          date: currentDate.toLocaleString() // Include date in the message
+          date: currentDate.toLocaleString(), // Include date in the message
         };
         setMessages([...messages, newMessage]);
-        localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
+        localStorage.setItem(
+          "chatMessages",
+          JSON.stringify([...messages, newMessage])
+        ); // Save to localStorage
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
     }
   };
-  
 
   const handleDragOver = (e) => {
     e.preventDefault();
   };
-  
+
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -90,19 +94,21 @@ function Chat({ toggleChatUnVisibility }) {
       const currentDate = new Date();
       const reader = new FileReader();
       reader.onload = () => {
-        const newMessage = { 
-          image: reader.result, 
+        const newMessage = {
+          image: reader.result,
           sender: senderName,
-          date: currentDate.toLocaleString() // Include date in the message
+          date: currentDate.toLocaleString(), // Include date in the message
         };
         setMessages([...messages, newMessage]);
-        localStorage.setItem("chatMessages", JSON.stringify([...messages, newMessage])); // Save to localStorage
+        localStorage.setItem(
+          "chatMessages",
+          JSON.stringify([...messages, newMessage])
+        ); // Save to localStorage
         setOpenUploader(false);
       };
       reader.readAsDataURL(file);
     }
   };
-  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -146,7 +152,7 @@ function Chat({ toggleChatUnVisibility }) {
     localStorage.removeItem("chatMessages"); // Remove chat messages from local storage
     toggleChatUnVisibility(); // Hide the chat
   };
-  
+
   return (
     <div className="Chat">
       <div className="Chat_Child">
@@ -375,7 +381,7 @@ function Chat({ toggleChatUnVisibility }) {
         {Close && (
           <div className="ConformationClose">
             <div className="closepopup">
-              <div className="Heading_title"> 
+              <div className="Heading_title">
                 <p>DO YOU WANT TO CLOSE THE CHAT?</p>
                 <p>If you close it, you will lose this conversation</p>
               </div>
