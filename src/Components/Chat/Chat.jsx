@@ -201,7 +201,7 @@ function Chat({ toggleChatUnVisibility }) {
                 }`}
               >
                 <div className="message-sender">
-                  {msg.sender === senderName ? senderName : receiverName}
+                  {/* {msg.sender === senderName ? senderName : receiverName} */}
                 </div>
                 <div className="message-content">
                   {msg.text ? (

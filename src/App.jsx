@@ -25,25 +25,33 @@ import FinalCartProductView from "./Components/FinalCartProductView/FinalCartPro
 import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
 import Order_Summary from "./Components/Order_Summary/Order_Summary";
 import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
+
 function App() {
-  const hasVisited = localStorage.getItem("visited") === "true";
+  const [hasVisited, setHasVisited] = useState(
+    localStorage.getItem("visited") === "true"
+  );
   const [isChatVisible, setIsChatVisible] = useState(false);
-  const [isChatOneVisible, setIsChatOneVisible] = useState(false);
 
   const toggleChatVisibility = () => {
     setIsChatVisible((prevIsChatVisible) => !prevIsChatVisible);
-    // setIsChatOneVisible(false);
   };
+
   const toggleChatUnVisibility = () => {
     setIsChatVisible(false);
   };
-  const toggleChatOneVisibility = () => {
-    setIsChatOneVisible((prevIsChatVisible) => !prevIsChatVisible);
-    // setIsChatVisible(false);
-  };
-  const toggleChatOneUnVisibility = () => {
-    setIsChatOneVisible(false);
-  };
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setHasVisited(localStorage.getItem("visited") === "true");
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   return (
     <div>
       <Router>
@@ -59,61 +67,183 @@ function App() {
             }
           />
           <Route
-            path="/Home"
-            element={<ProtectedHomeRoute redirectTo="/welcome" />}
-          />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/Help" element={<Help />} />
-          <Route path="/Shopping_Bag" element={<ShoppingBag />} />
-          <Route path="/Wishlist" element={<Wishlist />} />
-          <Route path="/User/Order" element={<UserOrder />} />
-          <Route path="/Search/Products" element={<Search />} />
-          <Route path="/New" element={<New />} />
-          <Route path="/SingleProduct" element={<SingleProduct />} />
-          <Route path="/Address_Conform" element={<Address_Conform />} />
-          <Route path="/method-selection" element={<FinalCartProductView />} />
-          <Route path="/SelectCardsForPay" element={<SelectCardsForPay />} />
-          <Route path="/InterCardData" element={<InterCardData />} />
-          <Route path="/Order_Summary" element={<Order_Summary />} />
-
-          <Route
             path="/welcome"
-            element={<ProtectedRoute redirectTo="/Home" />}
+            element={
+              <ProtectedWelcomeRoute redirectTo="/Home">
+                <Welcome />
+              </ProtectedWelcomeRoute>
+            }
+          />
+          <Route
+            path="/Home"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Login"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Signup"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Signup />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Help"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Help />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Shopping_Bag"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <ShoppingBag />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Wishlist"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Wishlist />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/User/Order"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <UserOrder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Search/Products"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Search />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/New"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <New />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/SingleProduct"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <SingleProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Address_Conform"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Address_Conform />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/method-selection"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <FinalCartProductView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/SelectCardsForPay"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <SelectCardsForPay />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/InterCardData"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <InterCardData />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Order_Summary"
+            element={
+              <ProtectedRoute redirectTo="/welcome">
+                <Order_Summary />
+              </ProtectedRoute>
+            }
           />
         </Routes>
-        {isChatVisible && (
-          <div className="chat-component">
-            <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
-          </div>
-        )}
-        {!isChatVisible && (
-          <div className="ChatPopupshow" onClick={toggleChatVisibility}>
-            <svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
-              stroke="inherit"
-              className="tray__button-icon"
-              aria-label="_tray-icon_"
-              alt="tray-icon"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
-              ></path>
-            </svg>
-            <span className="text-gray-400">Chat</span>
-          </div>
+        {hasVisited && (
+          <>
+            {isChatVisible && (
+              <div className="chat-component">
+                <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
+              </div>
+            )}
+            {!isChatVisible && (
+              <div className="ChatPopupshow" onClick={toggleChatVisibility}>
+                <svg
+                  width="24"
+                  height="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="inherit"
+                  stroke="inherit"
+                  className="tray__button-icon"
+                  aria-label="_tray-icon_"
+                  alt="tray-icon"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
+                  ></path>
+                </svg>
+                <span className="text-gray-400">Chat</span>
+              </div>
+            )}
+          </>
         )}
       </Router>
     </div>
   );
 }
 
-function ProtectedRoute({ redirectTo }) {
+function ProtectedRoute({ children, redirectTo }) {
+  const hasVisited = localStorage.getItem("visited") === "true";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!hasVisited) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [hasVisited, navigate, redirectTo]);
+
+  return hasVisited ? children : null;
+}
+
+function ProtectedWelcomeRoute({ children, redirectTo }) {
   const hasVisited = localStorage.getItem("visited") === "true";
   const navigate = useNavigate();
 
@@ -123,46 +253,7 @@ function ProtectedRoute({ redirectTo }) {
     }
   }, [hasVisited, navigate, redirectTo]);
 
-  return <Welcome />;
-}
-
-function ProtectedHomeRoute({ redirectTo }) {
-  const hasNotVisited = localStorage.getItem("NotVisited") !== "false";
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (hasNotVisited) {
-      navigate(redirectTo, { replace: true });
-    }
-  }, [hasNotVisited, navigate, redirectTo]);
-
-  return <Home />;
+  return !hasVisited ? children : null;
 }
 
 export default App;
-{
-  /* {isChatOneVisible && (
-          <ChatOne toggleChatOneUnVisibility={toggleChatOneUnVisibility} />
-        )}
-        {!isChatOneVisible && (
-          <div className="ChatOnePopupshow" onClick={toggleChatOneVisibility}>
-            <svg
-              width="24"
-              height="24"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
-              stroke="inherit"
-              class="tray__button-icon"
-              aria-label="_tray-icon_"
-              alt="tray-icon"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M3.7 3.7h16.6v13h-8.14L7.3 20.172V16.7H3.7v-13Zm1 1v11h3.6v2.528l3.54-2.528h7.46v-11H4.7Z"
-              ></path>
-            </svg>
-            <span className="text-gray-400">Chat One</span>
-          </div>
-        )} */
-}
