@@ -52,6 +52,21 @@ function App() {
     };
   }, []);
 
+  // UseEffect to handle quick update of isChatVisible state
+  useEffect(() => {
+    const handleChatToggle = (event) => {
+      if (event.detail === "toggleChat") {
+        setIsChatVisible((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("chatToggle", handleChatToggle);
+
+    return () => {
+      window.removeEventListener("chatToggle", handleChatToggle);
+    };
+  }, []);
+
   return (
     <div>
       <Router>
