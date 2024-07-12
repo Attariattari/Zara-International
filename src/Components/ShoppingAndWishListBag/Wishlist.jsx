@@ -44,7 +44,6 @@ function Wishlist() {
   }
 
   const token = getToken();
-  localStorage.setItem("token", "Ghulam Muhyo Din");
 
   useEffect(() => {
     const handleOverflow = () => {

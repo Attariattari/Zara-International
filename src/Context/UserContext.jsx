@@ -8,7 +8,6 @@ export function UserContextProvider({ children }) {
     return storedUser ? JSON.parse(storedUser) : { firstname: "" };
   });
 
-  // Persist user changes to local storage whenever the user state changes
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);

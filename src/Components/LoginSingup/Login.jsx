@@ -35,63 +35,52 @@ export default function Login() {
   const navigation = useNavigate();
 
   async function handleLogin(values) {
-    await axios
-      .post(
-        "https://zarabackendserver-448d1df25aec.herokuapp.com/user/authenticate",
+    try {
+      const response = await axios.post(
+        "http://localhost:1122/user/authenticate",
         {
           email: values.email,
           password: values.password,
-          pageRoll: 0,
         }
-      )
-      .then((res) => {
-        const { token, firstname, lastname, email, profileImage, phoneno } =
-          res.data;
-        setUser({
-          firstname: firstname,
-          lastname: lastname,
-          email: email,
-          profileImage: profileImage,
-          phoneno: phoneno,
-          token: token,
-        });
-        localStorage.setItem("token", token);
-        navigation("/");
-        return;
-      })
-      .catch((err) => {
-        console.log("Login failed " + err);
-      });
+      );
+
+      const { token, user } = response.data;
+      setUser(user);
+      localStorage.setItem("token", token);
+      navigation("/");
+    } catch (err) {
+      console.log("Login failed", err);
+    }
   }
 
-  // useEffect(() => {
-  //   const handleAutoFill = () => {
-  //     const form = document.getElementById("LoginForm");
-  //     const inputs = form.querySelectorAll("input");
+  useEffect(() => {
+    const handleAutoFill = () => {
+      const form = document.getElementById("LoginForm");
+      const inputs = form.querySelectorAll("input");
 
-  //     const allFieldsFilled = Array.from(inputs).every(
-  //       (input) => input.value !== ""
-  //     );
+      const allFieldsFilled = Array.from(inputs).every(
+        (input) => input.value !== ""
+      );
 
-  //     if (allFieldsFilled) {
-  //       setFocusedEmail("true")
-  //       setFocusedPassword("true")
-  //     }
-  //   };
-    
-  //   useEffect(() => {
-  //     window.scrollTo(0, 0);
-  //   }, []);
+      if (allFieldsFilled) {
+        setFocusedEmail("true");
+        setFocusedPassword("true");
+      }
+    };
 
-  //   // Listen for changes in the form
-  //   const form = document.getElementById("LoginForm");
-  //   form.addEventListener("change", handleAutoFill);
+    // Listen for changes in the form
+    const form = document.getElementById("LoginForm");
+    form.addEventListener("change", handleAutoFill);
 
-  //   // Clean up event listener
-  //   return () => {
-  //     form.removeEventListener("change", handleAutoFill);
-  //   };
-  // }, []);
+    // Clean up event listener
+    return () => {
+      form.removeEventListener("change", handleAutoFill);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="">

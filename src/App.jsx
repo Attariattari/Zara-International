@@ -1,5 +1,26 @@
 // App.jsx
-import React, { useEffect, useState } from "react";
+import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
+import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
+import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
+import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
+import ShoppingBag from "./Components/ShoppingAndWishListBag/ShoppingBag.jsx";
+import Address_Conform from "./Components/BillingAddress/Address_Conform";
+import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
+import Order_Summary from "./Components/Order_Summary/Order_Summary";
+import React, { useContext, useEffect, useState } from "react";
+import UserOrder from "./Components/UserOrder/UserOrder.jsx";
+import { userContext } from "./Context/UserContext.jsx";
+import Signup from "./Components/LoginSingup/Singup.jsx";
+import Login from "./Components/LoginSingup/Login.jsx";
+import New from "./Components/NewAllProducts/New.jsx";
+import Search from "./Components/Search/Search.jsx";
+import Welcome from "./Components/Welcome/Welcome";
+import Help from "./Components/Help/Help.jsx";
+import Chat from "./Components/Chat/Chat.jsx";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import Home from "./Pages/Home";
+import "./App.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,31 +28,13 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
-import Welcome from "./Components/Welcome/Welcome";
-import Home from "./Pages/Home";
-import Login from "./Components/LoginSingup/Login.jsx";
-import Help from "./Components/Help/Help.jsx";
-import Signup from "./Components/LoginSingup/Singup.jsx";
-import ShoppingBag from "./Components/ShoppingAndWishListBag/ShoppingBag.jsx";
-import UserOrder from "./Components/UserOrder/UserOrder.jsx";
-import Search from "./Components/Search/Search.jsx";
-import New from "./Components/NewAllProducts/New.jsx";
-import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
-import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
-import Chat from "./Components/Chat/Chat.jsx";
-import "./App.css";
-import Address_Conform from "./Components/BillingAddress/Address_Conform";
-import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
-import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
-import Order_Summary from "./Components/Order_Summary/Order_Summary";
-import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
 
 function App() {
   const [hasVisited, setHasVisited] = useState(
     localStorage.getItem("visited") === "true"
   );
   const [isChatVisible, setIsChatVisible] = useState(false);
-
+  const { setUser } = useContext(userContext);
   const toggleChatVisibility = () => {
     setIsChatVisible((prevIsChatVisible) => !prevIsChatVisible);
   };
@@ -66,6 +69,23 @@ function App() {
       window.removeEventListener("chatToggle", handleChatToggle);
     };
   }, []);
+
+  // useEffect(() => {
+  //   const token = Cookies.get("token");
+
+  //   if (token) {
+  //     const { exp } = jwtDecode(token); // Decode the token to get the expiration time
+  //     const expirationTime = exp * 1000; // Convert expiration time to milliseconds
+
+  //     const logoutTimer = setTimeout(() => {
+  //       Cookies.remove("token");
+  //       setUser(null);
+        
+  //     }, expirationTime - Date.now());
+
+  //     return () => clearTimeout(logoutTimer); // Cleanup function to clear the timer
+  //   }
+  // }, [ setUser]);
 
   return (
     <div>
