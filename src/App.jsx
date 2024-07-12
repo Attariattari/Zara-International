@@ -17,9 +17,8 @@ import Search from "./Components/Search/Search.jsx";
 import Welcome from "./Components/Welcome/Welcome";
 import Help from "./Components/Help/Help.jsx";
 import Chat from "./Components/Chat/Chat.jsx";
-import { jwtDecode } from "jwt-decode";
-import Cookies from "js-cookie";
 import Home from "./Pages/Home";
+import Nav from "./Zara_Admin/Home/Nav.jsx";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -28,6 +27,10 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import Dashboard from "./Zara_Admin/Home/Dashboard";
+import Navbar from "./Components/Navbar/Navbar.jsx";
+import SideBar from "./Zara_Admin/Home/SideBar.jsx";
+import NavLayout from "./Zara_Admin/Home/NavLayout.jsx";
 
 function App() {
   const [hasVisited, setHasVisited] = useState(
@@ -80,7 +83,7 @@ function App() {
   //     const logoutTimer = setTimeout(() => {
   //       Cookies.remove("token");
   //       setUser(null);
-        
+
   //     }, expirationTime - Date.now());
 
   //     return () => clearTimeout(logoutTimer); // Cleanup function to clear the timer
@@ -229,6 +232,11 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/Dashboard" element={<NavLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="Dashboard" element={<Dashboard />} />
+            <Route path="Sidebar" element={<SideBar />} />
+          </Route>
         </Routes>
         {hasVisited && (
           <>
