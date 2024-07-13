@@ -8,7 +8,7 @@ function SideBar() {
 
   return (
     <div className={`SideBar ${isexpanded ? "SmallSidebar" : "FullSidebar"}`}>
-      Zara Admin
+      Muhyo Tech
     </div>
   );
 }
