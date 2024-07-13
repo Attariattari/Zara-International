@@ -1,43 +1,138 @@
 body.light {
     --bg-color: white;
     --text-color: black;
+    --border-color: #000000;
 }
 
 body.dark {
     --bg-color: #333;
     --text-color: white;
+    --border-color: #ffffff;
 }
 
 .Dashboard {
     width: 100%;
     height: 100%;
     background-color: var(--bg-color);
-  color: var(--text-color);
-
-
+    color: var(--text-color);
 }
 
+/* Sidebar Styles */
 .SideBar {
     width: 100%;
-    box-shadow: 5px 0 3px -3px #00000030;
+    border-right: 1px solid var(--border-color);
     height: 100vh;
     transition: all 0.6s ease;
     background-color: var(--bg-color);
-  color: var(--text-color);
+    color: var(--text-color);
+}
 
+.Drawer {
+    box-shadow: 5px 0 3px -3px #00000030;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 250px;
+    height: 100%;
+    z-index: 99999999;
+}
+
+.DrawerOpen {
+    left: 0;
+    transition: left 0.6s ease-in-out;
+    padding: 0 15px;
+}
+
+.DrawerClosed {
+    left: -100%;
+    transition: left 0.6s ease-in-out;
 }
 
 .FullSidebar {
     width: 290px;
+    padding: 0 15px;
+    transition: all 0.6s ease;
 }
 
 .SmallSidebar {
     width: 88px;
     display: flex;
-    justify-content: center;
-    align-items: start;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.6s ease;
 }
 
+.SmallSidebar .SideBar_Menu {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.SmallSidebar .SideBar_Menu ul {
+    justify-content: center;
+    /* Center icons horizontally in small sidebar */
+}
+
+.SmallSidebar .SideBar_Menu ul li svg,
+.SmallSidebar .SideBar_Menu ul li .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.SideBar_Menu ul+ul {
+    margin-top: 5px;
+    /* 10px gap between each ul */
+}
+
+.SideBarLogo {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SideBarLogo div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+
+.SideBarLogo img {
+    border-radius: 50%;
+    width: 50px;
+    /* Ensure the width and height are equal for a perfect circle */
+    height: 50px;
+    object-fit: cover;
+    /* Ensure the image covers the container without distortion */
+}
+
+.SideBar_Menu {
+    width: 100%;
+    height: auto;
+    color: var(--text-color);
+    margin-top: 20px;
+}
+
+.SideBar_Menu ul {
+    width: 100%;
+    height: auto;
+    color: var(--text-color);
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Navbar Styles */
 .Nav {
     width: 100%;
     height: 70px;
@@ -47,93 +142,102 @@ body.dark {
     background-color: var(--bg-color);
     color: var(--text-color);
     padding: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
-    .FirstMenu {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
 
-    .Second-Menu {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
+.FirstMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
 
-    .Second-nav,
-    .nav-First {
-        position: relative;
-        margin: 0 15px;
-    }
+.Second-Menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
 
-    .icon {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
+.Second-nav,
+.nav-First {
+    position: relative;
+    margin: 0 15px;
+}
 
-    .create-new,
-    .notifications,
-    .user-data {
-        padding: 10px;
-        cursor: pointer;
-        position: relative;
-    }
+.icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
 
-    .dropdown-menu {
-        position: absolute;
-        width: 150px;
-        top: 100%;
-        left: 44%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        font-size: 12px;
-        transform: translateX(-50%);
-        background-color: var(--bg-color);
-        color: var(--text-color);      
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        border-radius: 2px;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -ms-border-radius: 2px;
-        -o-border-radius: 2px;
-    }
+.create-new,
+.notifications,
+.user-data {
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
 
-    .dropdown-menu ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-    }
+.dropdown-menu {
+    position: absolute;
+    width: 150px;
+    top: 100%;
+    left: 44%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-top: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    font-size: 12px;
+    transform: translateX(-50%);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 2px;
+}
 
-    .dropdown-menu li {
-        padding: 10px;
-        cursor: pointer;
-    }
+.dropdown-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 
-    .dropdown-menu li:hover {
-        background-color: var(--bg-color);
+}
 
+.dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-menu li:hover {
+    background-color: var(--bg-color);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle svg {
+    transition: color 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .SideBar {
+        display: none;
     }
-    .theme-toggle {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1.5em;
-        color: var(--text-color);
-        display: flex;
-        align-items: center;
-      }
-      
-      .theme-toggle svg {
-        transition: color 0.3s ease;
-      }
-      
-      .theme-toggle:hover svg {
-        color: var(--text-color);
-      }
+}

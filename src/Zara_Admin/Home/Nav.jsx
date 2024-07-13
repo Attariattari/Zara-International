@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BsJustify } from "react-icons/bs";
 import { useSidebar } from "../Context/SidebarContext";
 import { useTheme } from "../Context/ThemeContext";
@@ -10,8 +10,31 @@ function Navbar({ handleClick }) {
     notifications: false,
     userData: false,
   });
-  const { toggleExpanded } = useSidebar();
+  const { toggleExpanded, toggleDrawer } = useSidebar();
   const { theme, toggleTheme } = useTheme();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const createNewRef = useRef(null);
+  const notificationsRef = useRef(null);
+  const userDataRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleSidebarToggle = () => {
+    if (isMobile) {
+      toggleDrawer();
+    } else {
+      toggleExpanded();
+    }
+  };
+
   const toggleDropdown = (menu) => {
     setDropdownVisible((prevState) => {
       const newState = {
@@ -26,14 +49,36 @@ function Navbar({ handleClick }) {
     });
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        createNewRef.current && !createNewRef.current.contains(event.target) &&
+        notificationsRef.current && !notificationsRef.current.contains(event.target) &&
+        userDataRef.current && !userDataRef.current.contains(event.target)
+      ) {
+        setDropdownVisible({
+          createNew: false,
+          notifications: false,
+          userData: false,
+        });
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="Nav">
       <div className="FirstMenu">
-        <BsJustify onClick={() => toggleExpanded()} className="icon" />
+        <BsJustify onClick={handleSidebarToggle} className="icon" />
         <div className="nav-First">
           <div
             className="create-new"
             onClick={() => toggleDropdown("createNew")}
+            ref={createNewRef}
           >
             Create New
           </div>
@@ -53,6 +98,7 @@ function Navbar({ handleClick }) {
           <div
             className="notifications"
             onClick={() => toggleDropdown("notifications")}
+            ref={notificationsRef}
           >
             Notifications
           </div>
@@ -67,7 +113,11 @@ function Navbar({ handleClick }) {
           )}
         </div>
         <div className="Second-nav">
-          <div className="user-data" onClick={() => toggleDropdown("userData")}>
+          <div
+            className="user-data"
+            onClick={() => toggleDropdown("userData")}
+            ref={userDataRef}
+          >
             User Data
           </div>
           {dropdownVisible.userData && (
@@ -81,7 +131,7 @@ function Navbar({ handleClick }) {
           )}
         </div>
         <div className="theme-toggle" onClick={toggleTheme}>
-          {theme === 'light' ? <MdDarkMode /> : <MdOutlineLightMode />}
+          {theme === "light" ? <MdDarkMode /> : <MdOutlineLightMode />}
         </div>
       </div>
     </div>
