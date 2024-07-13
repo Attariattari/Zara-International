@@ -1,7 +1,6 @@
 import "./Css.css";
 import React from "react";
-import { useSidebar } from "./SidebarContext";
-import Navbar from "./Nav";
+import { useSidebar } from "../Context/SidebarContext";
 
 function SideBar() {
   const { isexpanded } = useSidebar();

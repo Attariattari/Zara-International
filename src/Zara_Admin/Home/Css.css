@@ -1,7 +1,19 @@
+body.light {
+    --bg-color: white;
+    --text-color: black;
+}
+
+body.dark {
+    --bg-color: #333;
+    --text-color: white;
+}
+
 .Dashboard {
     width: 100%;
     height: 100%;
-    background-color: rgb(0, 34, 255);
+    background-color: var(--bg-color);
+  color: var(--text-color);
+
 
 }
 
@@ -10,6 +22,9 @@
     box-shadow: 5px 0 3px -3px #00000030;
     height: 100vh;
     transition: all 0.6s ease;
+    background-color: var(--bg-color);
+  color: var(--text-color);
+
 }
 
 .FullSidebar {
@@ -29,79 +44,96 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 10px;
-    color: white;
 }
+    .FirstMenu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
 
-.FirstMenu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
+    .Second-Menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
 
-.Second-Menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
+    .Second-nav,
+    .nav-First {
+        position: relative;
+        margin: 0 15px;
+    }
 
-.Second-nav,
-.nav-First {
-    position: relative;
-    margin: 0 15px;
-}
+    .icon {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
 
-.icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
+    .create-new,
+    .notifications,
+    .user-data {
+        padding: 10px;
+        cursor: pointer;
+        position: relative;
+    }
 
-.create-new,
-.notifications,
-.user-data {
-    padding: 10px;
-    cursor: pointer;
-    position: relative;
-}
+    .dropdown-menu {
+        position: absolute;
+        width: 150px;
+        top: 100%;
+        left: 44%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 12px;
+        transform: translateX(-50%);
+        background-color: var(--bg-color);
+        color: var(--text-color);      
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -o-border-radius: 2px;
+    }
 
-.dropdown-menu {
-    position: absolute;
-    width: 150px;
-    top: 100%;
-    left: 44%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 12px;
-    transform: translateX(-50%);
-    background-color: white;
-    color: black;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 2px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
-}
+    .dropdown-menu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
 
-.dropdown-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
+    .dropdown-menu li {
+        padding: 10px;
+        cursor: pointer;
+    }
 
-.dropdown-menu li {
-    padding: 10px;
-    cursor: pointer;
-}
+    .dropdown-menu li:hover {
+        background-color: var(--bg-color);
 
-.dropdown-menu li:hover {
-    background-color: #f1f1f1;
-}
+    }
+    .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5em;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+      }
+      
+      .theme-toggle svg {
+        transition: color 0.3s ease;
+      }
+      
+      .theme-toggle:hover svg {
+        color: var(--text-color);
+      }

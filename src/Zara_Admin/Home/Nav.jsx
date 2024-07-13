@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { BsJustify } from "react-icons/bs";
-import { useSidebar } from "./SidebarContext";
+import { useSidebar } from "../Context/SidebarContext";
+import { useTheme } from "../Context/ThemeContext";
+import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
+
 function Navbar({ handleClick }) {
   const [dropdownVisible, setDropdownVisible] = useState({
     createNew: false,
@@ -8,6 +11,7 @@ function Navbar({ handleClick }) {
     userData: false,
   });
   const { toggleExpanded } = useSidebar();
+  const { theme, toggleTheme } = useTheme();
   const toggleDropdown = (menu) => {
     setDropdownVisible((prevState) => {
       const newState = {
@@ -75,6 +79,9 @@ function Navbar({ handleClick }) {
               </ul>
             </div>
           )}
+        </div>
+        <div className="theme-toggle" onClick={toggleTheme}>
+          {theme === 'light' ? <MdDarkMode /> : <MdOutlineLightMode />}
         </div>
       </div>
     </div>
