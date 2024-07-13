@@ -31,6 +31,7 @@ import Dashboard from "./Zara_Admin/Home/Dashboard";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import SideBar from "./Zara_Admin/Home/SideBar.jsx";
 import NavLayout from "./Zara_Admin/Home/NavLayout.jsx";
+import Product from "./Zara_Admin/Home/Product.jsx";
 
 function App() {
   const [hasVisited, setHasVisited] = useState(
@@ -232,10 +233,11 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/Dashboard" element={<NavLayout />}>
+          <Route path="/Admin/*" element={<NavLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="Dashboard" element={<Dashboard />} />
             <Route path="Sidebar" element={<SideBar />} />
+            <Route path="Dashboard" element={<Dashboard />} />
+            <Route path="Product" element={<Product />} />
           </Route>
         </Routes>
         {hasVisited && (

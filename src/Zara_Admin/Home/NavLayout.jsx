@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
+import { Outlet } from 'react-router-dom';
 import SideBar from './SideBar';
 
 const NavLayout = ({ children }) => {
@@ -9,7 +10,7 @@ const NavLayout = ({ children }) => {
       <div style={{ width: '100%' }}>
         <Nav />
         <div>
-          {children}
+          <Outlet />
         </div>
       </div>
     </div>
