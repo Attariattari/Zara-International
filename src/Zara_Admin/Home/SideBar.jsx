@@ -1,11 +1,14 @@
 import "./Css.css";
 import React, { useState, useEffect, useRef } from "react";
 import { useSidebar } from "../Context/SidebarContext";
-import { MdOutlineDashboard } from "react-icons/md";
+import { MdEditNotifications, MdOutlineBorderColor, MdOutlineDashboard } from "react-icons/md";
+import { BiSolidUserAccount } from "react-icons/bi";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiFunctionAddFill } from "react-icons/ri";
-import { TbListDetails } from "react-icons/tb";
-
+import { TbCategory2, TbListDetails } from "react-icons/tb";
+import { LuCombine, LuComponent } from "react-icons/lu";import { PiUserFocusDuotone } from "react-icons/pi";
+import { FaOpencart } from "react-icons/fa6";
+import { CgCarousel } from "react-icons/cg";
 function SideBar() {
   const { isexpanded } = useSidebar();
   const { openDrawer, toggleDrawer } = useSidebar();
@@ -70,7 +73,31 @@ function SideBar() {
             <MdOutlineDashboard className="icon" />
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-            <li>Dashboard</li>
+            <li className="cursor-pointer">Dashboard</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Dashboard">
+            <BiSolidUserAccount className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Users</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Dashboard">
+            <PiUserFocusDuotone className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Manage Users</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Dashboard">
+            <MdEditNotifications className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Notification</li>
           )}
         </ul>
         <ul>
@@ -78,15 +105,31 @@ function SideBar() {
             <AiOutlineProduct className="icon" />
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-            <li>Products</li>
+            <li className="cursor-pointer">Products</li>
           )}
         </ul>
         <ul>
           <li data-tip="Products">
-            <RiFunctionAddFill className="icon" />
+            <LuCombine className="icon" />
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-            <li>Add Products</li>
+            <li className="cursor-pointer">Featured Product</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <LuComponent className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Sales Product</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <CgCarousel className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Main Carousel</li>
           )}
         </ul>
         <ul>
@@ -94,7 +137,47 @@ function SideBar() {
             <TbListDetails className="icon" />
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-            <li>Products Details</li>
+            <li className="cursor-pointer">Products Details</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <TbCategory2 className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Catgeory</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <RiFunctionAddFill className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Add Products</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <FaOpencart className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Shopping Cart</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <MdOutlineBorderColor className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Order</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <TbListDetails className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Order Details</li>
           )}
         </ul>
       </div>

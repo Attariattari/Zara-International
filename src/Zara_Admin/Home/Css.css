@@ -2,12 +2,18 @@ body.light {
     --bg-color: white;
     --text-color: black;
     --border-color: #000000;
+    --scrollbar-bg: #f1f1f1;
+    --scrollbar-thumb: #000000;
+    --scrollbar-thumb-hover: #555;
 }
 
 body.dark {
     --bg-color: #333;
     --text-color: white;
     --border-color: #ffffff;
+    --scrollbar-bg: #555;
+    --scrollbar-thumb: #ffffff;
+    --scrollbar-thumb-hover: #aaa;
 }
 
 .Dashboard {
@@ -25,6 +31,26 @@ body.dark {
     transition: all 0.6s ease;
     background-color: var(--bg-color);
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.SideBar_Menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.SideBar_Menu::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+.SideBar_Menu::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+    border: 2px solid var(--scrollbar-bg);
+}
+
+.SideBar_Menu::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
 }
 
 .Drawer {
@@ -38,12 +64,14 @@ body.dark {
     max-width: 250px;
     height: 100%;
     z-index: 99999999;
+    display: flex;
+    flex-direction: column;
 }
 
 .DrawerOpen {
     left: 0;
     transition: left 0.6s ease-in-out;
-    padding: 0 15px;
+    padding-left: 15px;
 }
 
 .DrawerClosed {
@@ -53,7 +81,7 @@ body.dark {
 
 .FullSidebar {
     width: 290px;
-    padding: 0 15px;
+    padding-left: 15px;
     transition: all 0.6s ease;
 }
 
@@ -86,8 +114,7 @@ body.dark {
 }
 
 .SideBar_Menu ul+ul {
-    margin-top: 5px;
-    /* 10px gap between each ul */
+    margin-top: 10px;
 }
 
 .SideBarLogo {
@@ -96,6 +123,9 @@ body.dark {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 .SideBarLogo div {
@@ -120,6 +150,7 @@ body.dark {
     height: auto;
     color: var(--text-color);
     margin-top: 20px;
+    overflow-y: auto;
 }
 
 .SideBar_Menu ul {
