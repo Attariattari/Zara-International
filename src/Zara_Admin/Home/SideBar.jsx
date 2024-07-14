@@ -1,12 +1,17 @@
 import "./Css.css";
 import React, { useState, useEffect, useRef } from "react";
 import { useSidebar } from "../Context/SidebarContext";
-import { MdEditNotifications, MdOutlineBorderColor, MdOutlineDashboard } from "react-icons/md";
+import {
+  MdEditNotifications,
+  MdOutlineBorderColor,
+  MdOutlineDashboard,
+} from "react-icons/md";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiFunctionAddFill } from "react-icons/ri";
 import { TbCategory2, TbListDetails } from "react-icons/tb";
-import { LuCombine, LuComponent } from "react-icons/lu";import { PiUserFocusDuotone } from "react-icons/pi";
+import { LuCombine, LuComponent } from "react-icons/lu";
+import { PiUserFocusDuotone } from "react-icons/pi";
 import { FaOpencart } from "react-icons/fa6";
 import { CgCarousel } from "react-icons/cg";
 function SideBar() {
@@ -170,6 +175,14 @@ function SideBar() {
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
             <li className="cursor-pointer">Order</li>
+          )}
+        </ul>
+        <ul>
+          <li data-tip="Products">
+            <TbListDetails className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Order Details</li>
           )}
         </ul>
         <ul>

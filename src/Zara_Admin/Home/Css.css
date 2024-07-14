@@ -83,28 +83,28 @@ body.dark {
     width: 290px;
     padding-left: 15px;
     transition: all 0.6s ease;
+   
 }
 
 .SmallSidebar {
     width: 88px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
     transition: all 0.6s ease;
 }
 
 .SmallSidebar .SideBar_Menu {
     margin-top: 0;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
+    padding-bottom: 20px;
+}
+.FullSidebar .SideBar_Menu {
+    padding-bottom: 20px;
 }
 
 .SmallSidebar .SideBar_Menu ul {
     justify-content: center;
-    /* Center icons horizontally in small sidebar */
 }
 
 .SmallSidebar .SideBar_Menu ul li svg,
@@ -139,10 +139,8 @@ body.dark {
 .SideBarLogo img {
     border-radius: 50%;
     width: 50px;
-    /* Ensure the width and height are equal for a perfect circle */
     height: 50px;
     object-fit: cover;
-    /* Ensure the image covers the container without distortion */
 }
 
 .SideBar_Menu {
@@ -151,6 +149,7 @@ body.dark {
     color: var(--text-color);
     margin-top: 20px;
     overflow-y: auto;
+  
 }
 
 .SideBar_Menu ul {

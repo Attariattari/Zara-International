@@ -421,10 +421,12 @@
     user-select: none; */
     cursor: pointer;
 }
+
 .JUST_SHOW_MOBILE_Button_visible_hide {
     display: none;
     transition: all 0.6s ease;
 }
+
 .NoExpendArea {
     display: none;
     width: 100%;
@@ -438,6 +440,7 @@
     background-color: #ffffff;
     transition: all 0.6s ease;
 }
+
 .Noexpend {
     display: none;
     width: 100%;
@@ -446,11 +449,13 @@
     overflow: hidden;
     transition: all 0.6s ease;
 }
+
 .isexpanded {
     height: auto;
     top: 0;
     transition: all 0.6s ease;
 }
+
 .ExpendArea {
     display: none;
     transition: all 0.6s ease;
@@ -486,6 +491,7 @@
     padding: 0px 0px 0px 0px;
     font-size: 11px;
 }
+
 .compoinmobile :nth-child(4) {
     margin: 10px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
@@ -499,7 +505,7 @@
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     font-size: 11px;
-    
+
 }
 
 .compoinmobile :nth-child(6),
@@ -784,16 +790,17 @@
         justify-content: center;
         align-items: center;
         padding-bottom: 4px;
-        
+
     }
-    .JUST_SHOW_MOBILE_Button_visible_hide div{
+
+    .JUST_SHOW_MOBILE_Button_visible_hide div {
         display: block;
         display: flex;
         justify-content: center;
         align-items: center;
         padding-bottom: 4px;
-           width: auto;
-           padding: 0px 0px 10px 0px;
+        width: auto;
+        padding: 0px 0px 10px 0px;
     }
 
     .Noexpend {
