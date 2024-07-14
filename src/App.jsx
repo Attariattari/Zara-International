@@ -18,6 +18,7 @@ import Welcome from "./Components/Welcome/Welcome";
 import Help from "./Components/Help/Help.jsx";
 import Chat from "./Components/Chat/Chat.jsx";
 import Home from "./Pages/Home";
+import Authanticate from './Zara_Admin/Authanticate/Authanticate'
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -71,23 +72,6 @@ function App() {
       window.removeEventListener("chatToggle", handleChatToggle);
     };
   }, []);
-
-  // useEffect(() => {
-  //   const token = Cookies.get("token");
-
-  //   if (token) {
-  //     const { exp } = jwtDecode(token); // Decode the token to get the expiration time
-  //     const expirationTime = exp * 1000; // Convert expiration time to milliseconds
-
-  //     const logoutTimer = setTimeout(() => {
-  //       Cookies.remove("token");
-  //       setUser(null);
-
-  //     }, expirationTime - Date.now());
-
-  //     return () => clearTimeout(logoutTimer); // Cleanup function to clear the timer
-  //   }
-  // }, [ setUser]);
 
   return (
     <div>
@@ -237,6 +221,7 @@ function App() {
             <Route path="Dashboard" element={<Dashboard />} />
             <Route path="Product" element={<Product />} />
           </Route>
+          <Route path="/Admin/Autanticate" element={<Authanticate />} />
         </Routes>
         {hasVisited && (
           <>

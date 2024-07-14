@@ -10,7 +10,7 @@ import { useSidebar } from "../../Context/SidebarContext";
 import { useTheme } from "../../Context/ThemeContext";
 import "../Nav/Css.css";
 
-function Navbar({ handleClick }) {
+function Navbar() {
   const [dropdownVisible, setDropdownVisible] = useState({
     createNew: false,
     notifications: false,
