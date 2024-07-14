@@ -1,11 +1,12 @@
 import "./Css.css";
 import React, { useState, useEffect, useRef } from "react";
-import { useSidebar } from "../Context/SidebarContext";
+import { useSidebar } from "../../Context/SidebarContext";
 import {
   MdEditNotifications,
   MdOutlineBorderColor,
   MdOutlineDashboard,
 } from "react-icons/md";
+import { SiGooglemessages } from "react-icons/si";
 import { BiSolidUserAccount } from "react-icons/bi";
 import { AiOutlineProduct } from "react-icons/ai";
 import { RiFunctionAddFill } from "react-icons/ri";
@@ -106,6 +107,14 @@ function SideBar() {
           )}
         </ul>
         <ul>
+          <li data-tip="Dashboard">
+            <SiGooglemessages className="icon" />
+          </li>
+          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+            <li className="cursor-pointer">Messages</li>
+          )}
+        </ul>
+        <ul>
           <li data-tip="Products">
             <AiOutlineProduct className="icon" />
           </li>
@@ -175,14 +184,6 @@ function SideBar() {
           </li>
           {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
             <li className="cursor-pointer">Order</li>
-          )}
-        </ul>
-        <ul>
-          <li data-tip="Products">
-            <TbListDetails className="icon" />
-          </li>
-          {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-            <li className="cursor-pointer">Order Details</li>
           )}
         </ul>
         <ul>

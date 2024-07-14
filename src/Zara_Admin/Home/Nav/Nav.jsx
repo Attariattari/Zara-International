@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BsJustify } from "react-icons/bs";
-import { useSidebar } from "../Context/SidebarContext";
-import { useTheme } from "../Context/ThemeContext";
-import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
+import {
+  MdOutlineLightMode,
+  MdDarkMode,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+} from "react-icons/md";
+import { useSidebar } from "../../Context/SidebarContext";
+import { useTheme } from "../../Context/ThemeContext";
+import "../Nav/Css.css";
 
 function Navbar({ handleClick }) {
   const [dropdownVisible, setDropdownVisible] = useState({
@@ -52,9 +58,12 @@ function Navbar({ handleClick }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        createNewRef.current && !createNewRef.current.contains(event.target) &&
-        notificationsRef.current && !notificationsRef.current.contains(event.target) &&
-        userDataRef.current && !userDataRef.current.contains(event.target)
+        createNewRef.current &&
+        !createNewRef.current.contains(event.target) &&
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target) &&
+        userDataRef.current &&
+        !userDataRef.current.contains(event.target)
       ) {
         setDropdownVisible({
           createNew: false,
@@ -74,13 +83,17 @@ function Navbar({ handleClick }) {
     <div className="Nav">
       <div className="FirstMenu">
         <BsJustify onClick={handleSidebarToggle} className="icon" />
-        <div className="nav-First">
+        <div className="nav-First" ref={createNewRef}>
           <div
             className="create-new"
             onClick={() => toggleDropdown("createNew")}
-            ref={createNewRef}
           >
-            Create New
+            Create New{" "}
+            {dropdownVisible.createNew ? (
+              <MdKeyboardArrowUp />
+            ) : (
+              <MdKeyboardArrowDown />
+            )}
           </div>
           {dropdownVisible.createNew && (
             <div className="dropdown-menu">
@@ -94,13 +107,17 @@ function Navbar({ handleClick }) {
         </div>
       </div>
       <div className="Second-Menu">
-        <div className="Second-nav">
+        <div className="Second-nav" ref={notificationsRef}>
           <div
             className="notifications"
             onClick={() => toggleDropdown("notifications")}
-            ref={notificationsRef}
           >
-            Notifications
+            Notifications{" "}
+            {dropdownVisible.notifications ? (
+              <MdKeyboardArrowUp />
+            ) : (
+              <MdKeyboardArrowDown />
+            )}
           </div>
           {dropdownVisible.notifications && (
             <div className="dropdown-menu">
@@ -112,13 +129,14 @@ function Navbar({ handleClick }) {
             </div>
           )}
         </div>
-        <div className="Second-nav">
-          <div
-            className="user-data"
-            onClick={() => toggleDropdown("userData")}
-            ref={userDataRef}
-          >
-            User Data
+        <div className="Second-nav" ref={userDataRef}>
+          <div className="user-data" onClick={() => toggleDropdown("userData")}>
+            User Data{" "}
+            {dropdownVisible.userData ? (
+              <MdKeyboardArrowUp />
+            ) : (
+              <MdKeyboardArrowDown />
+            )}
           </div>
           {dropdownVisible.userData && (
             <div className="dropdown-menu">

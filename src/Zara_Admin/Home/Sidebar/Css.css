@@ -8,10 +8,10 @@ body.light {
 }
 
 body.dark {
-    --bg-color: #333;
+    --bg-color: #000000;
     --text-color: white;
     --border-color: #ffffff;
-    --scrollbar-bg: #555;
+    --scrollbar-bg: #000000;
     --scrollbar-thumb: #ffffff;
     --scrollbar-thumb-hover: #aaa;
 }
@@ -83,7 +83,7 @@ body.dark {
     width: 290px;
     padding-left: 15px;
     transition: all 0.6s ease;
-   
+
 }
 
 .SmallSidebar {
@@ -99,6 +99,7 @@ body.dark {
     flex-direction: column;
     padding-bottom: 20px;
 }
+
 .FullSidebar .SideBar_Menu {
     padding-bottom: 20px;
 }
@@ -149,7 +150,7 @@ body.dark {
     color: var(--text-color);
     margin-top: 20px;
     overflow-y: auto;
-  
+
 }
 
 .SideBar_Menu ul {
@@ -160,114 +161,4 @@ body.dark {
     justify-content: start;
     align-items: center;
     gap: 10px;
-}
-
-/* Navbar Styles */
-.Nav {
-    width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    padding: 10px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.FirstMenu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.Second-Menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.Second-nav,
-.nav-First {
-    position: relative;
-    margin: 0 15px;
-}
-
-.icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-
-.create-new,
-.notifications,
-.user-data {
-    padding: 10px;
-    cursor: pointer;
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    width: 150px;
-    top: 100%;
-    left: 44%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-top: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    border-left: 1px solid var(--border-color);
-    font-size: 12px;
-    transform: translateX(-50%);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 2px;
-}
-
-.dropdown-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-
-}
-
-.dropdown-menu li {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.dropdown-menu li:hover {
-    background-color: var(--bg-color);
-}
-
-.theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-}
-
-.theme-toggle svg {
-    transition: color 0.3s ease;
-}
-
-.theme-toggle:hover svg {
-    color: var(--text-color);
-}
-
-@media (max-width: 768px) {
-    .SideBar {
-        display: none;
-    }
 }

@@ -18,7 +18,6 @@ import Welcome from "./Components/Welcome/Welcome";
 import Help from "./Components/Help/Help.jsx";
 import Chat from "./Components/Chat/Chat.jsx";
 import Home from "./Pages/Home";
-import Nav from "./Zara_Admin/Home/Nav.jsx";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -28,8 +27,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Dashboard from "./Zara_Admin/Home/Dashboard";
-import Navbar from "./Components/Navbar/Navbar.jsx";
-import SideBar from "./Zara_Admin/Home/SideBar.jsx";
+import SideBar from "./Zara_Admin/Home/Sidebar/SideBar";
 import NavLayout from "./Zara_Admin/Home/NavLayout.jsx";
 import Product from "./Zara_Admin/Home/Product.jsx";
 

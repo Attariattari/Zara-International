@@ -1,9 +1,9 @@
 import React from 'react';
-import Nav from './Nav';
+import Nav from './Nav/Nav';
 import { Outlet } from 'react-router-dom';
-import SideBar from './SideBar';
+import SideBar from '../Home/Sidebar/SideBar';
 
-const NavLayout = ({ children }) => {
+const NavLayout = () => {
   return (
     <div style={{ display: 'flex' }}>
       <SideBar />
