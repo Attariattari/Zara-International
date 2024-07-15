@@ -1,4 +1,4 @@
-body.light {
+.Nav.light {
     --bg-color: white;
     --text-color: black;
     --border-color: #000000;
@@ -7,7 +7,7 @@ body.light {
     --scrollbar-thumb-hover: #555;
 }
 
-body.dark {
+.Nav.dark {
     --bg-color: #000000;
     --text-color: white;
     --border-color: #ffffff;

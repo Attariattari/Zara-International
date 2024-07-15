@@ -1,25 +1,44 @@
-:root {
-    --bg-color: white;
-    --text-color: black;
-    --border-color: #000000;
-    --scrollbar-bg: #f1f1f1;
-    --scrollbar-thumb: #000000;
-    --scrollbar-thumb-hover: #555;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --box-login-bg: black;
-    --box-login-text: rgb(255, 255, 255);
+/* Custom styles for autofilled input fields */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: black !important;
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+    border-bottom: 2px solid rgb(118, 118, 118) !important;
+    padding: 0.5rem;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-body.dark {
-    --bg-color: #000000;
-    --text-color: white;
-    --border-color: #ffffff;
-    --scrollbar-bg: #000000;
-    --scrollbar-thumb: #ffffff;
-    --scrollbar-thumb-hover: #aaa;
-    --box-shadow: 0 4px 8px rgba(249, 249, 249, 0.2);
-    --box-login-bg: white;
-    --box-login-text: rgb(0, 0, 0);
+input:-moz-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
+    -moz-text-fill-color: black !important;
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+    border-bottom: 2px solid rgb(118, 118, 118) !important;
+    padding: 0.5rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Ensure consistency across different browsers */
+input {
+    background-color: white;
+    color: black;
+    border: none !important;
+    border-bottom: 2px solid white !important;
+    padding: 0.5rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-bottom: 2px solid black !important;
 }
 
 body {
@@ -27,17 +46,18 @@ body {
     color: var(--text-color);
 }
 
-/* Additional CSS rules */
+/* Additional styles for the rest of your components */
 .Authanticate {
     width: 100%;
     height: auto;
-    background-color: var(--bg-color);
+    background: radial-gradient(circle, rgba(153, 153, 153, 1) 0%, rgba(85, 85, 85, 1) 100%);
     color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     transition: all 0.6s ease;
+
 }
 
 .Authanticate_Area {
@@ -52,14 +72,45 @@ body {
 .Authanticate_Form_Area {
     width: 30%;
     height: 600px;
-    background-color: white;
     display: flex;
+    background-color: white;
     justify-content: start;
+    position: relative;
     align-items: center;
     flex-direction: column;
-    box-shadow: var(--box-shadow);
+    box-shadow: 2px 3px 62px 20px rgba(28, 28, 28, 0.55);
+    -webkit-box-shadow: 2px 3px 62px 20px rgba(28, 28, 28, 0.55);
+    -moz-box-shadow: 2px 3px 62px 20px rgba(28, 28, 28, 0.55);
     transition: box-shadow 0.3s ease;
+    transition: all 0.6s ease;
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(92, 92, 92, 0.7);
+    /* Glossy effect */
+    z-index: 9999;
+}
+
+.blurred {
+    filter: blur(5px);
+    pointer-events: none;
+    /* Disable interactions */
+}
+
+.submit-button,
+.inputs,
+.ForgottPassword {
+    transition: filter 0.3s;
+}
+
 
 .Authanticate_Form_Area:hover {
     box-shadow: var(--box-shadow);
@@ -68,149 +119,126 @@ body {
 .Authanticate_text {
     font-size: 32px;
     line-height: 50px;
-    color: var(--box-login-text);
+    color: black;
 }
 
 .Authanticateform {
     width: 90%;
-    height: 70%;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .inputs {
     margin-bottom: 30px;
 }
-.custom-input-password{
+
+.custom-input-password {
     position: relative;
+    background: transparent;
 }
-  
-  .error-message {
+
+.error-message {
     color: red;
     font-size: 0.875rem;
-  }
+}
 
-  .inputs {
+.inputs {
     margin-bottom: 1rem;
-  }
-  
-  .password-input-wrapper {
+}
+
+.password-input-wrapper {
     position: relative;
-  }
-  
-  .password-container {
+}
+
+.password-container {
     position: relative;
-  }
-  
-  .show-password-toggle {
+}
+
+.show-password-toggle {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-  }
-  
-  
-  .submit-button {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    color: black;
+}
+
+.submit-button {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
     padding: 0.5rem 1rem;
-    border: none;
     cursor: pointer;
     font-size: 1rem;
     margin-top: 1rem;
-  }
-/* 
-.Authanticatetext {
-    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.Authanticatearea {
-    width: 23.125em;
-    height: 18.75em;
-    transition: all 0.6s ease;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+.submit-button:hover {
+    background-color: black;
+    color: white;
+    border-color: black;
 }
 
-.Authanticatetext {
-    margin: 20px 0px 40px 0px;
-    font-size: 15px;
-    font-weight: lighter;
-    color: var(--text-color);
-}
-
-.Authanticatebutton {
-    width: 100%;
-    height: 35px;
-    border: 1px solid var(--border-color);
-    font-size: 11px;
-    margin-top: 30px;
-    display: inline-block;
-    cursor: pointer;
+.ForgottPassword {
+    margin-top: 1rem;
+    text-align: right;
+    color: #000000;
     text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+    width: 100%;
+}
+
+/* Reset Code Check */
+.Resettoken_check {
+    width: 100%;
+    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
-.Authanticatebutton:hover {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+.verificationmain {
+    width: 100%;
+    padding: 30px 15px 30px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.Verificationtitle{
+    margin: 0px 0px 10px 0px;
 }
 
-.Fogotten {
-    margin-top: 30px;
-    font-size: 11px;
+.Verificationtitle {
+    line-height: 30px;
+    font-size: 22px;
+    color: #000000;
 }
 
 @media (max-width: 1279px) {
-    .Authanticate {
-        padding: 150px 0px 0px 150px;
-    }
-
-    .Authanticatearea {
-        width: 19.125em;
-    }
-
-    .singuparea {
-        width: 19.125em;
+    .Authanticate_Form_Area {
+        width: 32%;
     }
 }
 
 @media (max-width: 1179px) {
-    .Authanticate {
-        padding: 140px 0px 0px 130px;
+    .Authanticate_Form_Area {
+        width: 34%;
     }
 }
 
 @media (max-width: 1023px) {
-    .Authanticate {
-        padding: 130px 0px 0px 100px;
-    }
-
-    .Authanticatearea {
-        width: 16.125em;
-    }
-
-    .singuparea {
-        width: 16.125em;
+    .Authanticate_Form_Area {
+        width: 50%;
     }
 }
 
 @media (max-width: 768px) {
-    .Authanticate {
-        padding: 0px;
+    .Authanticate_Form_Area {
         width: 100%;
-        flex-direction: column;
-        padding: 100px 20px 0px 20px;
-        height: auto;
+        height: 100vh;
     }
-
-    .Authanticatearea,
-    .singuparea {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        height: auto;
-    }
-} */
+}
