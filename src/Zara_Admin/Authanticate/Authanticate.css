@@ -193,11 +193,27 @@ body {
 /* Reset Code Check */
 .Resettoken_check {
     width: 100%;
-    height: 40%;
+    height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
 
+}
+
+.timer {
+    color: #000000;
+    margin-top: 10px;
+    font-size: 20px;
+    line-height: 30px;
+    border: 1px solid black;
+    padding: 10px 20px 10px 20px;
+}
+
+.Timeouterr {
+    color: red;
+    margin-top: 10px;
+    border: 1px solid red;
+    padding: 10px 20px 10px 20px;
 }
 
 .verificationmain {
@@ -208,7 +224,8 @@ body {
     align-items: center;
     flex-direction: column;
 }
-.Verificationtitle{
+
+.Verificationtitle {
     margin: 0px 0px 10px 0px;
 }
 

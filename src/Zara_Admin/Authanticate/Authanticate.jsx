@@ -16,7 +16,7 @@ function validateEmail(value) {
   if (!value) {
     error = "Required";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
+    error = "Invalid email address.";
   }
   return error;
 }
@@ -24,7 +24,14 @@ function validateEmail(value) {
 function validatePassword(value) {
   let error;
   if (value.length < 6) {
-    error = "Password must be at least 6 characters long";
+    error = "Password must be at least 6 characters long.";
+  }
+  return error;
+}
+function validateVarification(value) {
+  let error;
+  if (!value || value.length < 6) {
+    error = "Check Your Email And Enter Correct Varification Code.";
   }
   return error;
 }
@@ -46,12 +53,23 @@ function Authanticate() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [resetTokenError, setResetTokenError] = useState(null);
   const [resetTokenSuccess, setResetTokenSuccess] = useState(null);
+  const [resetTokenSuccessSMS, setResetTokenSuccessSMS] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [Verified, setVerified] = useState(true);
   const { setAdmin } = useContext(userContext);
   const [authSuccess, setAuthSuccess] = useState("");
   const [authError, setAuthError] = useState("");
   const { theme } = useTheme(); // Get the current theme
+  const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [verifyNow, setVerifyNow] = useState(false);
+  const [showTimeoutError, setShowTimeoutError] = useState(false);
+  const [showForgotPasswordLink, setShowForgotPasswordLink] = useState(false);
+  const [smsError, setSMSError] = useState(null);
+  const [createNewVerifyCode, setCreateNewVerifyCode] = useState(false);
+  const [timer, setTimer] = useState(120);
 
   const navigate = useNavigate();
 
@@ -104,7 +122,7 @@ function Authanticate() {
 
       if (pageRoll !== 1) {
         setLoading(false);
-        setAuthError("Admin role does not allow login.");
+        setAuthError("Access Denied: Admin access required for login.");
         return;
       }
 
@@ -113,6 +131,7 @@ function Authanticate() {
         setAuthError(
           "Admin account not verified. Please verify your email first."
         );
+        setVerified(false); // Set verification status to false
         return;
       }
 
@@ -125,10 +144,13 @@ function Authanticate() {
         const { token } = loginResponse;
 
         document.cookie = `token=${token}; path=/`;
-
+        const successTimer = setTimeout(() => {
+          setAuthError(null);
+        }, 10000); // 10 seconds
+        setTimer(successTimer);
         setAuthError(null);
         setAdmin(adminDetails);
-
+        setVerified(true);
         navigate("/Admin/Dashboard");
       } else {
         setAuthError(loginResponse.message);
@@ -159,18 +181,48 @@ function Authanticate() {
           timestamp: new Date().getTime(), // Current time in milliseconds
         };
         localStorage.setItem("resetEmail", JSON.stringify(emailData));
+        setResetTokenSuccessSMS(response.data.message);
         setResetTokenSuccess(response.data.message);
+        // Set a timer to clear the success SMS after 10 seconds
+        const successTimer = setTimeout(() => {
+          setResetTokenSuccessSMS(null);
+        }, 10000); // 10 seconds
+
+        setTimer(successTimer);
       } else {
+        setResetTokenSuccessSMS(null);
         setResetTokenSuccess(null);
         setResetTokenError(response.data.message);
       }
     } catch (err) {
       console.log("Send reset token failed", err);
       setResetTokenSuccess(null);
+      setResetTokenSuccessSMS(null);
       setResetTokenError("Failed to send reset code. Please try again.");
     }
     setLoading(false);
   };
+  useEffect(() => {
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [timer]);
+
+  // useEffect(() => {
+  //   let interval = null;
+  //   if (timer > 0) {
+  //     interval = setInterval(() => {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     }, 1000);
+  //   } else {
+  //     clearInterval(interval);
+  //     setShowTimeoutError(true);
+  //   }
+  //   return () => clearInterval(interval);
+  // }, [timer]);
+
   const getEmailFromLocalStorage = () => {
     const emailData = JSON.parse(localStorage.getItem("resetEmail"));
     if (!emailData) {
@@ -178,7 +230,7 @@ function Authanticate() {
     }
 
     const currentTime = new Date().getTime();
-    const tenMinutesInMillis = 10 * 60 * 1000;
+    const tenMinutesInMillis = 1 * 60 * 1000;
 
     if (currentTime - emailData.timestamp > tenMinutesInMillis) {
       localStorage.removeItem("resetEmail");
@@ -188,57 +240,84 @@ function Authanticate() {
     return emailData.email;
   };
 
-  const handleVerifyResetToken = async (values) => {
+  const handleVerifyResetCode = async (values) => {
     setLoading(true);
+    setResponseMessage("");
+
+    const email = getEmailFromLocalStorage();
+    if (!email) {
+      setLoading(false);
+      setResponseMessage(
+        "Email has expired or is missing. Please request a new reset code."
+      );
+      setIsVerified(false);
+      return;
+    }
+
     try {
-      const response = await axios.get(
-        "http://localhost:1122/user/verifyResetCode",
+      const response = await axios.post(
+        "http://localhost:1122/User/verify-reset-password-code",
         {
-          params: { verificationCode: values.verificationCode },
+          email: email, // Use the email retrieved from local storage
+          verificationCode: values.verificationCode,
         }
       );
 
+      // Set verification status to true if backend response indicates success
       if (response.data.success) {
-        setResetTokenError(null);
-        setResetTokenSuccess(
-          "Verification successful. You can now reset your password."
-        );
-        setIsVerified(true); // Set verification status to true
+        setIsVerified(true);
+        setResponseMessage(response.data.message); // Set response message from backend
       } else {
-        setResetTokenSuccess(null);
-        setResetTokenError(response.data.message);
+        setIsVerified(false);
+        setResponseMessage(response.data.message); // Set response message from backend
       }
+
+      // Log entire response to console for debugging
+      console.log("Backend Response:", response.data);
     } catch (err) {
-      console.log("Verification failed", err);
-      setResetTokenSuccess(null);
-      setResetTokenError("Failed to verify the reset code. Please try again.");
+      console.error("Verification failed", err);
+      setResponseMessage("Failed to verify the reset code. Please try again.");
+      setIsVerified(false); // Set verification status to false on catch error
+
+      // Log error to console for debugging
+      console.error("Backend Error:", err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleNewresetpassword = async (values) => {
+    setLoading(true); // Set loading to true before the async operation
     try {
       const email = getEmailFromLocalStorage();
       if (!email) {
-        setAuthError("Email has expired. Please request a new reset link.");
+        setAuthError(
+          "Reset Code has expired. Please request a new reset link."
+        );
         setAuthSuccess("");
+        setLoading(false); // Set loading to false if email is expired
         return;
       }
-  
+
       const data = new URLSearchParams();
       data.append("email", email); // Use the email from localStorage
       data.append("newPassword", values.newPassword);
       data.append("confirmPassword", values.confirmPassword);
-  
-      const response = await axios.post("http://localhost:1122/user/Newreset", data, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-  
+
+      const response = await axios.post(
+        "http://localhost:1122/user/Newreset",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
       if (response.data.success) {
         setAuthSuccess("Password has been reset successfully.");
+        setPasswordResetSuccess(true);
+        setResetTokenSuccess(true);
         setAuthError("");
         localStorage.removeItem("resetEmail"); // Remove email after successful reset
       } else {
@@ -250,8 +329,81 @@ function Authanticate() {
       setAuthError("Something went wrong. Please try again.");
       setAuthSuccess("");
     }
+    setLoading(false); // Set loading to false after the async operation completes
   };
-  
+
+  useEffect(() => {
+    if (passwordResetSuccess) {
+      setShowForgotPassword(false);
+      setIsVerified(false);
+      setResetTokenSuccess(false);
+      setPasswordResetSuccess(false); // Reset the state after handling
+    }
+  }, [passwordResetSuccess]);
+
+  const handleVerifyEmail = async (
+    values,
+    setSMSError,
+    setLoading,
+    setVerified,
+    setSuccessMessage,
+    setVerifyNow,
+    setShowForgotPasswordLink
+  ) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:1122/User/verify-email",
+        {
+          email: values.email,
+          verificationCode: values.verify,
+        }
+      );
+
+      console.log("Response from server:", response.data); // Add this log
+
+      const { success, message } = response.data;
+
+      if (success) {
+        setSMSError(null);
+        setVerified(true);
+        setVerifyNow(false);
+        setSuccessMessage(message);
+        setShowForgotPasswordLink(false);
+      } else {
+        setVerified(false);
+        setSMSError(message);
+        setSuccessMessage("");
+        setShowForgotPasswordLink(true);
+      }
+    } catch (err) {
+      console.error("Verification failed", err);
+      setSMSError("Failed to verify the reset code. Please try again.");
+      setVerified(false);
+      setSuccessMessage("");
+      setShowForgotPasswordLink(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNewVerificationCode = () => {
+    setCreateNewVerifyCode(true);
+    setShowForgotPasswordLink(false); // Optionally hide the link when creating new verification code
+  };
+
+  useEffect(() => {
+    let timer;
+    if (authError) {
+      // Set a timer to clear the error message after 10 seconds
+      timer = setTimeout(() => {
+        setAuthError(null);
+      }, 5000); // 10000 milliseconds = 10 seconds
+    }
+
+    // Clear the timeout if the component is unmounted or if authError changes
+    return () => clearTimeout(timer);
+  }, [authError]);
 
   const inputFocusColor = theme === "light" ? "dark" : "dark";
 
@@ -370,7 +522,7 @@ function Authanticate() {
               <div className="Resettoken_check">
                 <Formik
                   initialValues={{ verificationCode: "" }}
-                  onSubmit={(values) => handleVerifyResetToken(values)}
+                  onSubmit={(values) => handleVerifyResetCode(values)}
                 >
                   {({ errors, touched }) => (
                     <Form className="verificationmain">
@@ -383,7 +535,7 @@ function Authanticate() {
                             <VerificationInput
                               {...field}
                               onComplete={(value) => {
-                                handleVerifyResetToken({
+                                handleVerifyResetCode({
                                   verificationCode: value,
                                 });
                               }}
@@ -391,10 +543,15 @@ function Authanticate() {
                           </div>
                         )}
                       </Field>
-                      <button type="submit" className="submit-button">
+                      <button
+                        type="submit"
+                        className="submit-button"
+                        disabled={timer <= 0 || loading}
+                      >
                         Submit
                       </button>
-                      {resetTokenError && (
+
+                      {resetTokenError && !showTimeoutError && (
                         <div
                           className="error-message mt-2"
                           style={{ color: "red" }}
@@ -402,12 +559,28 @@ function Authanticate() {
                           {resetTokenError}
                         </div>
                       )}
-                      {resetTokenSuccess && (
+                      {resetTokenSuccessSMS && (
                         <div
                           className="success-message mt-2"
                           style={{ color: "green" }}
                         >
-                          {resetTokenSuccess}
+                          {resetTokenSuccessSMS}
+                        </div>
+                      )}
+                      {responseMessage && (
+                        <div
+                          className={`message mt-2 ${
+                            responseMessage.includes("successful")
+                              ? "success-message"
+                              : "error-message"
+                          }`}
+                          style={{
+                            color: responseMessage.includes("successful")
+                              ? "green"
+                              : "red",
+                          }}
+                        >
+                          {responseMessage}
                         </div>
                       )}
                     </Form>
@@ -470,85 +643,219 @@ function Authanticate() {
               </Formik>
             )
           ) : (
-            <Formik
-              initialValues={{ email: "", password: "" }}
-              onSubmit={(values) => {
-                handleAuthenticate(values);
-              }}
-            >
-              {({ errors, touched }) => (
-                <Form className="Authanticateform">
-                  <div className="inputs">
-                    <Field
-                      name="email"
-                      validate={validateEmail}
-                      render={({ field }) => (
-                        <Input
-                          {...field}
-                          variant="standard"
-                          label="Email"
-                          placeholder="Email"
-                          className="custom-input"
-                          style={{
-                            "--tw-focus-ring-color": inputFocusColor,
-                          }}
+            <>
+              {!verifyNow ? (
+                <Formik
+                  initialValues={{ email: "", password: "" }}
+                  onSubmit={(values) => {
+                    handleAuthenticate(
+                      values,
+                      setAuthError,
+                      setLoading,
+                      setAdmin,
+                      navigate,
+                      setIsVerified
+                    );
+                  }}
+                >
+                  {({ errors, touched }) => (
+                    <Form className="Authanticateform">
+                      <div className="inputs">
+                        <Field
+                          name="email"
+                          validate={validateEmail}
+                          render={({ field }) => (
+                            <Input
+                              {...field}
+                              variant="standard"
+                              label="Email"
+                              placeholder="Email"
+                              className="custom-input"
+                            />
+                          )}
                         />
+                        <ErrorMessage
+                          name="email"
+                          component="div"
+                          className="error-message"
+                        />
+                      </div>
+                      <div className="inputs password-input-wrapper">
+                        <Field
+                          name="password"
+                          validate={validatePassword}
+                          render={({ field }) => (
+                            <div className="password-container">
+                              <Input
+                                {...field}
+                                type={showPassword ? "text" : "password"}
+                                variant="standard"
+                                label="Password"
+                                placeholder="Password"
+                                className="custom-input"
+                              />
+                              <div
+                                className="show-password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
+                              </div>
+                            </div>
+                          )}
+                        />
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="error-message"
+                        />
+                      </div>
+                      {Verified ? (
+                        <button type="submit" className="submit-button">
+                          Authenticate
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="submit-button"
+                          onClick={() => setVerifyNow(true)}
+                        >
+                          Verify Now
+                        </button>
                       )}
-                    />
-                    <ErrorMessage
-                      name="email"
-                      component="div"
-                      className="error-message"
-                    />
-                  </div>
-                  <div className="inputs password-input-wrapper">
-                    <Field
-                      name="password"
-                      validate={validatePassword}
-                      render={({ field }) => (
-                        <div className="password-container">
-                          <Input
-                            {...field}
-                            type={showPassword ? "text" : "password"}
-                            variant="standard"
-                            label="Password"
-                            placeholder="Password"
-                            className="custom-input"
-                            style={{
-                              "--tw-focus-ring-color": inputFocusColor,
-                            }}
-                          />
-                          <div
-                            className="show-password-toggle"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
-                          </div>
+                      {authError && (
+                        <div className="error-message" style={{ color: "red" }}>
+                          {authError}
                         </div>
                       )}
-                    />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="error-message"
-                    />
-                  </div>
-                  <button type="submit" className="submit-button">
-                    Authenticate
-                  </button>
-                  {authError && (
-                    <div className="error-message" style={{ color: "red" }}>
-                      {authError}
-                    </div>
+                      <div className="ForgottPassword">
+                        <Link
+                          to="#"
+                          onClick={() => setShowForgotPassword(true)}
+                        >
+                          Forgot Password?
+                        </Link>
+                      </div>
+                    </Form>
                   )}
-                  <div className="ForgottPassword">
-                    <Link to="#" onClick={() => setShowForgotPassword(true)}>
-                      Forgot Password?
-                    </Link>
-                  </div>
-                </Form>
+                </Formik>
+              ) : (
+                <>
+                  {createNewVerifyCode ? (
+                    <div>Hello</div>
+                  ) : (
+                    <Formik
+                      initialValues={{ email: "", verify: "" }}
+                      onSubmit={(values) => {
+                        handleVerifyEmail(
+                          values,
+                          setSMSError,
+                          setLoading,
+                          setVerified,
+                          setSuccessMessage,
+                          setVerifyNow,
+                          setShowForgotPasswordLink
+                        );
+                      }}
+                    >
+                      {({ errors, touched }) => (
+                        <Form className="Authanticateform">
+                          <div className="inputs">
+                            <Field
+                              name="email"
+                              validate={validateEmail}
+                              render={({ field }) => (
+                                <Input
+                                  {...field}
+                                  variant="standard"
+                                  label="Email"
+                                  placeholder="Email"
+                                  className="custom-input"
+                                />
+                              )}
+                            />
+                            <ErrorMessage
+                              name="email"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
+                          <div className="inputs password-input-wrapper">
+                            <Field
+                              name="verify"
+                              validate={validateVarification}
+                              render={({ field }) => (
+                                <div className="verification-code-container">
+                                  <Input
+                                    {...field}
+                                    type="text"
+                                    variant="standard"
+                                    label="Verification Code"
+                                    placeholder="Verification Code"
+                                    className="custom-input"
+                                    autoComplete="new-password" // Use a less common value to prevent autofill
+                                  />
+                                </div>
+                              )}
+                            />
+
+                            <ErrorMessage
+                              name="verify"
+                              component="div"
+                              className="error-message"
+                            />
+                          </div>
+                          {!showForgotPasswordLink && (
+                            <button
+                              type="submit"
+                              className="submit-button"
+                              disabled={loading}
+                            >
+                              Verify Now
+                            </button>
+                          )}
+                          {showForgotPasswordLink && (
+                            <button
+                              type="submit"
+                              className="submit-button"
+                              disabled={loading}
+                              onClick={handleNewVerificationCode}
+                            >
+                              Get New Verification Code?
+                            </button>
+                          )}
+                          {successMessage && (
+                            <div
+                              className="success-message"
+                              style={{ color: "green" }}
+                            >
+                              {successMessage}
+                            </div>
+                          )}
+                          {smsError && (
+                            <div
+                              className="error-message"
+                              style={{ color: "red" }}
+                            >
+                              {smsError}
+                            </div>
+                          )}
+                          {!showForgotPasswordLink && (
+                            <div className="ForgottPassword">
+                              <Link
+                                to="#"
+                                onClick={handleNewVerificationCode}
+                              >
+                                Get New Verification Code?
+                              </Link>
+                            </div>
+                          )}
+                        </Form>
+                      )}
+                    </Formik>
+                  )}
+                </>
               )}
-            </Formik>
+            </>
           )}
         </div>
       </div>
