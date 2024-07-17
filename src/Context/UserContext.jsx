@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import Cookies from "js-cookie";
 export const userContext = createContext({});
 
 export function UserContextProvider({ children }) {
@@ -26,37 +26,31 @@ export function UserContextProvider({ children }) {
 
   useEffect(() => {
     if (Admin && Admin.pageRoll !== 1) {
-      // Clear token from cookies
       document.cookie = "token=; Max-Age=0; path=/;";
-      setAdmin(null); // Clear Admin context
+      setAdmin(null);
+    }
+  }, [Admin]);
+  useEffect(() => {
+    if (Admin && Admin.pageRoll !== 1) {
+      Cookies.remove("token", { path: "/" });
+      setAdmin(null);
     }
   }, [Admin]);
 
   return (
-    <userContext.Provider value={{ user, setUser, Admin, setAdmin, authError, setAuthError, loading, setLoading }}>
+    <userContext.Provider
+      value={{
+        user,
+        setUser,
+        Admin,
+        setAdmin,
+        authError,
+        setAuthError,
+        loading,
+        setLoading,
+      }}
+    >
       {children}
     </userContext.Provider>
   );
 }
-
-
-// import { createContext, useEffect, useState } from "react";
-
-// export const userContext = createContext({});
-
-// export function UserContextProvider({ children }) {
-//   const [user, setUser] = useState(() => {
-//     const storedUser = localStorage.getItem("user");
-//     return storedUser ? JSON.parse(storedUser) : { firstname: "" };
-//   });
-
-//   useEffect(() => {
-//     localStorage.setItem("user", JSON.stringify(user));
-//   }, [user]);
-
-//   return (
-//     <userContext.Provider value={{ user, setUser }}>
-//       {children}
-//     </userContext.Provider>
-//   );
-// }

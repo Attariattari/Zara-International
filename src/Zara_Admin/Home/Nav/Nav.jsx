@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { BsJustify } from "react-icons/bs";
 import {
   MdOutlineLightMode,
@@ -9,6 +9,9 @@ import {
 import { useSidebar } from "../../Context/SidebarContext";
 import { useTheme } from "../../Context/ThemeContext";
 import "../Nav/Css.css";
+import axios from "axios";
+import { userContext } from "../../../Context/UserContext";
+import { PiUserSwitchFill } from "react-icons/pi";
 
 function Navbar() {
   const [dropdownVisible, setDropdownVisible] = useState({
@@ -19,10 +22,60 @@ function Navbar() {
   const { toggleExpanded, toggleDrawer } = useSidebar();
   const { theme, toggleTheme } = useTheme();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
+  const { user, setUser } = useContext(userContext);
   const createNewRef = useRef(null);
   const notificationsRef = useRef(null);
   const userDataRef = useRef(null);
+
+  const getUserInfo = async () => {};
+
+  // Example usage
+
+  useEffect(() => {
+    const fetchuserInfo = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:1122/user/getUserInfo",
+          {
+            withCredentials: true, // Ensure cookies are sent with the request
+          }
+        );
+        console.log("User Info:", response.data);
+        return response.data;
+      } catch (error) {
+        console.error("Failed to get user info", error);
+        throw new Error("Failed to get user info. Please try again.");
+      }
+    };
+    fetchuserInfo().then((data) => {
+      if (data && data.status === "success") {
+        fetchUserData(data.userId, data.token);
+      }
+    });
+  }, []);
+
+  const fetchUserData = async (userId, token) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:1122/user/Auth/${userId}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.status === "success") {
+        console.log("User Data:", response.data.user);
+        setUser(response.data.user);
+      } else {
+        console.error("Failed to fetch user data");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -131,7 +184,14 @@ function Navbar() {
         </div>
         <div className="Second-nav" ref={userDataRef}>
           <div className="user-data" onClick={() => toggleDropdown("userData")}>
-            User Data{" "}
+          <div className="user-data-user">
+          {user.profileImage ? (
+                <img src={user.profileImage} alt="Profile" />
+              ) : (
+                <PiUserSwitchFill className="profileicon" />
+              )}
+              <p>{user.firstname || "User Data"}</p>
+            </div>
             {dropdownVisible.userData ? (
               <MdKeyboardArrowUp />
             ) : (

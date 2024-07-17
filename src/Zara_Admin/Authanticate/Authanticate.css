@@ -27,11 +27,11 @@ input:-moz-autofill {
 }
 
 /* Ensure consistency across different browsers */
-input {
+.inputs input {
     background-color: white;
-    color: black;
+    color: black !important;
     border: none !important;
-    border-bottom: 2px solid white !important;
+    border-bottom: 1px solid rgb(165, 165, 165) !important;
     padding: 0.5rem;
     outline: none;
     transition: border-color 0.3s ease;
@@ -226,15 +226,20 @@ body {
 }
 
 .Verificationtitle {
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 30px 0px;
 }
 
 .Verificationtitle {
     line-height: 30px;
     font-size: 22px;
     color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline;
 }
 
+  
 @media (max-width: 1279px) {
     .Authanticate_Form_Area {
         width: 32%;
