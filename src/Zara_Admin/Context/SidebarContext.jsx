@@ -1,31 +1,3 @@
-// // SidebarContext.js
-
-// import React, { createContext, useContext, useState } from "react";
-
-// const SidebarContext = createContext();
-
-// export const SidebarProvider = ({ children }) => {
-//   const [isexpanded, setIsexpanded] = useState(false);
-//   const [openDrawer, setOpenDrawer] = useState(false);
-
-//   const toggleExpanded = () => {
-//     setIsexpanded(!isexpanded);
-//   };
-//   const toggleDrawer = () => {
-//     setOpenDrawer(!openDrawer);
-//   };
-//   return (
-//     <SidebarContext.Provider
-//       value={{ isexpanded, toggleExpanded, openDrawer, toggleDrawer }}
-//     >
-//       {children}
-//     </SidebarContext.Provider>
-//   );
-// };
-
-// export const useSidebar = () => useContext(SidebarContext);
-// SidebarContext.js
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const SidebarContext = createContext();

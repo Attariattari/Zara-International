@@ -1,5 +1,5 @@
 import React from "react";
-
+import './css.css'
 const Dashboard = () => {
   return (
     <div className="Dashboard">

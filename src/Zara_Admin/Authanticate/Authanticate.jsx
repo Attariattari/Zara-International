@@ -76,100 +76,6 @@ function Authanticate() {
 
   // Configure Axios to include credentials
   axios.defaults.withCredentials = true;
-  // const handleAuthenticate = async (values) => {
-  //   const authenticateUser = async (email, password) => {
-  //     try {
-  //       const response = await axios.post(
-  //         "http://localhost:1122/user/authenticate",
-  //         {
-  //           email,
-  //           password,
-  //         },
-  //         { withCredentials: true }
-  //       );
-  //       return response.data;
-  //     } catch (error) {
-  //       console.error("Authentication failed", error);
-  //       throw new Error("Authentication failed. Please try again.");
-  //     }
-  //   };
-
-  //   const checkAdminDetails = async (email) => {
-  //     try {
-  //       const response = await axios.post(
-  //         "http://localhost:1122/user/checkDetails",
-  //         {
-  //           email,
-  //         }
-  //       );
-  //       return response.data;
-  //     } catch (error) {
-  //       console.error("Admin check failed", error);
-  //       throw new Error("Failed to check admin details. Please try again.");
-  //     }
-  //   };
-
-  //   setLoading(true);
-
-  //   try {
-  //     const adminDetails = await checkAdminDetails(values.email);
-
-  //     if (adminDetails.status !== "success") {
-  //       setLoading(false);
-  //       setAuthError(adminDetails.message);
-  //       return;
-  //     }
-
-  //     const { pageRoll, verify } = adminDetails;
-
-  //     if (pageRoll !== 1) {
-  //       setLoading(false);
-  //       setAuthError("Access Denied: Admin access required for login.");
-  //       return;
-  //     }
-
-  //     if (!verify) {
-  //       setLoading(false);
-  //       setAuthError(
-  //         "Admin account not verified. Please verify your email first."
-  //       );
-  //       setVerified(false); // Set verification status to false
-  //       return;
-  //     }
-
-  //     const loginResponse = await authenticateUser(
-  //       values.email,
-  //       values.password
-  //     );
-
-  //     if (loginResponse.status === "success") {
-  //       const { token, user } = loginResponse;
-  //       document.cookie = `token=${token}; path=/`;
-  //       // Save user data to localStorage
-  //       localStorage.setItem("user", JSON.stringify(user));
-
-  //       // Set user context state
-  //       setUser(user);
-
-  //       document.cookie = `token=${token}; path=/`;
-  //       const successTimer = setTimeout(() => {
-  //         setAuthError(null);
-  //       }, 10000); // 10 seconds
-  //       setTimer(successTimer);
-  //       setAuthError(null);
-  //       setAdmin(adminDetails);
-  //       setVerified(true);
-  //       navigate("/Admin/Dashboard");
-  //     } else {
-  //       setAuthError(loginResponse.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(error.message);
-  //     setAuthError(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleAuthenticate = async (values) => {
     const authenticateUser = async (email, password) => {
       try {
@@ -267,8 +173,6 @@ function Authanticate() {
       setLoading(false);
     }
   };
-  
-  
 
   useEffect(() => {
     let timer;

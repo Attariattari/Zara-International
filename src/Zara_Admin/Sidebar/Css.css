@@ -5,22 +5,28 @@ body.light {
     --scrollbar-bg: #f1f1f1;
     --scrollbar-thumb: #000000;
     --scrollbar-thumb-hover: #555;
+    --active-bg-color: #e0e0e0;
+    --active-text-color: #000000;
+    --active-border-color: #000000;
 }
 
 body.dark {
-    --bg-color: #000000;
+    --bg-color: rgb(24, 24, 24);
     --text-color: white;
     --border-color: #ffffff;
-    --scrollbar-bg: #000000;
+    --scrollbar-bg: rgb(24, 24, 24);
     --scrollbar-thumb: #ffffff;
     --scrollbar-thumb-hover: #aaa;
+    --active-bg-color: #424242;
+    --active-text-color: #ffffff;
+    --active-border-color: #ffffff;
 }
+.SideBar_Menu .link.active {
+    background-color: var(--active-bg-color); /* Background color for active link */
+    color: var(--active-text-color); /* Text color for active link */
+    border-left: 4px solid var(--active-border-color); /* Optional border for active link */
+    padding-left: 10px; /* Adjust padding to accommodate border */
 
-.Dashboard {
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color);
-    color: var(--text-color);
 }
 
 /* Sidebar Styles */
@@ -113,7 +119,9 @@ body.dark {
     width: 30px;
     height: 30px;
 }
-
+.SideBar_Menu .link .icon {
+    transition: color 0.3s ease;
+}
 .SideBar_Menu ul+ul {
     margin-top: 10px;
 }
@@ -150,15 +158,15 @@ body.dark {
     color: var(--text-color);
     margin-top: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
 
 }
 
-.SideBar_Menu ul {
-    width: 100%;
-    height: auto;
-    color: var(--text-color);
+.SideBar_Menu .link {
     display: flex;
-    justify-content: start;
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Adjust the space between icon and text */
+    text-decoration: none; /* Remove default link underlining */
+    color: var(--text-color); /* Ensure link text color matches the theme */
+    transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease, padding-left 0.3s ease;
 }
