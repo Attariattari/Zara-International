@@ -82,8 +82,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Dashboard"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Dashboard"
             >
               <MdOutlineDashboard className="icon" />
@@ -97,8 +96,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Users"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Users"
             >
               <BiSolidUserAccount className="icon" />
@@ -112,8 +110,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Manage-Users"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Manage Users"
             >
               <PiUserFocusDuotone className="icon" />
@@ -127,8 +124,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Notifications"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Notification"
             >
               <MdEditNotifications className="icon" />
@@ -142,8 +138,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Messages"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Messages"
             >
               <SiGooglemessages className="icon" />
@@ -157,8 +152,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Product"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Products"
             >
               <AiOutlineProduct className="icon" />
@@ -172,8 +166,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Featured-Product"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Featured Product"
             >
               <LuCombine className="icon" />
@@ -187,8 +180,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Sales-Product"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Sales Product"
             >
               <LuComponent className="icon" />
@@ -202,8 +194,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Main-Carousel"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Main Carousel"
             >
               <CgCarousel className="icon" />
@@ -217,8 +208,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Products-Details"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Products Details"
             >
               <TbListDetails className="icon" />
@@ -232,8 +222,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Category"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Category"
             >
               <TbCategory2 className="icon" />
@@ -247,8 +236,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Add-Products"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Add Products"
             >
               <RiFunctionAddFill className="icon" />
@@ -262,8 +250,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Shopping-Cart"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Shopping Cart"
             >
               <FaOpencart className="icon" />
@@ -277,8 +264,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Order"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Order"
             >
               <MdOutlineBorderColor className="icon" />
@@ -292,8 +278,7 @@ function SideBar() {
           <li>
             <NavLink
               to="/Admin/Order-Details"
-              className="link"
-              activeClassName="active"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Order Details"
             >
               <TbListDetails className="icon" />

@@ -58,7 +58,7 @@ function Authanticate() {
   const [loading, setLoading] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [Verified, setVerified] = useState(true);
-  const { setUser, setAdmin } = useContext(userContext);
+  const { setUser, setAdmin ,scheduleAutoLogout, handleLogout} = useContext(userContext);
   const [authSuccess, setAuthSuccess] = useState("");
   const [authError, setAuthError] = useState("");
   const { theme } = useTheme(); // Get the current theme
@@ -71,7 +71,6 @@ function Authanticate() {
   const [createNewVerifyCode, setCreateNewVerifyCode] = useState(false);
   const [isCodeExpired, setIsCodeExpired] = useState(false);
   const [timer, setTimer] = useState(120);
-
   const navigate = useNavigate();
 
   // Configure Axios to include credentials
@@ -93,7 +92,7 @@ function Authanticate() {
         throw new Error("Authentication failed. Please try again.");
       }
     };
-
+  
     const checkAdminDetails = async (email) => {
       try {
         const response = await axios.post(
@@ -108,61 +107,58 @@ function Authanticate() {
         throw new Error("Failed to check admin details. Please try again.");
       }
     };
-
+  
     setLoading(true);
-
+  
     try {
       const adminDetails = await checkAdminDetails(values.email);
-
+  
       if (adminDetails.status !== "success") {
         setLoading(false);
         setAuthError(adminDetails.message);
         return;
       }
-
+  
       const { pageRoll, verify } = adminDetails;
-
+  
       if (pageRoll !== 1) {
         setLoading(false);
         setAuthError("Access Denied: Admin access required for login.");
         return;
       }
-
+  
       if (!verify) {
         setLoading(false);
-        setAuthError(
-          "Admin account not verified. Please verify your email first."
-        );
+        setAuthError("Admin account not verified. Please verify your email first.");
         setVerified(false); // Set verification status to false
         return;
       }
-
-      const loginResponse = await authenticateUser(
-        values.email,
-        values.password
-      );
-
+  
+      const loginResponse = await authenticateUser(values.email, values.password);
+  
       if (loginResponse.status === "success") {
         const { token, user } = loginResponse;
         document.cookie = `token=${token}; path=/`;
         // Save user data to localStorage
         localStorage.setItem("user", JSON.stringify(user));
-
+  
         // Set user context state
         setUser(user);
-
-        document.cookie = `token=${token}; path=/`;
-        const successTimer = setTimeout(() => {
-          setAuthError(null);
-        }, 10000); // 10 seconds
-        setTimer(successTimer);
+  
+        // Clear any existing auth errors
         setAuthError(null);
+  
+        // Set admin details in context state
         setAdmin(adminDetails);
+  
+        // Set verification status to true
         setVerified(true);
+  
+        // Navigate to the Admin Dashboard
         navigate("/Admin/Dashboard");
-
-        // // Fetch user info after successful login
-        // await handleFetchUserInfo();
+  
+        // Fetch user info after successful login
+        await fetchUserData();
       } else {
         setAuthError(loginResponse.message);
       }
@@ -173,6 +169,198 @@ function Authanticate() {
       setLoading(false);
     }
   };
+  
+  
+  // const handleAuthenticate = async (values) => {
+  //   const authenticateUser = async (email, password) => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:1122/user/authenticate",
+  //         {
+  //           email,
+  //           password,
+  //         },
+  //         { withCredentials: true }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Authentication failed", error);
+  //       throw new Error("Authentication failed. Please try again.");
+  //     }
+  //   };
+
+  //   const checkAdminDetails = async (email) => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:1122/user/checkDetails",
+  //         {
+  //           email,
+  //         }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Admin check failed", error);
+  //       throw new Error("Failed to check admin details. Please try again.");
+  //     }
+  //   };
+
+  //   setLoading(true);
+
+  //   try {
+  //     const adminDetails = await checkAdminDetails(values.email);
+
+  //     if (adminDetails.status !== "success") {
+  //       setLoading(false);
+  //       setAuthError(adminDetails.message);
+  //       return;
+  //     }
+
+  //     const { pageRoll, verify } = adminDetails;
+
+  //     if (pageRoll !== 1) {
+  //       setLoading(false);
+  //       setAuthError("Access Denied: Admin access required for login.");
+  //       return;
+  //     }
+
+  //     if (!verify) {
+  //       setLoading(false);
+  //       setAuthError(
+  //         "Admin account not verified. Please verify your email first."
+  //       );
+  //       setVerified(false); // Set verification status to false
+  //       return;
+  //     }
+
+  //     const loginResponse = await authenticateUser(
+  //       values.email,
+  //       values.password
+  //     );
+
+  //     if (loginResponse.status === "success") {
+  //       const { token, user } = loginResponse;
+  //       document.cookie = `token=${token}; path=/`;
+  //       // Save user data to localStorage
+  //       localStorage.setItem("user", JSON.stringify(user));
+
+  //       // Set user context state
+  //       setUser(user);
+
+  //       document.cookie = `token=${token}; path=/`;
+  //       const successTimer = setTimeout(() => {
+  //         setAuthError(null);
+  //       }, 10000); // 10 seconds
+  //       setTimer(successTimer);
+  //       setAuthError(null);
+  //       setAdmin(adminDetails);
+  //       setVerified(true);
+  //       navigate("/Admin/Dashboard");
+
+  //       // // Fetch user info after successful login
+  //       // await handleFetchUserInfo();
+  //     } else {
+  //       setAuthError(loginResponse.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message);
+  //     setAuthError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const handleAuthenticate = async (values) => {
+  //   const authenticateUser = async (email, password) => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:1122/user/authenticate",
+  //         { email, password },
+  //         { withCredentials: true }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Authentication failed", error);
+  //       throw new Error("Authentication failed. Please try again.");
+  //     }
+  //   };
+
+  //   const checkAdminDetails = async (email) => {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:1122/user/checkDetails",
+  //         { email }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Admin check failed", error);
+  //       throw new Error("Failed to check admin details. Please try again.");
+  //     }
+  //   };
+
+  //   setLoading(true);
+
+  //   try {
+  //     const adminDetails = await checkAdminDetails(values.email);
+
+  //     if (adminDetails.status !== "success") {
+  //       setLoading(false);
+  //       setAuthError(adminDetails.message);
+  //       return;
+  //     }
+
+  //     const { pageRoll, verify } = adminDetails;
+
+  //     if (pageRoll !== 1) {
+  //       setLoading(false);
+  //       setAuthError("Access Denied: Admin access required for login.");
+  //       return;
+  //     }
+
+  //     if (!verify) {
+  //       setLoading(false);
+  //       setAuthError(
+  //         "Admin account not verified. Please verify your email first."
+  //       );
+  //       setVerified(false);
+  //       return;
+  //     }
+
+  //     const loginResponse = await authenticateUser(
+  //       values.email,
+  //       values.password
+  //     );
+
+  //     if (loginResponse.status === "success") {
+  //       const { accessToken, refreshToken, user } = loginResponse;
+
+  //       // Save tokens in cookies
+  //       document.cookie = `accessToken=${accessToken}; path=/`;
+  //       document.cookie = `refreshToken=${refreshToken}; path=/`;
+
+  //       // Save user data to localStorage
+  //       localStorage.setItem("user", JSON.stringify(user));
+
+  //       // Set user context state
+  //       setUser(user);
+
+  //       const successTimer = setTimeout(() => {
+  //         setAuthError(null);
+  //       }, 10000);
+  //       setTimer(successTimer);
+  //       setAuthError(null);
+  //       setAdmin(adminDetails);
+  //       setVerified(true);
+  //       navigate("/Admin/Dashboard");
+  //     } else {
+  //       setAuthError(loginResponse.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message);
+  //     setAuthError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     let timer;

@@ -21,11 +21,16 @@ body.dark {
     --active-text-color: #ffffff;
     --active-border-color: #ffffff;
 }
+
 .SideBar_Menu .link.active {
-    background-color: var(--active-bg-color); /* Background color for active link */
-    color: var(--active-text-color); /* Text color for active link */
-    border-left: 4px solid var(--active-border-color); /* Optional border for active link */
-    padding-left: 10px; /* Adjust padding to accommodate border */
+    background-color: var(--active-bg-color);
+    /* Background color for active link */
+    color: var(--active-text-color);
+    /* Text color for active link */
+    border-left: 4px solid var(--active-border-color);
+    /* Optional border for active link */
+    padding-left: 10px;
+    /* Adjust padding to accommodate border */
 
 }
 
@@ -86,7 +91,7 @@ body.dark {
 }
 
 .FullSidebar {
-    width: 290px;
+    width: 230px;
     padding-left: 15px;
     transition: all 0.6s ease;
 
@@ -119,9 +124,11 @@ body.dark {
     width: 30px;
     height: 30px;
 }
+
 .SideBar_Menu .link .icon {
     transition: color 0.3s ease;
 }
+
 .SideBar_Menu ul+ul {
     margin-top: 10px;
 }
@@ -165,8 +172,11 @@ body.dark {
 .SideBar_Menu .link {
     display: flex;
     align-items: center;
-    gap: 10px; /* Adjust the space between icon and text */
-    text-decoration: none; /* Remove default link underlining */
-    color: var(--text-color); /* Ensure link text color matches the theme */
+    gap: 10px;
+    /* Adjust the space between icon and text */
+    text-decoration: none;
+    /* Remove default link underlining */
+    color: var(--text-color);
+    /* Ensure link text color matches the theme */
     transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease, padding-left 0.3s ease;
 }

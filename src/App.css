@@ -32,6 +32,17 @@
     font-size: 12px;
 }
 
+button {
+    width: 100%;
+    max-width: 500px;
+    height: 40px;
+    cursor: pointer;
+    outline: none;
+    padding: 8px 16px 8px 16px;
+    margin: 1px;
+    border: 1px solid var(--border-color);
+}
+
 @media (max-width: 768px) {
     .ChatPopupshow {
         display: none;

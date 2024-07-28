@@ -12,6 +12,7 @@ import { useTheme } from "../Context/ThemeContext";
 import "./Css.css";
 import { userContext } from "../../Context/UserContext";
 import { PiUserSwitchFill } from "react-icons/pi";
+import axios from "axios";
 
 function Navbar() {
   const [dropdownVisible, setDropdownVisible] = useState({
@@ -19,14 +20,15 @@ function Navbar() {
     notifications: false,
     userData: false,
   });
+  const [notifications, setNotifications] = useState([]); // Add state for notifications
+  const [loading, setLoading] = useState(false);
   const { toggleExpanded, toggleDrawer } = useSidebar();
   const { theme, toggleTheme } = useTheme();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { user, handleLogout } = useContext(userContext);
-  const createNewRef = useRef(null);
   const notificationsRef = useRef(null);
   const userDataRef = useRef(null);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -61,8 +63,6 @@ function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        createNewRef.current &&
-        !createNewRef.current.contains(event.target) &&
         notificationsRef.current &&
         !notificationsRef.current.contains(event.target) &&
         userDataRef.current &&
@@ -82,34 +82,40 @@ function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      if (!user?._id) return;
+
+      setLoading(true);
+      try {
+        
+        const response = await axios.get(
+          `http://localhost:1122/Notification/${user._id}`
+        );
+        setNotifications(response.data.notifications);
+        setError(null);
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+        setError("Failed to fetch notifications. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user && user._id) {
+      fetchNotifications();
+      const intervalId = setInterval(fetchNotifications, 5000); // Polling every 5 seconds
+
+      return () => clearInterval(intervalId); // Clean up on unmount
+    }
+  }, [user]);
+
   return (
     <div className="Nav">
       <div className="FirstMenu">
         <BsJustify onClick={handleSidebarToggle} className="icon" />
       </div>
       <div className="Second-Menu">
-        <div className="nav-First" ref={createNewRef}>
-          <div
-            className="create-new"
-            onClick={() => toggleDropdown("createNew")}
-          >
-            Create New{" "}
-            {dropdownVisible.createNew ? (
-              <MdKeyboardArrowUp />
-            ) : (
-              <MdKeyboardArrowDown />
-            )}
-          </div>
-          {dropdownVisible.createNew && (
-            <div className="dropdown-menu">
-              <ul>
-                <li>Option 1</li>
-                <li>Option 2</li>
-                <li>Option 3</li>
-              </ul>
-            </div>
-          )}
-        </div>
         <div className="Second-nav" ref={notificationsRef}>
           <div
             className="notifications"
@@ -123,12 +129,25 @@ function Navbar() {
             )}
           </div>
           {dropdownVisible.notifications && (
-            <div className="dropdown-menu">
-              <ul>
-                <li>Notification 1</li>
-                <li>Notification 2</li>
-                <li>Notification 3</li>
-              </ul>
+            <div className="dropdown-menu overflow-y-auto">
+              {loading ? (
+                <p>Loading...</p>
+              ) : error ? (
+                <p>{error}</p>
+              ) : (
+                <ul>
+                  {notifications && notifications.length > 0 ? (
+                    notifications.map((notification) => (
+                      <li key={notification._id}>
+                        <p>{notification.type}</p>
+                        <p>{notification.message}</p>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No notifications</li>
+                  )}
+                </ul>
+              )}
             </div>
           )}
         </div>
@@ -183,6 +202,7 @@ export default Navbar;
 // import axios from "axios";
 // import { userContext } from "../../../Context/UserContext";
 // import { PiUserSwitchFill } from "react-icons/pi";
+import Spinner from "./../../Spinner";
 
 // function Navbar() {
 //   const [dropdownVisible, setDropdownVisible] = useState({
