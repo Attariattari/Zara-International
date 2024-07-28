@@ -1,20 +1,4 @@
-.Nav.light {
-    --bg-color: white;
-    --text-color: black;
-    --border-color: #000000;
-    --scrollbar-bg: #f1f1f1;
-    --scrollbar-thumb: #000000;
-    --scrollbar-thumb-hover: #555;
-}
 
-.Nav.dark {
-    --bg-color: #000000;
-    --text-color: white;
-    --border-color: #ffffff;
-    --scrollbar-bg: #000000;
-    --scrollbar-thumb: #ffffff;
-    --scrollbar-thumb-hover: #aaa;
-}
 
 /* Navbar Styles */
 .Nav {
