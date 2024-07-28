@@ -5,7 +5,6 @@ import {
   Routes,
   Navigate,
   useNavigate,
-  BrowserRouter,
 } from "react-router-dom";
 import { userContext } from "./Context/UserContext.jsx";
 import "./App.css";
