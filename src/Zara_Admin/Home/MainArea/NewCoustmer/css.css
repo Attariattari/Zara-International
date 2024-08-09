@@ -1,0 +1,117 @@
+.MainArea_Data_Table {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    background-color: #3e3e3eac;
+    -webkit-backdrop-filter: blur(30px);
+}
+
+.New_Customers,
+.Top_Products,
+.Sales_Products {
+    width: 100%;
+    height: 384.306px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.New_Customers_Header,
+.Top_Products_Header,
+.Sales_Products_Header {
+    width: 100%;
+    height: auto;
+    padding: 8px 15px 8px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: fixed;
+    top: 0;
+}
+
+.New_Customers_Header p,
+.Top_Products_Header p,
+.Sales_Products_Header p {
+    padding: 4px 0px 4px 0px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+}
+
+.New_Customers_Main_Data,
+.Sales_Products_Main_Data {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.Main_Data_Container {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 10px;
+}
+.Main_Data_Fisrt,
+.Main_Data_Second {
+    display: flex;
+    gap: 10px;
+}
+.Main_Data_Fisrt {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.Main_User_Image {
+    width: 46px; /* Fixed width for the image container */
+    height: 46px; /* Fixed height for the image container */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.Main_User_Image img {
+    width: 100%; /* Image takes up the full width of the container */
+    height: 100%; /* Image takes up the full height of the container */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.Main_Name_Email {
+    flex-grow: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column; /* Align name and email vertically */
+    justify-content: center; /* Center align text vertically */
+}
+
+.Main_Name_Email .name {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+}
+
+.Main_Name_Email .email {
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+
+.Main_Data_Second .Icons {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(145, 145, 145, 0.63);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

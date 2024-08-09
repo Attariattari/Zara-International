@@ -1,0 +1,92 @@
+.Dashboard_MainArea_TotalInfo {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    gap: 20px;
+    
+  }
+  
+  .box-style {
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    background: var(--admin-bg-color);
+    /* background-color: #3e3e3eac; */
+    -webkit-backdrop-filter: blur(30px);
+  }
+  
+  .box-style-Firsts :nth-child(1) {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+  
+  .box-style-Firsts :nth-child(2) {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 29px;
+  }
+  
+  .box-style-Firsts :nth-child(3) {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  
+  .box-style-Second {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(145, 145, 145, 0.63);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  
+  .box-style-Second-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+  }
+  @media (max-width: 1200px) {
+    .Dashboard_MainArea_TotalInfo {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 1179px) {}
+  
+  @media (max-width: 970px) {}
+  
+  @media (max-width: 768px) {
+    .Dashboard_MainArea_TotalInfo {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  
+    .Dashboard_MainArea-Charts {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .Dashboard_MainArea_Charts_BigChart {
+      width: 100%;
+    }
+  
+    .Dashboard_MainArea_Charts_SmallChart {
+      width: 100%;
+    }
+  }

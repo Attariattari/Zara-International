@@ -1,0 +1,40 @@
+.Dashboard_Weekly_Visits {
+  width: 100%;
+  height: auto;
+  background: var(--admin-bg-color);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.Dashboard_Weekly_Visits_Mainarea {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.Dashboard_Weekly_Visits_Title {
+  padding: 8px 16px 8px 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
+}
+
+.Dashboard_Weekly_Visits_Title {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
+  padding: 8px 16px 8px 16px;
+  margin: 0px;
+}
+.Dashboard_Weekly_Visits_Chart{
+  width: 100%;
+  height: auto;
+  padding: 16px;
+}

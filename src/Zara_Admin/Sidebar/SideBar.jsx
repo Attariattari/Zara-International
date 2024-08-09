@@ -11,6 +11,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { RiFunctionAddFill } from "react-icons/ri";
 import { TbCategory2, TbListDetails } from "react-icons/tb";
 import { LuCombine, LuComponent } from "react-icons/lu";
+import { GrGallery } from "react-icons/gr";
 import { PiUserFocusDuotone } from "react-icons/pi";
 import { FaOpencart } from "react-icons/fa6";
 import { CgCarousel } from "react-icons/cg";
@@ -27,7 +28,7 @@ function SideBar() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     handleResize(); // Set initial value on component mount
@@ -88,6 +89,20 @@ function SideBar() {
               <MdOutlineDashboard className="icon" />
               {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
                 <span className="cursor-pointer">Dashboard</span>
+              )}
+            </NavLink>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <NavLink
+              to="/Admin/Gallery"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
+              title="Gallery"
+            >
+              <GrGallery className="icon" />
+              {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+                <span className="cursor-pointer">Gallery</span>
               )}
             </NavLink>
           </li>

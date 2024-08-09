@@ -1,0 +1,48 @@
+.Order_Charts {
+    width: 100%;
+    height: auto;
+    background: var(--admin-bg-color);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: 16px;
+}
+
+.Order_Charts_Main_Area {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.ChartsBorder {
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.ChartText {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+}
+
+@media (max-width: 1200px) {
+    .Order_Charts_Main_Area {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .Order_Charts_Main_Area {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

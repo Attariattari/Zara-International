@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,75 +11,41 @@ import "./App.css";
 import ProtectedRoutes from "./Context/ProtectedRoutes.jsx";
 import Spinner from "./Spinner.jsx";
 
-// Lazy load components
-const FinalCartProductView = lazy(() =>
-  import("./Components/FinalCartProductView/FinalCartProductView.jsx")
-);
-const SingleProduct = lazy(() =>
-  import("./Components/NewAllProducts/SingleProductData/SingleProduct.jsx")
-);
-const InterCardData = lazy(() =>
-  import("./Components/PaymentMethod/InterCardData/InterCardData")
-);
-const SelectCardsForPay = lazy(() =>
-  import("./Components/PaymentMethod/SelectCardsForPay.jsx")
-);
-const ShoppingBag = lazy(() =>
-  import("./Components/ShoppingAndWishListBag/ShoppingBag.jsx")
-);
-const Address_Conform = lazy(() =>
-  import("./Components/BillingAddress/Address_Conform")
-);
-const Wishlist = lazy(() =>
-  import("./Components/ShoppingAndWishListBag/Wishlist.jsx")
-);
-const Order_Summary = lazy(() =>
-  import("./Components/Order_Summary/Order_Summary")
-);
-const UserOrder = lazy(() => import("./Components/UserOrder/UserOrder.jsx"));
-const Signup = lazy(() => import("./Components/LoginSingup/Singup.jsx"));
-const Login = lazy(() => import("./Components/LoginSingup/Login.jsx"));
-const New = lazy(() => import("./Components/NewAllProducts/New.jsx"));
-const Search = lazy(() => import("./Components/Search/Search.jsx"));
-const Welcome = lazy(() => import("./Components/Welcome/Welcome"));
-const Help = lazy(() => import("./Components/Help/Help.jsx"));
-const Chat = lazy(() => import("./Components/Chat/Chat.jsx"));
-const Home = lazy(() => import("./Pages/Home"));
-const Authanticate = lazy(() =>
-  import("./Zara_Admin/Authanticate/Authanticate")
-);
-const Dashboard = lazy(() => import("./Zara_Admin/Home/Dashboard"));
-const NavLayout = lazy(() => import("./Zara_Admin/Home/NavLayout.jsx"));
-const Product = lazy(() => import("./Zara_Admin/Home/Product.jsx"));
-const User = lazy(() => import("./Zara_Admin/User/User.jsx"));
-const ManageUsers = lazy(() =>
-  import("./Zara_Admin/Manage Users/ManageUsers.jsx")
-);
-const Notification = lazy(() =>
-  import("./Zara_Admin/Notification/Notification.jsx")
-);
-const Messages = lazy(() => import("./Zara_Admin/Messages/Messages.jsx"));
-const FeaturedProduct = lazy(() =>
-  import("./Zara_Admin/Featured Product/FeaturedProduct.jsx")
-);
-const SalesProduct = lazy(() =>
-  import("./Zara_Admin/Sales Product/SalesProduct.jsx")
-);
-const MainCarousel = lazy(() => import("./Zara_Admin/Main/MainCarousel.jsx"));
-const ProductsDetails = lazy(() =>
-  import("./Zara_Admin/Products Details/ProductsDetails.jsx")
-);
-const Catgeory = lazy(() => import("./Zara_Admin/Catgeory/Catgeory.jsx"));
-const AddProducts = lazy(() =>
-  import("./Zara_Admin/Add Products/AddProducts.jsx")
-);
-const ShoppingCart = lazy(() =>
-  import("./Zara_Admin/Shopping Cart/ShoppingCart.jsx")
-);
-const Order = lazy(() => import("./Zara_Admin/Order/Order.jsx"));
-const OrderDetails = lazy(() =>
-  import("./Zara_Admin/OrderDetails/OrderDetails.jsx")
-);
+import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
+import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
+import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
+import SelectCardsForPay from "./Components/PaymentMethod/SelectCardsForPay.jsx";
+import ShoppingBag from "./Components/ShoppingAndWishListBag/ShoppingBag.jsx";
+import Address_Conform from "./Components/BillingAddress/Address_Conform";
+import Wishlist from "./Components/ShoppingAndWishListBag/Wishlist.jsx";
+import Order_Summary from "./Components/Order_Summary/Order_Summary";
+import UserOrder from "./Components/UserOrder/UserOrder.jsx";
+import Signup from "./Components/LoginSingup/Singup.jsx";
+import Login from "./Components/LoginSingup/Login.jsx";
+import New from "./Components/NewAllProducts/New.jsx";
+import Search from "./Components/Search/Search.jsx";
+import Welcome from "./Components/Welcome/Welcome";
+import Help from "./Components/Help/Help.jsx";
+import Chat from "./Components/Chat/Chat.jsx";
+import Home from "./Pages/Home";
+import Authanticate from "./Zara_Admin/Authanticate/Authanticate";
+import Dashboard from "./Zara_Admin/Home/Dashboard";
+import NavLayout from "./Zara_Admin/NavLayout/NavLayout.jsx";
+import Product from "./Zara_Admin/Product/Product.jsx";
+import User from "./Zara_Admin/User/User.jsx";
+import ManageUsers from "./Zara_Admin/Manage Users/ManageUsers.jsx";
+import Notification from "./Zara_Admin/Notification/Notification.jsx";
+import Messages from "./Zara_Admin/Messages/Messages.jsx";
+import FeaturedProduct from "./Zara_Admin/Featured Product/FeaturedProduct.jsx";
+import SalesProduct from "./Zara_Admin/Sales Product/SalesProduct.jsx";
+import MainCarousel from "./Zara_Admin/Main/MainCarousel.jsx";
+import ProductsDetails from "./Zara_Admin/Products Details/ProductsDetails.jsx";
+import Catgeory from "./Zara_Admin/Catgeory/Catgeory.jsx";
+import AddProducts from "./Zara_Admin/Add Products/AddProducts.jsx";
+import ShoppingCart from "./Zara_Admin/Shopping Cart/ShoppingCart.jsx";
+import Order from "./Zara_Admin/Order/Order.jsx";
+import OrderDetails from "./Zara_Admin/OrderDetails/OrderDetails.jsx";
+import Gallery from './Zara_Admin/Gallery/Gallery';
 
 function App() {
   const [hasVisited, setHasVisited] = useState(
@@ -125,15 +91,6 @@ function App() {
   return (
     <div>
       <Router>
-        <Suspense
-          fallback={
-            <div>
-              <div className="overlay">
-                <Spinner />
-              </div>
-            </div>
-          }
-        >
           <Routes>
             <Route
               path="/"
@@ -278,6 +235,7 @@ function App() {
               <Route element={<NavLayout />}>
                 <Route index element={<Dashboard />} />
                 <Route path="Dashboard" element={<Dashboard />} />
+                <Route path="Gallery" element={<Gallery />} />
                 <Route path="Users" element={<User />} />
                 <Route path="Manage-Users" element={<ManageUsers />} />
                 <Route path="Notifications" element={<Notification />} />
@@ -325,7 +283,6 @@ function App() {
               )}
             </>
           )}
-        </Suspense>
       </Router>
     </div>
   );

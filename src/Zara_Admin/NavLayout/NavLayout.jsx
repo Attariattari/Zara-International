@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Nav from "../Nav/Nav";
 import SideBar from "../Sidebar/SideBar";
 import { userContext } from "../../Context/UserContext";
+import './css.css'
 
 const NavLayout = () => {
   const { isTokenValid } = useContext(userContext);

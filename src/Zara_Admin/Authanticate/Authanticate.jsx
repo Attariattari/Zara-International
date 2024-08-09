@@ -61,12 +61,10 @@ function Authanticate() {
   const { setUser, setAdmin, isTokenValid } = useContext(userContext);
   const [authSuccess, setAuthSuccess] = useState("");
   const [authError, setAuthError] = useState("");
-  const { theme } = useTheme(); // Get the current theme
+  const { theme } = useTheme();
   const [passwordResetSuccess, setPasswordResetSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [verifyNow, setVerifyNow] = useState(false);
-  const [showTimeoutError, setShowTimeoutError] = useState(false);
-  const [tokenChecked, setTokenChecked] = useState(false);
   const [showForgotPasswordLink, setShowForgotPasswordLink] = useState(false);
   const [smsError, setSMSError] = useState(null);
   const [createNewVerifyCode, setCreateNewVerifyCode] = useState(false);
@@ -87,7 +85,6 @@ function Authanticate() {
     return () => clearTimeout(timer);
   }, [isTokenValid, navigate]);
 
-
   // Configure Axios to include credentials
   axios.defaults.withCredentials = true;
   const handleAuthenticate = async (values) => {
@@ -107,7 +104,7 @@ function Authanticate() {
         throw new Error("Authentication failed. Please try again.");
       }
     };
-  
+
     const checkAdminDetails = async (email) => {
       try {
         const response = await axios.post(
@@ -122,57 +119,49 @@ function Authanticate() {
         throw new Error("Failed to check admin details. Please try again.");
       }
     };
-  
+
     setLoading(true);
-  
+
     try {
       const adminDetails = await checkAdminDetails(values.email);
-  
+
       if (adminDetails.status !== "success") {
         setLoading(false);
         setAuthError(adminDetails.message);
         return;
       }
-  
+
       const { pageRoll, verify } = adminDetails;
-  
+
       if (pageRoll !== 1) {
         setLoading(false);
         setAuthError("Access Denied: Admin access required for login.");
         return;
       }
-  
+
       if (!verify) {
         setLoading(false);
-        setAuthError("Admin account not verified. Please verify your email first.");
-        setVerified(false); // Set verification status to false
+        setAuthError(
+          "Admin account not verified. Please verify your email first."
+        );
+        setVerified(false);
         return;
       }
-  
-      const loginResponse = await authenticateUser(values.email, values.password);
-  
+
+      const loginResponse = await authenticateUser(
+        values.email,
+        values.password
+      );
+
       if (loginResponse.status === "success") {
         const { token, user } = loginResponse;
         document.cookie = `token=${token}; path=/`;
-        // Save user data to localStorage
         localStorage.setItem("user", JSON.stringify(user));
-  
-        // Set user context state
         setUser(user);
-  
-        // Clear any existing auth errors
         setAuthError(null);
-  
-        // Set admin details in context state
         setAdmin(adminDetails);
-  
-        // Set verification status to true
         setVerified(true);
-  
-        // Navigate to the Admin Dashboard
         navigate("/Admin/Dashboard");
-  
-        // Fetch user info after successful login
         await fetchUserData();
       } else {
         setAuthError(loginResponse.message);
@@ -242,19 +231,6 @@ function Authanticate() {
       }
     };
   }, [timer]);
-
-  // useEffect(() => {
-  //   let interval = null;
-  //   if (timer > 0) {
-  //     interval = setInterval(() => {
-  //       setTimer((prevTimer) => prevTimer - 1);
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(interval);
-  //     setShowTimeoutError(true);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [timer]);
 
   const getEmailFromLocalStorage = () => {
     const emailData = JSON.parse(localStorage.getItem("resetEmail"));
@@ -611,7 +587,7 @@ function Authanticate() {
                         Submit
                       </button>
 
-                      {resetTokenError && !showTimeoutError && (
+                      {resetTokenError && (
                         <div
                           className="error-message mt-4"
                           style={{ color: "red" }}

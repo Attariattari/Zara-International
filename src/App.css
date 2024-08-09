@@ -1,4 +1,28 @@
+body.light {
+    --bg-color: white;
+    --admin-bg-color: radial-gradient(circle, rgba(0, 210, 247, 0.392) 0%, rgba(208, 54, 228, 0.449) 100%);
+    --text-color: black;
+    --border-color: #000000;
+    --scrollbar-bg: #f1f1f100;
+    --scrollbar-thumb: #090909;
+    --scrollbar-thumb-hover: #555;
+    --active-bg-color: #e0e0e0;
+    --active-text-color: #000000;
+    --active-border-color: #000000;
+}
 
+body.dark {
+    --bg-color: rgb(24, 24, 24);
+    --admin-bg-color: #3e3e3eac;
+    --text-color: white;
+    --border-color: #ffffff;
+    --scrollbar-bg: rgba(24, 24, 24, 0);
+    --scrollbar-thumb: #ffffff;
+    --scrollbar-thumb-hover: #aaa;
+    --active-bg-color: #424242;
+    --active-text-color: #ffffff;
+    --active-border-color: #ffffff;
+}
 
 
 .ChatPopupshow {
