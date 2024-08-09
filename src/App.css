@@ -9,6 +9,9 @@ body.light {
     --active-bg-color: #e0e0e0;
     --active-text-color: #000000;
     --active-border-color: #000000;
+    --input-bg-color: rgb(24, 24, 24);
+    --input-color: white;
+    --active-icon-color: rgb(46, 46, 46);
 }
 
 body.dark {
@@ -22,6 +25,9 @@ body.dark {
     --active-bg-color: #424242;
     --active-text-color: #ffffff;
     --active-border-color: #ffffff;
+    --input-bg-color: white;
+    --input-color: black;
+    --active-icon-color: rgb(178, 178, 178);
 }
 
 
