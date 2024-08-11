@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./css.css";
 import {
   MdOutlineGridView,
@@ -13,15 +13,26 @@ function Gallery() {
     sortByDate: false,
     sortOrder: false,
   });
-  const [searchText, setSearchText] = useState(""); // State for input text
-  const [viewMode, setViewMode] = useState("table"); // Default view mode
-
+  const [searchText, setSearchText] = useState("");
+  const [newInputText, setNewInputText] = useState("");
+  const [viewMode, setViewMode] = useState("table");
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "error" or "success"
+  const fileInputRef = useRef(null);
   const sortByDateRef = useRef(null);
   const sortOrderRef = useRef(null);
-  const inputRef = useRef(null); // Ref for the input field
+  const inputRef = useRef(null);
+  const newInputRef = useRef(null);
+  const [focusedImageIndex, setFocusedImageIndex] = useState(null);
+
+  const handleImageClick = (index) => {
+    setFocusedImageIndex(index);
+  };
 
   useEffect(() => {
-    // Retrieve the saved view mode from localStorage on component mount
     const savedViewMode = localStorage.getItem("viewMode");
     if (savedViewMode) {
       setViewMode(savedViewMode);
@@ -36,13 +47,117 @@ function Gallery() {
   };
 
   const handleClearSearch = () => {
-    setSearchText(""); // Clear the input
-    inputRef.current.focus(); // Focus back on the input after clearing
+    setSearchText("");
+    inputRef.current.focus();
+  };
+
+  const handleClearNewInput = () => {
+    setNewInputText("");
+    newInputRef.current.focus();
   };
 
   const handleViewChange = (mode) => {
-    setViewMode(mode); // Set the view mode
-    localStorage.setItem("viewMode", mode); // Save the selected view mode to localStorage
+    setViewMode(mode);
+    localStorage.setItem("viewMode", mode);
+  };
+
+  const toggleUploadVisibility = () => {
+    setUploadVisible((prev) => !prev);
+  };
+
+  const toggleUploadVisibilityClose = () => {
+    setUploadVisible(false);
+  };
+
+  const handleFileSelect = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    setIsDragOver(false);
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+      processFiles(files);
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragOver(false);
+  };
+
+  const handleFileInputChange = (event) => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      processFiles(files);
+    }
+  };
+
+  const isValidImageURL = (url) => {
+    // Simple regex to check if the URL ends with common image file extensions
+    return /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(url);
+  };
+
+  const processFiles = (files) => {
+    const newImages = Array.from(files).map((file) =>
+      URL.createObjectURL(file)
+    );
+    setSelectedImages((prevImages) => [...prevImages, ...newImages]);
+  };
+
+  const processImageURLs = async (urls) => {
+    // Filter out empty URLs and ensure each URL is unique
+    const validUrls = Array.from(
+      new Set(urls.filter((url) => url.trim() !== "" && isValidImageURL(url)))
+    );
+
+    if (validUrls.length === 0) {
+      return { success: false };
+    }
+
+    const fetchedImages = await Promise.all(
+      validUrls.map(async (url) => {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error(`Failed to fetch image: ${url}`);
+          const blob = await response.blob();
+          return URL.createObjectURL(blob);
+        } catch (error) {
+          console.error("Failed to fetch image:", url, error);
+          return null;
+        }
+      })
+    );
+
+    // Filter out null values and add new images to the gallery
+    const filteredImages = fetchedImages.filter((image) => image !== null);
+    if (filteredImages.length > 0) {
+      setSelectedImages((prevImages) => [...prevImages, ...filteredImages]);
+      return { success: true };
+    } else {
+      return { success: false };
+    }
+  };
+
+  const handleAddNow = async () => {
+    const urls = newInputText.split(/[\s,]+/); // Split by space, comma, or newline
+    const result = await processImageURLs(urls);
+
+    if (result.success) {
+      setMessage("Images added successfully!");
+      setMessageType("success");
+      setNewInputText(""); // Clear the input field after successful image processing
+      setTimeout(() => setMessage(""), 5000); // Hide success message after 5 seconds
+    } else {
+      setMessage("Invalid URL(s) or failed to fetch image(s).");
+      setMessageType("error");
+      setTimeout(() => setMessage(""), 10000); // Hide error message after 10 seconds
+    }
   };
 
   useEffect(() => {
@@ -71,13 +186,89 @@ function Gallery() {
       <div className="Gallery_MainArea">
         <div className="Gallery_MainArea_First">
           <p className="Gallery_MainArea_Fisrt_Title">Media Gallery</p>
-          <button className="Gallery_MainArea_Fisrt_Button">
+          <button
+            className="Gallery_MainArea_Fisrt_Button"
+            onClick={toggleUploadVisibility}
+          >
             Add New Media File
-          </button>
+          </button>{" "}
+          <div className="Gallery_MainArea_Second_Icon">
+            <LiaGripHorizontalSolid
+              className={`icons ${viewMode === "table" ? "active" : ""}`}
+              onClick={() => handleViewChange("table")}
+            />
+            <MdOutlineGridView
+              className={`icons ${viewMode === "grid" ? "active" : ""}`}
+              onClick={() => handleViewChange("grid")}
+            />
+          </div>
         </div>
+
+        {uploadVisible && (
+          <div
+            className={`Gallery_MainArea_File_Upload ${
+              uploadVisible ? "visible" : ""
+            } ${isDragOver ? "drag-over" : ""}`}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+          >
+            <div className="Gallery_MainArea_File_Upload_Title">
+              <p className="title">Drop files to upload</p>
+              <p className="or">or</p>
+              <button
+                className="Gallery_MainArea_File_Upload_Button"
+                onClick={handleFileSelect}
+              >
+                Select File
+              </button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                multiple
+                onChange={handleFileInputChange}
+              />
+            </div>
+            <div className="Gallery_MainArea_File_Upload_Title">
+              <p className="or">Maximum upload 20 Images</p>
+              <div className="search-input-wrapper-file">
+                <div className="search-input-wrapper-file-input">
+                  <input
+                    placeholder="Paste image URLs here."
+                    type="text"
+                    ref={newInputRef}
+                    value={newInputText}
+                    onChange={(e) => setNewInputText(e.target.value)}
+                  />
+                  {newInputText && (
+                    <MdClose
+                      className="clear-icon-file"
+                      onClick={handleClearNewInput}
+                    />
+                  )}
+                </div>
+                <button
+                  className="Gallery_MainArea_File_Upload_Add"
+                  onClick={handleAddNow}
+                >
+                  Add Now
+                </button>
+              </div>
+              {message && <p className={`message ${messageType}`}>{message}</p>}
+            </div>
+            <div className="PopupCloseButton">
+              <MdClose
+                onClick={toggleUploadVisibilityClose}
+                className="Close"
+              />
+            </div>
+          </div>
+        )}
+
         <div className="Gallery_MainArea_Second">
           <div className="Gallery_MainArea_Second_Area">
-            <div className="Gallery_MainArea_Second_Icons">
+            <div className="Gallery_MainArea_Second_Icons ">
               <LiaGripHorizontalSolid
                 className={`icons ${viewMode === "table" ? "active" : ""}`}
                 onClick={() => handleViewChange("table")}
@@ -87,47 +278,50 @@ function Gallery() {
                 onClick={() => handleViewChange("grid")}
               />
             </div>
-            <div className="Second-nav" ref={sortByDateRef}>
-              <div
-                className="sort-by-date"
-                onClick={() => toggleDropdown("sortByDate")}
-              >
-                <div className="sort-by-date-user">Sort by Date</div>
-                {dropdownVisible.sortByDate ? (
-                  <MdKeyboardArrowUp />
-                ) : (
-                  <MdKeyboardArrowDown />
+            <div className="Second-nav-gallery-dropdowns">
+              <div className="Second-nav-gallery" ref={sortByDateRef}>
+                <div
+                  className="sort-by-date"
+                  onClick={() => toggleDropdown("sortByDate")}
+                >
+                  <div className="sort-by-date-user">Sort by Date</div>
+                  {dropdownVisible.sortByDate ? (
+                    <MdKeyboardArrowUp />
+                  ) : (
+                    <MdKeyboardArrowDown />
+                  )}
+                </div>
+                {dropdownVisible.sortByDate && (
+                  <div className="dropdown-menu-gallry">
+                    <ul>
+                      <li>Newest First</li>
+                      <li>Oldest First</li>
+                    </ul>
+                  </div>
                 )}
               </div>
-              {dropdownVisible.sortByDate && (
-                <div className="dropdown-menu">
-                  <ul>
-                    <li>Newest First</li>
-                    <li>Oldest First</li>
-                  </ul>
+              <div className="Second-nav-gallery" ref={sortOrderRef}>
+                <div
+                  className="sort-order"
+                  onClick={() => toggleDropdown("sortOrder")}
+                >
+                  <div className="sort-order-user">Sort Order</div>
+                  {dropdownVisible.sortOrder ? (
+                    <MdKeyboardArrowUp />
+                  ) : (
+                    <MdKeyboardArrowDown />
+                  )}
                 </div>
-              )}
-            </div>
-            <div className="Second-nav" ref={sortOrderRef}>
-              <div
-                className="sort-order"
-                onClick={() => toggleDropdown("sortOrder")}
-              >
-                <div className="sort-order-user">Sort Order</div>
-                {dropdownVisible.sortOrder ? (
-                  <MdKeyboardArrowUp />
-                ) : (
-                  <MdKeyboardArrowDown />
+                {dropdownVisible.sortOrder && (
+                  <div className="dropdown-menu-gallry">
+                    <ul>
+                      <li>Ascending</li>
+                      <li>Descending</li>
+                    </ul>
+                  </div>
                 )}
               </div>
-              {dropdownVisible.sortOrder && (
-                <div className="dropdown-menu">
-                  <ul>
-                    <li>Ascending</li>
-                    <li>Descending</li>
-                  </ul>
-                </div>
-              )}
+              <div className="slect-bulk">Select Bulk</div>
             </div>
           </div>
           <div className="Gallery_MainArea_Second_Area_Second">
@@ -138,7 +332,7 @@ function Gallery() {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 ref={inputRef}
-                placeholder="Enter Text"
+                placeholder="Enter Text Here"
               />
               {searchText && (
                 <MdClose className="clear-icon" onClick={handleClearSearch} />
@@ -146,11 +340,40 @@ function Gallery() {
             </div>
           </div>
         </div>
+
+        {/* Image Gallery Area */}
+        <div className="Gallery-title">Images Section</div>
         <div className="gallery_area">
           {viewMode === "table" ? (
             <div>Table Data</div>
           ) : (
-            <div>Grid Data</div>
+            <div
+              className={
+                selectedImages.length > 0 ? "Grid_Gallery" : "Empty_Grid"
+              }
+            >
+              {selectedImages.length > 0 ? (
+                selectedImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`Gallery_Image ${viewMode} ${
+                      focusedImageIndex === index ? "focused" : ""
+                    }`}
+                    onClick={() => handleImageClick(index)}
+                  >
+                    <img
+                      src={image}
+                      alt=""
+                      onError={(e) => (e.target.style.display = "none")} // Hide image if it fails to load
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="No_Images">
+                  No images uploaded or fetched yet.
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
