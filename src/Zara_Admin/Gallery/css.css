@@ -369,6 +369,49 @@
     margin-bottom: 5px;
 }
 
+.slect-bulk {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.slect-bulk::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 10%;
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.slect-bulk:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.slect-bulk:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 .Second-nav-gallery-dropdowns {
     display: flex;
     gap: 20px;
@@ -376,7 +419,7 @@
 
 .Second-nav-gallery {
     position: relative;
-    /* Make it a positioning context for the dropdown */
+    cursor: pointer;
 }
 
 
@@ -463,15 +506,16 @@
 }
 
 .Gallery-title {
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    font-size: 2em;
-    line-height: 40px;
+    font-size: 1.5em;
+    line-height: 30px;
     font-weight: 500;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-transform: uppercase;
-    padding: 0px 16px 0px 16px;
+    text-decoration: underline;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
 }
 
 .gallery_area {
@@ -480,6 +524,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    flex-direction: column;
     padding: 16px;
     gap: 20px;
     border: 1px solid var(--border-color);
@@ -490,12 +535,114 @@
 }
 
 /* Images Gallry */
-.Grid_Gallery {
+.gallery_table {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
     gap: 16px;
+    justify-content: start;
     width: 100%;
 }
+
+.image-index-number-grid {
+    position: relative;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-radius: 0px 0px 0px 0px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.image-index-number {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-radius: 0px 0px 0px 0px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.Gallery_Image_table {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s ease, border 0.3s ease;
+    width: 250px;
+    flex-direction: column;
+    height: 300px;
+    overflow: hidden;
+}
+
+.Gallery_Image_table img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    object-position: center;
+}
+.Gallery_Image_table div {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  
+}
+.Table-image-title {
+   font-size: 16px;
+   text-decoration: underline;
+}
+.Table-image-Button {
+ width: 70px;
+ height: 30px;
+}
+.Gallery_Image_table.focused {
+    margin: 5px;
+    transform: scale(1.05);
+    border: 5px solid transparent;
+    border-image: var(--grid-border-color) 1;
+}
+/* Scale and highlight the image when focused */
+.Gallery_Image_table img.focused {
+    transform: scale(1.05);
+    border: 5px solid transparent;
+    border-image: var(--grid-border-color) 1;
+    transition: transform 0.3s ease, border 0.3s ease;
+}
+.Gallery_Image img.focused {
+    transform: scale(1.05);
+    border: 5px solid transparent;
+    border-image: var(--grid-border-color) 1;
+    transition: transform 0.3s ease, border 0.3s ease;
+}
+
+.Grid_Gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(115px, max-content));
+    gap: 16px;
+    justify-content: start;
+    width: 100%;
+}
+
 
 .Gallery_Image {
     position: relative;
@@ -531,6 +678,63 @@
     gap: 16px;
     width: 100%;
     height: 25px;
+}
+
+.pagination_controls {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.pagination_controls span {
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.pagination_controls button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.pagination_controls button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 10%;
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.pagination_controls button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.pagination_controls button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 941px) {
@@ -571,6 +775,10 @@
         line-height: 22px;
         font-weight: 400;
         color: var(--text-color);
+    }
+
+    .Gallery-title {
+        justify-content: center;
     }
 
     .Gallery_MainArea_Fisrt_Button {

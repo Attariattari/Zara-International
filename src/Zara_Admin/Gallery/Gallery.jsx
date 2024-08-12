@@ -27,9 +27,13 @@ function Gallery() {
   const inputRef = useRef(null);
   const newInputRef = useRef(null);
   const [focusedImageIndex, setFocusedImageIndex] = useState(null);
+  const [focusedImageGridIndex, setFocusedImageGridIndex] = useState(null);
 
   const handleImageClick = (index) => {
     setFocusedImageIndex(index);
+  };
+  const handleImageGridClick = (index) => {
+    setFocusedImageGridIndex(index);
   };
 
   useEffect(() => {
@@ -41,8 +45,8 @@ function Gallery() {
 
   const toggleDropdown = (menu) => {
     setDropdownVisible((prevState) => ({
-      ...prevState,
-      [menu]: !prevState[menu],
+      sortByDate: menu === "sortByDate" ? !prevState.sortByDate : false,
+      sortOrder: menu === "sortOrder" ? !prevState.sortOrder : false,
     }));
   };
 
@@ -180,6 +184,29 @@ function Gallery() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const imagesPerPage = 4; // Number of images to show per page
+
+  // Pagination logic
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = selectedImages.slice(
+    indexOfFirstImage,
+    indexOfLastImage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(selectedImages.length / imagesPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
 
   return (
     <div className="Gallery">
@@ -340,30 +367,69 @@ function Gallery() {
             </div>
           </div>
         </div>
-
         {/* Image Gallery Area */}
-        <div className="Gallery-title">Images Section</div>
+        <div className="Gallery-title">
+          <p>Images Section.</p>
+        </div>
         <div className="gallery_area">
           {viewMode === "table" ? (
-            <div>Table Data</div>
-          ) : (
-            <div
-              className={
-                selectedImages.length > 0 ? "Grid_Gallery" : "Empty_Grid"
-              }
-            >
-              {selectedImages.length > 0 ? (
-                selectedImages.map((image, index) => (
+            <div className="gallery_table">
+              {currentImages.length > 0 ? (
+                currentImages.map((image, index) => (
                   <div
-                    key={index}
-                    className={`Gallery_Image ${viewMode} ${
-                      focusedImageIndex === index ? "focused" : ""
-                    }`}
-                    onClick={() => handleImageClick(index)}
+                    key={indexOfFirstImage + index}
+                    className={`Gallery_Image_table ${viewMode}`}
                   >
+                    <p className="image-index-number">
+                      {indexOfFirstImage + index + 1}
+                    </p>
                     <img
                       src={image}
                       alt=""
+                      className={
+                        focusedImageIndex === indexOfFirstImage + index
+                          ? "focused"
+                          : ""
+                      }
+                      onClick={() =>
+                        handleImageClick(indexOfFirstImage + index)
+                      }
+                    />
+                    <div>
+                      <p className="Table-image-title">hello</p>
+                      <button className="Table-image-Button">View</button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="No_Images">
+                  No images uploaded or fetched yet.
+                </div>
+              )}
+            </div>
+          ) : (
+            <div
+              className={
+                currentImages.length > 0 ? "Grid_Gallery" : "Empty_Grid"
+              }
+            >
+              {currentImages.length > 0 ? (
+                currentImages.map((image, index) => (
+                  <div key={index} className={`Gallery_Image ${viewMode}`}>
+                    <p className="image-index-number-grid">
+                      {indexOfFirstImage + index + 1}
+                    </p>
+                    <img
+                      src={image}
+                      alt=""
+                      onClick={() =>
+                        handleImageGridClick(indexOfFirstImage + index)
+                      }
+                      className={
+                        focusedImageGridIndex === indexOfFirstImage + index
+                          ? "focused"
+                          : ""
+                      }
                       onError={(e) => (e.target.style.display = "none")} // Hide image if it fails to load
                     />
                   </div>
@@ -372,6 +438,19 @@ function Gallery() {
                 <div className="No_Images">
                   No images uploaded or fetched yet.
                 </div>
+              )}
+            </div>
+          )}
+
+          {selectedImages.length > imagesPerPage && (
+            <div className="pagination_controls">
+              <span>Page {currentPage}</span>{" "}
+              {currentPage > 1 && (
+                <button onClick={handlePreviousPage}>Previous</button>
+              )}
+              {currentPage <
+                Math.ceil(selectedImages.length / imagesPerPage) && (
+                <button onClick={handleNextPage}>Next</button>
               )}
             </div>
           )}
