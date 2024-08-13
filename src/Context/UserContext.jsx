@@ -113,7 +113,7 @@ export function UserContextProvider({ children }) {
 
   useEffect(() => {
     if (Admin) {
-      const tokenCheckInterval = setInterval(checkTokenValidity, 300000); // Check token every 5 minutes
+      const tokenCheckInterval = setInterval(checkTokenValidity, 3600000); // Check token every 1 hour
       return () => clearInterval(tokenCheckInterval);
     }
   }, [Admin]);

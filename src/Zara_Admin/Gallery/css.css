@@ -175,6 +175,49 @@
     align-items: center;
     gap: 10px;
 }
+/* Blur effect */
+.blurred {
+    filter: blur(5px); transition: filter 0.3s ease-in-out;
+}
+/* Spinner overlay */
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    z-index: 100; /* Ensures the overlay is above other content */
+    backdrop-filter: blur(10px); /* Adds blur to the background */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.spinner-overlay.visible {
+    opacity: 1;
+}
+
+/* Spinner animation */
+.spinner {
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 .search-input-wrapper-file-input {
     width: 100%;
@@ -532,6 +575,21 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     z-index: 0;
+    position: relative;
+}
+
+.loading-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100; /* Ensures the overlay is above other content */
+    transition: opacity 0.3s ease-in-out;
+    background-color: var(--bg-color);
 }
 
 /* Images Gallry */
@@ -541,21 +599,6 @@
     gap: 16px;
     justify-content: start;
     width: 100%;
-}
-
-.image-index-number-grid {
-    position: relative;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg-color);
-    border-radius: 0px 0px 0px 0px;
-    border-right: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
 }
 
 .image-index-number {
@@ -577,11 +620,21 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    transition: transform 0.3s ease, border 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        border 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     width: 250px;
-    flex-direction: column;
     height: 300px;
     overflow: hidden;
+    border-radius: 15px;
+
+}
+
+.Gallery_Image_table:hover {
+    transform: scale(1.05);
+    filter: brightness(105%);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+
 }
 
 .Gallery_Image_table img {
@@ -589,51 +642,31 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 80%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        filter 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: brightness(90%);
+    border-radius: 15px;
 }
-.Gallery_Image_table div {
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.Gallery_Image_table:hover img {
+    transform: scale(1.1) translateY(-5px);
+    filter: brightness(105%);
+}
+
+.Gallery_Image_table.focused img {
+    transform: scale(1.15);
+    filter: brightness(105%);
+}
+
+.Gallery_Image_table::before {
+    content: "";
     position: absolute;
-    width: 100%;
-    height: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  
+
 }
-.Table-image-title {
-   font-size: 16px;
-   text-decoration: underline;
-}
-.Table-image-Button {
- width: 70px;
- height: 30px;
-}
-.Gallery_Image_table.focused {
-    margin: 5px;
-    transform: scale(1.05);
-    border: 5px solid transparent;
-    border-image: var(--grid-border-color) 1;
-}
-/* Scale and highlight the image when focused */
-.Gallery_Image_table img.focused {
-    transform: scale(1.05);
-    border: 5px solid transparent;
-    border-image: var(--grid-border-color) 1;
-    transition: transform 0.3s ease, border 0.3s ease;
-}
-.Gallery_Image img.focused {
-    transform: scale(1.05);
-    border: 5px solid transparent;
-    border-image: var(--grid-border-color) 1;
-    transition: transform 0.3s ease, border 0.3s ease;
-}
+
 
 .Grid_Gallery {
     display: grid;
@@ -643,17 +676,42 @@
     width: 100%;
 }
 
+.image-index-number-grid {
+    position: relative;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-radius: 0px 0px 0px 0px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
 
+/* Base style for the image container */
 .Gallery_Image {
     position: relative;
     display: inline-block;
     cursor: pointer;
-    transition: transform 0.3s ease, border 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                border 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     width: 115.4px;
     height: 115.4px;
     overflow: hidden;
+    border-radius: 8px; /* Smooth rounded corners */
 }
 
+/* Subtle hover effect */
+.Gallery_Image:hover {
+    transform: scale(1.08); /* Slightly larger scale */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+/* Image styling */
 .Gallery_Image img {
     position: absolute;
     top: 0;
@@ -662,15 +720,50 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                filter 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: brightness(90%);
+    border-radius: 8px;
 }
 
-.Gallery_Image.focused {
-    margin: 5px;
-    transform: scale(1.05);
-    border: 5px solid transparent;
-    border-image: var(--grid-border-color) 1;
+/* Parallax effect on hover */
+.Gallery_Image:hover img {
+    transform: scale(1.12) translateY(-3px); /* Slight parallax effect */
+    filter: brightness(100%);
 }
 
+/* Pronounced focus effect */
+.Gallery_Image img.focused {
+    transform: scale(1.15); /* More pronounced scale */
+    border: 4px solid transparent;
+    border-image: linear-gradient(45deg, #ff416c, #ff4b2b) 1; /* Stylish gradient border */
+    filter: brightness(105%); /* Extra brightness */
+}
+
+/* Soft light overlay for focus */
+.Gallery_Image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.4));
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+.Gallery_Image img.focused::before {
+    opacity: 1; /* Show overlay on focus */
+}
+
+/* Subtle scale effect for icons or additional elements */
+.Gallery_Image:hover .image-index-number-grid {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
 
 
 .Empty_Grid {
@@ -854,6 +947,18 @@
 }
 
 @media (max-width: 600px) {
+    .gallery_table {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(198px, max-content));
+        gap: 16px;
+        justify-content: start;
+        width: 100%;
+    }
+    .Gallery_Image_table {
+        width: 198px;
+        height: 300px;
+    
+    }
     .Gallery_MainArea_Fisrt_Title {
         font-size: 18px;
         line-height: 22px;
