@@ -34,6 +34,7 @@ function Gallery() {
   const newInputRef = useRef(null);
   const [focusedImageIndex, setFocusedImageIndex] = useState(null);
   const [focusedImageGridIndex, setFocusedImageGridIndex] = useState(null);
+
   const handleImageClick = (index) => {
     setFocusedImageIndex(index);
   };
@@ -134,65 +135,100 @@ function Gallery() {
     fileInputRef.current.value = "";
   };
 
-  const isValidImageURL = (url) => {
-    return /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(url);
-  };
-  const processFiles = async (files) => {
-    const newImages = Array.from(files).map((file) =>
-      URL.createObjectURL(file)
-    );
-    setSelectedImages((prevImages) => [...prevImages, ...newImages]);
-
-    // Upload files to the backend
-    const result = await uploadImages(files);
-
-    if (result.success) {
-      setMessage("Images processed and uploaded successfully!");
-      setMessageType("success");
-    } else {
-      setMessage("Failed to process and upload images.");
-      setMessageType("error");
+  const isValidImageURL = async (url) => {
+    try {
+      console.log(`Validating URL: ${url}`);
+      const response = await fetch(url, { method: "HEAD" });
+      console.log(`Response status for ${url}: ${response.status}`);
+      if (!response.ok) throw new Error(`Failed to fetch HEAD for URL: ${url}`);
+      const contentType = response.headers.get("Content-Type");
+      console.log(`Content-Type for ${url}: ${contentType}`);
+      return contentType && contentType.startsWith("image/");
+    } catch (error) {
+      console.error("Error validating image URL:", url, error);
+      return false;
     }
-
-    setTimeout(() => setMessage(""), result.success ? 5000 : 10000);
   };
-
+  const fetchImageAsFile = async (url) => {
+    try {
+      console.log(`Fetching image from URL: ${url}`);
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Failed to fetch image: ${url}`);
+      const blob = await response.blob();
+      const fileName = url.split("/").pop() || "image";
+      return new File([blob], fileName, { type: blob.type });
+    } catch (error) {
+      console.error("Error fetching image from URL:", url, error);
+      return null;
+    }
+  };
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const processImageURLs = async (urls) => {
-    const validUrls = Array.from(
-      new Set(urls.filter((url) => url.trim() !== "" && isValidImageURL(url)))
-    );
+    const validUrls = [];
+
+    for (const url of urls) {
+      if (url.trim() !== "") {
+        const isValid = await isValidImageURL(url);
+        if (isValid) validUrls.push(url);
+        console.log(`URL is valid: ${isValid}`);
+      }
+    }
 
     if (validUrls.length === 0) {
-      return { success: false };
+      console.log("No valid URLs provided.");
+      return { success: false, message: "No valid image URLs provided." };
     }
 
-    const fetchedImages = await Promise.all(
-      validUrls.map(async (url) => {
-        try {
-          const response = await fetch(url);
-          if (!response.ok) throw new Error(`Failed to fetch image: ${url}`);
-          const blob = await response.blob();
-          return new File([blob], url.split("/").pop(), { type: blob.type });
-        } catch (error) {
-          console.error("Failed to fetch image:", url, error);
-          return null;
-        }
-      })
-    );
+    const fetchedImages = [];
 
-    const filteredImages = fetchedImages.filter((image) => image !== null);
-    if (filteredImages.length > 0) {
+    for (const url of validUrls) {
+      const image = await fetchImageAsFile(url);
+      if (image) {
+        fetchedImages.push(image);
+        console.log(`Successfully fetched image from: ${url}`);
+        await delay(1000); // Delay between fetches
+      } else {
+        console.error("Failed to fetch image from URL:", url);
+      }
+    }
+
+    if (fetchedImages.length > 0) {
       setSelectedImages((prevImages) => [
         ...prevImages,
-        ...filteredImages.map((file) => URL.createObjectURL(file)),
+        ...fetchedImages.map((file) => URL.createObjectURL(file)),
       ]);
 
-      // Upload fetched images to the backend
-      const result = await uploadImages(filteredImages);
+      const result = await uploadImages(fetchedImages);
+      console.log("Upload result:", result);
       return result;
     } else {
-      return { success: false };
+      console.log("No valid images were fetched.");
+      return { success: false, message: "No valid images were fetched." };
     }
+  };
+
+  const handleAddNow = async () => {
+    setIsLoading(true);
+
+    const urls = newInputText.split(/[\s,]+/);
+    console.log("Processing URLs:", urls);
+
+    const result = await processImageURLs(urls);
+
+    if (result.success) {
+      setMessage("Images added successfully!");
+      setMessageType("success");
+      setNewInputText("");
+      setTimeout(() => setMessage(""), 5000);
+    } else {
+      setMessage(
+        result.message || "Invalid URL(s) or failed to fetch image(s)."
+      );
+      setMessageType("error");
+      setTimeout(() => setMessage(""), 10000);
+    }
+
+    setIsLoading(false);
   };
 
   const uploadImages = async (files) => {
@@ -221,22 +257,6 @@ function Gallery() {
     } catch (error) {
       console.error("Error uploading images:", error);
       return { success: false };
-    }
-  };
-
-  const handleAddNow = async () => {
-    const urls = newInputText.split(/[\s,]+/);
-    const result = await processImageURLs(urls);
-
-    if (result.success) {
-      setMessage("Images added successfully!");
-      setMessageType("success");
-      setNewInputText("");
-      setTimeout(() => setMessage(""), 5000);
-    } else {
-      setMessage("Invalid URL(s) or failed to fetch image(s).");
-      setMessageType("error");
-      setTimeout(() => setMessage(""), 10000);
     }
   };
 
@@ -444,7 +464,7 @@ function Gallery() {
                   className="Gallery_MainArea_File_Upload_Add"
                   onClick={handleAddNow}
                 >
-                  Add Now
+                  {isLoading ? "Processing..." : "Add Now"}
                 </button>
               </div>
               {message && <p className={`message ${messageType}`}>{message}</p>}
