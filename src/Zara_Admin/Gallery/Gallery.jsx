@@ -16,24 +16,33 @@ function Gallery() {
     sortOrder: false,
   });
   const [searchText, setSearchText] = useState("");
-  const [newInputText, setNewInputText] = useState("");
   const [viewMode, setViewMode] = useState("table");
-  const [uploadVisible, setUploadVisible] = useState(false);
-  const [isDragOver, setIsDragOver] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState(""); // "error" or "success"
-  const fileInputRef = useRef(null);
-  const sortByDateRef = useRef(null);
   const [loading, setLoading] = useState(false);
-  const sortOrderRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [sortBy, setSortBy] = useState("newest"); // "newest" or "oldest"
   const [sortOrder, setSortOrder] = useState("ascending");
-  const inputRef = useRef(null);
-  const newInputRef = useRef(null);
   const [focusedImageIndex, setFocusedImageIndex] = useState(null);
   const [focusedImageGridIndex, setFocusedImageGridIndex] = useState(null);
+  const [isBulkSelect, setIsBulkSelect] = useState(false);
+  const [bulkImages, setBulkImages] = useState([]);
+  const [newInputText, setNewInputText] = useState("");
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "error" or "success"
+  const [galleryName, setGalleryName] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [galleryNameRequired, setGalleryNameRequired] = useState(false);
+  const [currentStep, setCurrentStep] = useState("addName");
+  const [conversionInProgress, setConversionInProgress] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sortByDateRef = useRef(null);
+  const sortOrderRef = useRef(null);
+  const inputRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const newInputRef = useRef(null);
 
   const handleImageClick = (index) => {
     setFocusedImageIndex(index);
@@ -47,6 +56,27 @@ function Gallery() {
     if (savedViewMode) {
       setViewMode(savedViewMode);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sortByDateRef.current &&
+        !sortByDateRef.current.contains(event.target) &&
+        sortOrderRef.current &&
+        !sortOrderRef.current.contains(event.target)
+      ) {
+        setDropdownVisible({
+          sortByDate: false,
+          sortOrder: false,
+        });
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const toggleDropdown = (menu) => {
@@ -75,33 +105,17 @@ function Gallery() {
     setUploadVisible((prev) => !prev);
   };
 
-  const toggleUploadVisibilityClose = () => {
-    setUploadVisible(false);
-  };
-
   const handleFileSelect = () => {
     fileInputRef.current.click();
   };
 
-  const handleDrop = async (event) => {
+  const handleDrop = (event) => {
     event.preventDefault();
     setIsDragOver(false);
 
     const files = event.dataTransfer.files;
     if (files.length > 0) {
-      setIsLoading(true); // Start loading
-      const result = await uploadImages(files);
-      setIsLoading(false); // End loading
-      console.log("Upload result:", result);
-      if (result.success) {
-        setMessage("Images uploaded successfully!");
-        setMessageType("success");
-        fetchImages();
-      } else {
-        setMessage("Failed to upload images.");
-        setMessageType("error");
-      }
-      setTimeout(() => setMessage(""), 5000);
+      setSelectedFiles(Array.from(files)); // Store files in state
     }
   };
 
@@ -109,51 +123,51 @@ function Gallery() {
     event.preventDefault();
     setIsDragOver(true);
   };
-
   const handleDragLeave = () => {
     setIsDragOver(false);
   };
 
-  const handleFileInputChange = async (event) => {
+  const handleFileInputChange = (event) => {
     const files = event.target.files;
     if (files.length > 0) {
-      setIsLoading(true); // Start loading
-      const result = await uploadImages(files);
-      setIsLoading(false); // End loading
-      console.log("Upload result:", result);
-      if (result.success) {
-        setMessage("Images uploaded successfully!");
-        setMessageType("success");
-        fetchImages();
-      } else {
-        setMessage("Failed to upload images.");
-        setMessageType("error");
-      }
-      setTimeout(() => setMessage(""), 5000);
+      setSelectedFiles(Array.from(files)); // Store files in state
     }
-
     fileInputRef.current.value = "";
   };
+  const areValidURLs = async (inputText) => {
+    const urls = inputText.split(/[\s,]+/).filter((url) => url.trim() !== "");
+    const validUrls = await Promise.all(urls.map(isValidImageURL));
+    return validUrls.every((isValid) => isValid);
+  };
+  useEffect(() => {
+    const checkURLs = async () => {
+      if (newInputText.trim()) {
+        const valid = await areValidURLs(newInputText);
+        setButtonVisible(valid);
+      } else {
+        setButtonVisible(false);
+      }
+    };
 
+    checkURLs();
+  }, [newInputText]);
+  // Function to validate image URLs
   const isValidImageURL = async (url) => {
     try {
-      console.log(`Validating URL: ${url}`);
       const response = await fetch(url, { method: "HEAD" });
-      console.log(`Response status for ${url}: ${response.status}`);
-      if (!response.ok) throw new Error(`Failed to fetch HEAD for URL: ${url}`);
+      if (!response.ok) throw new Error("Failed to fetch HEAD for URL");
       const contentType = response.headers.get("Content-Type");
-      console.log(`Content-Type for ${url}: ${contentType}`);
       return contentType && contentType.startsWith("image/");
     } catch (error) {
       console.error("Error validating image URL:", url, error);
       return false;
     }
   };
+  // Function to fetch image from URL and convert to file
   const fetchImageAsFile = async (url) => {
     try {
-      console.log(`Fetching image from URL: ${url}`);
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`Failed to fetch image: ${url}`);
+      if (!response.ok) throw new Error("Failed to fetch image");
       const blob = await response.blob();
       const fileName = url.split("/").pop() || "image";
       return new File([blob], fileName, { type: blob.type });
@@ -163,81 +177,136 @@ function Gallery() {
     }
   };
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  // Process image URLs to validate and fetch images
   const processImageURLs = async (urls) => {
     const validUrls = [];
+    const fetchedImages = [];
 
-    for (const url of urls) {
+    // Validate URLs concurrently
+    const validationPromises = urls.map(async (url) => {
       if (url.trim() !== "") {
         const isValid = await isValidImageURL(url);
-        if (isValid) validUrls.push(url);
-        console.log(`URL is valid: ${isValid}`);
+        if (isValid) {
+          validUrls.push(url);
+        }
       }
-    }
+    });
+
+    await Promise.all(validationPromises);
 
     if (validUrls.length === 0) {
-      console.log("No valid URLs provided.");
       return { success: false, message: "No valid image URLs provided." };
     }
 
-    const fetchedImages = [];
-
-    for (const url of validUrls) {
+    // Fetch images concurrently
+    const fetchPromises = validUrls.map(async (url) => {
       const image = await fetchImageAsFile(url);
       if (image) {
         fetchedImages.push(image);
-        console.log(`Successfully fetched image from: ${url}`);
-        await delay(1000); // Delay between fetches
-      } else {
-        console.error("Failed to fetch image from URL:", url);
       }
-    }
+    });
+
+    await Promise.all(fetchPromises);
 
     if (fetchedImages.length > 0) {
-      setSelectedImages((prevImages) => [
-        ...prevImages,
-        ...fetchedImages.map((file) => URL.createObjectURL(file)),
-      ]);
-
-      const result = await uploadImages(fetchedImages);
-      console.log("Upload result:", result);
-      return result;
+      setSelectedFiles(fetchedImages);
+      return { success: true, fetchedImages };
     } else {
-      console.log("No valid images were fetched.");
       return { success: false, message: "No valid images were fetched." };
     }
   };
 
   const handleAddNow = async () => {
-    setIsLoading(true);
+    if (!buttonVisible) return;
 
-    const urls = newInputText.split(/[\s,]+/);
-    console.log("Processing URLs:", urls);
+    if (currentStep === "addName") {
+      // Check if galleryName is provided
+      if (!galleryName.trim()) {
+        setGalleryNameRequired(true);
+        setMessage("Please enter a gallery name.");
+        setMessageType("error");
+        return;
+      }
 
-    const result = await processImageURLs(urls);
-
-    if (result.success) {
-      setMessage("Images added successfully!");
-      setMessageType("success");
-      setNewInputText("");
-      setTimeout(() => setMessage(""), 5000);
-    } else {
-      setMessage(
-        result.message || "Invalid URL(s) or failed to fetch image(s)."
-      );
-      setMessageType("error");
-      setTimeout(() => setMessage(""), 10000);
+      // Move to the next step
+      setCurrentStep("convert");
+      setMessage("Gallery name added. Converting images...");
+      return;
     }
 
-    setIsLoading(false);
+    if (currentStep === "convert") {
+      if (newInputText.trim()) {
+        setConversionInProgress(true); // Indicate that conversion is in progress
+        setMessage("Converting images...");
+
+        const urls = newInputText.split(/[\s,]+/);
+        const result = await processImageURLs(urls);
+
+        if (!result.success) {
+          setMessage(
+            result.message || "Invalid URL(s) or failed to fetch image(s)."
+          );
+          setMessageType("error");
+          setConversionInProgress(false);
+          return;
+        }
+
+        setSelectedFiles(result.fetchedImages);
+      }
+
+      // Move to the next step after conversion
+      setConversionInProgress(false);
+      setCurrentStep("upload");
+      setMessage("Images converted. Ready to upload.");
+      return;
+    }
+
+    if (currentStep === "upload") {
+      setIsLoading(true);
+
+      try {
+        const uploadResponse = await uploadImages();
+        setMessage("Gallery created and images uploaded successfully!");
+        setMessageType("success");
+        // Reset input fields and state after successful upload
+        setGalleryName("");
+        setNewInputText("");
+        setSelectedFiles([]);
+        setGalleryNameRequired(false);
+        setCurrentStep("addName"); // Reset step to initial state
+        setButtonVisible(false);
+      } catch (error) {
+        console.error("Upload Error:", error);
+        setMessage("Failed to upload images. Please try again.");
+        setMessageType("error");
+      } finally {
+        setIsLoading(false);
+        setCurrentStep("addName"); // Reset step to initial state
+      }
+    }
   };
 
-  const uploadImages = async (files) => {
+  const uploadImages = async () => {
+    // Check if files and gallery name are provided
+    if (!selectedFiles.length || !galleryName.trim()) {
+      setMessage("Please select files and enter a gallery name.");
+      setMessageType("error");
+      setTimeout(() => setMessage(""), 5000);
+      return;
+    }
+
+    setIsLoading(true);
+
     const formData = new FormData();
-    Array.from(files).forEach((file) => {
+    formData.append("galleryName", galleryName);
+
+    // Append each file to the FormData object
+    selectedFiles.forEach((file) => {
       formData.append("images", file);
     });
 
     try {
+      // Send POST request to the server
       const response = await axios.post(
         "http://localhost:1122/images/upload-gallery",
         formData,
@@ -247,39 +316,35 @@ function Gallery() {
           },
         }
       );
-      console.log("API response:", response);
-      // Check the status and decide the result
-      if (response.status === 201 || response.status === 200) {
-        return { success: true };
+
+      // Handle successful response
+      if (response.status === 200 || response.status === 201) {
+        setMessage("Images uploaded successfully!");
+        setMessageType("success");
+        setSelectedFiles([]); // Clear selected files after upload
+        setGalleryName(""); // Clear gallery name after upload
       } else {
-        return { success: false };
+        // Handle non-200 response
+        setMessage("Failed to upload images.");
+        setMessageType("error");
       }
     } catch (error) {
+      // Handle error during the request
       console.error("Error uploading images:", error);
-      return { success: false };
+      setMessage("Failed to upload images. Please try again.");
+      setMessageType("error");
+    } finally {
+      // Reset loading state and clear message after timeout
+      setIsLoading(false);
+      setTimeout(() => setMessage(""), 5000);
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        sortByDateRef.current &&
-        !sortByDateRef.current.contains(event.target) &&
-        sortOrderRef.current &&
-        !sortOrderRef.current.contains(event.target)
-      ) {
-        setDropdownVisible({
-          sortByDate: false,
-          sortOrder: false,
-        });
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const toggleUploadVisibilityClose = () => {
+    setUploadVisible(false);
+    setSelectedFiles([]); // Clear selected files
+    setGalleryName(""); // Clear gallery name
+  };
 
   const fetchImages = async () => {
     setLoading(true); // Start loading
@@ -306,7 +371,7 @@ function Gallery() {
   useEffect(() => {
     fetchImages();
   }, []);
-  // UseMemo for sorting images
+
   const sortedImages = useMemo(() => {
     // Clone the images array
     let images = [...selectedImages];
@@ -330,7 +395,6 @@ function Gallery() {
     return images;
   }, [selectedImages, sortBy, sortOrder]);
 
-  // Handle sort by date
   const handleSortByChange = (option) => {
     setSortBy(option); // Update the sortBy state
     toggleDropdown("sortByDate");
@@ -380,6 +444,34 @@ function Gallery() {
     }
   };
 
+  // Images bulk section
+  const toggleBulkSelect = () => {
+    setIsBulkSelect(!isBulkSelect);
+    setBulkImages([]);
+  };
+
+  const handleImageSelect = (index) => {
+    if (bulkImages.includes(index)) {
+      setBulkImages(bulkImages.filter((i) => i !== index));
+    } else {
+      setBulkImages([...bulkImages, index]);
+    }
+  };
+
+  const handleDeletePermanent = () => {
+    // Handle delete logic here
+  };
+
+  const handleCancel = () => {
+    setIsBulkSelect(false);
+    setBulkImages([]);
+  };
+
+  useEffect(() => {
+    setIsBulkSelect(false);
+    setBulkImages([]);
+  }, [viewMode]);
+
   return (
     <div className="Gallery">
       <div className="Gallery_MainArea">
@@ -424,12 +516,29 @@ function Gallery() {
             >
               <p className="title">Drop files to upload</p>
               <p className="or">or</p>
-              <button
-                className="Gallery_MainArea_File_Upload_Button"
-                onClick={handleFileSelect}
-              >
-                Select File
-              </button>
+              {selectedFiles.length === 0 ? (
+                <button
+                  className="Gallery_MainArea_File_Upload_Button"
+                  onClick={() => fileInputRef.current.click()}
+                >
+                  Select File
+                </button>
+              ) : (
+                <div className="search-input-wrapper-file">
+                  <input
+                    type="text"
+                    placeholder="Enter gallery name"
+                    value={galleryName}
+                    onChange={(e) => setGalleryName(e.target.value)}
+                  />
+                  <button
+                    className="Gallery_MainArea_File_Upload_Add"
+                    onClick={uploadImages}
+                  >
+                    {isLoading ? "Uploading..." : "Add Media"}
+                  </button>
+                </div>
+              )}
               <input
                 type="file"
                 ref={fileInputRef}
@@ -460,12 +569,32 @@ function Gallery() {
                     />
                   )}
                 </div>
-                <button
-                  className="Gallery_MainArea_File_Upload_Add"
-                  onClick={handleAddNow}
-                >
-                  {isLoading ? "Processing..." : "Add Now"}
-                </button>
+                {galleryNameRequired && (
+                  <div className="gallery-name-input-wrapper">
+                    <input
+                      type="text"
+                      placeholder="Enter gallery name"
+                      value={galleryName}
+                      onChange={(e) => setGalleryName(e.target.value)}
+                    />
+                  </div>
+                )}
+                {buttonVisible && (
+              <button
+                className="Gallery_MainArea_File_Upload_Add"
+                onClick={handleAddNow}
+              >
+                {isLoading
+                  ? "Processing..."
+                  : conversionInProgress
+                  ? "Converting..."
+                  : currentStep === "addName"
+                  ? "Add Name"
+                  : currentStep === "convert"
+                  ? "Convert to File"
+                  : "Add Now"}
+              </button>
+            )}
               </div>
               {message && <p className={`message ${messageType}`}>{message}</p>}
             </div>
@@ -491,60 +620,78 @@ function Gallery() {
               />
             </div>
             <div className="Second-nav-gallery-dropdowns">
-              <div
-                className="Second-nav-gallery cursor-not-allowed"
-                ref={sortByDateRef}
-              >
-                <div
-                  className="sort-by-date"
-                  // onClick={() => toggleDropdown("sortByDate")}
-                >
-                  <div className="sort-by-date-user">Sort by Date</div>
-                  {dropdownVisible.sortByDate ? (
-                    <MdKeyboardArrowUp />
-                  ) : (
-                    <MdKeyboardArrowDown />
-                  )}
-                </div>
-                {dropdownVisible.sortByDate && (
-                  <div className="dropdown-menu-gallry">
-                    <ul>
-                      <li onClick={() => handleSortByChange("newest")}>
-                        Newest First
-                      </li>
-                      <li onClick={() => handleSortByChange("oldest")}>
-                        Oldest First
-                      </li>
-                    </ul>
+              {!isBulkSelect ? (
+                <>
+                  <div
+                    className="Second-nav-gallery cursor-not-allowed"
+                    ref={sortByDateRef}
+                  >
+                    <div
+                      className="sort-by-date" /* onClick={() => toggleDropdown("sortByDate")} */
+                    >
+                      <div className="sort-by-date-user">Sort by Date</div>
+                      {dropdownVisible.sortByDate ? (
+                        <MdKeyboardArrowUp />
+                      ) : (
+                        <MdKeyboardArrowDown />
+                      )}
+                    </div>
+                    {dropdownVisible.sortByDate && (
+                      <div className="dropdown-menu-gallry">
+                        <ul>
+                          <li onClick={() => handleSortByChange("newest")}>
+                            Newest First
+                          </li>
+                          <li onClick={() => handleSortByChange("oldest")}>
+                            Oldest First
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="Second-nav-gallery" ref={sortOrderRef}>
-                <div
-                  className="sort-order"
-                  onClick={() => toggleDropdown("sortOrder")}
-                >
-                  <div className="sort-order-user">Sort Order</div>
-                  {dropdownVisible.sortOrder ? (
-                    <MdKeyboardArrowUp />
-                  ) : (
-                    <MdKeyboardArrowDown />
-                  )}
-                </div>
-                {dropdownVisible.sortOrder && (
-                  <div className="dropdown-menu-gallry">
-                    <ul>
-                      <li onClick={() => handleSortOrderChange("ascending")}>
-                        Ascending
-                      </li>
-                      <li onClick={() => handleSortOrderChange("descending")}>
-                        Descending
-                      </li>
-                    </ul>
+                  <div className="Second-nav-gallery" ref={sortOrderRef}>
+                    <div
+                      className="sort-order"
+                      onClick={() => toggleDropdown("sortOrder")}
+                    >
+                      <div className="sort-order-user">Sort Order</div>
+                      {dropdownVisible.sortOrder ? (
+                        <MdKeyboardArrowUp />
+                      ) : (
+                        <MdKeyboardArrowDown />
+                      )}
+                    </div>
+                    {dropdownVisible.sortOrder && (
+                      <div className="dropdown-menu-gallry">
+                        <ul>
+                          <li
+                            onClick={() => handleSortOrderChange("ascending")}
+                          >
+                            Ascending
+                          </li>
+                          <li
+                            onClick={() => handleSortOrderChange("descending")}
+                          >
+                            Descending
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="slect-bulk">Select Bulk</div>
+                  <div className="slect-bulk" onClick={toggleBulkSelect}>
+                    Select Bulk
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="slect-bulk" onClick={handleDeletePermanent}>
+                    Delete Permanent
+                  </div>
+                  <div className="slect-bulk" onClick={handleCancel}>
+                    Cancel
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="Gallery_MainArea_Second_Area_Second">
@@ -584,9 +731,26 @@ function Gallery() {
                         ? "focused"
                         : ""
                     }`}
-                    onClick={() => handleImageClick(indexOfFirstImage + index)} // Make the whole div clickable
+                    onClick={() =>
+                      isBulkSelect
+                        ? handleImageSelect(indexOfFirstImage + index)
+                        : handleImageClick(indexOfFirstImage + index)
+                    }
                   >
-                    <p className="image-index-number">{getImageIndex(index)}</p>
+                    {isBulkSelect ? (
+                      <input
+                        className="image-index-number-grid"
+                        type="checkbox"
+                        checked={bulkImages.includes(indexOfFirstImage + index)}
+                        onChange={() =>
+                          handleImageSelect(indexOfFirstImage + index)
+                        }
+                      />
+                    ) : (
+                      <p className="image-index-number">
+                        {getImageIndex(index)}
+                      </p>
+                    )}
                     <img
                       src={image}
                       alt=""
@@ -613,21 +777,34 @@ function Gallery() {
               {paginatedImages.length > 0 ? (
                 paginatedImages.map((image, index) => (
                   <div key={index} className={`Gallery_Image ${viewMode}`}>
-                    <p className="image-index-number-grid">
-                      {getImageIndex(index)}
-                    </p>
+                    {isBulkSelect ? (
+                      <input
+                        className="image-index-number-grid"
+                        type="checkbox"
+                        checked={bulkImages.includes(indexOfFirstImage + index)}
+                        onChange={() =>
+                          handleImageSelect(indexOfFirstImage + index)
+                        }
+                      />
+                    ) : (
+                      <p className="image-index-number-grid">
+                        {getImageIndex(index)}
+                      </p>
+                    )}
                     <img
                       src={image}
                       alt=""
                       onClick={() =>
-                        handleImageGridClick(indexOfFirstImage + index)
+                        isBulkSelect
+                          ? handleImageSelect(indexOfFirstImage + index)
+                          : handleImageGridClick(indexOfFirstImage + index)
                       }
                       className={
                         focusedImageGridIndex === indexOfFirstImage + index
                           ? "focused"
                           : ""
                       }
-                      onError={(e) => (e.target.style.display = "none")} // Hide image if it fails to load
+                      onError={(e) => (e.target.style.display = "none")}
                     />
                   </div>
                 ))

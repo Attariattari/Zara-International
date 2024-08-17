@@ -1,38 +1,4 @@
-body.light {
-    --bg-color: white;
-    --admin-bg-color: radial-gradient(circle, rgba(0, 210, 247, 0.392) 0%, rgba(208, 54, 228, 0.449) 100%);
-    --image-focuse-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    --text-color: black;
-    --border-color: #000000;
-    --scrollbar-bg: #f1f1f100;
-    --scrollbar-thumb: #090909;
-    --scrollbar-thumb-hover: #555;
-    --active-bg-color: #e0e0e0;
-    --active-text-color: #000000;
-    --active-border-color: #000000;
-    --input-bg-color: rgb(24, 24, 24);
-    --input-color: white;
-    --active-icon-color: rgb(46, 46, 46);
-    --grid-border-color: linear-gradient(90deg, rgba(0,210,247,1) 0%, rgba(208,54,228,1) 100%);
-}
 
-body.dark {
-    --bg-color: rgb(24, 24, 24);
-    --admin-bg-color: #3e3e3eac;
-    --image-focuse-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    --text-color: white;
-    --border-color: #ffffff;
-    --scrollbar-bg: rgba(24, 24, 24, 0);
-    --scrollbar-thumb: #ffffff;
-    --scrollbar-thumb-hover: #aaa;
-    --active-bg-color: #424242;
-    --active-text-color: #ffffff;
-    --active-border-color: #ffffff;
-    --input-bg-color: white;
-    --input-color: black;
-    --active-icon-color: rgb(178, 178, 178);
-    --grid-border-color: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-}
 .ChatPopupshow {
     position: fixed;
     z-index: 50;
