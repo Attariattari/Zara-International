@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import Spinner from "../../Spinner";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import "../css.css";
 import { MdClose } from "react-icons/md";
+import Spinner from "../../../Spinner";
 
-function ManageUsers() {
-  const [uploadVisible, setUploadVisible] = useState(false);
-  const [isDragOver, setIsDragOver] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+function UploadGallery() {
   const [newInputText, setNewInputText] = useState("");
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadVisible, setUploadVisible] = useState(false);
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState("");
+  const [messageType, setMessageType] = useState(""); // "error" or "success"
   const [galleryName, setGalleryName] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selectedFilesURL, setSelectedFilesURL] = useState([]);
@@ -17,12 +17,9 @@ function ManageUsers() {
   const [currentStep, setCurrentStep] = useState("addName");
   const [conversionInProgress, setConversionInProgress] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(false);
-  const newInputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
-
-  const toggleUploadVisibility = () => {
-    setUploadVisible((prev) => !prev);
-  };
+  const newInputRef = useRef(null);
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -34,34 +31,29 @@ function ManageUsers() {
     }
   };
 
-  const handleFileInputChange = (event) => {
-    const files = event.target.files;
-    if (files.length > 0) {
-      setSelectedFiles(Array.from(files));
-    }
-    fileInputRef.current.value = "";
-  };
-
   const handleDragOver = (event) => {
     event.preventDefault();
     setIsDragOver(true);
   };
-
+  const handleDragLeave = () => {
+    setIsDragOver(false);
+  };
   const handleClearNewInput = () => {
     setNewInputText("");
     newInputRef.current.focus();
   };
-
-  const handleDragLeave = () => {
-    setIsDragOver(false);
+  const handleFileInputChange = (event) => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      setSelectedFiles(Array.from(files)); // Store files in state
+    }
+    fileInputRef.current.value = "";
   };
-
   const areValidURLs = async (inputText) => {
     const urls = inputText.split(/[\s,]+/).filter((url) => url.trim() !== "");
     const validUrls = await Promise.all(urls.map(isValidImageURL));
     return validUrls.every((isValid) => isValid);
   };
-
   useEffect(() => {
     const checkURLs = async () => {
       if (newInputText.trim()) {
@@ -74,7 +66,7 @@ function ManageUsers() {
 
     checkURLs();
   }, [newInputText]);
-
+  // Function to validate image URLs
   const isValidImageURL = async (url) => {
     try {
       const response = await fetch(url, { method: "HEAD" });
@@ -99,9 +91,8 @@ function ManageUsers() {
       return null;
     }
   };
-
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+  // Process image URLs to validate and fetch images
   const processImageURLs = async (urls) => {
     const validUrls = [];
     const fetchedImages = [];
@@ -143,7 +134,6 @@ function ManageUsers() {
 
     if (currentStep === "addName") {
       if (!galleryName.trim()) {
-        setGalleryNameRequired(true);
         setMessage("Please enter a gallery name.");
         setMessageType("error");
         return;
@@ -151,6 +141,7 @@ function ManageUsers() {
 
       setCurrentStep("convert");
       setMessage("Gallery name added. Converting images...");
+      setMessageType("info");
       return;
     }
 
@@ -158,6 +149,7 @@ function ManageUsers() {
       if (newInputText.trim()) {
         setConversionInProgress(true);
         setMessage("Converting images...");
+        setMessageType("info");
 
         const urls = newInputText.split(/[\s,]+/);
         const result = await processImageURLs(urls);
@@ -172,11 +164,18 @@ function ManageUsers() {
         }
 
         setSelectedFilesURL(result.fetchedImages);
+        setMessage("Images converted successfully.");
+        setMessageType("success");
+      } else {
+        setMessage("No URLs provided for conversion.");
+        setMessageType("error");
+        return;
       }
 
       setConversionInProgress(false);
       setCurrentStep("upload");
       setMessage("Images converted. Ready to upload.");
+      setMessageType("info");
       return;
     }
 
@@ -187,6 +186,8 @@ function ManageUsers() {
         const uploadResponse = await uploadImages();
         setMessage("Gallery created and images uploaded successfully!");
         setMessageType("success");
+
+        // Reset states after successful upload
         setGalleryName("");
         setNewInputText("");
         setSelectedFilesURL([]);
@@ -266,135 +267,114 @@ function ManageUsers() {
     setSelectedFilesURL([]);
     setGalleryName("");
   };
-
   return (
-    <>
-      <button
-        className="Gallery_MainArea_Fisrt_Button"
-        onClick={toggleUploadVisibility}
+    <div
+      className={`Gallery_MainArea_File_Upload ${
+        uploadVisible ? "visible" : ""
+      } ${isDragOver ? "drag-over" : ""}`}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+    >
+      {isLoading && (
+        <div className="spinner-overlay">
+          <Spinner />
+        </div>
+      )}
+      <div
+        className={`Gallery_MainArea_File_Upload_Title ${
+          isLoading ? "blurred" : ""
+        }`}
       >
-        Add New Media File
-      </button>
-      {uploadVisible && (
-        <div
-          className={`Gallery_MainArea_File_Upload ${
-            uploadVisible ? "visible" : ""
-          } ${isDragOver ? "drag-over" : ""}`}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-        >
-          {isLoading && (
-            <div className="spinner-overlay">
-              <Spinner />
+        <p className="title">Drop files to upload</p>
+        <p className="or">or</p>
+        {selectedFiles.length === 0 ? (
+          <button
+            className="Gallery_MainArea_File_Upload_Button"
+            onClick={() => fileInputRef.current.click()}
+          >
+            Select File
+          </button>
+        ) : (
+          <div className="search-input-wrapper-file">
+            <input
+              type="text"
+              placeholder="Enter gallery name"
+              value={galleryName}
+              onChange={(e) => setGalleryName(e.target.value)}
+            />
+            <button
+              className="Gallery_MainArea_File_Upload_Add"
+              onClick={uploadImages}
+            >
+              {isLoading ? "Uploading..." : "Add Media"}
+            </button>
+          </div>
+        )}
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          multiple
+          onChange={handleFileInputChange}
+        />
+      </div>
+      <div
+        className={`Gallery_MainArea_File_Upload_Title ${
+          isLoading ? "blurred" : ""
+        }`}
+      >
+        <p className="or">Maximum upload 20 Images</p>
+        <div className="search-input-wrapper-file">
+          <div className="search-input-wrapper-file-input">
+            <input
+              placeholder="Paste image URLs here."
+              type="text"
+              ref={newInputRef}
+              value={newInputText}
+              onChange={(e) => setNewInputText(e.target.value)}
+            />
+            {newInputText && (
+              <MdClose
+                className="clear-icon-file"
+                onClick={handleClearNewInput}
+              />
+            )}
+          </div>
+          {buttonVisible && (
+            <div className="gallery-name-input-wrapper">
+              <input
+                type="text"
+                placeholder="Enter gallery name"
+                value={galleryName}
+                onChange={(e) => setGalleryName(e.target.value)}
+              />
             </div>
           )}
-          <div
-            className={`Gallery_MainArea_File_Upload_Title ${
-              isLoading ? "blurred" : ""
-            }`}
-          >
-            <p className="title">Drop files to upload</p>
-            <p className="or">or</p>
-
-            {/* Conditionally render buttons and gallery name input */}
-            {selectedFiles.length === 0 ? (
-              <button
-                className="Gallery_MainArea_File_Upload_Button"
-                onClick={() => fileInputRef.current.click()}
-              >
-                Select File
-              </button>
-            ) : (
-              <div className="gallery-name-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Enter gallery name"
-                  value={galleryName}
-                  onChange={(e) => setGalleryName(e.target.value)}
-                />
-                <button
-                  className="Gallery_MainArea_File_Upload_Add"
-                  onClick={uploadImages}
-                >
-                  {isLoading ? "Uploading..." : "Add Media"}
-                </button>
-              </div>
-            )}
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              multiple
-              onChange={handleFileInputChange}
-            />
-          </div>
-
-          <div className="search-input-wrapper-file">
-            <div className="search-input-wrapper-file-input">
-              <input
-                placeholder="Paste image URLs here."
-                type="text"
-                ref={newInputRef}
-                value={newInputText}
-                onChange={(e) => setNewInputText(e.target.value)}
-              />
-              {newInputText && (
-                <MdClose
-                  className="clear-icon-file"
-                  onClick={handleClearNewInput}
-                />
-              )}
-            </div>
-            {buttonVisible && (
-              <div className="gallery-name-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Enter gallery name"
-                  value={galleryName}
-                  onChange={(e) => setGalleryName(e.target.value)}
-                />
-              </div>
-            )}
-            {buttonVisible && (
-              <button
-                className="Gallery_MainArea_File_Upload_Add"
-                onClick={handleAddNow}
-              >
-                {isLoading
-                  ? "Processing..."
-                  : conversionInProgress
-                  ? "Converting..."
-                  : currentStep === "addName"
-                  ? "Add Name"
-                  : currentStep === "convert"
-                  ? "Convert to File"
-                  : "Add Now"}
-              </button>
-            )}
-          </div>
-
-          {message && <p className={`message ${messageType}`}>{message}</p>}
-          <div className="PopupCloseButton">
-            <MdClose onClick={toggleUploadVisibilityClose} className="Close" />
-          </div>
+          {buttonVisible && (
+            <button
+              className="Gallery_MainArea_File_Upload_Add"
+              onClick={handleAddNow}
+            >
+              {isLoading
+                ? "Processing..."
+                : conversionInProgress
+                ? "Converting..."
+                : currentStep === "addName"
+                ? "Add Name"
+                : currentStep === "convert"
+                ? "Convert"
+                : "Add Now"}
+            </button>
+          )}
         </div>
-      )}
-      {selectedFiles.length > 0 && (
-        <div className="uploaded-files-preview">
-          {selectedFiles.map((file, index) => (
-            <div key={index} className="file-preview">
-              <img
-                src={URL.createObjectURL(file)}
-                alt={`Preview ${index + 1}`}
-              />
-              <p>{file.name}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </>
+        {message && <p className={`message ${messageType}`}>{message}</p>}
+      </div>
+      <div className="PopupCloseButton">
+        <MdClose onClick={toggleUploadVisibilityClose} className="Close" />
+      </div>
+    </div>
   );
 }
 
-export default ManageUsers;
+export default UploadGallery;

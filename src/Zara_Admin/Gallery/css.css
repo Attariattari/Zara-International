@@ -105,7 +105,7 @@
 
 .Gallery_MainArea_File_Upload {
     width: 100%;
-    height: 0;
+    height: 400;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,10 +175,13 @@
     align-items: center;
     gap: 10px;
 }
+
 /* Blur effect */
 .blurred {
-    filter: blur(5px); transition: filter 0.3s ease-in-out;
+    filter: blur(5px);
+    transition: filter 0.3s ease-in-out;
 }
+
 /* Spinner overlay */
 .spinner-overlay {
     position: absolute;
@@ -189,9 +192,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-   
-    z-index: 100; /* Ensures the overlay is above other content */
-    backdrop-filter: blur(10px); /* Adds blur to the background */
+
+    z-index: 100;
+    /* Ensures the overlay is above other content */
+    backdrop-filter: blur(10px);
+    /* Adds blur to the background */
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -214,6 +219,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -338,6 +344,12 @@
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #b9bbbe;
 }
 
 .Gallery_MainArea_File_Upload_Add::before {
@@ -578,7 +590,7 @@
     position: relative;
 }
 
-.loading-overlay{
+.loading-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -587,7 +599,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100; /* Ensures the overlay is above other content */
+    z-index: 100;
+    /* Ensures the overlay is above other content */
     transition: opacity 0.3s ease-in-out;
     background-color: var(--bg-color);
 }
@@ -696,19 +709,22 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                border 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        border 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     width: 115.4px;
     height: 115.4px;
     overflow: hidden;
-    border-radius: 8px; /* Smooth rounded corners */
+    border-radius: 8px;
+    /* Smooth rounded corners */
 }
 
 /* Subtle hover effect */
 .Gallery_Image:hover {
-    transform: scale(1.08); /* Slightly larger scale */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    transform: scale(1.08);
+    /* Slightly larger scale */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    /* Enhanced shadow */
 }
 
 /* Image styling */
@@ -720,24 +736,28 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                filter 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        filter 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     filter: brightness(90%);
     border-radius: 8px;
 }
 
 /* Parallax effect on hover */
 .Gallery_Image:hover img {
-    transform: scale(1.12) translateY(-3px); /* Slight parallax effect */
+    transform: scale(1.12) translateY(-3px);
+    /* Slight parallax effect */
     filter: brightness(100%);
 }
 
 /* Pronounced focus effect */
 .Gallery_Image img.focused {
-    transform: scale(1.15); /* More pronounced scale */
+    transform: scale(1.15);
+    /* More pronounced scale */
     border: 4px solid transparent;
-    border-image: linear-gradient(45deg, #ff416c, #ff4b2b) 1; /* Stylish gradient border */
-    filter: brightness(105%); /* Extra brightness */
+    border-image: linear-gradient(45deg, #ff416c, #ff4b2b) 1;
+    /* Stylish gradient border */
+    filter: brightness(105%);
+    /* Extra brightness */
 }
 
 /* Soft light overlay for focus */
@@ -756,7 +776,8 @@
 }
 
 .Gallery_Image img.focused::before {
-    opacity: 1; /* Show overlay on focus */
+    opacity: 1;
+    /* Show overlay on focus */
 }
 
 /* Subtle scale effect for icons or additional elements */
@@ -954,11 +975,13 @@
         justify-content: start;
         width: 100%;
     }
+
     .Gallery_Image_table {
         width: 198px;
         height: 300px;
-    
+
     }
+
     .Gallery_MainArea_Fisrt_Title {
         font-size: 18px;
         line-height: 22px;
