@@ -273,20 +273,16 @@ function Gallery({ galleries }) {
       setBulkImages([...bulkImages, index]);
     }
   };
-  console.log("Selected Images Detailed:", selectedImages);
 
   const handleDeletePermanent = async () => {
     setLoading(true);
     const galleriesToDelete = selectedImages
       .filter((_, index) => bulkImages.includes(index))
       .map((item) => {
-        console.log("Item Details:", item);
         return item.galleryId;
       });
 
     const uniqueGalleryIds = [...new Set(galleriesToDelete)];
-
-    console.log("Gallery IDs to Delete:", uniqueGalleryIds);
 
     if (uniqueGalleryIds.length === 0) {
       console.warn("No gallery IDs selected for deletion.");
@@ -305,8 +301,6 @@ function Gallery({ galleries }) {
       if (response.status === 200) {
         setIsBulkSelect(false);
         fetchImages();
-        console.log("Galleries deleted successfully.");
-        // Optionally, you might want to update the UI or handle state changes
       } else {
         console.error("Failed to delete galleries.");
       }

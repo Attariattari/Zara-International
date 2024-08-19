@@ -281,7 +281,9 @@ function UploadGallery({ closeuploadpop, fetchImages }) {
     >
       {isLoading && (
         <div className="spinner-overlay">
-          <Spinner />
+          <div>
+            <Spinner />
+          </div>
         </div>
       )}
       <div
