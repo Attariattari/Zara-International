@@ -4,7 +4,7 @@ import "../css.css";
 import { MdClose } from "react-icons/md";
 import Spinner from "../../../Spinner";
 
-function UploadGallery() {
+function UploadGallery({ closeuploadpop, fetchImages }) {
   const [newInputText, setNewInputText] = useState("");
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadVisible, setUploadVisible] = useState(false);
@@ -193,6 +193,7 @@ function UploadGallery() {
         setSelectedFilesURL([]);
         setGalleryNameRequired(false);
         setCurrentStep("addName");
+        fetchImages();
         setButtonVisible(false);
       } catch (error) {
         console.error("Upload Error:", error);
@@ -247,6 +248,7 @@ function UploadGallery() {
         setMessageType("success");
         setSelectedFiles([]);
         setGalleryName("");
+        fetchImages();
       } else {
         setMessage("Failed to upload images.");
         setMessageType("error");
@@ -266,6 +268,7 @@ function UploadGallery() {
     setSelectedFiles([]);
     setSelectedFilesURL([]);
     setGalleryName("");
+    closeuploadpop();
   };
   return (
     <div

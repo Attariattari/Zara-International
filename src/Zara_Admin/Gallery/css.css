@@ -5,6 +5,7 @@
     color: var(--text-color);
     overflow-y: auto;
     overflow-x: auto;
+    transition: all 0.5s ease;
 }
 
 .Gallery_MainArea {
@@ -16,6 +17,7 @@
     flex-direction: column;
     padding: 1.5rem;
     gap: 1.5rem;
+    transition: all 0.5s ease;
 }
 
 /* .Gallery_MainArea_First {
@@ -600,7 +602,6 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
-    /* Ensures the overlay is above other content */
     transition: opacity 0.3s ease-in-out;
     background-color: var(--bg-color);
 }
