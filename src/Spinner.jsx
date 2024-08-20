@@ -1,5 +1,5 @@
 import { PacmanLoader } from "react-spinners";
 
 export default function Spinner() {
-  return <PacmanLoader color={"#ffffff"} speedMultiplier={2} />;
+  return <PacmanLoader color={"var(--text-color)"} speedMultiplier={2} />;
 }

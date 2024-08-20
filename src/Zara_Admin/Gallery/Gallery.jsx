@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import "./css.css";
 import {
   MdOutlineGridView,
@@ -23,7 +26,7 @@ function Gallery({ galleries }) {
   const [viewMode, setViewMode] = useState("table");
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [sortBy, setSortBy] = useState("newest"); // "newest" or "oldest"
+  const [selectedFilter, setSelectedFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("ascending");
   const [focusedImageIndex, setFocusedImageIndex] = useState(null);
   const [focusedImageGridIndex, setFocusedImageGridIndex] = useState(null);
@@ -161,59 +164,57 @@ function Gallery({ galleries }) {
     }
   };
 
-  const handleSortByChange = (option) => {
-    setSortBy(option);
-    toggleDropdown("sortByDate");
+  const applyFilter = async (filter) => {
+    setLoading(true);
+    try {
+      const url = `http://localhost:1122/images/galleries/filter?filter=${filter}`;
+      const response = await axios.get(url);
+
+      if (response.status === 200 && response.data.length > 0) {
+        const imagesWithGalleryId = response.data.flatMap((item) =>
+          item.images.map((image) => ({
+            galleryId: item._id || null,
+            image: image,
+          }))
+        );
+        setSelectedImages(imagesWithGalleryId);
+        setMessage("");
+      } else {
+        setSelectedImages([]);
+        setMessage("No images found.");
+        setMessageType("error");
+      }
+
+      // Close dropdown after selecting filter
+      setDropdownVisible({ sortByDate: false });
+      // Update selected filter text
+      setSelectedFilter(filter);
+    } catch (error) {
+      console.error("Error fetching filtered images:", error);
+      setSelectedImages([]);
+      setMessage("Failed to fetch images.");
+      setMessageType("error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeFilter = () => {
+    // Filter ko reset karo aur dropdown ko band karo
+    setSelectedFilter("");
+    setDropdownVisible({ sortByDate: false });
+    fetchImages(); // Default API se images ko fetch karo
   };
 
   const sortedImages = useMemo(() => {
     let images = [...selectedImages];
-
-    const today = new Date();
-
-    if (sortBy === "today") {
-      images = images.filter((image) => {
-        const imageDate = new Date(image.createdAt);
-        return imageDate.toDateString() === today.toDateString();
-      });
-    } else if (sortBy === "thisWeek") {
-      images = images.filter((image) => {
-        const imageDate = new Date(image.createdAt);
-        const dayOfWeek = imageDate.getDay();
-        const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5; // Monday to Friday
-        return (
-          isWeekday &&
-          imageDate >= today.setDate(today.getDate() - today.getDay() + 1)
-        ); // Start of the week
-      });
-    } else if (sortBy === "monday") {
-      images = images.filter(
-        (image) => new Date(image.createdAt).getDay() === 1
-      );
-    } else if (sortBy === "tuesday") {
-      images = images.filter(
-        (image) => new Date(image.createdAt).getDay() === 2
-      );
-    } else if (sortBy === "wednesday") {
-      images = images.filter(
-        (image) => new Date(image.createdAt).getDay() === 3
-      );
-    } else if (sortBy === "thursday") {
-      images = images.filter(
-        (image) => new Date(image.createdAt).getDay() === 4
-      );
-    } else if (sortBy === "friday") {
-      images = images.filter(
-        (image) => new Date(image.createdAt).getDay() === 5
-      );
-    }
 
     if (sortOrder === "descending") {
       images.reverse();
     }
 
     return images;
-  }, [selectedImages, sortBy, sortOrder]);
+  }, [selectedImages, sortOrder]);
 
   const handleSortOrderChange = (option) => {
     setSortOrder(option);
@@ -285,8 +286,19 @@ function Gallery({ galleries }) {
     const uniqueGalleryIds = [...new Set(galleriesToDelete)];
 
     if (uniqueGalleryIds.length === 0) {
-      console.warn("No gallery IDs selected for deletion.");
-      return;
+      // Show error message using Toastify
+      toast.error("Please select at least one image to delete.", {
+        position: "top-right",
+        autoClose: 3000, // 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsBulkSelect(false);
+      setLoading(false); // End loading
+      return; // Stop further execution
     }
 
     try {
@@ -301,11 +313,20 @@ function Gallery({ galleries }) {
       if (response.status === 200) {
         setIsBulkSelect(false);
         fetchImages();
+        toast.success("Galleries deleted successfully!", {
+          autoClose: 3000,
+        });
       } else {
         console.error("Failed to delete galleries.");
+        toast.error("Failed to delete galleries.", {
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.error("Error deleting galleries:", error);
+      toast.error("Error deleting galleries.", {
+        autoClose: 3000,
+      });
     } finally {
       setLoading(false); // End loading
     }
@@ -323,6 +344,18 @@ function Gallery({ galleries }) {
 
   return (
     <div className="Gallery">
+      <ToastContainer
+        position="top-right" // Set position to top-right
+        autoClose={3000} // Auto close after 3 seconds
+        hideProgressBar={false} // Show progress bar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        closeButton={false} // Close button removed
+      />
       <div className="Gallery_MainArea">
         <div className="Gallery_MainArea_First">
           <p className="Gallery_MainArea_Fisrt_Title">Media Gallery</p>
@@ -347,6 +380,8 @@ function Gallery({ galleries }) {
           <UploadGallery
             closeuploadpop={closeuploadpop}
             fetchImages={fetchImages}
+            uploadVisible={uploadVisible}
+            setUploadVisible={setUploadVisible}
           />
         )}
         <div className="Gallery_MainArea_Second">
@@ -364,15 +399,28 @@ function Gallery({ galleries }) {
             <div className="Second-nav-gallery-dropdowns">
               {!isBulkSelect ? (
                 <>
-                  <div
-                    className="Second-nav-gallery cursor-not-allowed"
-                    ref={sortByDateRef}
-                  >
+                  <div className="Second-nav-gallery" ref={sortByDateRef}>
                     <div
                       className="sort-by-date"
-                      // onClick={() => toggleDropdown("sortByDate")}
+                      onClick={() => toggleDropdown("sortByDate")}
                     >
-                      <div className="sort-by-date-user">Filter by Date</div>
+                      <div className="sort-by-date-user">
+                        {selectedFilter ? (
+                          <>
+                            {selectedFilter.charAt(0).toUpperCase() +
+                              selectedFilter.slice(1)}
+                            <MdClose
+                              className="clear-filter-icon"
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent dropdown toggle on icon click
+                                removeFilter();
+                              }}
+                            />
+                          </>
+                        ) : (
+                          "Filter by Date"
+                        )}
+                      </div>
                       {dropdownVisible.sortByDate ? (
                         <MdKeyboardArrowUp />
                       ) : (
@@ -381,29 +429,12 @@ function Gallery({ galleries }) {
                     </div>
                     {dropdownVisible.sortByDate && (
                       <div className="dropdown-menu-gallry">
-                        <ul>
-                          <li onClick={() => handleSortByChange("today")}>
-                            Today ({new Date().toLocaleDateString()})
-                          </li>
-                          <li onClick={() => handleSortByChange("thisWeek")}>
-                            This Week (Mon-Fri)
-                          </li>
-                          <li onClick={() => handleSortByChange("monday")}>
-                            Monday
-                          </li>
-                          <li onClick={() => handleSortByChange("tuesday")}>
-                            Tuesday
-                          </li>
-                          <li onClick={() => handleSortByChange("wednesday")}>
-                            Wednesday
-                          </li>
-                          <li onClick={() => handleSortByChange("thursday")}>
-                            Thursday
-                          </li>
-                          <li onClick={() => handleSortByChange("friday")}>
-                            Friday
-                          </li>
-                        </ul>
+                        <div onClick={() => applyFilter("today")}>Today</div>
+                        <div onClick={() => applyFilter("7days")}>
+                          Last 7 Days
+                        </div>
+                        <div onClick={() => applyFilter("older")}>Older</div>
+                        <div onClick={() => applyFilter("newest")}>Newest</div>
                       </div>
                     )}
                   </div>

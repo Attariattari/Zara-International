@@ -5,7 +5,6 @@
     color: var(--text-color);
     overflow-y: auto;
     overflow-x: auto;
-    transition: all 0.5s ease;
 }
 
 .Gallery_MainArea {
@@ -17,19 +16,7 @@
     flex-direction: column;
     padding: 1.5rem;
     gap: 1.5rem;
-    transition: all 0.5s ease;
 }
-
-/* .Gallery_MainArea_First {
-    width: 100%;
-    height: 60px;
-    padding: 0 16px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 20px;
-    transition: all 0.6s ease;
-} */
 
 .Gallery_MainArea_First {
     width: 100%;
@@ -39,8 +26,6 @@
     align-items: center;
     gap: 20px;
     transition: all 0.6s ease;
-    position: relative;
-    /* Allow for absolute positioning of the icons */
 }
 
 .Gallery_MainArea_Fisrt_Title,
@@ -107,11 +92,11 @@
 
 .Gallery_MainArea_File_Upload {
     width: 100%;
-    height: 400;
+    height: 300;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     border: 4px dashed var(--border-color);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(30px);
@@ -206,7 +191,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 .spinner-overlay.visible {
@@ -282,7 +267,6 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 }
-
 .Gallery_MainArea_File_Upload_Button {
     padding: 8px 0;
     border: 1px solid var(--border-color);
@@ -433,6 +417,13 @@
     margin-bottom: 5px;
 }
 
+.sort-by-date-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .slect-bulk {
     display: flex;
     justify-content: center;
@@ -490,27 +481,37 @@
 /* Dropdown menu */
 .dropdown-menu-gallry {
     position: absolute;
-    width: 150px;
+    width: 250px;
     top: 100%;
     left: 44%;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     border: 1px solid var(--border-color);
     font-size: 12px;
     transform: translateX(-50%);
     background-color: var(--bg-color);
     color: var(--text-color);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 100;
+    z-index: 200;
     border-radius: 2px;
+
+}
+
+.dropdown-menu-gallry div {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    padding: 8px 8px;
+    cursor: pointer;
 }
 
 .dropdown-menu-gallry ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
 }
 
 .dropdown-menu-gallry li {
@@ -593,8 +594,6 @@
     gap: 20px;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
     z-index: 0;
     position: relative;
 }
@@ -610,7 +609,8 @@
     justify-content: center;
     z-index: 100;
     transition: opacity 0.3s ease-in-out;
-    background-color: var(--bg-color);
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
 }
 
 /* Images Gallry */
@@ -622,20 +622,7 @@
     width: 100%;
 }
 
-.image-index-number {
-    position: relative;
-    z-index: 1;
-    width: 30px;
-    height: 30px;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg-color);
-    border-radius: 0px 0px 0px 0px;
-    border-right: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
+
 
 .Gallery_Image_table {
     position: relative;
@@ -651,12 +638,7 @@
 
 }
 
-.Gallery_Image_table:hover {
-    transform: scale(1.05);
-    filter: brightness(105%);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 
-}
 
 .Gallery_Image_table img {
     position: absolute;
@@ -671,7 +653,12 @@
     filter: brightness(90%);
     border-radius: 15px;
 }
+.Gallery_Image_table:hover {
+    transform: scale(1.05);
+    filter: brightness(105%);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 
+}
 .Gallery_Image_table:hover img {
     transform: scale(1.1) translateY(-5px);
     filter: brightness(105%);
@@ -688,6 +675,20 @@
 
 }
 
+.image-index-number {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-radius: 0px 0px 0px 0px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
 
 .Grid_Gallery {
     display: grid;

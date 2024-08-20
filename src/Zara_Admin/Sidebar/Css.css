@@ -11,15 +11,10 @@
     width: 100%;
     border-right: 1px solid var(--border-color);
     height: 100vh;
-    transition: all 0.2s ease;
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
 }
 
 .SideBar_Menu::-webkit-scrollbar {

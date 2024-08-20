@@ -4,10 +4,14 @@ import "../css.css";
 import { MdClose } from "react-icons/md";
 import Spinner from "../../../Spinner";
 
-function UploadGallery({ closeuploadpop, fetchImages }) {
+function UploadGallery({
+  closeuploadpop,
+  fetchImages,
+  setUploadVisible,
+  uploadVisible,
+}) {
   const [newInputText, setNewInputText] = useState("");
   const [isDragOver, setIsDragOver] = useState(false);
-  const [uploadVisible, setUploadVisible] = useState(false);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState(""); // "error" or "success"
   const [galleryName, setGalleryName] = useState("");
@@ -195,6 +199,7 @@ function UploadGallery({ closeuploadpop, fetchImages }) {
         setCurrentStep("addName");
         fetchImages();
         setButtonVisible(false);
+        setUploadVisible(false)
       } catch (error) {
         console.error("Upload Error:", error);
         setMessage("Failed to upload images. Please try again.");
@@ -249,6 +254,7 @@ function UploadGallery({ closeuploadpop, fetchImages }) {
         setSelectedFiles([]);
         setGalleryName("");
         fetchImages();
+        setUploadVisible(false)
       } else {
         setMessage("Failed to upload images.");
         setMessageType("error");
