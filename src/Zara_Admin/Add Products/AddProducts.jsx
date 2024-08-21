@@ -25,9 +25,9 @@ const schema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        image: yup.array().of(yup.string().url("Invalid URL format")),
-        color: yup.array().of(yup.string()).required("Color is required"),
-        size: yup.array().of(yup.string()).required("Size is required"),
+        image: yup.array().of(yup.string().url("Invalid URL format")), // Array of image URLs or file names
+        color: yup.string().required("Color is required"), // Single color string
+        size: yup.string().required("Size is required"), // Single size string
       })
     )
     .required("Variations are required"),
@@ -43,7 +43,7 @@ const schema = yup.object().shape({
   category: yup.string().required("Category is required"),
   subcategory: yup.string().required("Subcategory is required"),
   brand: yup.string(),
-  tags: yup.array().of(yup.string()),
+  tags: yup.array().of(yup.string()).min(1, "At least one tag is required"),
   careInstructions: yup.string(),
   availability: yup.string(),
   relatedProducts: yup.array().of(yup.string()),
@@ -53,7 +53,10 @@ const schema = yup.object().shape({
   meta: yup.object().shape({
     title: yup.string(),
     description: yup.string(),
-    keywords: yup.array().of(yup.string()),
+    keywords: yup
+      .array()
+      .of(yup.string())
+      .min(1, "At least one keyword is required"),
   }),
   materials: yup.array().of(
     yup.object().shape({
@@ -98,6 +101,7 @@ const AddProducts = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm({
@@ -128,12 +132,15 @@ const AddProducts = () => {
   };
 
   const handleImageChange = (event, variationIndex) => {
-    const files = Array.from(event.target.files);
-    const previews = files.map((file) => URL.createObjectURL(file));
+    const files = Array.from(event.target.files); // Correct 'event' usage
+    setValue(`variations[${variationIndex}].image`, files);
 
+    console.log("Files selected for variation", variationIndex, files); // Check files
+
+    // Updating image previews for UI
     setImagePreviews((prev) => ({
       ...prev,
-      [variationIndex]: previews,
+      [variationIndex]: files.map((file) => URL.createObjectURL(file)),
     }));
   };
 
@@ -142,12 +149,10 @@ const AddProducts = () => {
       .split("\n")
       .map((url) => url.trim())
       .filter((url) => url);
+    const previews = urls.map((url) => url);
 
-    // URL validation regex
-    const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-
-    const validUrls = urls.filter((url) => urlRegex.test(url));
-    const previews = validUrls.map((url) => url);
+    console.log("URLs:", urls);
+    console.log("Previews:", previews);
 
     setImagePreviews((prev) => ({
       ...prev,
@@ -187,18 +192,6 @@ const AddProducts = () => {
     }
   };
 
-
-// Local state for input value
-const [inputTags, setInputTags] = useState('');
-
-// Convert comma-separated string to array and set the value
-const handleTagsChange = (e) => {
-  const input = e.target.value;
-  setInputTags(input);
-  const tagsArray = input.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
-  setValue('tags', tagsArray, { shouldValidate: true }); // Update the tags field
-};
-
   const handleModeSelect = (mode) => {
     setMainImageMode(mode);
     setShowMainImageOptions(false);
@@ -210,6 +203,14 @@ const handleTagsChange = (e) => {
     setShowMainImageOptions(true);
     setMainImagePreview("");
   };
+  // Convert value to object format expected by react-select
+  const getOptionFromValue = (value, options) =>
+    options.find((option) => option.value === value) || null;
+
+  const availabilityOptions = [
+    { value: "in_stock", label: "In stock" },
+    { value: "out_of_stock", label: "Out of stock" },
+  ];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
@@ -319,38 +320,24 @@ const handleTagsChange = (e) => {
       <label>Variations:</label>
       {variationFields.map((field, index) => (
         <div key={field.id}>
-          <label>Colors:</label>
-          {field.color && field.color.length > 0 ? (
-            field.color.map((color, colorIndex) => (
-              <input
-                key={colorIndex}
-                {...register(`variations.${index}.color.${colorIndex}`)}
-                placeholder="Color"
-                defaultValue={color}
-              />
-            ))
-          ) : (
-            <input
-              {...register(`variations.${index}.color`)}
-              placeholder="Color"
-            />
+          <label>Color:</label>
+          <input
+            {...register(`variations.${index}.color`)}
+            placeholder="Color"
+            defaultValue={field.color} // Single string for color
+          />
+          {errors.variations?.[index]?.color && (
+            <p>{errors.variations[index].color.message}</p>
           )}
 
-          <label>Sizes:</label>
-          {field.size && field.size.length > 0 ? (
-            field.size.map((size, sizeIndex) => (
-              <input
-                key={sizeIndex}
-                {...register(`variations.${index}.size.${sizeIndex}`)}
-                placeholder="Size"
-                defaultValue={size}
-              />
-            ))
-          ) : (
-            <input
-              {...register(`variations.${index}.size`)}
-              placeholder="Size"
-            />
+          <label>Size:</label>
+          <input
+            {...register(`variations.${index}.size`)}
+            placeholder="Size"
+            defaultValue={field.size} // Single string for size
+          />
+          {errors.variations?.[index]?.size && (
+            <p>{errors.variations[index].size.message}</p>
           )}
 
           {mode === null && (
@@ -380,6 +367,9 @@ const handleTagsChange = (e) => {
                 {...register(`variations.${index}.image`)}
                 onChange={(e) => handleImageChange(e, index)}
               />
+              {errors.variations?.[index]?.image && (
+                <p>{errors.variations[index].image.message}</p>
+              )}
               {imagePreviews[index] && (
                 <div>
                   {imagePreviews[index].map((image, imgIndex) => (
@@ -424,6 +414,9 @@ const handleTagsChange = (e) => {
                 cols="50"
                 {...register(`variations.${index}.image`)}
               />
+              {errors.variations?.[index]?.image && (
+                <p>{errors.variations[index].image.message}</p>
+              )}
               {imagePreviews[index] && (
                 <div>
                   {imagePreviews[index].map((image, imgIndex) => (
@@ -459,12 +452,6 @@ const handleTagsChange = (e) => {
             </div>
           )}
 
-          {errors.variations?.[index]?.color && (
-            <p>{errors.variations[index].color.message}</p>
-          )}
-          {errors.variations?.[index]?.size && (
-            <p>{errors.variations[index].size.message}</p>
-          )}
           <button type="button" onClick={() => removeVariation(index)}>
             Remove Variation
           </button>
@@ -472,7 +459,7 @@ const handleTagsChange = (e) => {
       ))}
       <button
         type="button"
-        onClick={() => appendVariation({ color: [], size: [], images: [] })}
+        onClick={() => appendVariation({ color: "", size: "", image: [] })}
       >
         Add Variation
       </button>
@@ -495,16 +482,26 @@ const handleTagsChange = (e) => {
       <Controller
         name="category"
         control={control}
-        render={({ field }) => (
-          <Select
-            {...field}
-            options={(categories || []).map((cat) => ({
-              value: cat._id,
-              label: cat.Name,
-            }))}
-            placeholder="Select Category"
-          />
-        )}
+        render={({ field: { onChange, onBlur, value, ref } }) => {
+          const categoryOptions = (categories || []).map((cat) => ({
+            value: cat._id,
+            label: cat.Name,
+          }));
+
+          return (
+            <Select
+              onChange={(option) => {
+                console.log("Selected Category:", option); // Debugging
+                onChange(option ? option.value : ""); // Ensure it passes the correct value
+              }}
+              onBlur={onBlur}
+              value={getOptionFromValue(value, categoryOptions)} // Convert value to object format
+              options={categoryOptions}
+              placeholder="Select Category"
+              ref={ref}
+            />
+          );
+        }}
       />
       {errors.category && <p>{errors.category.message}</p>}
 
@@ -512,16 +509,26 @@ const handleTagsChange = (e) => {
       <Controller
         name="subcategory"
         control={control}
-        render={({ field }) => (
-          <Select
-            {...field}
-            options={(subcategories || []).map((subcat) => ({
-              value: subcat._id,
-              label: subcat.Name,
-            }))}
-            placeholder="Select Subcategory"
-          />
-        )}
+        render={({ field: { onChange, onBlur, value, ref } }) => {
+          const subcategoryOptions = (subcategories || []).map((subcat) => ({
+            value: subcat._id,
+            label: subcat.Name,
+          }));
+
+          return (
+            <Select
+              onChange={(option) => {
+                console.log("Selected Subcategory:", option); // Debugging
+                onChange(option ? option.value : ""); // Ensure it passes the correct value
+              }}
+              onBlur={onBlur}
+              value={getOptionFromValue(value, subcategoryOptions)} // Convert value to object format
+              options={subcategoryOptions}
+              placeholder="Select Subcategory"
+              ref={ref}
+            />
+          );
+        }}
       />
       {errors.subcategory && <p>{errors.subcategory.message}</p>}
 
@@ -531,15 +538,43 @@ const handleTagsChange = (e) => {
       <label>Tags:</label>
       <input
         placeholder="Comma separated tags"
-       
-        {...register('tags', { setValueAs: v => v })} 
+        {...register("tags", {
+          setValueAs: (v) => {
+            // Ensure v is a string before calling split
+            if (typeof v === "string") {
+              return v
+                .split(",")
+                .map((tag) => tag.trim())
+                .filter((tag) => tag !== "");
+            }
+            return []; // Return an empty array if v is not a string
+          },
+        })}
       />
       {errors.tags && <p>{errors.tags.message}</p>}
+
       <label>Care Instructions:</label>
       <textarea {...register("careInstructions")} />
 
       <label>Availability:</label>
-      <input {...register("availability")} placeholder="Availability status" />
+      <Controller
+        name="availability"
+        control={control}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Select
+            onChange={(option) => {
+              console.log("Selected Availability:", option); // Debugging
+              onChange(option ? option.value : ""); // Ensure it passes the correct value
+            }}
+            onBlur={onBlur}
+            value={getOptionFromValue(value, availabilityOptions)} // Convert value to object format
+            options={availabilityOptions}
+            placeholder="Select Availability"
+            ref={ref}
+          />
+        )}
+      />
+      {errors.availability && <p>{errors.availability.message}</p>}
 
       <label>Featured:</label>
       <input type="checkbox" {...register("featured")} />
@@ -558,9 +593,21 @@ const handleTagsChange = (e) => {
 
       <label>Meta Keywords:</label>
       <input
-        {...register("meta.keywords")}
+        {...register("meta.keywords", {
+          setValueAs: (v) => {
+            // Ensure v is a string before calling split
+            if (typeof v === "string") {
+              return v
+                .split(",")
+                .map((keyword) => keyword.trim())
+                .filter((keyword) => keyword !== "");
+            }
+            return []; // Return an empty array if v is not a string
+          },
+        })}
         placeholder="Comma separated keywords"
       />
+      {errors.meta?.keywords && <p>{errors.meta.keywords.message}</p>}
 
       <label>Materials:</label>
       {fields.map((field, index) => (
