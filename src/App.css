@@ -1,6 +1,6 @@
 body.light {
     --bg-color: white;
-    --admin-bg-color: radial-gradient(circle, rgba(0, 210, 247, 0.392) 0%, rgba(208, 54, 228, 0.449) 100%);
+    --admin-bg-color: #e7eaee;
     --image-focuse-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
     --text-color: black;
     --border-color: #000000;
@@ -13,7 +13,7 @@ body.light {
     --input-bg-color: rgb(24, 24, 24);
     --input-color: white;
     --active-icon-color: rgb(46, 46, 46);
-    --grid-border-color: linear-gradient(90deg, rgba(0,210,247,1) 0%, rgba(208,54,228,1) 100%);
+    --grid-border-color: linear-gradient(90deg, rgba(0, 210, 247, 1) 0%, rgba(208, 54, 228, 1) 100%);
 }
 
 body.dark {
@@ -31,8 +31,9 @@ body.dark {
     --input-bg-color: white;
     --input-color: black;
     --active-icon-color: rgb(178, 178, 178);
-    --grid-border-color: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    --grid-border-color: linear-gradient(90deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
+
 .ChatPopupshow {
     position: fixed;
     z-index: 50;

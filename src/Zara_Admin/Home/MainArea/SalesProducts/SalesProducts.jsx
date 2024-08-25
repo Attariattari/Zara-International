@@ -73,12 +73,12 @@ const salesProducts = [
   }
 ];
 
-function SalesProducts() {
+function SalesProducts({ title }) {
   return (
     <div className="MainArea_Data_Table">
       <div className="Top_Products">
         <div className="Top_Products_Header">
-          <p>Sales Products</p>
+          <p>{title}</p>
         </div>
         <div className="Top_Products_Main_Data">
           {salesProducts.map(product => (

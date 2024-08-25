@@ -3,7 +3,6 @@ import "./css.css";
 import NewCoustmer from "./NewCoustmer/NewCoustmer";
 import TopProducts from "./TopProducts/TopProducts";
 import SalesProducts from "./SalesProducts/SalesProducts";
-import Users from "./Users/Users";
 
 function MainArea() {
   return (
@@ -11,8 +10,8 @@ function MainArea() {
       <div className="MainArea_Data">
         <NewCoustmer />
         <TopProducts />
-        <SalesProducts />
-        <Users />
+        <SalesProducts title="Sale Product" />
+        <SalesProducts title="Featured Product" />
       </div>
     </div>
   );

@@ -81,7 +81,6 @@ export function UserContextProvider({ children }) {
     try {
       const response = await axios.post(
         "http://localhost:1122/user/getUserInfo",
-        {},
         { withCredentials: true }
       );
       if (response.data.status === "success") {

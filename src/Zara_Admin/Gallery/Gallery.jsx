@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,9 +13,12 @@ import {
 } from "react-icons/md";
 import { LiaGripHorizontalSolid } from "react-icons/lia";
 import Spinner from "../../Spinner";
-import UploadGallery from "./Upload/UploadGallery";
+import { userContext } from "../../Context/UserContext";
+import Uploadimages from "./Upload/Uploadimages";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 function Gallery({ galleries }) {
+  const { token } = useContext(userContext);
   const [dropdownVisible, setDropdownVisible] = useState({
     sortByDate: false,
     sortOrder: false,
@@ -35,7 +38,7 @@ function Gallery({ galleries }) {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
-
+  const navigate = useNavigate();
   const sortByDateRef = useRef(null);
   const sortOrderRef = useRef(null);
   const inputRef = useRef(null);
@@ -113,9 +116,14 @@ function Gallery({ galleries }) {
     }
   };
 
-  const toggleUploadVisibility = () => {
-    setUploadVisible((prev) => !prev);
-  };
+  // const toggleUploadVisibility = () => {
+  //   setUploadVisible((prev) => !prev);
+  // };
+
+  // const toggleUploadVisibility = () => {
+  //   // Ye function route ko change karay ga jab button click hoga
+  //   navigate("Gallery/upload"); // Specific route
+  // };
 
   const closeuploadpop = () => {
     setUploadVisible(false);
@@ -134,9 +142,12 @@ function Gallery({ galleries }) {
               galleryName
             )}`
           : "http://localhost:1122/images/";
-
-      const response = await axios.get(url);
-
+      const response = await axios.get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.status === 200 && response.data.length > 0) {
         // Extract images and galleryId from each item
         const imagesWithGalleryId = response.data.flatMap((item) =>
@@ -168,7 +179,13 @@ function Gallery({ galleries }) {
     setLoading(true);
     try {
       const url = `http://localhost:1122/images/galleries/filter?filter=${filter}`;
-      const response = await axios.get(url);
+
+      const response = await axios.get(url, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200 && response.data.length > 0) {
         const imagesWithGalleryId = response.data.flatMap((item) =>
@@ -307,6 +324,10 @@ function Gallery({ galleries }) {
         "http://localhost:1122/images/delete-multiple-galleries",
         {
           ids: uniqueGalleryIds,
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -359,12 +380,15 @@ function Gallery({ galleries }) {
       <div className="Gallery_MainArea">
         <div className="Gallery_MainArea_First">
           <p className="Gallery_MainArea_Fisrt_Title">Media Gallery</p>
-          <button
-            className="Gallery_MainArea_Fisrt_Button"
-            onClick={toggleUploadVisibility}
+          <Link
+            to="/Admin/Gallery/upload"
+            className={({ isActive }) => (isActive ? "link active" : "link")}
+            title="Dashboard"
           >
-            Add New Media File
-          </button>{" "}
+            <button className="Gallery_MainArea_Fisrt_Button">
+              Add New Media File
+            </button>
+          </Link>{" "}
           <div className="Gallery_MainArea_Second_Icon">
             <LiaGripHorizontalSolid
               className={`icons ${viewMode === "table" ? "active" : ""}`}
@@ -376,14 +400,11 @@ function Gallery({ galleries }) {
             />
           </div>
         </div>
-        {uploadVisible && (
-          <UploadGallery
-            closeuploadpop={closeuploadpop}
-            fetchImages={fetchImages}
-            uploadVisible={uploadVisible}
-            setUploadVisible={setUploadVisible}
-          />
-        )}
+        {/* <div className={`UploadImages ${uploadVisible ? "show" : "hide"}`}>
+          <div className="UploadImages-popup">
+            <Uploadimages closeuploadpop={closeuploadpop} />
+          </div>
+        </div> */}
         <div className="Gallery_MainArea_Second">
           <div className="Gallery_MainArea_Second_Area">
             <div className="Gallery_MainArea_Second_Icons ">
@@ -648,3 +669,9 @@ function Gallery({ galleries }) {
 }
 
 export default Gallery;
+//   // <UploadGallery
+//   closeuploadpop={closeuploadpop}
+//   fetchImages={fetchImages}
+//   uploadVisible={uploadVisible}
+//   setUploadVisible={setUploadVisible}
+// />

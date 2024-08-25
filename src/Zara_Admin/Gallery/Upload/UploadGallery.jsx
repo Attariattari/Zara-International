@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import "../css.css";
 import { MdClose } from "react-icons/md";
 import Spinner from "../../../Spinner";
+import { userContext } from "../../../Context/UserContext";
 
 function UploadGallery({
   closeuploadpop,
@@ -24,7 +25,7 @@ function UploadGallery({
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const newInputRef = useRef(null);
-
+  const { token } = useContext(userContext);
   const handleDrop = (event) => {
     event.preventDefault();
     setIsDragOver(false);
@@ -240,10 +241,12 @@ function UploadGallery({
     try {
       const response = await axios.post(
         "http://localhost:1122/images/upload-gallery",
+
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -278,9 +281,8 @@ function UploadGallery({
   };
   return (
     <div
-      className={`Gallery_MainArea_File_Upload ${
-        uploadVisible ? "visible" : ""
-      } ${isDragOver ? "drag-over" : ""}`}
+      className={`Gallery_MainArea_File_Upload ${uploadVisible ? "visible" : ""
+        } ${isDragOver ? "drag-over" : ""}`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -293,9 +295,8 @@ function UploadGallery({
         </div>
       )}
       <div
-        className={`Gallery_MainArea_File_Upload_Title ${
-          isLoading ? "blurred" : ""
-        }`}
+        className={`Gallery_MainArea_File_Upload_Title ${isLoading ? "blurred" : ""
+          }`}
       >
         <p className="title">Drop files to upload</p>
         <p className="or">or</p>
@@ -331,9 +332,8 @@ function UploadGallery({
         />
       </div>
       <div
-        className={`Gallery_MainArea_File_Upload_Title ${
-          isLoading ? "blurred" : ""
-        }`}
+        className={`Gallery_MainArea_File_Upload_Title ${isLoading ? "blurred" : ""
+          }`}
       >
         <p className="or">Maximum upload 20 Images</p>
         <div className="search-input-wrapper-file">
@@ -370,12 +370,12 @@ function UploadGallery({
               {isLoading
                 ? "Processing..."
                 : conversionInProgress
-                ? "Converting..."
-                : currentStep === "addName"
-                ? "Add Name"
-                : currentStep === "convert"
-                ? "Convert"
-                : "Add Now"}
+                  ? "Converting..."
+                  : currentStep === "addName"
+                    ? "Add Name"
+                    : currentStep === "convert"
+                      ? "Convert"
+                      : "Add Now"}
             </button>
           )}
         </div>

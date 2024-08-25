@@ -1,79 +1,63 @@
 import React, { useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod"; // Zod resolver
 import "./AddProductForm.css";
-import * as yup from "yup";
+import { z } from "zod"; // Import Zod
 import Select from "react-select";
 import { FaTimes } from "react-icons/fa";
 
-// Validation schema
-const schema = yup.object().shape({
-  Name: yup
+// Zod validation schema
+const schema = z.object({
+  Name: z
     .string()
-    .required("Name is required")
+    .min(1, "Name is required")
     .max(100, "Name must be at most 100 characters"),
-  MainImage: yup.string().required("Main Image is required"),
-  Price: yup
-    .object()
-    .shape({
-      real: yup.string().required("Real price is required"),
-      discount: yup.string().required("Discount price is required"),
-    })
-    .required("Price is required"),
-  Description: yup.string().required("Description is required"),
-  variations: yup
-    .array()
-    .of(
-      yup.object().shape({
-        image: yup.array().of(yup.string().url("Invalid URL format")), // Array of image URLs or file names
-        color: yup.string().required("Color is required"), // Single color string
-        size: yup.string().required("Size is required"), // Single size string
+  MainImage: z.string().min(1, "Main Image is required"),
+  Price: z.object({
+    real: z.string().min(1, "Real price is required"),
+    discount: z.string().min(1, "Discount price is required"),
+  }),
+  Description: z.string().min(1, "Description is required"),
+  variations: z
+    .array(
+      z.object({
+        image: z.array(z.string().url("Invalid URL format")).optional(),
+        color: z.string().min(1, "Color is required"),
+        size: z.string().min(1, "Size is required"),
       })
     )
-    .required("Variations are required"),
-  stock: yup
-    .number()
-    .required("Stock is required")
-    .min(0, "Stock must be greater than or equal to 0"),
-  minimumStock: yup
-    .number()
-    .min(0, "Minimum Stock must be greater than or equal to 0"),
-  new: yup.boolean(),
-  carousel: yup.boolean(),
-  category: yup.string().required("Category is required"),
-  subcategory: yup.string().required("Subcategory is required"),
-  brand: yup.string(),
-  tags: yup.array().of(yup.string()).min(1, "At least one tag is required"),
-  careInstructions: yup.string(),
-  availability: yup.string(),
-  relatedProducts: yup.array().of(yup.string()),
-  featured: yup.boolean(),
-  active: yup.boolean(),
-  sale: yup.boolean(),
-  meta: yup.object().shape({
-    title: yup.string(),
-    description: yup.string(),
-    keywords: yup
-      .array()
-      .of(yup.string())
-      .min(1, "At least one keyword is required"),
-  }),
-  materials: yup.array().of(
-    yup.object().shape({
-      material: yup.string().required("Material is required"),
-      percentage: yup
-        .number()
-        .required("Percentage is required")
-        .min(0)
-        .max(100),
+    .nonempty("Variations are required"),
+  stock: z.number().min(0, "Stock must be greater than or equal to 0"),
+  minimumStock: z.number().min(0, "Minimum Stock must be greater than or equal to 0").optional(),
+  new: z.boolean().optional(),
+  carousel: z.boolean().optional(),
+  category: z.string().min(1, "Category is required"),
+  subcategory: z.string().min(1, "Subcategory is required"),
+  brand: z.string().optional(),
+  tags: z.array(z.string()).min(1, "At least one tag is required"),
+  careInstructions: z.string().optional(),
+  availability: z.string().optional(),
+  relatedProducts: z.array(z.string()).optional(),
+  featured: z.boolean().optional(),
+  active: z.boolean().optional(),
+  sale: z.boolean().optional(),
+  meta: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+    keywords: z.array(z.string()).min(1, "At least one keyword is required").optional(),
+  }).optional(),
+  materials: z.array(
+    z.object({
+      material: z.string().min(1, "Material is required"),
+      percentage: z.number().min(0).max(100, "Percentage must be between 0 and 100"),
     })
   ),
-  dimensions: yup.object().shape({
-    length: yup.number(),
-    width: yup.number(),
-    height: yup.number(),
-  }),
-  weight: yup.number(),
+  dimensions: z.object({
+    length: z.number().optional(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+  }).optional(),
+  weight: z.number().optional(),
 });
 
 const AddProducts = () => {
@@ -105,7 +89,7 @@ const AddProducts = () => {
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
     defaultValues: {
       materials: [{ material: "", percentage: 0 }],
       tags: [],
@@ -131,32 +115,23 @@ const AddProducts = () => {
     console.log(data);
   };
 
-  const handleImageChange = (event, variationIndex) => {
-    const files = Array.from(event.target.files); // Correct 'event' usage
-    setValue(`variations[${variationIndex}].image`, files);
-
-    console.log("Files selected for variation", variationIndex, files); // Check files
-
-    // Updating image previews for UI
-    setImagePreviews((prev) => ({
-      ...prev,
-      [variationIndex]: files.map((file) => URL.createObjectURL(file)),
-    }));
-  };
+  const handleImageChange = (event, variationIndex) => { };
 
   const handleUrlsChange = (event, variationIndex) => {
     const urls = event.target.value
       .split("\n")
       .map((url) => url.trim())
       .filter((url) => url);
-    const previews = urls.map((url) => url);
 
     console.log("URLs:", urls);
-    console.log("Previews:", previews);
 
+    // Ensure `setValue` sets an array
+    setValue(`variations[${variationIndex}].image`, urls);
+
+    // Update image previews for UI
     setImagePreviews((prev) => ({
       ...prev,
-      [variationIndex]: previews,
+      [variationIndex]: urls,
     }));
   };
 
@@ -324,7 +299,7 @@ const AddProducts = () => {
           <input
             {...register(`variations.${index}.color`)}
             placeholder="Color"
-            defaultValue={field.color} // Single string for color
+            defaultValue={field.color}
           />
           {errors.variations?.[index]?.color && (
             <p>{errors.variations[index].color.message}</p>
@@ -334,7 +309,7 @@ const AddProducts = () => {
           <input
             {...register(`variations.${index}.size`)}
             placeholder="Size"
-            defaultValue={field.size} // Single string for size
+            defaultValue={field.size}
           />
           {errors.variations?.[index]?.size && (
             <p>{errors.variations[index].size.message}</p>
@@ -409,10 +384,10 @@ const AddProducts = () => {
             <div>
               <textarea
                 placeholder="Paste image URLs here (one per line)"
+                {...register(`variations.${index}.image`)}
                 onChange={(e) => handleUrlsChange(e, index)}
                 rows="4"
                 cols="50"
-                {...register(`variations.${index}.image`)}
               />
               {errors.variations?.[index]?.image && (
                 <p>{errors.variations[index].image.message}</p>
