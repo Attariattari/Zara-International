@@ -4,7 +4,6 @@
   background-color: var(--bg-color);
   color: var(--text-color);
   overflow-y: auto;
-  overflow-x: auto;
 }
 
 .Uploadimages-mainArea {
@@ -20,7 +19,6 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  /* Changed from start to center */
   align-items: center;
   padding: 1.5rem;
 }
@@ -34,7 +32,7 @@
 
 .Uploadimages-mainArea-data {
   width: 100%;
-  height: auto;
+  height: 78vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -46,6 +44,7 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
+  transition: all 0.5s ease;
 }
 
 .Uploadimages-side {
@@ -59,14 +58,48 @@
   justify-content: start;
   align-items: flex-start;
   flex-direction: column;
+  position: relative;
+  transition: all 0.6s ease;
+  -webkit-transition: all 0.6s ease;
+  -moz-transition: all 0.6s ease;
+  -ms-transition: all 0.6s ease;
+  -o-transition: all 0.6s ease;
 }
+
+.loading-overlay-Uploadimages-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  overflow: hidden;
+}
+
 
 .Uploadimages-side-title {
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.Uploadimages-side-title-first {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  height: 40px;
+  align-items: flex-start;
   padding: 0.5rem;
 }
 
@@ -78,13 +111,223 @@
   flex-direction: column;
   padding: 0.5rem;
   gap: 0.5rem;
-  border-top: 1px solid var(--border-color);
+
 }
 
 .Uploadimages-side-folder div {
   width: 100%;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.folders {
+  width: 100%;
+  height: 100%;
+  margin: 10px 0px 0px 0px;
+  overflow-y: auto;
+}
+
+.folders::-webkit-scrollbar {
+  width: 5px;
+}
+
+.folders::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+.folders::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid var(--scrollbar-bg);
+}
+
+.folders::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.folder-item {
+  margin: 0px 0px 5px 0px;
+  padding: 0.2rem;
+  gap: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+.folder-actions {
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.folder-item:hover .folder-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Default hidden state for folder actions */
+.folder-actions {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Active state - folder actions are visible */
+.folder-actions.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Inactive state - folder actions remain hidden */
+.folder-actions.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Style for action icons (edit, delete, etc.) */
+.folder-actions>* {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Slight zoom effect and color change on hover */
+.folder-actions>*:hover {
+  transform: scale(1.1);
+  /* Zoom effect */
+  color: #007bff;
+  /* Optional: blue tint on hover */
+}
+
+
+
+.folder-name {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  flex-grow: 1;
+}
+
+.folder-item:hover .folder-name {
+  color: var(--hover-text-color);
+  /* Optional hover color for folder name */
+}
+
+.folder-name input {
+  flex-grow: 1;
+  padding: 0.4rem;
+  outline: none;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  width: 100%;
+  border: none;
+}
+
+
+
+.folder-name {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.Uploadimages-create-folder {
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+}
+
+.Uploadimages-create-folder-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+
+}
+
+.Uploadimages-create-folder-inputs div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.Uploadimages-create-folder-inputs input {
+  flex-grow: 1;
+  padding: 0.4rem;
+  outline: none;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  width: 100%;
+}
+
+#galleryName {
+  cursor: not-allowed;
+}
+
+.Uploadimages-create-folder-inputs input::placeholder {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--text-color);
+}
+
+.Uploadimages-create-folder-buttons {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.Uploadimages-create-folder-buttons button {
+  padding: 8px 16px;
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.Uploadimages-create-folder-buttons button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: var(--button-bg-color);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.Uploadimages-create-folder-buttons button:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.Uploadimages-create-folder-buttons button:hover {
+  background-color: var(--button-bg-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .Uploadimages-main {
@@ -95,4 +338,140 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
+  transition: all 0.6s ease;
+
+  overflow-y: auto;
+}
+
+.galleryfeilds {
+  width: 100%;
+  height: auto;
+  padding: 1.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.mapimages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
+  gap: 20px;
+}
+
+.galleryfeilds-data {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  gap: 20px;
+}
+
+.galleryfeilds-data-image {
+  width: 250px;
+  height: 200px;
+  padding: 1.5rem;
+  border: 1px dashed var(--border-color);
+  position: relative;
+}
+
+.galleryfeilds-data-image span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-left: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.galleryfeilds-data-image span .iconclose {
+  transition: transform 0.3s ease-in-out;
+}
+
+.galleryfeilds-data-image span .iconclose:hover {
+  transform: rotate(360deg) scale(1.2);
+}
+
+.galleryfeilds-data-image-section {
+  width: 100%;
+  height: 100%;
+  border: 3px dashed var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 0.8em;
+}
+
+.galleryfeilds-data-image-section div {
+  width: 160px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed var(--border-color);
+  cursor: pointer;
+  position: relative;
+}
+
+.galleryfeilds-data-image-section div h4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  border-right: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.section-icon {
+  width: 50px;
+  height: 50px;
+
+}
+
+.galleryfeilds-data-feilds {
+  width: 50%;
+  height: auto;
+  border: 1px dashed var(--border-color);
+  padding: 1.5rem;
+}
+
+.mapbuttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.mapbuttons button {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+
+  .Uploadimages-mainArea-data {
+    flex-direction: column;
+  }
+
+  .Uploadimages-side {
+    width: 100%;
+    height: 50%;
+  }
+
+  .Uploadimages-main {
+    width: 100%;
+    height: 50%;
+    position: relative;
+  }
 }
