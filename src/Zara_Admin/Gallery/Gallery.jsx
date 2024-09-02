@@ -142,23 +142,30 @@ function Gallery({ galleries }) {
               galleryName
             )}`
           : "http://localhost:1122/images/";
+
       const response = await axios.get(url, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (response.status === 200 && response.data.length > 0) {
-        // Extract images and galleryId from each item
-        const imagesWithGalleryId = response.data.flatMap((item) =>
-          item.images.map((image) => ({
-            galleryId: item._id || null,
-            image: image,
-          }))
+        // Extract images with galleryId and folder information
+        const imagesWithGalleryAndFolder = response.data.flatMap((gallery) =>
+          gallery.folders.flatMap((folder) =>
+            folder.images.map((image) => ({
+              galleryId: gallery._id,
+              folderName: folder.folderName, // Adding folder info
+              image: image.url, // Extract image URL from new schema
+              altText: image.altText || "",
+              title: image.title || "",
+            }))
+          )
         );
 
-        // Extract images array with gallery ID
-        setSelectedImages(imagesWithGalleryId);
+        // Set images to state
+        setSelectedImages(imagesWithGalleryAndFolder);
         setMessage("");
       } else {
         setSelectedImages([]);
@@ -188,13 +195,21 @@ function Gallery({ galleries }) {
       });
 
       if (response.status === 200 && response.data.length > 0) {
-        const imagesWithGalleryId = response.data.flatMap((item) =>
-          item.images.map((image) => ({
-            galleryId: item._id || null,
-            image: image,
-          }))
+        // Extract images with galleryId and folder information
+        const imagesWithGalleryAndFolder = response.data.flatMap((gallery) =>
+          gallery.folders.flatMap((folder) =>
+            folder.images.map((image) => ({
+              galleryId: gallery._id,
+              folderName: folder.folderName, // Adding folder info
+              image: image.url, // Extract image URL from new schema
+              altText: image.altText || "",
+              title: image.title || "",
+            }))
+          )
         );
-        setSelectedImages(imagesWithGalleryId);
+
+        // Set images to state
+        setSelectedImages(imagesWithGalleryAndFolder);
         setMessage("");
       } else {
         setSelectedImages([]);
@@ -212,7 +227,7 @@ function Gallery({ galleries }) {
       setMessage("Failed to fetch images.");
       setMessageType("error");
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading
     }
   };
 

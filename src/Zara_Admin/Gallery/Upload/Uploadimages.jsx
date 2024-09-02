@@ -14,7 +14,7 @@ import { RiUpload2Fill } from "react-icons/ri";
 const Uploadimages = ({ closeuploadpop }) => {
   const [galleryName, setGalleryName] = useState("Default Gallery");
   const [folderName, setFolderName] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(Array(6).fill(null));
   const [altTexts, setAltTexts] = useState([]);
   const [titles, setTitles] = useState([]);
   const [descriptions, setDescriptions] = useState([]);
@@ -224,7 +224,7 @@ const Uploadimages = ({ closeuploadpop }) => {
     const selectedFiles = Array.from(e.target.files);
     const newImages = [...images];
 
-    // If single image selection is allowed
+    // Handle single image selection
     if (selectedFiles.length === 1 && images.length <= 1) {
       const file = selectedFiles[0];
       newImages[index] = {
@@ -232,14 +232,29 @@ const Uploadimages = ({ closeuploadpop }) => {
         previewUrl: URL.createObjectURL(file),
       };
     }
-    // If multiple image selection is allowed
-    else if (selectedFiles.length > 1 && images.length > 1) {
+    // Handle multiple image selection
+    else if (selectedFiles.length > 1) {
       selectedFiles.forEach((file, i) => {
-        newImages[index + i] = {
-          file: file,
-          previewUrl: URL.createObjectURL(file),
-        };
+        // If the index + i exceeds the current newImages length, push the new image
+        if (index + i >= newImages.length) {
+          newImages.push({
+            file: file,
+            previewUrl: URL.createObjectURL(file),
+          });
+        } else {
+          // Otherwise, just replace the existing image at that position
+          newImages[index + i] = {
+            file: file,
+            previewUrl: URL.createObjectURL(file),
+          };
+        }
       });
+    } else {
+      // If single selection with existing images, just replace at the current index
+      newImages[index] = {
+        file: selectedFiles[0],
+        previewUrl: URL.createObjectURL(selectedFiles[0]),
+      };
     }
 
     setImages(newImages);
@@ -349,7 +364,10 @@ const Uploadimages = ({ closeuploadpop }) => {
             <div className="Uploadimages-side-title">
               <div className="Uploadimages-side-title-first">
                 <p>Folders.</p>
-                <p className="cursor-pointer" onClick={createFolder}>
+                <p
+                  className="cursor-pointer Gallery-Button"
+                  onClick={createFolder}
+                >
                   Create Folder
                 </p>
               </div>
@@ -505,6 +523,40 @@ const Uploadimages = ({ closeuploadpop }) => {
             <div className="Uploadimages-side-title">
               <div className="Uploadimages-side-title-first">
                 <p>Gallery.</p>
+                <div className="Uploadimages-main-buttons">
+                  {openFolderId && (
+                    <p
+                      className="cursor-pointer Gallery-Button"
+                      onClick={() => {
+                        if (images.length >= 10) {
+                          // Show error message
+                          Swal.fire({
+                            icon: "error",
+                            title: "Limit Reached",
+                            text: "You can only add up to 10 images.",
+                          });
+                        } else {
+                          // Add image if limit is not reached
+                          setImages([...images, null]);
+                        }
+                      }}
+                      disabled={isloading}
+                    >
+                      Add Image
+                    </p>
+                  )}
+                  {images.length > 0 &&
+                    images.some((image) => image !== null) && (
+                      <p
+                        className="cursor-pointer Gallery-Button"
+                        type="submit"
+                        onClick={handleSubmit}
+                        disabled={isloading}
+                      >
+                        {isloading ? "Uploading..." : "Upload Gallery"}
+                      </p>
+                    )}
+                </div>
               </div>
             </div>
             <form
@@ -512,75 +564,54 @@ const Uploadimages = ({ closeuploadpop }) => {
               className="galleryfeilds"
               encType="multipart/form-data"
             >
-              <div className="mapimages">
-                {images.map((image, index) => (
-                  <div className="galleryfeilds-data" key={index}>
-                    <div className="galleryfeilds-data-image">
-                      <div className="galleryfeilds-data-image-section">
-                        {image?.previewUrl ? (
-                          <img
-                            src={image.previewUrl}
-                            alt={`Preview ${index + 1}`}
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              objectFit: "cover",
-                            }}
+              {!openFolderId ? (
+                <div className="w-full h-full flex justify-center items-center">
+                  <p>Please select a folder to start adding images.</p>
+                </div>
+              ) : (
+                <div className="mapimages">
+                  {images.map((image, index) => (
+                    <div className="galleryfeilds-data" key={index}>
+                      <div className="galleryfeilds-data-image">
+                        <div className="galleryfeilds-data-image-section">
+                          {image?.previewUrl ? (
+                            <img
+                              src={image.previewUrl}
+                              alt={`Preview ${index + 1}`}
+                              style={{
+                                width: "100px",
+                                height: "100px",
+                                objectFit: "cover",
+                              }}
+                            />
+                          ) : (
+                            <div
+                              onClick={() => handleIconClick(index)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              <RiUpload2Fill className="section-icon" />
+                              <h4>{index + 1}</h4>
+                            </div>
+                          )}
+                          <input
+                            type="file"
+                            ref={(el) => (fileInputRefs.current[index] = el)}
+                            onChange={(e) => handleImageChange(e, index)}
+                            multiple={images.length > 1} // Multiple selection if more than one image exists
+                            style={{ display: "none" }}
                           />
-                        ) : (
-                          <div
-                            onClick={() => handleIconClick(index)}
-                            style={{ cursor: "pointer" }}
-                          >
-                            <RiUpload2Fill className="section-icon" />
-                            <h4>{index + 1}</h4>
-                          </div>
-                        )}
-                        <input
-                          type="file"
-                          ref={(el) => (fileInputRefs.current[index] = el)}
-                          onChange={(e) => handleImageChange(e, index)}
-                          multiple={images.length > 1} // Multiple selection if more than one image exists
-                          style={{ display: "none" }}
-                        />
+                        </div>
+                        <span
+                          onClick={() => handleRemoveImage(index)}
+                          style={{ cursor: "pointer", color: "red" }}
+                        >
+                          <MdClose className="iconclose" />
+                        </span>
                       </div>
-                      <span
-                        onClick={() => handleRemoveImage(index)}
-                        style={{ cursor: "pointer", color: "red" }}
-                      >
-                        <MdClose className="iconclose" />
-                      </span>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mapbuttons">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (images.length >= 12) {
-                      // Show error message
-                      Swal.fire({
-                        icon: "error",
-                        title: "Limit Reached",
-                        text: "You can only add up to 10 images.",
-                      });
-                    } else {
-                      // Add image if limit is not reached
-                      setImages([...images, null]);
-                    }
-                  }}
-                  disabled={isloading}
-                >
-                  Add Image
-                </button>{" "}
-                {images.length > 0 &&
-                  images.some((image) => image !== null) && (
-                    <button type="submit" disabled={isloading}>
-                      {isloading ? "Uploading..." : "Upload Gallery"}
-                    </button>
-                  )}
-              </div>
+                  ))}
+                </div>
+              )}
             </form>
           </div>
         </div>

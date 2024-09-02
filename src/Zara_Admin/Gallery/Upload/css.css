@@ -60,10 +60,6 @@
   flex-direction: column;
   position: relative;
   transition: all 0.6s ease;
-  -webkit-transition: all 0.6s ease;
-  -moz-transition: all 0.6s ease;
-  -ms-transition: all 0.6s ease;
-  -o-transition: all 0.6s ease;
 }
 
 .loading-overlay-Uploadimages-side {
@@ -86,13 +82,29 @@
 }
 
 
+/* .Uploadimages-side-title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+} */
+
 .Uploadimages-side-title {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  /* Stick at the top of the side */
+  background-color: var(--bg-color);
+  /* Ensure background doesn't become transparent */
+  z-index: 10;
+  /* Ensures it stays above scrolling content */
 }
+
 
 .Uploadimages-side-title-first {
   width: 100%;
@@ -333,29 +345,76 @@
 .Uploadimages-main {
   width: 70%;
   height: 100%;
+  /* Ensure this takes up the full height of its parent */
   gap: 20px;
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   transition: all 0.6s ease;
-
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  /* Make sure the content flows in column */
 }
 
-.galleryfeilds {
+.Uploadimages-main-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Sticky title at the top */
+.Uploadimages-side-title {
   width: 100%;
-  height: auto;
-  padding: 1.5rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-color);
+  z-index: 10;
+}
+
+.Uploadimages-main-title-first {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem;
+
+}
+
+/* Scrolling content container */
+.galleryfeilds {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.galleryfeilds::-webkit-scrollbar {
+  width: 5px;
+}
+
+.galleryfeilds::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+
+.galleryfeilds::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid var(--scrollbar-bg);
+}
+
+.galleryfeilds::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }
 
 .mapimages {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
   gap: 20px;
+  overflow-y: auto;
 }
 
 .galleryfeilds-data {
@@ -458,6 +517,45 @@
   width: 50%;
 }
 
+.Gallery-Button {
+  padding: 1px 0;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: 0px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Gallery-Button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 10%;
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.Gallery-Button:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.Gallery-Button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 @media (max-width: 768px) {
 
   .Uploadimages-mainArea-data {
@@ -473,5 +571,6 @@
     width: 100%;
     height: 50%;
     position: relative;
+
   }
 }
