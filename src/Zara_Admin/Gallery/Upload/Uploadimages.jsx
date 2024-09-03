@@ -528,12 +528,12 @@ const Uploadimages = ({ closeuploadpop }) => {
                     <p
                       className="cursor-pointer Gallery-Button"
                       onClick={() => {
-                        if (images.length >= 10) {
+                        if (images.length >= 24) {
                           // Show error message
                           Swal.fire({
                             icon: "error",
                             title: "Limit Reached",
-                            text: "You can only add up to 10 images.",
+                            text: "You can only add up to 24 images.",
                           });
                         } else {
                           // Add image if limit is not reached

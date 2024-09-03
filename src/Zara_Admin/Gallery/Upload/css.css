@@ -4,6 +4,7 @@
   background-color: var(--bg-color);
   color: var(--text-color);
   overflow-y: auto;
+  user-select: none;
 }
 
 .Uploadimages-mainArea {
@@ -530,6 +531,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .Gallery-Button::before {
