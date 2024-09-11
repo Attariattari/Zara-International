@@ -156,14 +156,16 @@ function Gallery({ galleries }) {
           gallery.folders.flatMap((folder) =>
             folder.images.map((image) => ({
               galleryId: gallery._id,
+              galleryname: gallery.galleryName,
               folderName: folder.folderName, // Adding folder info
+              imageobjectid: image._id,
               image: image.url, // Extract image URL from new schema
               altText: image.altText || "",
               title: image.title || "",
             }))
           )
         );
-
+        console.log(imagesWithGalleryAndFolder);
         // Set images to state
         setSelectedImages(imagesWithGalleryAndFolder);
         setMessage("");
@@ -181,7 +183,6 @@ function Gallery({ galleries }) {
       setLoading(false); // End loading
     }
   };
-
   const applyFilter = async (filter) => {
     setLoading(true);
     try {
@@ -300,72 +301,35 @@ function Gallery({ galleries }) {
   };
 
   const handleImageSelect = (index) => {
-    if (bulkImages.includes(index)) {
-      setBulkImages(bulkImages.filter((i) => i !== index));
-    } else {
-      setBulkImages([...bulkImages, index]);
-    }
+    const image = paginatedImages[index]; // Assuming paginatedImages is your array
+
+    setBulkImages((prevBulkImages) => {
+      const updatedBulkImages = prevBulkImages.includes(index)
+        ? prevBulkImages.filter((i) => i !== index)
+        : [...prevBulkImages, index];
+
+      // Update selectedImages with relevant data
+      const updatedSelectedImages = updatedBulkImages.map((i) => ({
+        galleryId: image.galleryId, // Use the correct property name
+        galleryname: image.galleryname,
+        folderName: image.folderName,
+        imageId: image.title, // Assuming 'title' is the correct ID, adjust if needed
+        imageobjectid: image._id,
+      }));
+
+      console.log("Updated Selected Images:", updatedSelectedImages);
+      return updatedBulkImages;
+    });
   };
 
-  const handleDeletePermanent = async () => {
-    setLoading(true);
-    const galleriesToDelete = selectedImages
-      .filter((_, index) => bulkImages.includes(index))
-      .map((item) => {
-        return item.galleryId;
-      });
+  const handleDeletePermanent = () => {
+    selectedImages.forEach((image) => {
+      const { galleryname, folderName, imageId, imageobjectid } = image; // Adjusted to use galleryName and imageId
 
-    const uniqueGalleryIds = [...new Set(galleriesToDelete)];
-
-    if (uniqueGalleryIds.length === 0) {
-      // Show error message using Toastify
-      toast.error("Please select at least one image to delete.", {
-        position: "top-right",
-        autoClose: 3000, // 3 seconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setIsBulkSelect(false);
-      setLoading(false); // End loading
-      return; // Stop further execution
-    }
-
-    try {
-      // Replace with correct API endpoint and request body
-      const response = await axios.post(
-        "http://localhost:1122/images/delete-multiple-galleries",
-        {
-          ids: uniqueGalleryIds,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setIsBulkSelect(false);
-        fetchImages();
-        toast.success("Galleries deleted successfully!", {
-          autoClose: 3000,
-        });
-      } else {
-        console.error("Failed to delete galleries.");
-        toast.error("Failed to delete galleries.", {
-          autoClose: 3000,
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting galleries:", error);
-      toast.error("Error deleting galleries.", {
-        autoClose: 3000,
-      });
-    } finally {
-      setLoading(false); // End loading
-    }
+      console.log("Gallery Name:", galleryname);
+      console.log("Folder Name:", folderName);
+      console.log("Image ID:", imageobjectid); // Only the image ID, not the object ID
+    });
   };
 
   const handleCancel = () => {

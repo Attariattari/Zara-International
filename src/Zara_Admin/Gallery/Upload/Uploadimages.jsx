@@ -106,6 +106,7 @@ const Uploadimages = ({ closeuploadpop }) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        withCredentials: true,
       });
       if (response.data && response.data.length > 0) {
         setFolder(response.data[0].folders); // Accessing the folders inside the first object in `data`
@@ -183,15 +184,21 @@ const Uploadimages = ({ closeuploadpop }) => {
       });
 
       if (result.isConfirmed) {
+        setLoading(true);
         // API call to delete the folder
         const response = await axios.post(
           "http://localhost:1122/images/deleteFolder",
           { folderName } // Pass folderName in request body
         );
-
+        setLoading(false);
+        // Show response from backend in Swal, regardless of success or error
         if (response.status === 200) {
-          // Success, show Swal and update the UI or state
-          Swal.fire("Deleted!", "Your folder has been deleted.", "success");
+          // Success, show Swal with backend message
+          Swal.fire(
+            "Deleted!",
+            response.data.message || "Your folder has been deleted.",
+            "success"
+          );
 
           // Update the gallery state
           setGalleryData((prevGalleryData) =>
@@ -206,11 +213,30 @@ const Uploadimages = ({ closeuploadpop }) => {
                 : gallery
             )
           );
+        } else {
+          // In case of any unexpected status code (not likely)
+          Swal.fire(
+            "Error!",
+            response.data.error || "Failed to delete folder.",
+            "error"
+          );
         }
       }
     } catch (error) {
+      // Handle any errors from the request
+      setLoading(false);
       console.error("Error deleting folder:", error);
-      Swal.fire("Error!", "Failed to delete folder.", "error");
+
+      // Show detailed error message from backend, if available
+      if (error.response && error.response.data) {
+        Swal.fire(
+          "Error!",
+          error.response.data.error || "An unexpected error occurred.",
+          "error"
+        );
+      } else {
+        Swal.fire("Error!", "Failed to delete folder.", "error");
+      }
     }
   };
 
@@ -305,7 +331,7 @@ const Uploadimages = ({ closeuploadpop }) => {
       });
 
       // Reset form fields and state
-      setImages([]);
+      setImages(Array(6).fill(null));
       setAltTexts([]);
       setTitles([]);
       setDescriptions([]);
