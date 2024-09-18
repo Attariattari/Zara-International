@@ -51,6 +51,7 @@ const productSchema = z.object({
   carousel: z.boolean().optional(),
   category: z.string().min(1, "Category is required"),
   subcategory: z.string().min(1, "Subcategory is required"),
+  childsubcategory: z.string().optional(),
   brand: z.string().optional(),
   tags: z.array(z.string()).optional(),
   careInstructions: z.string().optional(),
@@ -104,8 +105,10 @@ const ProductForm = () => {
   const [state, setState] = useState({
     categories: [],
     subcategories: [],
+    childsubcategory: [],
     selectedCategory: null,
-    selectedSubcategory: null, // Initialize as null or empty
+    selectedSubcategory: null,
+    selectedhildsubcategory: null,
   });
 
   // Convert comma-separated image URLs to array
@@ -146,11 +149,10 @@ const ProductForm = () => {
             },
             withCredentials: true,
           }
-        ); // Your API call here
-        // Ensure the response is an array
+        );
         setState((prevState) => ({
           ...prevState,
-          categories: Array.isArray(response.data) ? response.data : [], // Ensure it's an array
+          categories: Array.isArray(response.data) ? response.data : [],
         }));
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -175,13 +177,13 @@ const ProductForm = () => {
         );
         setState((prevState) => ({
           ...prevState,
-          subcategories: response.data.data, // Ensure data access is correct
+          subcategories: response.data.data,
         }));
       } catch (error) {
         console.error("Error fetching subcategories:", error);
         setState((prevState) => ({
           ...prevState,
-          subcategories: [], // Reset on error
+          subcategories: [],
         }));
       }
     };
@@ -197,6 +199,46 @@ const ProductForm = () => {
     }
   }, [state.selectedCategory, token]);
 
+  useEffect(() => {
+    const fetchChildSubcategories = async (categoryId, subcategoryId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:1122/ChildSubCategory/by-main-sub/${categoryId}/${subcategoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        setState((prevState) => ({
+          ...prevState,
+          childsubcategory: response.data.data,
+        }));
+      } catch (error) {
+        console.error("Error fetching childsubcategory:", error);
+        setState((prevState) => ({
+          ...prevState,
+          childsubcategory: [], // Reset childsubcategory if an error occurs
+        }));
+      }
+    };
+
+    // Trigger fetch when both selectedCategory and selectedSubcategory are available
+    if (state.selectedCategory && state.selectedSubcategory) {
+      fetchChildSubcategories(
+        state.selectedCategory,
+        state.selectedSubcategory
+      );
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        childsubcategory: [], // Reset childsubcategory if not selected
+      }));
+    }
+  }, [state.selectedCategory, state.selectedSubcategory, token]);
+
   const getOptionFromValue = (value, options) => {
     return options.find((option) => option.value === value) || null;
   };
@@ -204,8 +246,9 @@ const ProductForm = () => {
   const onSubmit = async (data) => {
     const updatedData = {
       ...data,
-      category: state.selectedCategory, // Ensure this is set
-      subcategory: state.selectedSubcategory, // Ensure this is set
+      category: state.selectedCategory, // Ensure category is included
+      subcategory: state.selectedSubcategory, // Ensure subcategory is included
+      childsubcategory: state.selectedChildSubcategory, // Include selected childsubcategory
     };
 
     console.log("Submitting Data:", updatedData); // Debugging
@@ -428,6 +471,7 @@ const ProductForm = () => {
       {errors.category && <p>{errors.category.message}</p>}
 
       {/* Subcategory Select */}
+
       <label>Subcategory:</label>
       <Controller
         name="subcategory"
@@ -461,6 +505,40 @@ const ProductForm = () => {
         }}
       />
       {errors.subcategory && <p>{errors.subcategory.message}</p>}
+
+      <label>Child-Subcategory:</label>
+      <Controller
+        name="childsubcategory"
+        control={control}
+        render={({ field: { onChange, onBlur, value, ref } }) => {
+          const childsubcategoryOptions = Array.isArray(state.childsubcategory)
+            ? state.childsubcategory.map((childsubcat) => ({
+                value: childsubcat._id,
+                label: childsubcat.ChildSubCategory,
+              }))
+            : [];
+
+          return (
+            <Select
+              onChange={(option) => {
+                console.log("Selected ChildSubCategory:", option); // Debugging
+                onChange(option ? option.value : "");
+                setState((prevState) => ({
+                  ...prevState,
+                  selectedChildSubcategory: option ? option.value : null, // Update state
+                }));
+              }}
+              onBlur={onBlur}
+              value={getOptionFromValue(value, childsubcategoryOptions)}
+              options={childsubcategoryOptions}
+              placeholder="Select Child Subcategory"
+              ref={ref}
+              isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
+            />
+          );
+        }}
+      />
+      {errors.childsubcategory && <p>{errors.childsubcategory.message}</p>}
 
       <div>
         <label>Brand</label>
