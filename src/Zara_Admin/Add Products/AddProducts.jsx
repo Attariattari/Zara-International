@@ -1,473 +1,420 @@
-import React, { useState } from "react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"; // Zod resolver
+import React, { useContext, useEffect, useState } from "react";
+import { z } from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import "./AddProductForm.css";
-import { z } from "zod"; // Import Zod
+import { userContext } from "../../Context/UserContext";
+import axios from "axios";
 import Select from "react-select";
-import { FaTimes } from "react-icons/fa";
 
-// Zod validation schema
-const schema = z.object({
-  Name: z
-    .string()
-    .min(1, "Name is required")
-    .max(100, "Name must be at most 100 characters"),
-  MainImage: z.string().min(1, "Main Image is required"),
-  Price: z.object({
-    real: z.string().min(1, "Real price is required"),
-    discount: z.string().min(1, "Discount price is required"),
-  }),
+// Zod Schema for validation
+const productSchema = z.object({
+  Name: z.string().min(1, "Product name is required"),
+  MainImage: z.string().url("Main image must be a valid URL"),
   Description: z.string().min(1, "Description is required"),
   variations: z
     .array(
       z.object({
-        image: z.array(z.string().url("Invalid URL format")).optional(),
+        image: z.array(z.string().url("Each image URL must be valid")),
         color: z.string().min(1, "Color is required"),
         size: z.string().min(1, "Size is required"),
+        dimensions: z
+          .object({
+            length: z.number().optional(),
+            width: z.number().optional(),
+            height: z.number().optional(),
+          })
+          .refine(
+            (val) =>
+              val.length !== undefined ||
+              val.width !== undefined ||
+              val.height !== undefined,
+            {
+              message:
+                "At least one dimension (length, width, height) must be provided",
+            }
+          )
+          .optional(),
+        weight: z.number().optional(),
+        stock: z.number().min(0, "Stock must be at least 0"),
+        price: z.object({
+          real: z.string().min(1, "Real price is required"),
+          discount: z.string().optional(),
+        }),
+        status: z
+          .enum(["In Stock", "Out of Stock", "Discontinued"])
+          .default("In Stock"),
       })
     )
-    .nonempty("Variations are required"),
-  stock: z.number().min(0, "Stock must be greater than or equal to 0"),
-  minimumStock: z.number().min(0, "Minimum Stock must be greater than or equal to 0").optional(),
-  new: z.boolean().optional(),
+    .min(1, "At least one variation is required"),
+  new: z.boolean().default(true),
   carousel: z.boolean().optional(),
   category: z.string().min(1, "Category is required"),
   subcategory: z.string().min(1, "Subcategory is required"),
   brand: z.string().optional(),
-  tags: z.array(z.string()).min(1, "At least one tag is required"),
+  tags: z.array(z.string()).optional(),
   careInstructions: z.string().optional(),
   availability: z.string().optional(),
-  relatedProducts: z.array(z.string()).optional(),
   featured: z.boolean().optional(),
-  active: z.boolean().optional(),
-  sale: z.boolean().optional(),
-  meta: z.object({
-    title: z.string().optional(),
-    description: z.string().optional(),
-    keywords: z.array(z.string()).min(1, "At least one keyword is required").optional(),
-  }).optional(),
-  materials: z.array(
-    z.object({
-      material: z.string().min(1, "Material is required"),
-      percentage: z.number().min(0).max(100, "Percentage must be between 0 and 100"),
+  active: z.boolean().default(true),
+  sale: z.boolean().default(false),
+  meta: z
+    .object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+      keywords: z.array(z.string()).optional(),
     })
-  ),
-  dimensions: z.object({
-    length: z.number().optional(),
-    width: z.number().optional(),
-    height: z.number().optional(),
-  }).optional(),
-  weight: z.number().optional(),
+    .optional(),
+  materials: z
+    .array(
+      z.object({
+        material: z.string().min(1, "Material is required"),
+        percentage: z.number().min(0, "Percentage must be a positive number"),
+      })
+    )
+    .optional(),
+  publishStatus: z.enum(["Published", "Draft"]).default("Draft"),
 });
 
-const AddProducts = () => {
-  const [imagePreviews, setImagePreviews] = useState({});
-  const [mode, setMode] = useState(null);
-  const [mainImageMode, setMainImageMode] = useState(null); // null, 'file' or 'url'
-  const [mainImagePreview, setMainImagePreview] = useState("");
-  const [showMainImageOptions, setShowMainImageOptions] = useState(false);
-  const [showMainImageButton, setShowMainImageButton] = useState(true);
-  const categories = [
-    { _id: 1, Name: "Women" },
-    { _id: 2, Name: "Men" },
-    { _id: 3, Name: "Kids" },
-  ];
-
-  const subcategories = [
-    { _id: 1, categoryId: 1, Name: "Dresses" },
-    { _id: 2, categoryId: 1, Name: "Tops" },
-    { _id: 3, categoryId: 2, Name: "Shirts" },
-    { _id: 4, categoryId: 2, Name: "Trousers" },
-    { _id: 5, categoryId: 3, Name: "Toys" },
-    { _id: 6, categoryId: 3, Name: "Shoes" },
-  ];
+const ProductForm = () => {
+  const [variations, setVariations] = useState([
+    {
+      image: [],
+      color: "",
+      size: "",
+      price: { real: "", discount: "" },
+      dimensions: { length: 0, width: 0, height: 0 },
+      weight: 0,
+      stock: 0,
+      status: "In Stock",
+    },
+  ]);
 
   const {
     register,
     handleSubmit,
+    formState: { errors },
+    reset,
     setValue,
     control,
-    formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      materials: [{ material: "", percentage: 0 }],
-      tags: [],
-    },
+    resolver: zodResolver(productSchema),
+  });
+  const { token } = useContext(userContext);
+  const [state, setState] = useState({
+    categories: [],
+    subcategories: [],
+    selectedCategory: null,
+    selectedSubcategory: null, // Initialize as null or empty
   });
 
-  // Use useFieldArray to manage the dynamic fields
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "materials",
-  });
-  const {
-    fields: variationFields,
-    append: appendVariation,
-    remove: removeVariation,
-  } = useFieldArray({
-    control,
-    name: "variations",
-  });
-
-  const onSubmit = (data) => {
-    // Handle form submission
-    console.log(data);
+  // Convert comma-separated image URLs to array
+  const handleImageChange = (e, index) => {
+    const value = e.target.value;
+    const imageArray = value.split(",").map((url) => url.trim());
+    setValue(`variations.${index}.image`, imageArray);
   };
 
-  const handleImageChange = (event, variationIndex) => { };
-
-  const handleUrlsChange = (event, variationIndex) => {
-    const urls = event.target.value
-      .split("\n")
-      .map((url) => url.trim())
-      .filter((url) => url);
-
-    console.log("URLs:", urls);
-
-    // Ensure `setValue` sets an array
-    setValue(`variations[${variationIndex}].image`, urls);
-
-    // Update image previews for UI
-    setImagePreviews((prev) => ({
-      ...prev,
-      [variationIndex]: urls,
-    }));
+  const handleNumberChange = (e, index, field) => {
+    const value = e.target.value;
+    const numberValue = parseFloat(value); // Convert string to number
+    setValue(`variations.${index}.${field}`, numberValue); // Update state
   };
 
-  // Function to handle removing image previews
-  const handleRemoveImage = (index, isMainImage) => {
-    if (isMainImage) {
-      setMainImagePreview(""); // Remove main image preview
+  // Function to convert comma-separated tags string to array
+  const handleTagChange = (e) => {
+    const value = e.target.value;
+    const tagsArray = value.split(",").map((tag) => tag.trim()); // Trimmed array of tags
+    setValue("tags", tagsArray); // Set value as array
+  };
+  // Function to convert comma-separated meta keywords string to array
+  const handleMetaKeywordsChange = (e) => {
+    const value = e.target.value;
+    const keywordsArray = value.split(",").map((keyword) => keyword.trim());
+    setValue("meta.keywords", keywordsArray); // Set value as array
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:1122/MainCategory/getAll",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        ); // Your API call here
+        // Ensure the response is an array
+        setState((prevState) => ({
+          ...prevState,
+          categories: Array.isArray(response.data) ? response.data : [], // Ensure it's an array
+        }));
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchSubcategories = async (categoryId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:1122/SubMainCategory/subcategories/maincategory/${categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        setState((prevState) => ({
+          ...prevState,
+          subcategories: response.data.data, // Ensure data access is correct
+        }));
+      } catch (error) {
+        console.error("Error fetching subcategories:", error);
+        setState((prevState) => ({
+          ...prevState,
+          subcategories: [], // Reset on error
+        }));
+      }
+    };
+
+    // Trigger subcategory fetch when a category is selected
+    if (state.selectedCategory) {
+      fetchSubcategories(state.selectedCategory);
     } else {
-      setMainImagePreview((prev) => {
-        const updatedPreviews = { ...prev };
-        updatedPreviews[index] = []; // Remove previews for the specific variation
-        return updatedPreviews;
-      });
+      setState((prevState) => ({
+        ...prevState,
+        subcategories: [], // Reset subcategories if no category is selected
+      }));
+    }
+  }, [state.selectedCategory, token]);
+
+  const getOptionFromValue = (value, options) => {
+    return options.find((option) => option.value === value) || null;
+  };
+
+  const onSubmit = async (data) => {
+    const updatedData = {
+      ...data,
+      category: state.selectedCategory, // Ensure this is set
+      subcategory: state.selectedSubcategory, // Ensure this is set
+    };
+
+    console.log("Submitting Data:", updatedData); // Debugging
+
+    try {
+      const response = await axios.post(
+        "http://localhost:1122/Product/Create",
+        updatedData,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Product created successfully:", response.data);
+      reset(); // Reset the form after submission
+    } catch (error) {
+      console.error("Error creating product:", error);
     }
   };
 
-  const handleMainImageChange = (event) => {
-    const file = event.target.files[0];
-    const preview = file ? URL.createObjectURL(file) : "";
-    setMainImagePreview(preview);
+  // Handler for adding new variation
+  const addVariation = () => {
+    setVariations([
+      ...variations,
+      {
+        image: [],
+        color: "",
+        size: "",
+        price: { real: "", discount: "" },
+        dimensions: { length: 0, width: 0, height: 0 },
+        weight: 0,
+        stock: 0,
+        status: "In Stock",
+      },
+    ]);
   };
 
-  const handleMainImageUrlChange = (event) => {
-    const url = event.target.value.trim();
-
-    // URL validation regex
-    const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-
-    if (urlRegex.test(url)) {
-      setMainImagePreview(url);
-    } else {
-      setMainImagePreview(""); // Clear the preview if URL is invalid
-    }
+  // Handler for removing a variation
+  const removeVariation = (index) => {
+    const updatedVariations = [...variations];
+    updatedVariations.splice(index, 1);
+    setVariations(updatedVariations);
   };
-
-  const handleModeSelect = (mode) => {
-    setMainImageMode(mode);
-    setShowMainImageOptions(false);
-    setShowMainImageButton(false);
-  };
-
-  const handleReset = () => {
-    setMainImageMode(null);
-    setShowMainImageOptions(true);
-    setMainImagePreview("");
-  };
-  // Convert value to object format expected by react-select
-  const getOptionFromValue = (value, options) =>
-    options.find((option) => option.value === value) || null;
-
-  const availabilityOptions = [
-    { value: "in_stock", label: "In stock" },
-    { value: "out_of_stock", label: "Out of stock" },
-  ];
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="add-product-form">
-      <label>Name:</label>
-      <input {...register("Name")} />
-      {errors.Name && <p>{errors.Name.message}</p>}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Add New Product</h2>
 
-      {showMainImageButton && !showMainImageOptions && (
-        <button type="button" onClick={() => setShowMainImageOptions(true)}>
-          Add Main Image
-        </button>
-      )}
-
-      {showMainImageOptions && !mainImageMode && (
-        <div>
-          <button type="button" onClick={() => handleModeSelect("file")}>
-            Select File
-          </button>
-          <button type="button" onClick={() => handleModeSelect("url")}>
-            Provide URL
-          </button>
-        </div>
-      )}
-
-      {mainImageMode === "file" && (
-        <div>
-          <input
-            type="file"
-            {...register("MainImage")}
-            onChange={handleMainImageChange}
-          />
-          {mainImagePreview && (
-            <div style={{ position: "relative", display: "inline-block" }}>
-              <img
-                src={mainImagePreview}
-                alt="Main Image Preview"
-                style={{ width: "100px", height: "100px", margin: "5px" }}
-              />
-              <FaTimes
-                onClick={() => setMainImagePreview("")} // Clear the main image preview on close
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  cursor: "pointer",
-                  color: "red",
-                  background: "white",
-                  borderRadius: "50%",
-                }}
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {mainImageMode === "url" && (
-        <div>
-          <input
-            type="text"
-            {...register("MainImage")}
-            placeholder="Paste image URL here"
-            onChange={handleMainImageUrlChange}
-          />
-          {mainImagePreview && (
-            <div style={{ position: "relative", display: "inline-block" }}>
-              <img
-                src={mainImagePreview} // Use mainImagePreview here
-                alt="Main Image Preview"
-                style={{ width: "100px", height: "100px", margin: "5px" }}
-              />
-              <FaTimes
-                onClick={() => setMainImagePreview("")} // Clear the main image preview on close
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  cursor: "pointer",
-                  color: "red",
-                  background: "white",
-                  borderRadius: "50%",
-                }}
-              />
-            </div>
-          )}
-        </div>
-      )}
-
-      {mainImageMode !== null && (
-        <button type="button" onClick={handleReset}>
-          Add Another Main Image
-        </button>
-      )}
-      {errors.MainImage && <p>{errors.MainImage.message}</p>}
-
-      <label>Price:</label>
       <div>
-        <input {...register("Price.real")} placeholder="Real Price" />
-        <input {...register("Price.discount")} placeholder="Discount Price" />
-        {errors.Price?.real && <p>{errors.Price.real.message}</p>}
-        {errors.Price?.discount && <p>{errors.Price.discount.message}</p>}
+        <label>Product Name</label>
+        <input type="text" {...register("Name")} />
+        {errors.Name && <span>{errors.Name.message}</span>}
       </div>
 
-      <label>Description:</label>
-      <textarea {...register("Description")} />
-      {errors.Description && <p>{errors.Description.message}</p>}
+      <div>
+        <label>Main Image URL</label>
+        <input type="text" {...register("MainImage")} />
+        {errors.MainImage && <span>{errors.MainImage.message}</span>}
+      </div>
 
-      <label>Variations:</label>
-      {variationFields.map((field, index) => (
-        <div key={field.id}>
-          <label>Color:</label>
+      <div>
+        <label>Description</label>
+        <textarea {...register("Description")}></textarea>
+        {errors.Description && <span>{errors.Description.message}</span>}
+      </div>
+
+      <h3>Variations</h3>
+      {variations.map((_, index) => (
+        <div key={index}>
+          <label>Variation {index + 1} Image URLs (comma-separated)</label>
           <input
+            type="text"
+            placeholder="Image URLs (comma-separated)"
+            onChange={(e) => handleImageChange(e, index)}
+          />
+          {errors.variations?.[index]?.image && (
+            <span>{errors.variations[index].image.message}</span>
+          )}
+
+          <label>Color</label>
+          <input
+            type="text"
             {...register(`variations.${index}.color`)}
             placeholder="Color"
-            defaultValue={field.color}
           />
           {errors.variations?.[index]?.color && (
-            <p>{errors.variations[index].color.message}</p>
+            <span>{errors.variations[index].color.message}</span>
           )}
 
-          <label>Size:</label>
+          <label>Size</label>
           <input
+            type="text"
             {...register(`variations.${index}.size`)}
             placeholder="Size"
-            defaultValue={field.size}
           />
           {errors.variations?.[index]?.size && (
-            <p>{errors.variations[index].size.message}</p>
+            <span>{errors.variations[index].size.message}</span>
           )}
 
-          {mode === null && (
-            <div>
-              <button type="button" onClick={() => setMode("file")}>
-                Select Images
-              </button>
-              <button type="button" onClick={() => setMode("url")}>
-                Provide URLs
-              </button>
-            </div>
+          <label>Real Price</label>
+          <input
+            type="text"
+            {...register(`variations.${index}.price.real`)}
+            placeholder="Real Price"
+          />
+          {errors.variations?.[index]?.price?.real && (
+            <span>{errors.variations[index].price.real.message}</span>
           )}
 
-          {mode && (
-            <div>
-              <button type="button" onClick={() => setMode(null)}>
-                Change Mode
-              </button>
-            </div>
+          <label>Discount Price (optional)</label>
+          <input
+            type="text"
+            {...register(`variations.${index}.price.discount`)}
+            placeholder="Discount Price"
+          />
+
+          <label>Dimensions (L x W x H)</label>
+          <input
+            type="number"
+            placeholder="Length"
+            onChange={(e) => handleNumberChange(e, index, "dimensions.length")}
+          />
+          <input
+            type="number"
+            placeholder="Width"
+            onChange={(e) => handleNumberChange(e, index, "dimensions.width")}
+          />
+          <input
+            type="number"
+            placeholder="Height"
+            onChange={(e) => handleNumberChange(e, index, "dimensions.height")}
+          />
+          {errors.variations?.[index]?.dimensions && (
+            <span>{errors.variations[index].dimensions.message}</span>
           )}
 
-          {mode === "file" && (
-            <div>
-              <input
-                type="file"
-                multiple
-                {...register(`variations.${index}.image`)}
-                onChange={(e) => handleImageChange(e, index)}
-              />
-              {errors.variations?.[index]?.image && (
-                <p>{errors.variations[index].image.message}</p>
-              )}
-              {imagePreviews[index] && (
-                <div>
-                  {imagePreviews[index].map((image, imgIndex) => (
-                    <div
-                      key={imgIndex}
-                      style={{ position: "relative", display: "inline-block" }}
-                    >
-                      <img
-                        src={image}
-                        alt={`Preview ${index}-${imgIndex}`}
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          margin: "5px",
-                        }}
-                      />
-                      <FaTimes
-                        onClick={() => handleRemoveImage(index, imgIndex)}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          cursor: "pointer",
-                          color: "red",
-                          background: "white",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+          <label>Weight</label>
+          <input
+            type="number"
+            placeholder="Weight (kg)"
+            onChange={(e) => handleNumberChange(e, index, "weight")}
+          />
+          {errors.variations?.[index]?.weight && (
+            <span>{errors.variations[index].weight.message}</span>
           )}
 
-          {mode === "url" && (
-            <div>
-              <textarea
-                placeholder="Paste image URLs here (one per line)"
-                {...register(`variations.${index}.image`)}
-                onChange={(e) => handleUrlsChange(e, index)}
-                rows="4"
-                cols="50"
-              />
-              {errors.variations?.[index]?.image && (
-                <p>{errors.variations[index].image.message}</p>
-              )}
-              {imagePreviews[index] && (
-                <div>
-                  {imagePreviews[index].map((image, imgIndex) => (
-                    <div
-                      key={imgIndex}
-                      style={{ position: "relative", display: "inline-block" }}
-                    >
-                      <img
-                        src={image}
-                        alt={`Preview ${index}-${imgIndex}`}
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          margin: "5px",
-                        }}
-                      />
-                      <FaTimes
-                        onClick={() => handleRemoveImage(index, imgIndex)}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          cursor: "pointer",
-                          color: "red",
-                          background: "white",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+          <label>Stock</label>
+          <input
+            type="number"
+            placeholder="Stock"
+            onChange={(e) => handleNumberChange(e, index, "stock")}
+          />
+          {errors.variations?.[index]?.stock && (
+            <span>{errors.variations[index].stock.message}</span>
           )}
+
+          <label>Status</label>
+          <select {...register(`variations.${index}.status`)}>
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+            <option value="Discontinued">Discontinued</option>
+          </select>
 
           <button type="button" onClick={() => removeVariation(index)}>
             Remove Variation
           </button>
+          <hr />
         </div>
       ))}
-      <button
-        type="button"
-        onClick={() => appendVariation({ color: "", size: "", image: [] })}
-      >
+
+      <button type="button" onClick={addVariation}>
         Add Variation
       </button>
 
-      <label>Stock:</label>
-      <input type="number" {...register("stock")} />
-      {errors.stock && <p>{errors.stock.message}</p>}
+      <div>
+        <label>Is New?</label>
+        <input type="checkbox" {...register("new")} defaultChecked />
+      </div>
 
-      <label>Minimum Stock:</label>
-      <input type="number" {...register("minimumStock")} />
-      {errors.minimumStock && <p>{errors.minimumStock.message}</p>}
-
-      <label>New:</label>
-      <input type="checkbox" {...register("new")} />
-
-      <label>Carousel:</label>
-      <input type="checkbox" {...register("carousel")} />
-
+      <div>
+        <label>Show in Carousel?</label>
+        <input type="checkbox" {...register("carousel")} />
+      </div>
       <label>Category:</label>
       <Controller
         name="category"
         control={control}
         render={({ field: { onChange, onBlur, value, ref } }) => {
-          const categoryOptions = (categories || []).map((cat) => ({
+          const categoryOptions = state.categories.map((cat) => ({
             value: cat._id,
-            label: cat.Name,
+            label: cat.MainCategoryName,
           }));
 
           return (
             <Select
               onChange={(option) => {
                 console.log("Selected Category:", option); // Debugging
-                onChange(option ? option.value : ""); // Ensure it passes the correct value
+                onChange(option ? option.value : "");
+                const selectedCategoryId = option ? option.value : null;
+
+                // Set selected category and reset subcategories
+                setState((prevState) => ({
+                  ...prevState,
+                  selectedCategory: selectedCategoryId,
+                  subcategories: [], // Reset subcategories when category changes
+                }));
               }}
               onBlur={onBlur}
               value={getOptionFromValue(value, categoryOptions)} // Convert value to object format
@@ -480,156 +427,144 @@ const AddProducts = () => {
       />
       {errors.category && <p>{errors.category.message}</p>}
 
+      {/* Subcategory Select */}
       <label>Subcategory:</label>
       <Controller
         name="subcategory"
         control={control}
         render={({ field: { onChange, onBlur, value, ref } }) => {
-          const subcategoryOptions = (subcategories || []).map((subcat) => ({
-            value: subcat._id,
-            label: subcat.Name,
-          }));
+          const subcategoryOptions = Array.isArray(state.subcategories)
+            ? state.subcategories.map((subcat) => ({
+                value: subcat._id,
+                label: subcat.SubMainCategory,
+              }))
+            : [];
 
           return (
             <Select
               onChange={(option) => {
                 console.log("Selected Subcategory:", option); // Debugging
-                onChange(option ? option.value : ""); // Ensure it passes the correct value
+                onChange(option ? option.value : "");
+                setState((prevState) => ({
+                  ...prevState,
+                  selectedSubcategory: option ? option.value : null, // Update state
+                }));
               }}
               onBlur={onBlur}
-              value={getOptionFromValue(value, subcategoryOptions)} // Convert value to object format
+              value={getOptionFromValue(value, subcategoryOptions)}
               options={subcategoryOptions}
               placeholder="Select Subcategory"
               ref={ref}
+              isDisabled={!state.selectedCategory} // Disable if no category selected
             />
           );
         }}
       />
       {errors.subcategory && <p>{errors.subcategory.message}</p>}
 
-      <label>Brand:</label>
-      <input {...register("brand")} />
+      <div>
+        <label>Brand</label>
+        <input type="text" {...register("brand")} />
+      </div>
 
-      <label>Tags:</label>
-      <input
-        placeholder="Comma separated tags"
-        {...register("tags", {
-          setValueAs: (v) => {
-            // Ensure v is a string before calling split
-            if (typeof v === "string") {
-              return v
-                .split(",")
-                .map((tag) => tag.trim())
-                .filter((tag) => tag !== "");
-            }
-            return []; // Return an empty array if v is not a string
-          },
-        })}
-      />
-      {errors.tags && <p>{errors.tags.message}</p>}
+      <div>
+        <label>Tags (comma-separated)</label>
+        <input
+          type="text"
+          placeholder="Tags (comma-separated)"
+          onChange={handleTagChange} // Call custom tag handler
+        />
+        {errors.tags && <span>{errors.tags.message}</span>}
+      </div>
 
-      <label>Care Instructions:</label>
-      <textarea {...register("careInstructions")} />
+      <div>
+        <label>Care Instructions</label>
+        <textarea {...register("careInstructions")}></textarea>
+      </div>
 
-      <label>Availability:</label>
-      <Controller
-        name="availability"
-        control={control}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Select
-            onChange={(option) => {
-              console.log("Selected Availability:", option); // Debugging
-              onChange(option ? option.value : ""); // Ensure it passes the correct value
-            }}
-            onBlur={onBlur}
-            value={getOptionFromValue(value, availabilityOptions)} // Convert value to object format
-            options={availabilityOptions}
-            placeholder="Select Availability"
-            ref={ref}
-          />
+      <div>
+        <label>Availability</label>
+        <select {...register("availability")} defaultValue="In Stock">
+          <option value="In Stock">In Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+          <option value="Limited Availability">Limited Availability</option>
+          <option value="Pre-order">Pre-order</option>
+          <option value="Discontinued">Discontinued</option>
+        </select>
+        {errors.availability && (
+          <span className="error-message">{errors.availability.message}</span>
         )}
-      />
-      {errors.availability && <p>{errors.availability.message}</p>}
+      </div>
 
-      <label>Featured:</label>
-      <input type="checkbox" {...register("featured")} />
+      <div>
+        <label>Featured</label>
+        <input type="checkbox" {...register("featured")} />
+      </div>
 
-      <label>Active:</label>
-      <input type="checkbox" {...register("active")} />
+      <div>
+        <label>Active</label>
+        <input type="checkbox" {...register("active")} defaultChecked />
+      </div>
 
-      <label>Sale:</label>
-      <input type="checkbox" {...register("sale")} />
+      <div>
+        <label>On Sale?</label>
+        <input type="checkbox" {...register("sale")} />
+      </div>
 
-      <label>Meta Title:</label>
-      <input {...register("meta.title")} />
+      <div>
+        <label>Meta Title</label>
+        <input type="text" {...register("meta.title")} />
+      </div>
 
-      <label>Meta Description:</label>
-      <textarea {...register("meta.description")} />
+      <div>
+        <label>Meta Description</label>
+        <textarea {...register("meta.description")}></textarea>
+      </div>
 
-      <label>Meta Keywords:</label>
-      <input
-        {...register("meta.keywords", {
-          setValueAs: (v) => {
-            // Ensure v is a string before calling split
-            if (typeof v === "string") {
-              return v
-                .split(",")
-                .map((keyword) => keyword.trim())
-                .filter((keyword) => keyword !== "");
-            }
-            return []; // Return an empty array if v is not a string
-          },
-        })}
-        placeholder="Comma separated keywords"
-      />
-      {errors.meta?.keywords && <p>{errors.meta.keywords.message}</p>}
+      <div>
+        <label>Meta Keywords (comma-separated)</label>
+        <input type="text" onChange={handleMetaKeywordsChange} />
+        {errors.meta?.keywords && <span>{errors.meta.keywords.message}</span>}
+      </div>
+      <div className="materials-container">
+        <label htmlFor="material">Material</label>
+        <input
+          type="text"
+          id="material"
+          placeholder="Material (e.g., Cotton)"
+          {...register("material", { required: "Material is required" })}
+        />
+        {errors.material && (
+          <span className="error-message">{errors.material.message}</span>
+        )}
 
-      <label>Materials:</label>
-      {fields.map((field, index) => (
-        <div key={field.id}>
-          <input
-            {...register(`materials.${index}.material`)}
-            placeholder="Material"
-            defaultValue={field.material} // Use defaultValue for initial values
-          />
-          <input
-            type="number"
-            {...register(`materials.${index}.percentage`)}
-            placeholder="Percentage"
-            defaultValue={field.percentage} // Use defaultValue for initial values
-          />
-          {errors.materials?.[index]?.material && (
-            <p>{errors.materials[index].material.message}</p>
-          )}
-          {errors.materials?.[index]?.percentage && (
-            <p>{errors.materials[index].percentage.message}</p>
-          )}
-          <button
-            type="button"
-            onClick={() => remove(index)} // Add remove functionality if needed
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() => append({ material: "", percentage: 0 })}
-      >
-        Add Material
-      </button>
+        <label htmlFor="percentage">Percentage</label>
+        <input
+          type="number"
+          id="percentage"
+          placeholder="Percentage (e.g., 100)"
+          {...register("percentage", {
+            required: "Percentage is required",
+            min: 1,
+            max: 100,
+          })}
+        />
+        {errors.percentage && (
+          <span className="error-message">{errors.percentage.message}</span>
+        )}
+      </div>
 
-      <label>Dimensions:</label>
-      <input {...register("dimensions.length")} placeholder="Length" />
-      <input {...register("dimensions.width")} placeholder="Width" />
-      <input {...register("dimensions.height")} placeholder="Height" />
-
-      <label>Weight:</label>
-      <input type="number" {...register("weight")} />
+      <div>
+        <label>Publish Status</label>
+        <select {...register("publishStatus")}>
+          <option value="Published">Published</option>
+          <option value="Draft">Draft</option>
+        </select>
+      </div>
 
       <button type="submit">Submit</button>
     </form>
   );
 };
 
-export default AddProducts;
+export default ProductForm;

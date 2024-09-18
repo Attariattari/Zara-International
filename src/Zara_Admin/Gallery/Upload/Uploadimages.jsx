@@ -10,6 +10,7 @@ import { FcOpenedFolder } from "react-icons/fc";
 import Swal from "sweetalert2";
 import Spinner from "../../../Spinner";
 import { RiUpload2Fill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const Uploadimages = ({ closeuploadpop }) => {
   const [galleryName, setGalleryName] = useState("Default Gallery");
@@ -33,7 +34,7 @@ const Uploadimages = ({ closeuploadpop }) => {
   const fileInputRefs = useRef([]);
   const [activeFolderId, setActiveFolderId] = useState(null);
   const { token } = useContext(userContext);
-
+  const navigate = useNavigate();
   const createFolder = () => {
     setcreateFolder((prev) => !prev);
   };
@@ -316,6 +317,7 @@ const Uploadimages = ({ closeuploadpop }) => {
         "http://localhost:1122/images/upload-gallery",
         formData,
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
@@ -336,6 +338,8 @@ const Uploadimages = ({ closeuploadpop }) => {
       setTitles([]);
       setDescriptions([]);
       setTags([]);
+      navigate("/Admin/Gallery");
+      setOpenFolderId(false);
     } catch (error) {
       console.error("Error uploading gallery:", error);
       Swal.fire({

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useContext } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "./css.css";
@@ -165,7 +165,6 @@ function Gallery({ galleries }) {
             }))
           )
         );
-        console.log(imagesWithGalleryAndFolder);
         // Set images to state
         setSelectedImages(imagesWithGalleryAndFolder);
         setMessage("");
@@ -310,26 +309,115 @@ function Gallery({ galleries }) {
 
       // Update selectedImages with relevant data
       const updatedSelectedImages = updatedBulkImages.map((i) => ({
-        galleryId: image.galleryId, // Use the correct property name
-        galleryname: image.galleryname,
-        folderName: image.folderName,
-        imageId: image.title, // Assuming 'title' is the correct ID, adjust if needed
-        imageobjectid: image._id,
+        galleryname: paginatedImages[i].galleryname,
+        folderName: paginatedImages[i].folderName,
+        imageId: paginatedImages[i].title, // Assuming 'title' is the correct ID, adjust if needed
+        imageobjectid: paginatedImages[i]._id,
       }));
 
-      console.log("Updated Selected Images:", updatedSelectedImages);
       return updatedBulkImages;
     });
   };
 
-  const handleDeletePermanent = () => {
-    selectedImages.forEach((image) => {
-      const { galleryname, folderName, imageId, imageobjectid } = image; // Adjusted to use galleryName and imageId
+  const handleDeletePermanent = async () => {
+    try {
+      // Show confirmation dialog
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This action will permanently delete the selected images.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete them!",
+      });
 
-      console.log("Gallery Name:", galleryname);
-      console.log("Folder Name:", folderName);
-      console.log("Image ID:", imageobjectid); // Only the image ID, not the object ID
-    });
+      if (result.isConfirmed) {
+        // Start loading state
+        setLoading(true);
+
+        // Group images by gallery and folder
+        const imagesGrouped = selectedImages
+          .filter((image) =>
+            bulkImages.includes(paginatedImages.indexOf(image))
+          )
+          .reduce((acc, image) => {
+            const { galleryname, folderName, imageobjectid } = image;
+            const key = `${galleryname}-${folderName}`;
+            if (!acc[key]) {
+              acc[key] = {
+                galleryName: galleryname,
+                folderName: folderName,
+                imageIds: [],
+              };
+            }
+            acc[key].imageIds.push(imageobjectid);
+            return acc;
+          }, {});
+
+        // Create a list of requests to delete images
+        const deleteRequests = Object.values(imagesGrouped).map(
+          async ({ galleryName, folderName, imageIds }) => {
+            try {
+              const response = await axios({
+                method: "delete",
+                url: "http://localhost:1122/images/deleteImage",
+                data: {
+                  galleryName,
+                  folderName,
+                  imageIds, // Sending all image IDs for the gallery and folder
+                },
+                withCredentials: true,
+                headers: {
+                  Authorization: `Bearer ${token}`, // Include token if required
+                  "Content-Type": "application/json", // Ensure proper content type
+                },
+              });
+
+              // Debug: Check the response
+              console.log("Response from server:", response.data);
+
+              return response;
+            } catch (error) {
+              // If there's an error, reject the promise to stop further requests
+              throw error; // This will trigger the catch block below
+            }
+          }
+        );
+
+        // Wait for all requests to complete
+        await Promise.all(deleteRequests);
+
+        Swal.fire(
+          "Deleted!",
+          "The selected images have been deleted.",
+          "success"
+        );
+
+        // Optionally, refresh your image list or update state here
+        fetchImages();
+        setSelectedImages([]);
+        setIsBulkSelect(false);
+      }
+    } catch (error) {
+      // Handle any errors, including network issues, server errors, etc.
+      console.error("Error deleting images:", error);
+
+      // If error response exists, show it in the Swal
+      const errorMessage = error.response
+        ? error.response.data.error || "Failed to delete images."
+        : error.message || "Unknown error occurred.";
+
+      Swal.fire("Error!", errorMessage, "error");
+
+      // Optionally, handle specific errors like token expiry
+      if (error.response && error.response.status === 401) {
+        Swal.fire("Error!", "Token expired. Please log in again.", "error");
+      }
+    } finally {
+      // Stop loading state regardless of success or failure
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
