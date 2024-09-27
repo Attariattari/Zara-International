@@ -14,7 +14,6 @@ import {
 import { LiaGripHorizontalSolid } from "react-icons/lia";
 import Spinner from "../../Spinner";
 import { userContext } from "../../Context/UserContext";
-import Uploadimages from "./Upload/Uploadimages";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
 function Gallery({ galleries }) {

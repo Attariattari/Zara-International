@@ -1,0 +1,142 @@
+/* Main container styling for gallery popup */
+.Gallery-select {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    /* Dark transparent background */
+    z-index: 1000;
+    /* Ensures it stays on top */
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Main area for content inside the popup */
+.Gallery-select-mainarea {
+    background: var(--bg-color);
+    /* White background */
+    padding: 20px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 80%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for popup */
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+/* Close button for popup */
+.Gallery-select-mainarea p {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-color);
+    /* Darker color for close button */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.Gallery-select-mainarea p:hover {
+    color: #e74c3c;
+    /* Red color on hover */
+}
+
+/* Loading and message styles */
+.Gallery-select-mainarea .loading,
+.Gallery-select-mainarea .error,
+.Gallery-select-mainarea .success {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+.Gallery-select-mainarea .error {
+    color: #e74c3c;
+    /* Red color for errors */
+}
+
+.Gallery-select-mainarea .success {
+    color: #2ecc71;
+    /* Green for success */
+}
+
+/* Image grid styling */
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    /* Space between images */
+    margin-top: 20px;
+}
+
+/* Individual image styling */
+.image-item {
+    width: 100%;
+    height: 150px;
+    background-color: #f4f4f4;
+    /* Placeholder background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    /* Light shadow */
+}
+
+.image-item:hover {
+    transform: scale(1.05);
+    /* Slight zoom on hover */
+}
+
+.image-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    /* Makes sure the image fits properly */
+    transition: opacity 0.3s ease;
+}
+
+/* Popup fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* .Gallery-select {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(35, 35, 35, 0.87);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Gallery-select-mainarea {
+    width: 80%;
+    height: 80%;
+    background-color: rgba(154, 154, 154, 0.775);
+} */

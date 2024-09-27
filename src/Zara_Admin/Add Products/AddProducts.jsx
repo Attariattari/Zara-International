@@ -6,6 +6,10 @@ import "./AddProductForm.css";
 import { userContext } from "../../Context/UserContext";
 import axios from "axios";
 import Select from "react-select";
+import { IoStorefrontSharp } from "react-icons/io5";
+import { CgCopy } from "react-icons/cg";
+import { LuPlus } from "react-icons/lu";
+import GallerySelect from "./Gallery-Select/GallerySelect";
 
 // Zod Schema for validation
 const productSchema = z.object({
@@ -109,6 +113,7 @@ const ProductForm = () => {
     selectedCategory: null,
     selectedSubcategory: null,
     selectedhildsubcategory: null,
+    gallery: false,
   });
 
   // Convert comma-separated image URLs to array
@@ -296,353 +301,425 @@ const ProductForm = () => {
     setVariations(updatedVariations);
   };
 
+  const handleGallery = () => {
+    setState((prevState) => ({
+      ...prevState, // Keep previous state intact
+      gallery: true, // Update only 'gallery' property
+    }));
+  };
+  const handleGalleryfalse = () => {
+    setState((prevState) => ({
+      ...prevState, // Keep previous state intact
+      gallery: false, // Update only 'gallery' property
+    }));
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Add New Product</h2>
-
-      <div>
-        <label>Product Name</label>
-        <input type="text" {...register("Name")} />
-        {errors.Name && <span>{errors.Name.message}</span>}
-      </div>
-
-      <div>
-        <label>Main Image URL</label>
-        <input type="text" {...register("MainImage")} />
-        {errors.MainImage && <span>{errors.MainImage.message}</span>}
-      </div>
-
-      <div>
-        <label>Description</label>
-        <textarea {...register("Description")}></textarea>
-        {errors.Description && <span>{errors.Description.message}</span>}
-      </div>
-
-      <h3>Variations</h3>
-      {variations.map((_, index) => (
-        <div key={index}>
-          <label>Variation {index + 1} Image URLs (comma-separated)</label>
-          <input
-            type="text"
-            placeholder="Image URLs (comma-separated)"
-            onChange={(e) => handleImageChange(e, index)}
-          />
-          {errors.variations?.[index]?.image && (
-            <span>{errors.variations[index].image.message}</span>
-          )}
-
-          <label>Color</label>
-          <input
-            type="text"
-            {...register(`variations.${index}.color`)}
-            placeholder="Color"
-          />
-          {errors.variations?.[index]?.color && (
-            <span>{errors.variations[index].color.message}</span>
-          )}
-
-          <label>Size</label>
-          <input
-            type="text"
-            {...register(`variations.${index}.size`)}
-            placeholder="Size"
-          />
-          {errors.variations?.[index]?.size && (
-            <span>{errors.variations[index].size.message}</span>
-          )}
-
-          <label>Real Price</label>
-          <input
-            type="text"
-            {...register(`variations.${index}.price.real`)}
-            placeholder="Real Price"
-          />
-          {errors.variations?.[index]?.price?.real && (
-            <span>{errors.variations[index].price.real.message}</span>
-          )}
-
-          <label>Discount Price (optional)</label>
-          <input
-            type="text"
-            {...register(`variations.${index}.price.discount`)}
-            placeholder="Discount Price"
-          />
-
-          <label>Dimensions (L x W x H)</label>
-          <input
-            type="number"
-            placeholder="Length"
-            onChange={(e) => handleNumberChange(e, index, "dimensions.length")}
-          />
-          <input
-            type="number"
-            placeholder="Width"
-            onChange={(e) => handleNumberChange(e, index, "dimensions.width")}
-          />
-          <input
-            type="number"
-            placeholder="Height"
-            onChange={(e) => handleNumberChange(e, index, "dimensions.height")}
-          />
-          {errors.variations?.[index]?.dimensions && (
-            <span>{errors.variations[index].dimensions.message}</span>
-          )}
-
-          <label>Weight</label>
-          <input
-            type="number"
-            placeholder="Weight (kg)"
-            onChange={(e) => handleNumberChange(e, index, "weight")}
-          />
-          {errors.variations?.[index]?.weight && (
-            <span>{errors.variations[index].weight.message}</span>
-          )}
-
-          <label>Stock</label>
-          <input
-            type="number"
-            placeholder="Stock"
-            onChange={(e) => handleNumberChange(e, index, "stock")}
-          />
-          {errors.variations?.[index]?.stock && (
-            <span>{errors.variations[index].stock.message}</span>
-          )}
-
-          <label>Status</label>
-          <select {...register(`variations.${index}.status`)}>
-            <option value="In Stock">In Stock</option>
-            <option value="Out of Stock">Out of Stock</option>
-            <option value="Discontinued">Discontinued</option>
-          </select>
-
-          <button type="button" onClick={() => removeVariation(index)}>
-            Remove Variation
-          </button>
-          <hr />
+      <div className="Product">
+        <div className="Product-mainarea">
+          <div className="Product-Title">
+            <div className="Product-Title-first">
+              <IoStorefrontSharp />
+              <p>Add New Product</p>
+            </div>
+            <div className="Product-Title-second">
+              <button className="Draf-button" title="Save Draf">
+                <CgCopy className="draf-icon" />
+                <p>Save Draf</p>
+              </button>
+              <button className="Add-button" title="Add Product">
+                Add Product
+              </button>
+            </div>
+          </div>
+          <div className="Product-main-data">
+            <div className="Product-from-area">
+              <div>
+                <label>Product Name.</label>
+                <input
+                  type="text"
+                  {...register("Name")}
+                  placeholder="Enter Product Name ....."
+                />
+                {errors.Name && <span>{errors.Name.message}</span>}
+              </div>
+              <div>
+                <label>Description</label>
+                <textarea
+                  className="Product-from-area-textarea"
+                  {...register("Description")}
+                  rows={7}
+                />{" "}
+                {errors.Description && (
+                  <span className="Discription-error">
+                    {errors.Description.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="Product-detils-area">
+              <div>
+                <label>Select Main Image.</label>
+                <input
+                  className="hidden"
+                  type="text"
+                  {...register("MainImage")}
+                />
+                <div
+                  className="Product-detils-area-main-image"
+                  onClick={handleGallery}
+                >
+                  <LuPlus className="Product-detils-area-main-Plus" />
+                </div>
+                {errors.MainImage && <span>{errors.MainImage.message}</span>}
+              </div>
+            </div>
+          </div>
         </div>
-      ))}
-
-      <button type="button" onClick={addVariation}>
-        Add Variation
-      </button>
-
-      <div>
-        <label>Is New?</label>
-        <input type="checkbox" {...register("new")} defaultChecked />
       </div>
-
-      <div>
-        <label>Show in Carousel?</label>
-        <input type="checkbox" {...register("carousel")} />
-      </div>
-      <label>Category:</label>
-      <Controller
-        name="category"
-        control={control}
-        render={({ field: { onChange, onBlur, value, ref } }) => {
-          const categoryOptions = state.categories.map((cat) => ({
-            value: cat._id,
-            label: cat.MainCategoryName,
-          }));
-
-          return (
-            <Select
-              onChange={(option) => {
-                console.log("Selected Category:", option); // Debugging
-                onChange(option ? option.value : "");
-                const selectedCategoryId = option ? option.value : null;
-
-                // Set selected category and reset subcategories
-                setState((prevState) => ({
-                  ...prevState,
-                  selectedCategory: selectedCategoryId,
-                  subcategories: [], // Reset subcategories when category changes
-                }));
-              }}
-              onBlur={onBlur}
-              value={getOptionFromValue(value, categoryOptions)} // Convert value to object format
-              options={categoryOptions}
-              placeholder="Select Category"
-              ref={ref}
-            />
-          );
-        }}
-      />
-      {errors.category && <p>{errors.category.message}</p>}
-
-      {/* Subcategory Select */}
-
-      <label>Subcategory:</label>
-      <Controller
-        name="subcategory"
-        control={control}
-        render={({ field: { onChange, onBlur, value, ref } }) => {
-          const subcategoryOptions = Array.isArray(state.subcategories)
-            ? state.subcategories.map((subcat) => ({
-                value: subcat._id,
-                label: subcat.SubMainCategory,
-              }))
-            : [];
-
-          return (
-            <Select
-              onChange={(option) => {
-                console.log("Selected Subcategory:", option); // Debugging
-                onChange(option ? option.value : "");
-                setState((prevState) => ({
-                  ...prevState,
-                  selectedSubcategory: option ? option.value : null, // Update state
-                }));
-              }}
-              onBlur={onBlur}
-              value={getOptionFromValue(value, subcategoryOptions)}
-              options={subcategoryOptions}
-              placeholder="Select Subcategory"
-              ref={ref}
-              isDisabled={!state.selectedCategory} // Disable if no category selected
-            />
-          );
-        }}
-      />
-      {errors.subcategory && <p>{errors.subcategory.message}</p>}
-
-      <label>Child-Subcategory:</label>
-      <Controller
-        name="childsubcategory"
-        control={control}
-        render={({ field: { onChange, onBlur, value, ref } }) => {
-          const childsubcategoryOptions = Array.isArray(state.childsubcategory)
-            ? state.childsubcategory.map((childsubcat) => ({
-                value: childsubcat._id,
-                label: childsubcat.ChildSubCategory,
-              }))
-            : [];
-
-          return (
-            <Select
-              onChange={(option) => {
-                console.log("Selected ChildSubCategory:", option); // Debugging
-                onChange(option ? option.value : "");
-                setState((prevState) => ({
-                  ...prevState,
-                  selectedChildSubcategory: option ? option.value : null, // Update state
-                }));
-              }}
-              onBlur={onBlur}
-              value={getOptionFromValue(value, childsubcategoryOptions)}
-              options={childsubcategoryOptions}
-              placeholder="Select Child Subcategory"
-              ref={ref}
-              isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
-            />
-          );
-        }}
-      />
-      {errors.childsubcategory && <p>{errors.childsubcategory.message}</p>}
-
-      <div>
-        <label>Brand</label>
-        <input type="text" {...register("brand")} />
-      </div>
-
-      <div>
-        <label>Tags (comma-separated)</label>
-        <input
-          type="text"
-          placeholder="Tags (comma-separated)"
-          onChange={handleTagChange} // Call custom tag handler
-        />
-        {errors.tags && <span>{errors.tags.message}</span>}
-      </div>
-
-      <div>
-        <label>Care Instructions</label>
-        <textarea {...register("careInstructions")}></textarea>
-      </div>
-
-      <div>
-        <label>Availability</label>
-        <select {...register("availability")} defaultValue="In Stock">
-          <option value="In Stock">In Stock</option>
-          <option value="Out of Stock">Out of Stock</option>
-          <option value="Limited Availability">Limited Availability</option>
-          <option value="Pre-order">Pre-order</option>
-          <option value="Discontinued">Discontinued</option>
-        </select>
-        {errors.availability && (
-          <span className="error-message">{errors.availability.message}</span>
-        )}
-      </div>
-
-      <div>
-        <label>Featured</label>
-        <input type="checkbox" {...register("featured")} />
-      </div>
-
-      <div>
-        <label>Active</label>
-        <input type="checkbox" {...register("active")} defaultChecked />
-      </div>
-
-      <div>
-        <label>On Sale?</label>
-        <input type="checkbox" {...register("sale")} />
-      </div>
-
-      <div>
-        <label>Meta Title</label>
-        <input type="text" {...register("meta.title")} />
-      </div>
-
-      <div>
-        <label>Meta Description</label>
-        <textarea {...register("meta.description")}></textarea>
-      </div>
-
-      <div>
-        <label>Meta Keywords (comma-separated)</label>
-        <input type="text" onChange={handleMetaKeywordsChange} />
-        {errors.meta?.keywords && <span>{errors.meta.keywords.message}</span>}
-      </div>
-      <div className="materials-container">
-        <label htmlFor="material">Material</label>
-        <input
-          type="text"
-          id="material"
-          placeholder="Material (e.g., Cotton)"
-          {...register("material", { required: "Material is required" })}
-        />
-        {errors.material && (
-          <span className="error-message">{errors.material.message}</span>
-        )}
-
-        <label htmlFor="percentage">Percentage</label>
-        <input
-          type="number"
-          id="percentage"
-          placeholder="Percentage (e.g., 100)"
-          {...register("percentage", {
-            required: "Percentage is required",
-            min: 1,
-            max: 100,
-          })}
-        />
-        {errors.percentage && (
-          <span className="error-message">{errors.percentage.message}</span>
-        )}
-      </div>
-
-      <div>
-        <label>Publish Status</label>
-        <select {...register("publishStatus")}>
-          <option value="Published">Published</option>
-          <option value="Draft">Draft</option>
-        </select>
-      </div>
-
-      <button type="submit">Submit</button>
+      {state.gallery && (
+        <GallerySelect handleGalleryfalse={handleGalleryfalse} />
+      )}
     </form>
   );
 };
 
 export default ProductForm;
+{
+  /*                 
+              <h3>Variations</h3>
+              {variations.map((_, index) => (
+                <div key={index}>
+                  <label>
+                    Variation {index + 1} Image URLs (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Image URLs (comma-separated)"
+                    onChange={(e) => handleImageChange(e, index)}
+                  />
+                  {errors.variations?.[index]?.image && (
+                    <span>{errors.variations[index].image.message}</span>
+                  )}
+
+                  <label>Color</label>
+                  <input
+                    type="text"
+                    {...register(`variations.${index}.color`)}
+                    placeholder="Color"
+                  />
+                  {errors.variations?.[index]?.color && (
+                    <span>{errors.variations[index].color.message}</span>
+                  )}
+
+                  <label>Size</label>
+                  <input
+                    type="text"
+                    {...register(`variations.${index}.size`)}
+                    placeholder="Size"
+                  />
+                  {errors.variations?.[index]?.size && (
+                    <span>{errors.variations[index].size.message}</span>
+                  )}
+
+                  <label>Real Price</label>
+                  <input
+                    type="text"
+                    {...register(`variations.${index}.price.real`)}
+                    placeholder="Real Price"
+                  />
+                  {errors.variations?.[index]?.price?.real && (
+                    <span>{errors.variations[index].price.real.message}</span>
+                  )}
+
+                  <label>Discount Price (optional)</label>
+                  <input
+                    type="text"
+                    {...register(`variations.${index}.price.discount`)}
+                    placeholder="Discount Price"
+                  />
+
+                  <label>Dimensions (L x W x H)</label>
+                  <input
+                    type="number"
+                    placeholder="Length"
+                    onChange={(e) =>
+                      handleNumberChange(e, index, "dimensions.length")
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder="Width"
+                    onChange={(e) =>
+                      handleNumberChange(e, index, "dimensions.width")
+                    }
+                  />
+                  <input
+                    type="number"
+                    placeholder="Height"
+                    onChange={(e) =>
+                      handleNumberChange(e, index, "dimensions.height")
+                    }
+                  />
+                  {errors.variations?.[index]?.dimensions && (
+                    <span>{errors.variations[index].dimensions.message}</span>
+                  )}
+
+                  <label>Weight</label>
+                  <input
+                    type="number"
+                    placeholder="Weight (kg)"
+                    onChange={(e) => handleNumberChange(e, index, "weight")}
+                  />
+                  {errors.variations?.[index]?.weight && (
+                    <span>{errors.variations[index].weight.message}</span>
+                  )}
+
+                  <label>Stock</label>
+                  <input
+                    type="number"
+                    placeholder="Stock"
+                    onChange={(e) => handleNumberChange(e, index, "stock")}
+                  />
+                  {errors.variations?.[index]?.stock && (
+                    <span>{errors.variations[index].stock.message}</span>
+                  )}
+
+                  <label>Status</label>
+                  <select {...register(`variations.${index}.status`)}>
+                    <option value="In Stock">In Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Discontinued">Discontinued</option>
+                  </select>
+
+                  <button type="button" onClick={() => removeVariation(index)}>
+                    Remove Variation
+                  </button>
+                  <hr />
+                </div>
+              ))}
+              <button type="button" onClick={addVariation}>
+                Add Variation
+              </button>
+              <div>
+                <label>Is New?</label>
+                <input type="checkbox" {...register("new")} defaultChecked />
+              </div>
+              <div>
+                <label>Show in Carousel?</label>
+                <input type="checkbox" {...register("carousel")} />
+              </div>
+              <label>Category:</label>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field: { onChange, onBlur, value, ref } }) => {
+                  const categoryOptions = state.categories.map((cat) => ({
+                    value: cat._id,
+                    label: cat.MainCategoryName,
+                  }));
+
+                  return (
+                    <Select
+                      onChange={(option) => {
+                        console.log("Selected Category:", option); // Debugging
+                        onChange(option ? option.value : "");
+                        const selectedCategoryId = option ? option.value : null;
+
+                        // Set selected category and reset subcategories
+                        setState((prevState) => ({
+                          ...prevState,
+                          selectedCategory: selectedCategoryId,
+                          subcategories: [], // Reset subcategories when category changes
+                        }));
+                      }}
+                      onBlur={onBlur}
+                      value={getOptionFromValue(value, categoryOptions)} // Convert value to object format
+                      options={categoryOptions}
+                      placeholder="Select Category"
+                      ref={ref}
+                    />
+                  );
+                }}
+              />
+              {errors.category && <p>{errors.category.message}</p>}
+              {/* Subcategory Select */
+}
+{
+  /* <label>Subcategory:</label>
+              <Controller
+                name="subcategory"
+                control={control}
+                render={({ field: { onChange, onBlur, value, ref } }) => {
+                  const subcategoryOptions = Array.isArray(state.subcategories)
+                    ? state.subcategories.map((subcat) => ({
+                        value: subcat._id,
+                        label: subcat.SubMainCategory,
+                      }))
+                    : [];
+
+                  return (
+                    <Select
+                      onChange={(option) => {
+                        console.log("Selected Subcategory:", option); // Debugging
+                        onChange(option ? option.value : "");
+                        setState((prevState) => ({
+                          ...prevState,
+                          selectedSubcategory: option ? option.value : null, // Update state
+                        }));
+                      }}
+                      onBlur={onBlur}
+                      value={getOptionFromValue(value, subcategoryOptions)}
+                      options={subcategoryOptions}
+                      placeholder="Select Subcategory"
+                      ref={ref}
+                      isDisabled={!state.selectedCategory} // Disable if no category selected
+                    />
+                  );
+                }}
+              />
+              {errors.subcategory && <p>{errors.subcategory.message}</p>}
+              <label>Child-Subcategory:</label>
+              <Controller
+                name="childsubcategory"
+                control={control}
+                render={({ field: { onChange, onBlur, value, ref } }) => {
+                  const childsubcategoryOptions = Array.isArray(
+                    state.childsubcategory
+                  )
+                    ? state.childsubcategory.map((childsubcat) => ({
+                        value: childsubcat._id,
+                        label: childsubcat.ChildSubCategory,
+                      }))
+                    : [];
+
+                  return (
+                    <Select
+                      onChange={(option) => {
+                        console.log("Selected ChildSubCategory:", option); // Debugging
+                        onChange(option ? option.value : "");
+                        setState((prevState) => ({
+                          ...prevState,
+                          selectedChildSubcategory: option
+                            ? option.value
+                            : null, // Update state
+                        }));
+                      }}
+                      onBlur={onBlur}
+                      value={getOptionFromValue(value, childsubcategoryOptions)}
+                      options={childsubcategoryOptions}
+                      placeholder="Select Child Subcategory"
+                      ref={ref}
+                      isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
+                    />
+                  );
+                }}
+              />
+              {errors.childsubcategory && (
+                <p>{errors.childsubcategory.message}</p>
+              )} */
+}
+{
+  /* <div>
+                <label>Brand</label>
+                <input type="text" {...register("brand")} />
+              </div>
+              <div>
+                <label>Tags (comma-separated)</label>
+                <input
+                  type="text"
+                  placeholder="Tags (comma-separated)"
+                  onChange={handleTagChange} // Call custom tag handler
+                />
+                {errors.tags && <span>{errors.tags.message}</span>}
+              </div>
+              <div>
+                <label>Care Instructions</label>
+                <textarea {...register("careInstructions")}></textarea>
+              </div>
+              <div>
+                <label>Availability</label>
+                <select {...register("availability")} defaultValue="In Stock">
+                  <option value="In Stock">In Stock</option>
+                  <option value="Out of Stock">Out of Stock</option>
+                  <option value="Limited Availability">
+                    Limited Availability
+                  </option>
+                  <option value="Pre-order">Pre-order</option>
+                  <option value="Discontinued">Discontinued</option>
+                </select>
+                {errors.availability && (
+                  <span className="error-message">
+                    {errors.availability.message}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label>Featured</label>
+                <input type="checkbox" {...register("featured")} />
+              </div>
+              <div>
+                <label>Active</label>
+                <input type="checkbox" {...register("active")} defaultChecked />
+              </div>
+              <div>
+                <label>On Sale?</label>
+                <input type="checkbox" {...register("sale")} />
+              </div>
+              <div>
+                <label>Meta Title</label>
+                <input type="text" {...register("meta.title")} />
+              </div>
+              <div>
+                <label>Meta Description</label>
+                <textarea {...register("meta.description")}></textarea>
+              </div>
+              <div>
+                <label>Meta Keywords (comma-separated)</label>
+                <input type="text" onChange={handleMetaKeywordsChange} />
+                {errors.meta?.keywords && (
+                  <span>{errors.meta.keywords.message}</span>
+                )}
+              </div>
+              <div className="materials-container">
+                <label htmlFor="material">Material</label>
+                <input
+                  type="text"
+                  id="material"
+                  placeholder="Material (e.g., Cotton)"
+                  {...register("material", {
+                    required: "Material is required",
+                  })}
+                />
+                {errors.material && (
+                  <span className="error-message">
+                    {errors.material.message}
+                  </span>
+                )}
+
+                <label htmlFor="percentage">Percentage</label>
+                <input
+                  type="number"
+                  id="percentage"
+                  placeholder="Percentage (e.g., 100)"
+                  {...register("percentage", {
+                    required: "Percentage is required",
+                    min: 1,
+                    max: 100,
+                  })}
+                />
+                {errors.percentage && (
+                  <span className="error-message">
+                    {errors.percentage.message}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label>Publish Status</label>
+                <select {...register("publishStatus")}>
+                  <option value="Published">Published</option>
+                  <option value="Draft">Draft</option>
+                </select>
+              </div> */
+}
