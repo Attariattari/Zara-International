@@ -10,6 +10,7 @@ import { IoStorefrontSharp } from "react-icons/io5";
 import { CgCopy } from "react-icons/cg";
 import { LuPlus } from "react-icons/lu";
 import GallerySelect from "./Gallery-Select/GallerySelect";
+import { MdClose } from "react-icons/md";
 
 // Zod Schema for validation
 const productSchema = z.object({
@@ -82,18 +83,18 @@ const productSchema = z.object({
 });
 
 const ProductForm = () => {
-  const [variations, setVariations] = useState([
-    {
-      image: [],
-      color: "",
-      size: "",
-      price: { real: "", discount: "" },
-      dimensions: { length: 0, width: 0, height: 0 },
-      weight: 0,
-      stock: 0,
-      status: "In Stock",
-    },
-  ]);
+  // const [variations, setVariations] = useState([
+  //   {
+  //     image: [],
+  //     color: "",
+  //     size: "",
+  //     price: { real: "", discount: "" },
+  //     dimensions: { length: 0, width: 0, height: 0 },
+  //     weight: 0,
+  //     stock: 0,
+  //     status: "In Stock",
+  //   },
+  // ]);
 
   const {
     register,
@@ -114,8 +115,22 @@ const ProductForm = () => {
     selectedSubcategory: null,
     selectedhildsubcategory: null,
     gallery: false,
+    selectedMainImage: null,
+    variations: [
+      {
+        image: [],
+        color: "",
+        size: "",
+        price: { real: "", discount: "" },
+        dimensions: { length: 0, width: 0, height: 0 },
+        weight: 0,
+        stock: 0,
+        status: "In Stock",
+      },
+    ],
+    showVariationPopup: false, // For handling popup visibility
+    activeVariationIndex: null,
   });
-
   // Convert comma-separated image URLs to array
   const handleImageChange = (e, index) => {
     const value = e.target.value;
@@ -277,40 +292,72 @@ const ProductForm = () => {
     }
   };
 
-  // Handler for adding new variation
-  const addVariation = () => {
-    setVariations([
-      ...variations,
-      {
-        image: [],
-        color: "",
-        size: "",
-        price: { real: "", discount: "" },
-        dimensions: { length: 0, width: 0, height: 0 },
-        weight: 0,
-        stock: 0,
-        status: "In Stock",
-      },
-    ]);
+  const handleImageSelect = (imageURL) => {
+    setValue("MainImage", imageURL); // Set the image URL
+    setState((prevState) => ({
+      ...prevState,
+      selectedMainImage: imageURL, // Update selected main image
+      gallery: false, // Close the gallery
+    }));
   };
-
-  // Handler for removing a variation
-  const removeVariation = (index) => {
-    const updatedVariations = [...variations];
-    updatedVariations.splice(index, 1);
-    setVariations(updatedVariations);
+  const handleImageUnSelect = (imageURL) => {
+    setState((prevState) => ({
+      ...prevState,
+      selectedMainImage: false,
+      gallery: true,
+    }));
   };
 
   const handleGallery = () => {
+    if (!state.selectedMainImage) {
+      setState((prevState) => ({
+        ...prevState,
+        gallery: true, // Open the gallery
+      }));
+    }
+  };
+
+  const handleVariationClick = (index) => {
     setState((prevState) => ({
-      ...prevState, // Keep previous state intact
-      gallery: true, // Update only 'gallery' property
+      ...prevState,
+      showVariationPopup: true,
+      activeVariationIndex: index,
     }));
   };
-  const handleGalleryfalse = () => {
+
+  // Function to handle closing the popup
+  const closePopup = () => {
     setState((prevState) => ({
-      ...prevState, // Keep previous state intact
-      gallery: false, // Update only 'gallery' property
+      ...prevState,
+      showVariationPopup: false,
+      activeVariationIndex: null,
+    }));
+  };
+
+  // Function to add a new variation card
+  const addVariation = () => {
+    setState((prevState) => ({
+      ...prevState,
+      variations: [
+        ...prevState.variations,
+        {
+          image: [],
+          color: "",
+          size: "",
+          price: { real: "", discount: "" },
+          dimensions: { length: 0, width: 0, height: 0 },
+          weight: 0,
+          stock: 0,
+          status: "In Stock",
+        },
+      ],
+    }));
+  };
+
+  const removeVariation = (index) => {
+    setState((prevState) => ({
+      ...prevState,
+      variations: prevState.variations.filter((_, i) => i !== index),
     }));
   };
 
@@ -349,6 +396,7 @@ const ProductForm = () => {
                 <textarea
                   className="Product-from-area-textarea"
                   {...register("Description")}
+                  placeholder="Enter Product Detailed Discription ....."
                   rows={7}
                 />{" "}
                 {errors.Description && (
@@ -357,29 +405,219 @@ const ProductForm = () => {
                   </span>
                 )}
               </div>
+              <div>
+                <div className="Product-variation-area">
+                  <p>Variations</p>
+                  <p
+                    className="Variation-Button-product"
+                    type="button"
+                    onClick={addVariation}
+                  >
+                    Add Variation
+                  </p>
+                </div>
+
+                {/* Render cards for each variation */}
+                <div className="variation-cards">
+                  {state.variations.map((_, index) => (
+                    <div key={index} className="variation-card">
+                      <p>Variation {index + 1}</p>
+                      <p onClick={() => handleVariationClick(index)}>
+                        Click to edit details
+                      </p>
+                      <p onClick={() => removeVariation(index)}>Remove</p>{" "}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Popup for editing variation */}
+                {state.showVariationPopup && (
+                  <div className="variation-popup">
+                    <div className="popup-content">
+                      <button onClick={closePopup}>Close</button>
+                      <form onSubmit={handleSubmit(onSubmit)}>
+                        <label>Color</label>
+                        <input
+                          type="text"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.color`,
+                            {
+                              required: "Color is required",
+                            }
+                          )}
+                          placeholder="Color"
+                        />
+                        {errors.variations?.[state.activeVariationIndex]
+                          ?.color && (
+                          <span>
+                            {
+                              errors.variations[state.activeVariationIndex]
+                                .color.message
+                            }
+                          </span>
+                        )}
+
+                        <label>Size</label>
+                        <input
+                          type="text"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.size`,
+                            {
+                              required: "Size is required",
+                            }
+                          )}
+                          placeholder="Size"
+                        />
+                        {errors.variations?.[state.activeVariationIndex]
+                          ?.size && (
+                          <span>
+                            {
+                              errors.variations[state.activeVariationIndex].size
+                                .message
+                            }
+                          </span>
+                        )}
+
+                        <label>Real Price</label>
+                        <input
+                          type="text"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.price.real`,
+                            {
+                              required: "Real Price is required",
+                            }
+                          )}
+                          placeholder="Real Price"
+                        />
+                        {errors.variations?.[state.activeVariationIndex]?.price
+                          ?.real && (
+                          <span>
+                            {
+                              errors.variations[state.activeVariationIndex]
+                                .price.real.message
+                            }
+                          </span>
+                        )}
+
+                        <label>Discount Price (optional)</label>
+                        <input
+                          type="text"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.price.discount`
+                          )}
+                          placeholder="Discount Price"
+                        />
+
+                        <label>Dimensions (L x W x H)</label>
+                        <input
+                          type="number"
+                          placeholder="Length"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.dimensions.length`
+                          )}
+                        />
+                        <input
+                          type="number"
+                          placeholder="Width"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.dimensions.width`
+                          )}
+                        />
+                        <input
+                          type="number"
+                          placeholder="Height"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.dimensions.height`
+                          )}
+                        />
+
+                        <label>Weight (kg)</label>
+                        <input
+                          type="number"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.weight`
+                          )}
+                          placeholder="Weight (kg)"
+                        />
+
+                        <label>Stock</label>
+                        <input
+                          type="number"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.stock`
+                          )}
+                          placeholder="Stock"
+                        />
+
+                        <label>Status</label>
+                        <select
+                          {...register(
+                            `variations.${state.activeVariationIndex}.status`
+                          )}
+                        >
+                          <option value="In Stock">In Stock</option>
+                          <option value="Out of Stock">Out of Stock</option>
+                          <option value="Discontinued">Discontinued</option>
+                        </select>
+
+                        <button type="submit">Save Variation</button>
+                      </form>
+                    </div>
+                  </div>
+                )}
+                {errors.variations && <span>{errors.variations.message}</span>}
+              </div>
             </div>
             <div className="Product-detils-area">
               <div>
                 <label>Select Main Image.</label>
-                <input
-                  className="hidden"
-                  type="text"
-                  {...register("MainImage")}
-                />
                 <div
                   className="Product-detils-area-main-image"
-                  onClick={handleGallery}
+                  onClick={handleGallery} // Open gallery when clicked
                 >
-                  <LuPlus className="Product-detils-area-main-Plus" />
+                  {state.selectedMainImage ? (
+                    <>
+                      <img
+                        className="MainImageSlected"
+                        src={state.selectedMainImage}
+                        alt="Selected Main"
+                      />
+                      <p
+                        className="MainImageunSlected"
+                        onClick={handleImageUnSelect}
+                      >
+                        <MdClose />
+                      </p>
+                    </>
+                  ) : (
+                    <LuPlus className="Product-detils-area-main-Plus" />
+                  )}
                 </div>
                 {errors.MainImage && <span>{errors.MainImage.message}</span>}
               </div>
+              {state.variations.map((_, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    placeholder="Image URLs (comma-separated)"
+                    onChange={(e) => handleImageChange(e, index)}
+                  />
+                  {errors.variations?.[index]?.image && (
+                    <span>{errors.variations[index].image.message}</span>
+                  )}{" "}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
       {state.gallery && (
-        <GallerySelect handleGalleryfalse={handleGalleryfalse} />
+        <GallerySelect
+          handleGalleryfalse={() =>
+            setState((prevState) => ({ ...prevState, gallery: false }))
+          }
+          onSelectImage={handleImageSelect}
+        />
       )}
     </form>
   );
@@ -388,120 +626,7 @@ const ProductForm = () => {
 export default ProductForm;
 {
   /*                 
-              <h3>Variations</h3>
-              {variations.map((_, index) => (
-                <div key={index}>
-                  <label>
-                    Variation {index + 1} Image URLs (comma-separated)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Image URLs (comma-separated)"
-                    onChange={(e) => handleImageChange(e, index)}
-                  />
-                  {errors.variations?.[index]?.image && (
-                    <span>{errors.variations[index].image.message}</span>
-                  )}
-
-                  <label>Color</label>
-                  <input
-                    type="text"
-                    {...register(`variations.${index}.color`)}
-                    placeholder="Color"
-                  />
-                  {errors.variations?.[index]?.color && (
-                    <span>{errors.variations[index].color.message}</span>
-                  )}
-
-                  <label>Size</label>
-                  <input
-                    type="text"
-                    {...register(`variations.${index}.size`)}
-                    placeholder="Size"
-                  />
-                  {errors.variations?.[index]?.size && (
-                    <span>{errors.variations[index].size.message}</span>
-                  )}
-
-                  <label>Real Price</label>
-                  <input
-                    type="text"
-                    {...register(`variations.${index}.price.real`)}
-                    placeholder="Real Price"
-                  />
-                  {errors.variations?.[index]?.price?.real && (
-                    <span>{errors.variations[index].price.real.message}</span>
-                  )}
-
-                  <label>Discount Price (optional)</label>
-                  <input
-                    type="text"
-                    {...register(`variations.${index}.price.discount`)}
-                    placeholder="Discount Price"
-                  />
-
-                  <label>Dimensions (L x W x H)</label>
-                  <input
-                    type="number"
-                    placeholder="Length"
-                    onChange={(e) =>
-                      handleNumberChange(e, index, "dimensions.length")
-                    }
-                  />
-                  <input
-                    type="number"
-                    placeholder="Width"
-                    onChange={(e) =>
-                      handleNumberChange(e, index, "dimensions.width")
-                    }
-                  />
-                  <input
-                    type="number"
-                    placeholder="Height"
-                    onChange={(e) =>
-                      handleNumberChange(e, index, "dimensions.height")
-                    }
-                  />
-                  {errors.variations?.[index]?.dimensions && (
-                    <span>{errors.variations[index].dimensions.message}</span>
-                  )}
-
-                  <label>Weight</label>
-                  <input
-                    type="number"
-                    placeholder="Weight (kg)"
-                    onChange={(e) => handleNumberChange(e, index, "weight")}
-                  />
-                  {errors.variations?.[index]?.weight && (
-                    <span>{errors.variations[index].weight.message}</span>
-                  )}
-
-                  <label>Stock</label>
-                  <input
-                    type="number"
-                    placeholder="Stock"
-                    onChange={(e) => handleNumberChange(e, index, "stock")}
-                  />
-                  {errors.variations?.[index]?.stock && (
-                    <span>{errors.variations[index].stock.message}</span>
-                  )}
-
-                  <label>Status</label>
-                  <select {...register(`variations.${index}.status`)}>
-                    <option value="In Stock">In Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                    <option value="Discontinued">Discontinued</option>
-                  </select>
-
-                  <button type="button" onClick={() => removeVariation(index)}>
-                    Remove Variation
-                  </button>
-                  <hr />
-                </div>
-              ))}
-              <button type="button" onClick={addVariation}>
-                Add Variation
-              </button>
+              
               <div>
                 <label>Is New?</label>
                 <input type="checkbox" {...register("new")} defaultChecked />
