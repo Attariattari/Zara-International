@@ -255,15 +255,18 @@ function App() {
             </Route>
           </Route>
         </Routes>
-        {hasVisited && (
+        {/* {hasVisited && (
           <>
             {isChatVisible && (
-              <div className="chat-component">
+              <div className="chat-component none">
                 <Chat toggleChatUnVisibility={toggleChatUnVisibility} />
               </div>
             )}
             {!isChatVisible && (
-              <div className="ChatPopupshow" onClick={toggleChatVisibility}>
+              <div
+                className="ChatPopupshow none"
+                onClick={toggleChatVisibility}
+              >
                 <svg
                   width="24"
                   height="24"
@@ -284,7 +287,7 @@ function App() {
               </div>
             )}
           </>
-        )}
+        )} */}
       </Router>
     </div>
   );

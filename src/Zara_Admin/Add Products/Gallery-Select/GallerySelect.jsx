@@ -1,17 +1,25 @@
-import React, { useState, useRef, useEffect, useMemo, useContext } from "react";
-import "./css.css";
+import React, { useState, useEffect, useContext } from "react";
+import "./css.css"; // Add spinner styling here
 import { userContext } from "../../../Context/UserContext";
 import axios from "axios";
 import { MdClose } from "react-icons/md";
+import Spinner from "../../../Spinner";
 
-function GallerySelect({ handleGalleryfalse, onSelectImage }) {
+function GallerySelect({
+  handleGalleryfalse,
+  onSelectImage,
+  onVariationSelectImage,
+  isVariation,
+}) {
   const { token } = useContext(userContext);
   const [state, setState] = useState({
     selectedImages: [],
+    selectedImageUrls: [],
     loading: false,
     message: "",
     messageType: "",
   });
+
   useEffect(() => {
     fetchImages();
   }, []);
@@ -36,6 +44,7 @@ function GallerySelect({ handleGalleryfalse, onSelectImage }) {
         );
         setState({
           selectedImages: imageUrls,
+          selectedImageUrls: [],
           loading: false,
           message: "",
           messageType: "",
@@ -58,11 +67,38 @@ function GallerySelect({ handleGalleryfalse, onSelectImage }) {
       });
     }
   };
+
   const selectImage = (imageURL) => {
-    console.log("Selected Image URL:", imageURL); // Debugging log
     onSelectImage(imageURL); // Pass selected image URL to parent
     handleGalleryfalse(); // Close the gallery popup
   };
+  const toggleImageSelection = (imageURL) => {
+    setState((prevState) => {
+      const isAlreadySelected = prevState.selectedImageUrls.includes(imageURL);
+      const updatedSelectedImages = isAlreadySelected
+        ? prevState.selectedImageUrls.filter((url) => url !== imageURL) // Deselect
+        : [...prevState.selectedImageUrls, imageURL]; // Select
+
+      return { ...prevState, selectedImageUrls: updatedSelectedImages };
+    });
+  };
+
+  // Handle the final add button click
+  const handleAddSelectedImages = () => {
+    if (state.selectedImageUrls.length > 0) {
+      state.selectedImageUrls.forEach((imageUrl) => {
+        if (isVariation) {
+          onVariationSelectImage(imageUrl); // Handle variation images
+        } else {
+          onSelectImage(imageUrl); // Handle regular images
+        }
+      });
+      handleGalleryfalse(); // Close the gallery after adding images
+    } else {
+      alert("No images selected!");
+    }
+  };
+
   return (
     <div className="Gallery-select">
       <div className="Gallery-select-mainarea">
@@ -70,20 +106,51 @@ function GallerySelect({ handleGalleryfalse, onSelectImage }) {
           <MdClose />
         </p>
         {state.loading ? (
-          <div>Loading...</div>
+          <div className="spinner-container">
+            <Spinner />
+          </div>
         ) : state.message ? (
           <div className={state.messageType}>{state.message}</div>
         ) : (
           <div className="images-grid">
-            {state.selectedImages.map((imageUrl, index) => (
-              <div key={index} className="image-item">
-                <img
-                  src={imageUrl}
-                  alt={`image-${index}`}
-                  onClick={() => selectImage(imageUrl)} // Corrected to pass imageUrl
-                />
-              </div>
-            ))}
+            {/* Check if it is a variation gallery */}
+            {isVariation
+              ? state.selectedImages.map((imageUrl, index) => (
+                  <div key={index} className="image-item">
+                    <img
+                      src={imageUrl}
+                      alt={`image-${index}`}
+                      onClick={() => toggleImageSelection(imageUrl)}
+                      className={
+                        state.selectedImageUrls.includes(imageUrl)
+                          ? "selected"
+                          : ""
+                      }
+                    />
+                    <input
+                      type="checkbox"
+                      checked={state.selectedImageUrls.includes(imageUrl)}
+                      onChange={() => toggleImageSelection(imageUrl)}
+                    />
+                  </div>
+                ))
+              : state.selectedImages.map((imageUrl, index) => (
+                  <div key={index} className="image-item">
+                    <img
+                      src={imageUrl}
+                      alt={`image-${index}`}
+                      onClick={() => {
+                        onSelectImage(imageUrl); // Pass to main image handler
+                        handleGalleryfalse(); // Close the gallery popup
+                      }}
+                    />
+                  </div>
+                ))}
+            {isVariation && (
+              <button onClick={handleAddSelectedImages}>
+                Add Selected Images
+              </button>
+            )}
           </div>
         )}
       </div>

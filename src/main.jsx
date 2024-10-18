@@ -10,14 +10,14 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <UserContextWrapper>
-        <MeasureProvider>
-          <ThemeProvider>
-            <SidebarProvider>
-              <App />
-            </SidebarProvider>
-          </ThemeProvider>
-        </MeasureProvider>
-      </UserContextWrapper>
+    <UserContextWrapper>
+      <MeasureProvider>
+        <ThemeProvider>
+          <SidebarProvider>
+            <App />
+          </SidebarProvider>
+        </ThemeProvider>
+      </MeasureProvider>
+    </UserContextWrapper>
   </React.StrictMode>
 );

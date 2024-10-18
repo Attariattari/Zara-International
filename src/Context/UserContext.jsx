@@ -90,10 +90,10 @@ export function UserContextProvider({ children }) {
         const userDataResponse = await axios.get(
           `http://localhost:1122/user/Auth/${userId}`,
           {
-            withCredentials: true,
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            withCredentials: true,
           }
         );
 
