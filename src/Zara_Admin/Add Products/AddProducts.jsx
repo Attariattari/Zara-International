@@ -15,6 +15,7 @@ import GallerySelect from "./Gallery-Select/GallerySelect";
 import { MdClose } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper/modules";
+import { WithContext as ReactTags } from "react-tag-input";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 // Import Swiper styles
@@ -134,12 +135,39 @@ const ProductForm = () => {
     showVariationPopup: false, // For handling popup visibility
     activeVariationIndex: 0,
     defaultImage: null,
+    tags: [], // First set of tags
+    metaKeywords: [],
   });
-  // Convert comma-separated image URLs to array
-  const handleImageChange = (e, index) => {
-    const value = e.target.value;
-    const imageArray = value.split(",").map((url) => url.trim());
-    setValue(`variations.${index}.image`, imageArray);
+  const delimiters = [188, 13]; // 188 = comma, 13 = enter key
+
+  // ReactTag specific handlers for `tags`
+  const handleDeleteTags = (i) => {
+    setState((prevState) => ({
+      ...prevState,
+      tags: prevState.tags.filter((tag, index) => index !== i),
+    }));
+  };
+
+  const handleAdditionTags = (tag) => {
+    setState((prevState) => ({
+      ...prevState,
+      tags: [...prevState.tags, tag],
+    }));
+  };
+
+  // ReactTag specific handlers for `metaKeywords`
+  const handleDeleteMetaKeywords = (i) => {
+    setState((prevState) => ({
+      ...prevState,
+      metaKeywords: prevState.metaKeywords.filter((tag, index) => index !== i),
+    }));
+  };
+
+  const handleAdditionMetaKeywords = (tag) => {
+    setState((prevState) => ({
+      ...prevState,
+      metaKeywords: [...prevState.metaKeywords, tag],
+    }));
   };
 
   const handleNumberChange = (e, index, field) => {
@@ -513,7 +541,6 @@ const ProductForm = () => {
                     Add Variation
                   </p>
                 </div>
-
                 {/* Render cards for each variation */}
                 <p className="variation-cards" style={{ position: "relative" }}>
                   <spn className="Cuttoooo">
@@ -544,7 +571,7 @@ const ProductForm = () => {
                                 height: "20px",
                                 backgroundColor: "#333",
                                 color: "white",
-                                fontSize: "12px",
+                                fontSize: "15px",
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -804,169 +831,217 @@ const ProductForm = () => {
                     <input type="checkbox" {...register("sale")} />
                   </div>
                 </div>
-                <label>Category:</label>
-                <Controller
-                  name="category"
-                  className="Controller"
-                  control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => {
-                    const categoryOptions = state.categories.map((cat) => ({
-                      value: cat._id,
-                      label: cat.MainCategoryName,
-                    }));
+                <div className="Product-Categories">
+                  <label>Category:</label>
+                  <Controller
+                    name="category"
+                    className="Controller"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, ref } }) => {
+                      const categoryOptions = state.categories.map((cat) => ({
+                        value: cat._id,
+                        label: cat.MainCategoryName,
+                      }));
 
-                    return (
-                      <Select
-                        onChange={(option) => {
-                          console.log("Selected Category:", option); // Debugging
-                          onChange(option ? option.value : "");
-                          const selectedCategoryId = option
-                            ? option.value
-                            : null;
-
-                          // Set selected category and reset subcategories
-                          setState((prevState) => ({
-                            ...prevState,
-                            selectedCategory: selectedCategoryId,
-                            subcategories: [], // Reset subcategories when category changes
-                          }));
-                        }}
-                        onBlur={onBlur}
-                        value={getOptionFromValue(value, categoryOptions)} // Convert value to object format
-                        options={categoryOptions}
-                        placeholder="Select Category"
-                        ref={ref}
-                      />
-                    );
-                  }}
-                />
-                {errors.category && <p>{errors.category.message}</p>}
-                <label>Subcategory:</label>
-                <Controller
-                  name="subcategory"
-                  control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => {
-                    const subcategoryOptions = Array.isArray(
-                      state.subcategories
-                    )
-                      ? state.subcategories.map((subcat) => ({
-                          value: subcat._id,
-                          label: subcat.SubMainCategory,
-                        }))
-                      : [];
-
-                    return (
-                      <Select
-                        onChange={(option) => {
-                          console.log("Selected Subcategory:", option); // Debugging
-                          onChange(option ? option.value : "");
-                          setState((prevState) => ({
-                            ...prevState,
-                            selectedSubcategory: option ? option.value : null, // Update state
-                          }));
-                        }}
-                        onBlur={onBlur}
-                        value={getOptionFromValue(value, subcategoryOptions)}
-                        options={subcategoryOptions}
-                        placeholder="Select Subcategory"
-                        ref={ref}
-                        isDisabled={!state.selectedCategory} // Disable if no category selected
-                      />
-                    );
-                  }}
-                />
-                {errors.subcategory && <p>{errors.subcategory.message}</p>}
-                <label>Child-Subcategory:</label>
-                <Controller
-                  name="childsubcategory"
-                  control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => {
-                    const childsubcategoryOptions = Array.isArray(
-                      state.childsubcategory
-                    )
-                      ? state.childsubcategory.map((childsubcat) => ({
-                          value: childsubcat._id,
-                          label: childsubcat.ChildSubCategory,
-                        }))
-                      : [];
-
-                    return (
-                      <Select
-                        onChange={(option) => {
-                          console.log("Selected ChildSubCategory:", option); // Debugging
-                          onChange(option ? option.value : "");
-                          setState((prevState) => ({
-                            ...prevState,
-                            selectedChildSubcategory: option
+                      return (
+                        <Select
+                          onChange={(option) => {
+                            console.log("Selected Category:", option);
+                            onChange(option ? option.value : "");
+                            const selectedCategoryId = option
                               ? option.value
-                              : null, // Update state
-                          }));
-                        }}
-                        onBlur={onBlur}
-                        value={getOptionFromValue(
-                          value,
-                          childsubcategoryOptions
-                        )}
-                        options={childsubcategoryOptions}
-                        placeholder="Select Child Subcategory"
-                        ref={ref}
-                        isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
-                      />
-                    );
-                  }}
-                />
-                {errors.childsubcategory && (
-                  <p>{errors.childsubcategory.message}</p>
-                )}
+                              : null;
+
+                            setState((prevState) => ({
+                              ...prevState,
+                              selectedCategory: selectedCategoryId,
+                              subcategories: [],
+                            }));
+                          }}
+                          onBlur={onBlur}
+                          value={getOptionFromValue(value, categoryOptions)}
+                          options={categoryOptions}
+                          placeholder="Select Category"
+                          ref={ref}
+                          styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              backgroundColor: "#f0f0f0",
+                              borderColor: "#333",
+                              boxShadow: "none",
+                              display: "flex",
+                              fontSize: "15px",
+                              alignItems: "center", // Vertically center the content
+                            }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected
+                                ? "#4caf50"
+                                : "white",
+                              color: state.isSelected ? "white" : "#333",
+                              padding: 5,
+                              fontSize: "15px",
+                            }),
+                            menu: (provided) => ({
+                              ...provided,
+                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                            }),
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                  {errors.category && <p>{errors.category.message}</p>}
+                  <label>Subcategory:</label>
+                  <Controller
+                    name="subcategory"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, ref } }) => {
+                      const subcategoryOptions = Array.isArray(
+                        state.subcategories
+                      )
+                        ? state.subcategories.map((subcat) => ({
+                            value: subcat._id,
+                            label: subcat.SubMainCategory,
+                          }))
+                        : [];
+
+                      return (
+                        <Select
+                          onChange={(option) => {
+                            console.log("Selected Subcategory:", option); // Debugging
+                            onChange(option ? option.value : "");
+                            setState((prevState) => ({
+                              ...prevState,
+                              selectedSubcategory: option ? option.value : null, // Update state
+                            }));
+                          }}
+                          onBlur={onBlur}
+                          value={getOptionFromValue(value, subcategoryOptions)}
+                          options={subcategoryOptions}
+                          placeholder="Select Subcategory"
+                          ref={ref}
+                          styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              backgroundColor: "#f0f0f0",
+                              borderColor: "#333",
+                              boxShadow: "none",
+                              display: "flex",
+                              fontSize: "15px",
+                              alignItems: "center", // Vertically center the content
+                            }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected
+                                ? "#4caf50"
+                                : "white",
+                              color: state.isSelected ? "white" : "#333",
+                              padding: 5,
+                              fontSize: "15px",
+                            }),
+                            menu: (provided) => ({
+                              ...provided,
+                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                            }),
+                          }}
+                          isDisabled={!state.selectedCategory} // Disable if no category selected
+                        />
+                      );
+                    }}
+                  />
+                  {errors.subcategory && <p>{errors.subcategory.message}</p>}
+                  <label>Child-Subcategory:</label>
+                  <Controller
+                    name="childsubcategory"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value, ref } }) => {
+                      const childsubcategoryOptions = Array.isArray(
+                        state.childsubcategory
+                      )
+                        ? state.childsubcategory.map((childsubcat) => ({
+                            value: childsubcat._id,
+                            label: childsubcat.ChildSubCategory,
+                          }))
+                        : [];
+
+                      return (
+                        <Select
+                          onChange={(option) => {
+                            console.log("Selected ChildSubCategory:", option); // Debugging
+                            onChange(option ? option.value : "");
+                            setState((prevState) => ({
+                              ...prevState,
+                              selectedChildSubcategory: option
+                                ? option.value
+                                : null, // Update state
+                            }));
+                          }}
+                          onBlur={onBlur}
+                          value={getOptionFromValue(
+                            value,
+                            childsubcategoryOptions
+                          )}
+                          options={childsubcategoryOptions}
+                          placeholder="Select Child Subcategory"
+                          ref={ref}
+                          styles={{
+                            control: (provided) => ({
+                              ...provided,
+                              backgroundColor: "#f0f0f0",
+                              borderColor: "#333",
+                              boxShadow: "none",
+                              fontSize: "15px",
+                              display: "flex",
+                              alignItems: "center", // Vertically center the content
+                            }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected
+                                ? "#4caf50"
+                                : "white",
+                              color: state.isSelected ? "white" : "#333",
+                              padding: 5,
+                              fontSize: "15px",
+                            }),
+                            menu: (provided) => ({
+                              ...provided,
+                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                            }),
+                          }}
+                          isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
+                        />
+                      );
+                    }}
+                  />
+                  {errors.childsubcategory && (
+                    <p>{errors.childsubcategory.message}</p>
+                  )}
+                </div>
                 <div>
                   <label>Brand</label>
                   <input type="text" {...register("brand")} />
                 </div>
                 <div>
-                  <label>Tags (comma-separated)</label>
-                  <input
-                    type="text"
-                    placeholder="Tags (comma-separated)"
-                    onChange={handleTagChange} // Call custom tag handler
+                  <label>Tags</label>
+                  <ReactTags
+                    tags={state.tags} // First set of tags
+                    handleDelete={handleDeleteTags} // Delete handler for first set
+                    handleAddition={handleAdditionTags} // Add handler for first set
+                    delimiters={delimiters} // Comma and Enter for adding tags
+                    placeholder="Add new tag"
+                    inputFieldPosition="inline" // Input inline with tags
+                    autocomplete // Enable suggestions
                   />
                   {errors.tags && <span>{errors.tags.message}</span>}
                 </div>
                 <div>
                   <label>Care Instructions</label>
-                  <textarea {...register("careInstructions")}></textarea>
-                </div>
-                <div>
-                  <label>Availability</label>
-                  <select {...register("availability")} defaultValue="In Stock">
-                    <option value="In Stock">In Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                    <option value="Limited Availability">
-                      Limited Availability
-                    </option>
-                    <option value="Pre-order">Pre-order</option>
-                    <option value="Discontinued">Discontinued</option>
-                  </select>
-                  {errors.availability && (
-                    <span className="error-message">
-                      {errors.availability.message}
-                    </span>
-                  )}
-                </div>
-
-                <div>
-                  <label>Meta Title</label>
-                  <input type="text" {...register("meta.title")} />
-                </div>
-                <div>
-                  <label>Meta Description</label>
-                  <textarea {...register("meta.description")}></textarea>
-                </div>
-                <div>
-                  <label>Meta Keywords (comma-separated)</label>
-                  <input type="text" onChange={handleMetaKeywordsChange} />
-                  {errors.meta?.keywords && (
-                    <span>{errors.meta.keywords.message}</span>
-                  )}
+                  <textarea
+                    rows={7}
+                    placeholder="Enter CareInstructions About Product....."
+                    {...register("careInstructions")}
+                  ></textarea>
                 </div>
                 <div className="materials-container">
                   <label htmlFor="material">Material</label>
@@ -998,6 +1073,47 @@ const ProductForm = () => {
                   {errors.percentage && (
                     <span className="error-message">
                       {errors.percentage.message}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label>Meta Title</label>
+                  <input type="text" {...register("meta.title")} />
+                </div>
+                <div>
+                  <label>Meta Description</label>
+                  <textarea
+                    rows={7}
+                    placeholder="Enter Meta Discription......"
+                    {...register("meta.description")}
+                  ></textarea>
+                </div>
+                <div>
+                  <label>Meta Keywords (comma-separated)</label>
+                  <ReactTags
+                    tags={state.metaKeywords} // Second set for meta keywords
+                    handleDelete={handleDeleteMetaKeywords} // Delete handler for second set
+                    handleAddition={handleAdditionMetaKeywords} // Add handler for second set
+                    delimiters={delimiters} // Comma and Enter for adding keywords
+                    placeholder="Add new meta keyword"
+                    inputFieldPosition="inline" // Input inline with keywords
+                    autocomplete // Enable suggestions
+                  />
+                </div>
+                <div>
+                  <label>Availability</label>
+                  <select {...register("availability")} defaultValue="In Stock">
+                    <option value="In Stock">In Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Limited Availability">
+                      Limited Availability
+                    </option>
+                    <option value="Pre-order">Pre-order</option>
+                    <option value="Discontinued">Discontinued</option>
+                  </select>
+                  {errors.availability && (
+                    <span className="error-message">
+                      {errors.availability.message}
                     </span>
                   )}
                 </div>

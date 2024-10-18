@@ -180,13 +180,6 @@
     flex-direction: column;
 }
 
-.Product-from-area div {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-
 .Product-from-area label {
     font-size: 12px;
     line-height: 14px;
@@ -205,51 +198,31 @@
     background-color: var(--input-bg-color);
 }
 
-.Controller {
-    width: 100%;
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--text-color);
-    /* Ensure this matches your design */
-    background-color: var(--input-bg-color);
-    border: 1px solid var(--border-color);
-    /* Add border for visibility */
-    border-radius: 4px;
-    /* Optional: add rounded corners */
-}
-
-.Controller .Select__control {
+.Product-from-area select {
     outline: none;
-    min-height: 40px;
-    /* Increase height for better usability */
-    padding: 0 5px;
-    /* Add padding */
-}
-
-.Controller .Select__indicator {
-    color: var(--text-color);
-    /* Change arrow color */
-}
-
-/* Optionally, adjust styles for the dropdown options */
-.Controller .Select__menu {
+    width: 100%;
+    height: 30px;
+    padding: 0px 0px 0px 5px;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: 400;
+    color: var(--bg-color);
     background-color: var(--input-bg-color);
-    /* Match the dropdown menu to the input */
-    border: 1px solid var(--border-color);
 }
 
-.Controller .Select__option {
-    padding: 10px;
-    /* Add some padding to options */
-    cursor: pointer;
-    /* Pointer cursor for options */
+.Product-from-area textarea {
+    outline: none;
+    width: 100%;
+    padding: 8px 0px 0px 5px;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: 400;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: var(--bg-color);
+    background-color: var(--input-bg-color);
 }
-
-.Controller .Select__option:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    /* Add hover effect */
-}
-
 
 .Product-from-area-textarea {
     outline: none;
@@ -780,9 +753,8 @@ label {
     gap: 10px;
     margin: 20px 0;
     border: 1px solid var(--border-color);
-    padding: 10px 0px 0px 5px;
+    padding: 10px 05px 10px 5px;
 }
-
 
 .Product-Checkboxes div {
     display: flex;
@@ -810,4 +782,39 @@ label {
 
 .Product-Checkboxes input[type="checkbox"]:checked {
     border: 2px solid #007BFF;
+}
+
+.ReactTags__tags {
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ReactTags__tag {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ReactTags__remove {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #d9534f;
+}
+
+.ReactTags__tagInput {
+    display: inline-flex;
+    align-items: center;
+}
+
+.ReactTags__tagInputField {
+    width: auto;
+    border: none;
+    outline: none;
+    font-size: 14px;
 }
