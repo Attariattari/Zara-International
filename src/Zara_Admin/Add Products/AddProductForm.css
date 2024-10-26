@@ -1,9 +1,29 @@
 .Product {
     width: 100%;
-    height: auto;
+    height: 100%;
     background-color: var(--bg-color);
     color: var(--text-color);
+    position: relative;
 }
+
+.spinner-container-for-product {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    background-color: #3131319f;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.3s ease-in-out;
+    backdrop-filter: blur(05px);
+    -webkit-backdrop-filter: blur(100px);
+}
+
 
 .Product-mainarea {
     width: 100%;
@@ -262,7 +282,7 @@
     font-size: 12px;
     line-height: 14px;
     font-weight: 400;
-    color: red;
+
 }
 
 .Product-variation-area {
@@ -273,6 +293,7 @@
     justify-content: space-between;
     margin-top: 10px;
     border: 1px solid var(--scrollbar-thumb-hover);
+    user-select: none;
 }
 
 .Variation-Button-product {
@@ -293,6 +314,17 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(30px);
     background: var(--admin-bg-color);
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+
+}
+
+.Product-from-area span {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
+    color: red;
 }
 
 .Product-detils-area span {
@@ -496,7 +528,7 @@ label {
     background-color: var(--bg-color);
     width: 100%;
     height: auto;
-    margin-bottom: 10px;
+    gap: 10px;
 }
 
 
@@ -530,12 +562,45 @@ label {
     background-color: var(--input-bg-color);
 }
 
+.variation-popup option {
+    outline: none;
+    width: 100%;
+    height: 30px;
+    padding: 0px 0px 0px 5px;
+    font-size: 15px;
+    line-height: 17px;
+    font-weight: 400;
+    color: var(--bg-color);
+    background-color: var(--input-bg-color);
+}
+
 .popup-content {
     border-radius: 10px;
     width: 100%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 1010;
     position: relative;
+}
+
+.popup-content .popup-content-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-content-area div {
+    gap: 5px;
+}
+
+.Variation-Price {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
 }
 
 .Variation-Deimensisons {
@@ -584,11 +649,44 @@ label {
 
 
 .variation-Images {
-    width: 232px;
+    width: 100%;
+
     height: auto;
+    max-height: 300px;
     margin: 10px 0px 10px 0px;
     border-top: 1px solid var(--button-bg-color);
     user-select: none;
+    overflow: hidden;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+}
+
+.variation-Images-main-area {
+    width: 232px;
+    max-width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin-top: 5px;
+    padding: 05px 05px 0px 0px;
+}
+
+.Product-Categories {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+    gap: 05px;
+}
+
+.Product-Categories .Controller {
+    width: 100%;
+    background-color: #313131;
+    color: #313131;
+
 }
 
 .image-wrapper {
@@ -793,8 +891,9 @@ label {
 }
 
 .ReactTags__tag {
-    background-color: #f1f1f1;
-    padding: 5px 10px;
+    background-color: #313131;
+    color: var(--text-color);
+    padding: 5px 05px;
     margin: 2px;
     border-radius: 3px;
     display: inline-flex;
@@ -804,7 +903,9 @@ label {
 .ReactTags__remove {
     margin-left: 8px;
     cursor: pointer;
-    color: #d9534f;
+    color: var(--text-color);
+    height: 20px;
+    Border: none
 }
 
 .ReactTags__tagInput {

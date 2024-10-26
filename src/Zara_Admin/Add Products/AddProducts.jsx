@@ -18,23 +18,26 @@ import { FreeMode, Pagination } from "swiper/modules";
 import { WithContext as ReactTags } from "react-tag-input";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-// Zod Schema for validation
+import colorNames from "color-name";
+import Swal from "sweetalert2";
+import Spinner from "../../Spinner";
 const productSchema = z.object({
   Name: z.string().min(1, "Product name is required"),
-  MainImage: z.string().url("Main image must be a valid URL"),
+  MainImage: z
+    .string()
+    .url("Main image must be a valid URL")
+    .nonempty("Main image is required"),
   Description: z.string().min(1, "Description is required"),
   variations: z
     .array(
       z.object({
         image: z
           .array(z.string().url("Each image URL must be valid"))
-          .refine((val) => val.length > 0, {
-            message: "At least one image is required",
-          }),
+          .nonempty("At least one image URL is required"), // Ensuring array is not empty
+
         color: z.string().min(1, "Color is required"),
         size: z.string().min(1, "Size is required"),
         dimensions: z
@@ -56,6 +59,17 @@ const productSchema = z.object({
           .optional(),
         weight: z.number().optional(),
         stock: z.number().min(1, "Stock must be at least 0"),
+        material: z
+          .object({
+            material: z.string().optional(),
+            percentage: z
+              .number()
+              .min(1, "Percentage must be at least 1")
+              .max(100, "Percentage cannot exceed 100")
+              .optional(),
+          })
+          .optional(), // Add optional here
+
         price: z.object({
           real: z.string().min(1, "Real price is required"),
           discount: z.string().optional(),
@@ -85,17 +99,9 @@ const productSchema = z.object({
       keywords: z.array(z.string()).optional(),
     })
     .optional(),
-  materials: z
-    .array(
-      z.object({
-        material: z.string().min(1, "Material is required"),
-        percentage: z.number().min(0, "Percentage must be a positive number"),
-      })
-    )
-    .optional(),
+
   publishStatus: z.enum(["Published", "Draft"]).default("Draft"),
 });
-
 const ProductForm = () => {
   const {
     register,
@@ -126,6 +132,7 @@ const ProductForm = () => {
         color: "",
         size: "",
         price: { real: "", discount: "" },
+        material: undefined,
         dimensions: { length: 0, width: 0, height: 0 },
         weight: 0,
         stock: 0,
@@ -137,10 +144,53 @@ const ProductForm = () => {
     defaultImage: null,
     tags: [], // First set of tags
     metaKeywords: [],
+    loading: false,
   });
   const delimiters = [188, 13]; // 188 = comma, 13 = enter key
+  useEffect(() => {
+    // Scroll position ko top pe set karta hai jab component render ho
+    window.scrollTo(0, 0);
+  }, []);
+  const hexToColorName = (hex) => {
+    const rgb = parseInt(hex.slice(1), 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
 
-  // ReactTag specific handlers for `tags`
+    let closestColorName = "Unknown Color";
+    let minDistance = Infinity;
+
+    for (const [name, rgbValues] of Object.entries(colorNames)) {
+      const distance = Math.sqrt(
+        Math.pow(rgbValues[0] - r, 2) +
+          Math.pow(rgbValues[1] - g, 2) +
+          Math.pow(rgbValues[2] - b, 2)
+      );
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestColorName = name;
+      }
+    }
+
+    return closestColorName;
+  };
+
+  // Handle Color Change
+  const handleColorChange = (event) => {
+    const selectedHex = event.target.value;
+    const colorName = hexToColorName(selectedHex);
+
+    setState((prevState) => ({
+      ...prevState,
+      variations: prevState.variations.map((variation, index) =>
+        index === prevState.activeVariationIndex
+          ? { ...variation, color: colorName }
+          : variation
+      ),
+    }));
+  };
+
   const handleDeleteTags = (i) => {
     setState((prevState) => ({
       ...prevState,
@@ -149,10 +199,20 @@ const ProductForm = () => {
   };
 
   const handleAdditionTags = (tag) => {
-    setState((prevState) => ({
-      ...prevState,
-      tags: [...prevState.tags, tag],
-    }));
+    setState((prevState) => {
+      const updatedTags = [...prevState.tags, tag];
+
+      // Extract only the `text` values from the tags array
+      const tagTexts = updatedTags.map((t) => t.text);
+
+      // Update form with the extracted tag text array
+      setValue("tags", tagTexts);
+
+      return {
+        ...prevState,
+        tags: updatedTags,
+      };
+    });
   };
 
   // ReactTag specific handlers for `metaKeywords`
@@ -164,34 +224,31 @@ const ProductForm = () => {
   };
 
   const handleAdditionMetaKeywords = (tag) => {
-    setState((prevState) => ({
-      ...prevState,
-      metaKeywords: [...prevState.metaKeywords, tag],
-    }));
+    setState((prevState) => {
+      const updatedmeta = [...prevState.metaKeywords, tag];
+
+      // Extract only the `text` values from the tags array
+      const tagTexts = updatedmeta.map((t) => t.text);
+
+      // Update form with the extracted tag text array
+      setValue("meta.keywords", tagTexts);
+
+      return {
+        ...prevState,
+        metaKeywords: updatedmeta,
+      };
+    });
   };
 
-  const handleNumberChange = (e, index, field) => {
-    const value = e.target.value;
-    const numberValue = parseFloat(value); // Convert string to number
-    setValue(`variations.${index}.${field}`, numberValue); // Update state
-  };
   const handleNumberChangeStock = (e, index, field) => {
     const value = e.target.value;
     const numberValue = value ? parseFloat(value) : 0; // Convert string to number or set to 0
     setValue(`variations.${index}.${field}`, numberValue); // Update state
   };
-
-  // Function to convert comma-separated tags string to array
-  const handleTagChange = (e) => {
+  const handleNumberChange = (e, index, field) => {
     const value = e.target.value;
-    const tagsArray = value.split(",").map((tag) => tag.trim()); // Trimmed array of tags
-    setValue("tags", tagsArray); // Set value as array
-  };
-  // Function to convert comma-separated meta keywords string to array
-  const handleMetaKeywordsChange = (e) => {
-    const value = e.target.value;
-    const keywordsArray = value.split(",").map((keyword) => keyword.trim());
-    setValue("meta.keywords", keywordsArray); // Set value as array
+    const numberValue = value ? parseFloat(value) : undefined; // Convert to number or set to undefined
+    setValue(`variations.${index}.${field}`, numberValue); // Update field value
   };
 
   useEffect(() => {
@@ -300,17 +357,77 @@ const ProductForm = () => {
     return options.find((option) => option.value === value) || null;
   };
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  // Helper function to reset the state
+  const resetState = () => {
+    setState((prevState) => ({
+      ...prevState,
+      categories: [],
+      subcategories: [],
+      childsubcategory: [],
+      selectedCategory: null,
+      selectedSubcategory: null,
+      selectedChildSubcategory: null,
+      gallery: false,
+      galleryVariaton: false,
+      selectedMainImage: null,
+      selectedVariationimages: null,
+      isVariation: false,
+      variations: [
+        {
+          image: [],
+          color: "",
+          size: "",
+          price: { real: "", discount: "" },
+          material: undefined,
+          dimensions: { length: 0, width: 0, height: 0 },
+          weight: 0,
+          stock: 0,
+          status: "In Stock",
+        },
+      ],
+      showVariationPopup: false,
+      activeVariationIndex: 0,
+      defaultImage: null,
+      tags: [],
+      metaKeywords: [],
+      loading: false,
+    }));
+  };
+
+  const onSubmit = async (data, event) => {
+    event.preventDefault();
+
+    // Loading state set karein
+    setState((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
+
     try {
-      // Agar data valid hai, toh API request karo
       const updatedData = {
-        ...data,
-        category: state.selectedCategory,
-        subcategory: state.selectedSubcategory,
-        childsubcategory: state.selectedChildSubcategory,
+        Name: data.Name,
+        MainImage: data.MainImage,
+        Description: data.Description,
+        variations: data.variations,
+        new: data.new,
+        carousel: data.carousel,
+        category: data.category,
+        subcategory: data.subcategory,
+        childsubcategory: data.childsubcategory,
+        brand: data.brand,
+        tags: data.tags,
+        careInstructions: data.careInstructions,
+        availability: data.availability,
+        featured: data.featured,
+        active: data.active,
+        sale: data.sale,
+        meta: data.meta,
+        publishStatus: data.publishStatus,
       };
-      console.log("Product created successfully:", response.data);
+
+      console.log("Final Data to be Sent:", updatedData);
+
+      // API call with await to ensure it completes before moving forward
       const response = await axios.post(
         "http://localhost:1122/Product/Create",
         updatedData,
@@ -324,11 +441,31 @@ const ProductForm = () => {
       );
 
       console.log("Product created successfully:", response.data);
-      reset(); // Reset the form after submission
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: response.data.message || "Product created successfully!",
+        confirmButtonText: "OK",
+      });
+
+      // Call resetState function to clear all states on success
+      resetState();
+      reset();
     } catch (error) {
-      console.error("Error creating product:", error); // Console mein error dikhaye
+      console.error("Error creating product:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error.response?.data?.error || "Something went wrong!",
+        confirmButtonText: "OK",
+      });
+    } finally {
+      // Loading reset after response is received
+      setState((prevState) => ({
+        ...prevState,
+        loading: false,
+      }));
     }
-    console.log("Product created successfully:", response.data);
   };
 
   const handleImageSelect = (imageURL) => {
@@ -347,52 +484,65 @@ const ProductForm = () => {
     }));
   };
 
-  const handleVariationImages = (imageURL) => {
+  const handleVariationImages = (imageURLs) => {
+    const currentVariationIndex = state.activeVariationIndex;
+
     setState((prevState) => {
-      console.log("Previous State:", prevState); // Debugging
+      const updatedVariations = prevState.variations.map((variation, index) => {
+        if (index === currentVariationIndex) {
+          // Initialize image array if it doesn't exist
+          const newImagesArray = variation.image ? [...variation.image] : [];
 
-      const currentVariation =
-        prevState.variations[prevState.activeVariationIndex];
+          // Loop through each imageURL in the array
+          imageURLs.forEach((imageURL) => {
+            if (!newImagesArray.includes(imageURL)) {
+              newImagesArray.push(imageURL); // Add new image
+            } else {
+              console.log(
+                `${imageURL} is already selected. Skipping this image.`
+              );
+            }
+          });
 
-      const isImageSelected = currentVariation?.image.includes(imageURL);
+          // Update the state
+          setValue(`variations.${currentVariationIndex}.image`, newImagesArray); // Update form value
 
-      if (isImageSelected) {
-        alert("This image is already selected. Kindly select another image."); // Show error message
-        return prevState; // Do not update the state if image is already selected
-      }
+          return {
+            ...variation,
+            image: newImagesArray, // Update the images array
+          };
+        }
+        return variation;
+      });
 
-      const updatedImages = [...currentVariation.image, imageURL]; // Add new image to variation
-
-      const updatedVariations = [...prevState.variations];
-      updatedVariations[prevState.activeVariationIndex] = {
-        ...currentVariation,
-        image: updatedImages,
-      };
-
+      console.log(
+        "Updated Images Array:",
+        updatedVariations[currentVariationIndex].image
+      );
       return {
         ...prevState,
         variations: updatedVariations,
-        gallery: false,
       };
     });
   };
 
   const handleVariationImagesUnselect = (imageURL) => {
     setState((prevState) => {
-      const updatedImages = prevState.variations[
-        prevState.activeVariationIndex
-      ]?.image.filter((img) => img !== imageURL); // Filter out the clicked image
-
-      const updatedVariations = [...prevState.variations];
-      updatedVariations[prevState.activeVariationIndex] = {
-        ...updatedVariations[prevState.activeVariationIndex],
-        image: updatedImages,
-      };
+      // Loop through all variations to find and remove the image
+      const updatedVariations = prevState.variations.map((variation) => {
+        // Check if the current variation contains the image
+        if (variation.image.includes(imageURL)) {
+          return {
+            ...variation,
+            image: variation.image.filter((img) => img !== imageURL), // Remove the image from this variation
+          };
+        }
+        return variation; // If image not found, return variation as is
+      });
 
       return {
         ...prevState,
         variations: updatedVariations, // Update variations in state
-        selectedVariationimages: updatedImages, // Update selected images state if needed
       };
     });
   };
@@ -442,6 +592,7 @@ const ProductForm = () => {
           color: "",
           size: "",
           price: { real: "", discount: "" },
+          material: { material: "", percentage: 0 },
           dimensions: { length: 0, width: 0, height: 0 },
           weight: 0,
           stock: 0,
@@ -453,28 +604,33 @@ const ProductForm = () => {
 
   const removeVariation = (index) => {
     setState((prevState) => {
-      // If the removed variation is the one that is currently being edited in the popup, close the popup
+      // Agar sirf 1 variation reh jaye, to delete na karein
+      if (prevState.variations.length === 1) {
+        return prevState; // Kuch bhi nahi badlega, delete nahi karega
+      }
+
+      // Agar active variation ko delete karna ho, to popup band kardo
       if (prevState.activeVariationIndex === index) {
         return {
           ...prevState,
           variations: prevState.variations.filter((_, i) => i !== index),
-          showVariationPopup: false, // Close the popup
-          activeVariationIndex: null, // Reset the active index
+          showVariationPopup: false, // Popup close
+          activeVariationIndex: null, // Active index reset
         };
       }
 
-      // Close popup if any other variation is removed and active one becomes out of bounds
+      // Agar koi aur variation delete ho aur active wala out of bounds ho jaye
       const newVariations = prevState.variations.filter((_, i) => i !== index);
       if (prevState.activeVariationIndex >= newVariations.length) {
         return {
           ...prevState,
           variations: newVariations,
-          showVariationPopup: false, // Close the popup
-          activeVariationIndex: null, // Reset the active index
+          showVariationPopup: false, // Popup close
+          activeVariationIndex: null, // Active index reset
         };
       }
 
-      // Default case, remove the variation without affecting the popup
+      // Default case, variation ko delete karo bina popup ke effect ke
       return {
         ...prevState,
         variations: newVariations,
@@ -485,6 +641,11 @@ const ProductForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="Product">
+        {state.loading && (
+          <div className="spinner-container-for-product">
+            <Spinner />
+          </div>
+        )}
         <div className="Product-mainarea">
           <div className="Product-Title">
             <div className="Product-Title-first">
@@ -497,11 +658,11 @@ const ProductForm = () => {
                 <p>Save Draf</p>
               </button>
               <button
-                onClick={onSubmit}
+                onClick={(e) => onSubmit}
                 className="Add-button"
                 title="Add Product"
               >
-                Add Product
+                {state.loading ? "Loading..." : "Submit"}
               </button>
             </div>
           </div>
@@ -541,7 +702,6 @@ const ProductForm = () => {
                     Add Variation
                   </p>
                 </div>
-                {/* Render cards for each variation */}
                 <p className="variation-cards" style={{ position: "relative" }}>
                   <spn className="Cuttoooo">
                     <Swiper
@@ -627,503 +787,577 @@ const ProductForm = () => {
                       <MdClose />
                     </button>{" "}
                     <div className="popup-content">
-                      <form onSubmit={handleSubmit(onSubmit)}>
-                        <label>Color</label>
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.color`,
-                            {
-                              required: "Color is required",
-                            }
-                          )}
-                          placeholder="Color"
-                        />
-                        {errors.variations?.[state.activeVariationIndex]
-                          ?.color && (
-                          <span>
-                            {
-                              errors.variations[state.activeVariationIndex]
-                                .color.message
-                            }
-                          </span>
-                        )}
-
-                        <label>Size</label>
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.size`,
-                            {
-                              required: "Size is required",
-                            }
-                          )}
-                          placeholder="Size"
-                        />
-                        {errors.variations?.[state.activeVariationIndex]
-                          ?.size && (
-                          <span>
-                            {
-                              errors.variations[state.activeVariationIndex].size
-                                .message
-                            }
-                          </span>
-                        )}
-
-                        <label>Real Price</label>
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.price.real`,
-                            {
-                              required: "Real Price is required",
-                            }
-                          )}
-                          placeholder="Real Price"
-                        />
-                        {errors.variations?.[state.activeVariationIndex]?.price
-                          ?.real && (
-                          <span>
-                            {
-                              errors.variations[state.activeVariationIndex]
-                                .price.real.message
-                            }
-                          </span>
-                        )}
-
-                        <label>Discount Price (optional)</label>
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.price.discount`
-                          )}
-                          placeholder="Discount Price"
-                        />
-                        {errors.variations?.[state.activeVariationIndex]?.price
-                          ?.discount && (
-                          <span>
-                            {
-                              errors.variations[state.activeVariationIndex]
-                                .price.discount.message
-                            }
-                          </span>
-                        )}
-                        <label>Dimensions (L x W x H)</label>
-                        <div className="Variation-Deimensisons">
+                      <div className="popup-content-area">
+                        <div>
+                          <label>Color</label>
                           <input
-                            type="text"
-                            placeholder="Length"
-                            onChange={(e) =>
-                              handleNumberChange(e, "dimensions.length")
-                            }
+                            type="color"
+                            style={{ paddingRight: "0px" }}
+                            {...register(
+                              `variations.${state.activeVariationIndex}.color`,
+                              {
+                                required: "Color is required",
+                              }
+                            )}
+                            onChange={handleColorChange}
                           />
+                          {/* <p>
+                            {state.variations[state.activeVariationIndex].color}
+                          </p> */}
                           {errors.variations?.[state.activeVariationIndex]
-                            ?.dimensions?.length && (
+                            ?.color && (
                             <span>
                               {
                                 errors.variations[state.activeVariationIndex]
-                                  .dimensions.length.message
+                                  .color.message
                               }
                             </span>
                           )}
+                        </div>
+                        <div>
+                          <label>Stock</label>
                           <input
-                            type="text"
-                            placeholder="Width"
+                            type="number"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.stock`
+                            )}
                             onChange={(e) =>
-                              handleNumberChange(e, "dimensions.width")
+                              handleNumberChangeStock(
+                                e,
+                                state.activeVariationIndex,
+                                "stock"
+                              )
                             }
+                            onBlur={(e) =>
+                              handleNumberChangeStock(
+                                e,
+                                state.activeVariationIndex,
+                                "stock"
+                              )
+                            } // Add onBlur
+                            placeholder="Stock"
                           />
-                          <input
-                            type="text"
-                            placeholder="Height"
-                            onChange={(e) =>
-                              handleNumberChange(e, "dimensions.height")
-                            }
-                          />
-                          {errors.variations?.dimensions && (
-                            <span>{errors.variations.dimensions.message}</span>
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.stock && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .stock.message
+                              }
+                            </span>
                           )}
                         </div>
-                        <label>Weight</label>
+                      </div>
+
+                      <label>Dimensions (L x W x H)</label>
+                      <div className="Variation-Deimensisons">
                         <input
                           type="text"
-                          placeholder="Weight (kg)"
-                          onChange={(e) => handleNumberChange(e, "weight")}
-                        />
-                        {errors.variations?.weight && (
-                          <span>{errors.variations.weight.message}</span>
-                        )}
-
-                        <label>Stock</label>
-                        <input
-                          type="number"
                           {...register(
-                            `variations.${state.activeVariationIndex}.stock`
+                            `variations.${state.activeVariationIndex}.dimensions.length`,
+                            {
+                              valueAsNumber: true,
+                              required: "Length is required",
+                            }
                           )}
-                          onChange={(e) =>
-                            handleNumberChangeStock(
-                              e,
-                              state.activeVariationIndex,
-                              "stock"
-                            )
-                          }
-                          onBlur={(e) =>
-                            handleNumberChangeStock(
-                              e,
-                              state.activeVariationIndex,
-                              "stock"
-                            )
-                          } // Add onBlur
-                          placeholder="Stock"
+                          placeholder="Length"
                         />
                         {errors.variations?.[state.activeVariationIndex]
-                          ?.stock && (
+                          ?.dimensions?.length && (
                           <span>
                             {
                               errors.variations[state.activeVariationIndex]
-                                .stock.message
+                                .dimensions.length.message
                             }
                           </span>
                         )}
 
-                        <label>Status</label>
-                        <select
+                        <input
+                          type="text"
                           {...register(
-                            `variations.${state.activeVariationIndex}.status`
+                            `variations.${state.activeVariationIndex}.dimensions.width`,
+                            {
+                              valueAsNumber: true,
+                            }
                           )}
-                        >
-                          <option value="In Stock">In Stock</option>
-                          <option value="Out of Stock">Out of Stock</option>
-                          <option value="Discontinued">Discontinued</option>
-                        </select>
-                      </form>
+                          placeholder="Width"
+                        />
+
+                        <input
+                          type="text"
+                          {...register(
+                            `variations.${state.activeVariationIndex}.dimensions.height`,
+                            {
+                              valueAsNumber: true,
+                            }
+                          )}
+                          placeholder="Height"
+                        />
+                      </div>
+                      <div className="Variation-Price">
+                        <div>
+                          <label>Real Price</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.price.real`,
+                              {
+                                required: "Real Price is required",
+                              }
+                            )}
+                            placeholder="Real Price"
+                          />
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.price?.real && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .price.real.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                        <div>
+                          <label>Discount Price (optional)</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.price.discount`
+                            )}
+                            placeholder="Discount Price"
+                          />
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.price?.discount && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .price.discount.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="popup-content-area">
+                        <div>
+                          <label htmlFor="material">Material</label>
+                          <input
+                            type="text"
+                            id="material"
+                            placeholder="Material (e.g., Cotton)"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.material.material`,
+                              {
+                                required: "Material is required",
+                              }
+                            )}
+                          />
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.material?.material && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .material.material.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                        <div>
+                          <label htmlFor="percentage">Percentage</label>
+                          <input
+                            type="number"
+                            placeholder="Percentage (e.g., 100)"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.material.percentage`,
+                              {
+                                required: "Percentage is required",
+                                min: {
+                                  value: 1,
+                                  message: "Percentage must be at least 1",
+                                },
+                                max: {
+                                  value: 100,
+                                  message: "Percentage cannot exceed 100",
+                                },
+                              }
+                            )}
+                            onChange={(e) =>
+                              handleNumberChange(
+                                e,
+                                state.activeVariationIndex,
+                                "material.percentage"
+                              )
+                            }
+                            onBlur={(e) =>
+                              handleNumberChange(
+                                e,
+                                state.activeVariationIndex,
+                                "material.percentage"
+                              )
+                            } // Optional: update on blur
+                          />
+
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.material?.percentage && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .material.percentage.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                        <div>
+                          <label>Weight</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.weight`,
+                              {
+                                valueAsNumber: true,
+                              }
+                            )}
+                            placeholder="Weight (kg)"
+                          />
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.weight && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .weight.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="popup-content-area">
+                        <div>
+                          <label>Size</label>
+                          <select
+                            {...register(
+                              `variations.${state.activeVariationIndex}.size`,
+                              {
+                                required: "Size is required",
+                              }
+                            )}
+                          >
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                          </select>
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.size && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .size.message
+                              }
+                            </span>
+                          )}
+                        </div>
+                        <div>
+                          <label>Status</label>
+                          <select
+                            {...register(
+                              `variations.${state.activeVariationIndex}.status`
+                            )}
+                          >
+                            <option value="In Stock">In Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                            <option value="Discontinued">Discontinued</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Popup>
                 {errors.variations && <span>{errors.variations.message}</span>}
-                <div className="Product-Checkboxes">
-                  <div>
-                    <label>Is New?</label>
-                    <input
-                      type="checkbox"
-                      {...register("new")}
-                      defaultChecked
-                    />
-                  </div>
-                  <div>
-                    <label>Show in Carousel?</label>
-                    <input type="checkbox" {...register("carousel")} />
-                  </div>
-                  <div>
-                    <label>Featured</label>
-                    <input type="checkbox" {...register("featured")} />
-                  </div>
-                  <div>
-                    <label>Active</label>
-                    <input
-                      type="checkbox"
-                      {...register("active")}
-                      defaultChecked
-                    />
-                  </div>
-                  <div>
-                    <label>On Sale?</label>
-                    <input type="checkbox" {...register("sale")} />
-                  </div>
+              </div>
+              <div className="Product-Checkboxes">
+                <div>
+                  <label>Is New?</label>
+                  <input type="checkbox" {...register("new")} defaultChecked />
                 </div>
-                <div className="Product-Categories">
-                  <label>Category:</label>
-                  <Controller
-                    name="category"
-                    className="Controller"
-                    control={control}
-                    render={({ field: { onChange, onBlur, value, ref } }) => {
-                      const categoryOptions = state.categories.map((cat) => ({
-                        value: cat._id,
-                        label: cat.MainCategoryName,
-                      }));
+                <div>
+                  <label>Show in Carousel?</label>
+                  <input type="checkbox" {...register("carousel")} />
+                </div>
+                <div>
+                  <label>Featured</label>
+                  <input type="checkbox" {...register("featured")} />
+                </div>
+                <div>
+                  <label>Active</label>
+                  <input
+                    type="checkbox"
+                    {...register("active")}
+                    defaultChecked
+                  />
+                </div>
+                <div>
+                  <label>On Sale?</label>
+                  <input type="checkbox" {...register("sale")} />
+                </div>
+              </div>
+              <div className="Product-Categories">
+                <label>Category:</label>
+                <Controller
+                  name="category"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value, ref } }) => {
+                    const categoryOptions = state.categories.map((cat) => ({
+                      value: cat._id,
+                      label: cat.MainCategoryName,
+                    }));
 
-                      return (
-                        <Select
-                          onChange={(option) => {
-                            console.log("Selected Category:", option);
-                            onChange(option ? option.value : "");
-                            const selectedCategoryId = option
+                    return (
+                      <Select
+                        onChange={(option) => {
+                          onChange(option ? option.value : "");
+                          const selectedCategoryId = option
+                            ? option.value
+                            : null;
+
+                          setState((prevState) => ({
+                            ...prevState,
+                            selectedCategory: selectedCategoryId,
+                            subcategories: [],
+                          }));
+                        }}
+                        onBlur={onBlur}
+                        className="Controller"
+                        value={getOptionFromValue(value, categoryOptions)}
+                        options={categoryOptions}
+                        placeholder="Select Category"
+                        ref={ref}
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                          }),
+                          option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: state.isSelected
+                              ? "#4caf50"
+                              : "white",
+                            color: state.isSelected ? "white" : "#333",
+                            padding: 5,
+                            fontSize: "15px",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                          }),
+                        }}
+                      />
+                    );
+                  }}
+                />
+                {errors.category && <span>{errors.category.message}</span>}
+                <label>Subcategory:</label>
+                <Controller
+                  name="subcategory"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value, ref } }) => {
+                    const subcategoryOptions = Array.isArray(
+                      state.subcategories
+                    )
+                      ? state.subcategories.map((subcat) => ({
+                          value: subcat._id,
+                          label: subcat.SubMainCategory,
+                        }))
+                      : [];
+
+                    return (
+                      <Select
+                        onChange={(option) => {
+                          onChange(option ? option.value : "");
+                          setState((prevState) => ({
+                            ...prevState,
+                            selectedSubcategory: option ? option.value : null, // Update state
+                          }));
+                        }}
+                        onBlur={onBlur}
+                        className="Controller"
+                        value={getOptionFromValue(value, subcategoryOptions)}
+                        options={subcategoryOptions}
+                        placeholder="Select Subcategory"
+                        ref={ref}
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                          }),
+                          option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: state.isSelected
+                              ? "#4caf50"
+                              : "white",
+                            color: state.isSelected ? "white" : "#333",
+                            padding: 5,
+                            fontSize: "15px",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                          }),
+                        }}
+                        isDisabled={!state.selectedCategory} // Disable if no category selected
+                      />
+                    );
+                  }}
+                />
+                {errors.subcategory && (
+                  <span>{errors.subcategory.message}</span>
+                )}
+                <label>Child-Subcategory:</label>
+                <Controller
+                  name="childsubcategory"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value, ref } }) => {
+                    const childsubcategoryOptions = Array.isArray(
+                      state.childsubcategory
+                    )
+                      ? state.childsubcategory.map((childsubcat) => ({
+                          value: childsubcat._id,
+                          label: childsubcat.ChildSubCategory,
+                        }))
+                      : [];
+
+                    return (
+                      <Select
+                        onChange={(option) => {
+                          onChange(option ? option.value : "");
+                          setState((prevState) => ({
+                            ...prevState,
+                            selectedChildSubcategory: option
                               ? option.value
-                              : null;
+                              : null, // Update state
+                          }));
+                        }}
+                        onBlur={onBlur}
+                        className="Controller"
+                        value={getOptionFromValue(
+                          value,
+                          childsubcategoryOptions
+                        )}
+                        options={childsubcategoryOptions}
+                        placeholder="Select Child Subcategory"
+                        ref={ref}
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            boxShadow: "none",
+                            fontSize: "15px",
+                            display: "flex",
+                            alignItems: "center", // Vertically center the content
+                          }),
+                          option: (provided, state) => ({
+                            ...provided,
+                            backgroundColor: state.isSelected
+                              ? "#4caf50"
+                              : "white",
+                            color: state.isSelected ? "white" : "#333",
+                            padding: 5,
+                            fontSize: "15px",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                          }),
+                        }}
+                        isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
+                      />
+                    );
+                  }}
+                />
+                {errors.childsubcategory && (
+                  <span>{errors.childsubcategory.message}</span>
+                )}
+              </div>
+              <div>
+                <label>Brand</label>
+                <input
+                  placeholder="Enter Your Company Brand......."
+                  type="text"
+                  {...register("brand")}
+                />
+              </div>
+              <div>
+                <label>Tags</label>
+                <ReactTags
+                  tags={state.tags}
+                  handleDelete={handleDeleteTags}
+                  handleAddition={handleAdditionTags}
+                  delimiters={delimiters}
+                  placeholder="Add new tag"
+                  inputFieldPosition="inline"
+                  autocomplete
+                  {...register("tags")} // Ensure proper registration
+                />
 
-                            setState((prevState) => ({
-                              ...prevState,
-                              selectedCategory: selectedCategoryId,
-                              subcategories: [],
-                            }));
-                          }}
-                          onBlur={onBlur}
-                          value={getOptionFromValue(value, categoryOptions)}
-                          options={categoryOptions}
-                          placeholder="Select Category"
-                          ref={ref}
-                          styles={{
-                            control: (provided) => ({
-                              ...provided,
-                              backgroundColor: "#f0f0f0",
-                              borderColor: "#333",
-                              boxShadow: "none",
-                              display: "flex",
-                              fontSize: "15px",
-                              alignItems: "center", // Vertically center the content
-                            }),
-                            option: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: state.isSelected
-                                ? "#4caf50"
-                                : "white",
-                              color: state.isSelected ? "white" : "#333",
-                              padding: 5,
-                              fontSize: "15px",
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                            }),
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                  {errors.category && <p>{errors.category.message}</p>}
-                  <label>Subcategory:</label>
-                  <Controller
-                    name="subcategory"
-                    control={control}
-                    render={({ field: { onChange, onBlur, value, ref } }) => {
-                      const subcategoryOptions = Array.isArray(
-                        state.subcategories
-                      )
-                        ? state.subcategories.map((subcat) => ({
-                            value: subcat._id,
-                            label: subcat.SubMainCategory,
-                          }))
-                        : [];
-
-                      return (
-                        <Select
-                          onChange={(option) => {
-                            console.log("Selected Subcategory:", option); // Debugging
-                            onChange(option ? option.value : "");
-                            setState((prevState) => ({
-                              ...prevState,
-                              selectedSubcategory: option ? option.value : null, // Update state
-                            }));
-                          }}
-                          onBlur={onBlur}
-                          value={getOptionFromValue(value, subcategoryOptions)}
-                          options={subcategoryOptions}
-                          placeholder="Select Subcategory"
-                          ref={ref}
-                          styles={{
-                            control: (provided) => ({
-                              ...provided,
-                              backgroundColor: "#f0f0f0",
-                              borderColor: "#333",
-                              boxShadow: "none",
-                              display: "flex",
-                              fontSize: "15px",
-                              alignItems: "center", // Vertically center the content
-                            }),
-                            option: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: state.isSelected
-                                ? "#4caf50"
-                                : "white",
-                              color: state.isSelected ? "white" : "#333",
-                              padding: 5,
-                              fontSize: "15px",
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                            }),
-                          }}
-                          isDisabled={!state.selectedCategory} // Disable if no category selected
-                        />
-                      );
-                    }}
-                  />
-                  {errors.subcategory && <p>{errors.subcategory.message}</p>}
-                  <label>Child-Subcategory:</label>
-                  <Controller
-                    name="childsubcategory"
-                    control={control}
-                    render={({ field: { onChange, onBlur, value, ref } }) => {
-                      const childsubcategoryOptions = Array.isArray(
-                        state.childsubcategory
-                      )
-                        ? state.childsubcategory.map((childsubcat) => ({
-                            value: childsubcat._id,
-                            label: childsubcat.ChildSubCategory,
-                          }))
-                        : [];
-
-                      return (
-                        <Select
-                          onChange={(option) => {
-                            console.log("Selected ChildSubCategory:", option); // Debugging
-                            onChange(option ? option.value : "");
-                            setState((prevState) => ({
-                              ...prevState,
-                              selectedChildSubcategory: option
-                                ? option.value
-                                : null, // Update state
-                            }));
-                          }}
-                          onBlur={onBlur}
-                          value={getOptionFromValue(
-                            value,
-                            childsubcategoryOptions
-                          )}
-                          options={childsubcategoryOptions}
-                          placeholder="Select Child Subcategory"
-                          ref={ref}
-                          styles={{
-                            control: (provided) => ({
-                              ...provided,
-                              backgroundColor: "#f0f0f0",
-                              borderColor: "#333",
-                              boxShadow: "none",
-                              fontSize: "15px",
-                              display: "flex",
-                              alignItems: "center", // Vertically center the content
-                            }),
-                            option: (provided, state) => ({
-                              ...provided,
-                              backgroundColor: state.isSelected
-                                ? "#4caf50"
-                                : "white",
-                              color: state.isSelected ? "white" : "#333",
-                              padding: 5,
-                              fontSize: "15px",
-                            }),
-                            menu: (provided) => ({
-                              ...provided,
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                            }),
-                          }}
-                          isDisabled={!state.selectedSubcategory} // Disable if no subcategory selected
-                        />
-                      );
-                    }}
-                  />
-                  {errors.childsubcategory && (
-                    <p>{errors.childsubcategory.message}</p>
-                  )}
-                </div>
-                <div>
-                  <label>Brand</label>
-                  <input type="text" {...register("brand")} />
-                </div>
-                <div>
-                  <label>Tags</label>
-                  <ReactTags
-                    tags={state.tags} // First set of tags
-                    handleDelete={handleDeleteTags} // Delete handler for first set
-                    handleAddition={handleAdditionTags} // Add handler for first set
-                    delimiters={delimiters} // Comma and Enter for adding tags
-                    placeholder="Add new tag"
-                    inputFieldPosition="inline" // Input inline with tags
-                    autocomplete // Enable suggestions
-                  />
-                  {errors.tags && <span>{errors.tags.message}</span>}
-                </div>
-                <div>
-                  <label>Care Instructions</label>
-                  <textarea
-                    rows={7}
-                    placeholder="Enter CareInstructions About Product....."
-                    {...register("careInstructions")}
-                  ></textarea>
-                </div>
-                <div className="materials-container">
-                  <label htmlFor="material">Material</label>
-                  <input
-                    type="text"
-                    id="material"
-                    placeholder="Material (e.g., Cotton)"
-                    {...register("material", {
-                      required: "Material is required",
-                    })}
-                  />
-                  {errors.material && (
-                    <span className="error-message">
-                      {errors.material.message}
-                    </span>
-                  )}
-
-                  <label htmlFor="percentage">Percentage</label>
-                  <input
-                    type="number"
-                    id="percentage"
-                    placeholder="Percentage (e.g., 100)"
-                    {...register("percentage", {
-                      required: "Percentage is required",
-                      min: 1,
-                      max: 100,
-                    })}
-                  />
-                  {errors.percentage && (
-                    <span className="error-message">
-                      {errors.percentage.message}
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <label>Meta Title</label>
-                  <input type="text" {...register("meta.title")} />
-                </div>
-                <div>
-                  <label>Meta Description</label>
-                  <textarea
-                    rows={7}
-                    placeholder="Enter Meta Discription......"
-                    {...register("meta.description")}
-                  ></textarea>
-                </div>
-                <div>
-                  <label>Meta Keywords (comma-separated)</label>
-                  <ReactTags
-                    tags={state.metaKeywords} // Second set for meta keywords
-                    handleDelete={handleDeleteMetaKeywords} // Delete handler for second set
-                    handleAddition={handleAdditionMetaKeywords} // Add handler for second set
-                    delimiters={delimiters} // Comma and Enter for adding keywords
-                    placeholder="Add new meta keyword"
-                    inputFieldPosition="inline" // Input inline with keywords
-                    autocomplete // Enable suggestions
-                  />
-                </div>
-                <div>
-                  <label>Availability</label>
-                  <select {...register("availability")} defaultValue="In Stock">
-                    <option value="In Stock">In Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                    <option value="Limited Availability">
-                      Limited Availability
-                    </option>
-                    <option value="Pre-order">Pre-order</option>
-                    <option value="Discontinued">Discontinued</option>
-                  </select>
-                  {errors.availability && (
-                    <span className="error-message">
-                      {errors.availability.message}
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <label>Publish Status</label>
-                  <select {...register("publishStatus")}>
-                    <option value="Published">Published</option>
-                    <option value="Draft">Draft</option>
-                  </select>
-                </div>
+                {errors.tags && <span>{errors.tags.message}</span>}
+              </div>
+              <div>
+                <label>Care Instructions</label>
+                <textarea
+                  rows={7}
+                  placeholder="Enter CareInstructions About Product....."
+                  {...register("careInstructions")}
+                ></textarea>
+              </div>
+              <div>
+                <label>Meta Title</label>
+                <input
+                  className="Enter "
+                  type="text"
+                  placeholder="Meta Title......."
+                  {...register("meta.title")}
+                />
+              </div>
+              <div>
+                <label>Meta Description</label>
+                <textarea
+                  rows={7}
+                  placeholder="Enter Meta Discription......"
+                  {...register("meta.description")}
+                ></textarea>
+              </div>
+              <div>
+                <label>Meta Keywords (comma-separated)</label>
+                <ReactTags
+                  tags={state.metaKeywords} // Second set for meta keywords
+                  handleDelete={handleDeleteMetaKeywords} // Delete handler for second set
+                  handleAddition={handleAdditionMetaKeywords} // Add handler for second set
+                  delimiters={delimiters} // Comma and Enter for adding keywords
+                  placeholder="Add new meta keyword"
+                  inputFieldPosition="inline" // Input inline with keywords
+                  autocomplete // Enable suggestions
+                />
+              </div>
+              <div>
+                <label>Availability</label>
+                <select {...register("availability")} defaultValue="In Stock">
+                  <option value="In Stock">In Stock</option>
+                  <option value="Out of Stock">Out of Stock</option>
+                  <option value="Limited Availability">
+                    Limited Availability
+                  </option>
+                  <option value="Pre-order">Pre-order</option>
+                  <option value="Discontinued">Discontinued</option>
+                </select>
+                {errors.availability && (
+                  <span className="error-message">
+                    {errors.availability.message}
+                  </span>
+                )}
+              </div>
+              <div>
+                <label>Publish Status</label>
+                <select {...register("publishStatus")}>
+                  <option value="Published">Published</option>
+                  <option value="Draft">Draft</option>
+                </select>
               </div>
             </div>
             <div className="Product-detils-area">
@@ -1158,59 +1392,57 @@ const ProductForm = () => {
               </div>
               <div className="variation-Images">
                 <label htmlFor="">Variation Images</label>
-                {state.variations.map((variation, index) => (
-                  <div key={index} className="Variation-image-section">
-                    {variation.image && variation.image.length > 0 ? (
-                      <Swiper
-                        slidesPerView={4}
-                        spaceBetween={3}
-                        freeMode={true}
-                        modules={[FreeMode]}
-                        className="mySwiper"
-                      >
-                        {variation.image.map((image, imgIndex) => (
-                          <SwiperSlide key={imgIndex}>
-                            <div className="image-wrapper">
-                              <img
-                                src={image}
-                                alt={`Variation ${index} Image ${imgIndex + 1}`}
-                                className="variation-image"
-                                {...register(
-                                  `variations.${index}.image.${imgIndex}`,
-                                  {
-                                    required: "Image is required",
-                                  }
-                                )}
-                              />
-                              <div className="remove-image-icon">
-                                <MdClose
-                                  onClick={() =>
-                                    handleVariationImagesUnselect(image)
-                                  }
+                <div className="variation-Images-main-area">
+                  {state.variations.map((variation, index) => (
+                    <div key={index} className="Variation-image-section">
+                      {variation.image && variation.image.length > 0 ? (
+                        <Swiper
+                          slidesPerView={4}
+                          spaceBetween={3}
+                          freeMode={true}
+                          modules={[FreeMode]}
+                          className="mySwiper"
+                        >
+                          {variation.image.map((image, imgIndex) => (
+                            <SwiperSlide key={imgIndex}>
+                              <div className="image-wrapper">
+                                <img
+                                  src={image}
+                                  alt={`Variation ${index} Image ${
+                                    imgIndex + 1
+                                  }`}
+                                  className="variation-image"
                                 />
+                                <div className="remove-image-icon">
+                                  <MdClose
+                                    onClick={() =>
+                                      handleVariationImagesUnselect(image)
+                                    }
+                                  />
+                                </div>
                               </div>
+                            </SwiperSlide>
+                          ))}
+                          <SwiperSlide>
+                            <div
+                              className="add-variation-image"
+                              onClick={() => handleGalleryVariation(index)}
+                            >
+                              <LuPlus className="variation-Images-main-Plus" />
                             </div>
                           </SwiperSlide>
-                        ))}
-                        <SwiperSlide>
-                          <div
-                            className="add-variation-image"
-                            onClick={() => handleGalleryVariation(index)}
-                          >
-                            <LuPlus className="variation-Images-main-Plus" />
-                          </div>
-                        </SwiperSlide>
-                      </Swiper>
-                    ) : (
-                      <p
-                        className="add-variation-image"
-                        onClick={() => handleGalleryVariation(index)}
-                      >
-                        <LuPlus className="variation-Images-main-Plus" />
-                      </p>
-                    )}
-                  </div>
-                ))}
+                        </Swiper>
+                      ) : (
+                        <p
+                          className="add-variation-image"
+                          onClick={() => handleGalleryVariation(index)}
+                        >
+                          <LuPlus className="variation-Images-main-Plus" />
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
                 {errors.variations?.[state.activeVariationIndex]?.image && (
                   <span>
                     {
@@ -1244,6 +1476,7 @@ const ProductForm = () => {
           onVariationSelectImage={handleVariationImages}
           isVariation={true}
           activeVariationIndex={state.activeVariationIndex}
+          allSelectedImages={state.variations[state.activeVariationIndex].image}
         />
       )}
     </form>
@@ -1251,7 +1484,3 @@ const ProductForm = () => {
 };
 
 export default ProductForm;
-{
-  /*
-   */
-}
