@@ -246,7 +246,11 @@ function App() {
               <Route path="Featured-Product" element={<FeaturedProduct />} />
               <Route path="Sales-Product" element={<SalesProduct />} />
               <Route path="Main-Carousel" element={<MainCarousel />} />
-              <Route path="Products-Details" element={<ProductsDetails />} />
+              <Route
+                path="Products-Details/:name/:id"
+                element={<ProductsDetails />}
+              />
+
               <Route path="Category" element={<Catgeory />} />
               <Route path="Add-Products" element={<AddProducts />} />
               <Route path="Shopping-Cart" element={<ShoppingCart />} />

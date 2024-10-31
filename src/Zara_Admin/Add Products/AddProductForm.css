@@ -278,11 +278,18 @@
     margin-top: 500px;
 }
 
-.Product-from-area span {
+.Product span {
     font-size: 12px;
     line-height: 14px;
     font-weight: 400;
+    color: red;
+}
 
+.variation-popup span {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
+    color: red;
 }
 
 .Product-variation-area {
@@ -320,21 +327,7 @@
 
 }
 
-.Product-from-area span {
-    font-size: 12px;
-    line-height: 14px;
-    font-weight: 400;
-    color: red;
-}
-
-.Product-detils-area span {
-    font-size: 12px;
-    line-height: 14px;
-    font-weight: 400;
-    color: red;
-}
-
-label {
+.Product label {
     font-size: 12px;
     line-height: 14px;
     font-weight: 400;
@@ -650,11 +643,9 @@ label {
 
 .variation-Images {
     width: 100%;
-
     height: auto;
     max-height: 300px;
     margin: 10px 0px 10px 0px;
-    border-top: 1px solid var(--button-bg-color);
     user-select: none;
     overflow: hidden;
     display: flex;

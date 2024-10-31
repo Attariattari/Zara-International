@@ -14,7 +14,7 @@ import { LuPlus } from "react-icons/lu";
 import GallerySelect from "./Gallery-Select/GallerySelect";
 import { MdClose } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Pagination } from "swiper/modules";
+import { FreeMode } from "swiper/modules";
 import { WithContext as ReactTags } from "react-tag-input";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
@@ -653,10 +653,6 @@ const ProductForm = () => {
               <p>Add New Product</p>
             </div>
             <div className="Product-Title-second">
-              <button className="Draf-button" title="Save Draf">
-                <CgCopy className="draf-icon" />
-                <p>Save Draf</p>
-              </button>
               <button
                 onClick={(e) => onSubmit}
                 className="Add-button"
@@ -801,9 +797,6 @@ const ProductForm = () => {
                             )}
                             onChange={handleColorChange}
                           />
-                          {/* <p>
-                            {state.variations[state.activeVariationIndex].color}
-                          </p> */}
                           {errors.variations?.[state.activeVariationIndex]
                             ?.color && (
                             <span>
@@ -849,51 +842,58 @@ const ProductForm = () => {
                         </div>
                       </div>
 
-                      <label>Dimensions (L x W x H)</label>
-                      <div className="Variation-Deimensisons">
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.dimensions.length`,
-                            {
-                              valueAsNumber: true,
-                              required: "Length is required",
-                            }
+                      <div className="popup-content-area">
+                        <div>
+                          <label htmlFor="material">Length</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.dimensions.length`,
+                              {
+                                valueAsNumber: true,
+                                required: "Length is required",
+                              }
+                            )}
+                            placeholder="Length"
+                          />
+                          {errors.variations?.[state.activeVariationIndex]
+                            ?.dimensions?.length && (
+                            <span>
+                              {
+                                errors.variations[state.activeVariationIndex]
+                                  .dimensions.length.message
+                              }
+                            </span>
                           )}
-                          placeholder="Length"
-                        />
-                        {errors.variations?.[state.activeVariationIndex]
-                          ?.dimensions?.length && (
-                          <span>
-                            {
-                              errors.variations[state.activeVariationIndex]
-                                .dimensions.length.message
-                            }
-                          </span>
-                        )}
-
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.dimensions.width`,
-                            {
-                              valueAsNumber: true,
-                            }
-                          )}
-                          placeholder="Width"
-                        />
-
-                        <input
-                          type="text"
-                          {...register(
-                            `variations.${state.activeVariationIndex}.dimensions.height`,
-                            {
-                              valueAsNumber: true,
-                            }
-                          )}
-                          placeholder="Height"
-                        />
+                        </div>
+                        <div>
+                          <label htmlFor="percentage">Width</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.dimensions.width`,
+                              {
+                                valueAsNumber: true,
+                              }
+                            )}
+                            placeholder="Width"
+                          />
+                        </div>
+                        <div>
+                          <label>Height</label>
+                          <input
+                            type="text"
+                            {...register(
+                              `variations.${state.activeVariationIndex}.dimensions.height`,
+                              {
+                                valueAsNumber: true,
+                              }
+                            )}
+                            placeholder="Height"
+                          />
+                        </div>
                       </div>
+
                       <div className="Variation-Price">
                         <div>
                           <label>Real Price</label>
@@ -1033,6 +1033,7 @@ const ProductForm = () => {
                         <div>
                           <label>Size</label>
                           <select
+                            defaultValue=""
                             {...register(
                               `variations.${state.activeVariationIndex}.size`,
                               {
@@ -1040,6 +1041,9 @@ const ProductForm = () => {
                               }
                             )}
                           >
+                            <option value="" disabled hidden>
+                              Select size
+                            </option>
                             <option value="XS">XS</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -1057,6 +1061,7 @@ const ProductForm = () => {
                             </span>
                           )}
                         </div>
+
                         <div>
                           <label>Status</label>
                           <select
@@ -1293,6 +1298,7 @@ const ProductForm = () => {
                   placeholder="Add new tag"
                   inputFieldPosition="inline"
                   autocomplete
+                  autofocus={false}
                   {...register("tags")} // Ensure proper registration
                 />
 
@@ -1324,15 +1330,16 @@ const ProductForm = () => {
                 ></textarea>
               </div>
               <div>
-                <label>Meta Keywords (comma-separated)</label>
+                <label>Meta Keywords</label>
                 <ReactTags
-                  tags={state.metaKeywords} // Second set for meta keywords
-                  handleDelete={handleDeleteMetaKeywords} // Delete handler for second set
-                  handleAddition={handleAdditionMetaKeywords} // Add handler for second set
-                  delimiters={delimiters} // Comma and Enter for adding keywords
+                  tags={state.metaKeywords}
+                  handleDelete={handleDeleteMetaKeywords}
+                  handleAddition={handleAdditionMetaKeywords}
+                  delimiters={delimiters}
                   placeholder="Add new meta keyword"
-                  inputFieldPosition="inline" // Input inline with keywords
-                  autocomplete // Enable suggestions
+                  inputFieldPosition="inline"
+                  autocomplete
+                  autofocus={false}
                 />
               </div>
               <div>
