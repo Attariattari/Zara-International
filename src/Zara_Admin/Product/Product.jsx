@@ -32,34 +32,6 @@ function Product() {
 
   const typingTimer = useRef(null);
 
-  // const fetchallproduct = async () => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     loading: true, // Set loading to true before fetching data
-  //   }));
-  //   try {
-  //     const response = await axios.get(`http://localhost:1122/Product/getAll`, {
-  //       headers: {
-  //         Authenticate: `Bearer ${token}`,
-  //       },
-  //       withCredentials: true,
-  //     });
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       data: Array.isArray(response.data) ? response.data : [],
-  //       hasFetched: true,
-  //       loading: false, // Set loading to false after fetching data
-  //     }));
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log("Error fetching Products", error);
-  //     setState((prevState) => ({
-  //       ...prevState,
-  //       loading: false, // Set loading to false in case of error
-  //     }));
-  //   }
-  // };
-
   const fetchAllProducts = async () => {
     setState((prevState) => ({
       ...prevState,

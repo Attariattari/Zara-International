@@ -222,7 +222,7 @@ function SideBar() {
         <ul>
           <li>
             <NavLink
-              to="/Admin/Products-Details"
+              to="/Admin/Products-Details/:name/:id"
               className={({ isActive }) => (isActive ? "link active" : "link")}
               title="Products Details"
             >

@@ -1,0 +1,107 @@
+.ProductsDetails {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.ProductsDetails-area {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    gap: 1.5rem;
+}
+
+.ProductsDetails-area-topbar {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.ProductsDetails-area-topbar-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.ProductsDetails-area-topbar-title div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.ProductsDetails-area-topbar-title-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.ProductsDetails-area-topbar-Button-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 30%;
+}
+
+.ProductsDetails-area-topbar-button {
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--button-bg-color);
+    /* Background based on theme */
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 30px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    gap: 5px;
+}
+
+.ProductsDetails-area-topbar-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: var(--button-hover-bg-color);
+    /* Hover color based on theme */
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.ProductsDetails-area-topbar-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.ProductsDetails-area-topbar-button:hover {
+    background-color: var(--button-hover-bg-color);
+    transform: translateY(-2px);
+    box-shadow: var(--button-shadow);
+    /* Shadow based on theme */
+}
+
+.Product-details-area-data {
+    width: 100%;
+    height: auto;
+}

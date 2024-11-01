@@ -38,7 +38,10 @@ const productSchema = z.object({
           .array(z.string().url("Each image URL must be valid"))
           .nonempty("At least one image URL is required"), // Ensuring array is not empty
 
-        color: z.string().min(1, "Color is required"),
+        color: z.object({
+          name: z.string().min(1, "Color name is required"),
+          code: z.string().optional(), // Color code is optional
+        }),
         size: z.string().min(1, "Size is required"),
         dimensions: z
           .object({
@@ -129,7 +132,7 @@ const ProductForm = () => {
     variations: [
       {
         image: [],
-        color: "",
+        color: { name: "", code: "" },
         size: "",
         price: { real: "", discount: "" },
         material: undefined,
@@ -151,13 +154,14 @@ const ProductForm = () => {
     // Scroll position ko top pe set karta hai jab component render ho
     window.scrollTo(0, 0);
   }, []);
+
   const hexToColorName = (hex) => {
     const rgb = parseInt(hex.slice(1), 16);
     const r = (rgb >> 16) & 0xff;
     const g = (rgb >> 8) & 0xff;
     const b = (rgb >> 0) & 0xff;
 
-    let closestColorName = "Unknown Color";
+    let closestColorName = "Unknown Color"; // Initial value
     let minDistance = Infinity;
 
     for (const [name, rgbValues] of Object.entries(colorNames)) {
@@ -169,26 +173,34 @@ const ProductForm = () => {
 
       if (distance < minDistance) {
         minDistance = distance;
-        closestColorName = name;
+        closestColorName = name; // Set the name
       }
     }
 
+    console.log("Generated Color Name:", closestColorName); // Check color name
     return closestColorName;
   };
 
-  // Handle Color Change
   const handleColorChange = (event) => {
-    const selectedHex = event.target.value;
-    const colorName = hexToColorName(selectedHex);
+    const selectedHex = event.target.value; // Get the selected hex color
+    const colorName = hexToColorName(selectedHex); // Get the color name based on hex
 
-    setState((prevState) => ({
-      ...prevState,
-      variations: prevState.variations.map((variation, index) =>
-        index === prevState.activeVariationIndex
-          ? { ...variation, color: colorName }
-          : variation
-      ),
-    }));
+    // Directly update the variations array with color code and name
+    setState((prevState) => {
+      const updatedVariations = [...prevState.variations];
+      updatedVariations[prevState.activeVariationIndex] = {
+        ...updatedVariations[prevState.activeVariationIndex],
+        color: { name: colorName, code: selectedHex }, // Update both color name and code
+      };
+
+      return {
+        ...prevState,
+        variations: updatedVariations,
+      };
+    });
+
+    // Manually set the value for color name in the registered field to ensure validation
+    setValue(`variations.${state.activeVariationIndex}.color.name`, colorName);
   };
 
   const handleDeleteTags = (i) => {
@@ -375,7 +387,7 @@ const ProductForm = () => {
       variations: [
         {
           image: [],
-          color: "",
+          color: { name: "", code: "" },
           size: "",
           price: { real: "", discount: "" },
           material: undefined,
@@ -577,7 +589,7 @@ const ProductForm = () => {
     setState((prevState) => ({
       ...prevState,
       showVariationPopup: false,
-      activeVariationIndex: null,
+      // activeVariationIndex ko yahan par na change karein
     }));
   };
 
@@ -589,7 +601,7 @@ const ProductForm = () => {
         ...prevState.variations,
         {
           image: [],
-          color: "",
+          color: { name: "", code: "" },
           size: "",
           price: { real: "", discount: "" },
           material: { material: "", percentage: 0 },
@@ -790,19 +802,23 @@ const ProductForm = () => {
                             type="color"
                             style={{ paddingRight: "0px" }}
                             {...register(
-                              `variations.${state.activeVariationIndex}.color`,
+                              `variations.${state.activeVariationIndex}.color.code`, // Registering color code
                               {
-                                required: "Color is required",
+                                required: "Color code is required", // Required message for color code
                               }
                             )}
-                            onChange={handleColorChange}
+                            onChange={handleColorChange} // Call handleColorChange to set both name and code
+                            value={
+                              state.variations[state.activeVariationIndex]
+                                ?.color.code || ""
+                            }
                           />
                           {errors.variations?.[state.activeVariationIndex]
-                            ?.color && (
+                            ?.color?.code && (
                             <span>
                               {
                                 errors.variations[state.activeVariationIndex]
-                                  .color.message
+                                  .color.code.message
                               }
                             </span>
                           )}
