@@ -59,8 +59,17 @@ function ProductsDetails() {
         </div>
         {state.data ? (
           <div className="Product-details-area-data">
-            <img src={state.data.MainImage} alt="" />
-            <p>{state.data.Description}</p>
+            <div className="Product-details-area-data-area">
+              <div className="Left">
+                <img src={state.data.MainImage} alt="" />
+              </div>
+              <div className="Right">
+                <p className="Right-title">{state.data.Name}</p>
+              </div>
+            </div>
+            <div>hello</div>
+
+            {/*  */}
           </div>
         ) : (
           <p>Loading...</p>

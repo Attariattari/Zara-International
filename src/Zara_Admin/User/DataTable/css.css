@@ -1,0 +1,192 @@
+/* DataTable Container Styling */
+.datatable {
+    padding: 1.5rem;
+    background-color: var(--bg-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.datatable:hover {
+    box-shadow: 0 6px 15px var(--shadow-color-hover);
+}
+
+/* DataGrid Styling */
+.datagrid {
+    background-color: var(--admin-bg-color);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.css-5wdp45-MuiDataGrid-root .MuiDataGrid-container--top [role=row], .css-5wdp45-MuiDataGrid-root .MuiDataGrid-container--bottom [role=row] {
+    background: var(--admin-bg-color);
+}
+
+.datagrid .MuiDataGrid-toolbarContainer {
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+}
+
+.MuiDataGrid-root .MuiDataGrid-cell {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+.MuiDataGrid-filler {
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+.css-ptiqhd-MuiSvgIcon-root {
+    color: var(--text-color);
+}
+
+.css-1vooibu-MuiSvgIcon-root {
+    color: var(--text-color);
+}
+
+.css-1m9pwf3 {
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeader {
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+/* Table Rows and Hover Effect */
+.MuiDataGrid-row:hover {
+    background-color: var(--active-bg-color);
+}
+
+/* Image (Avatar) Styling */
+.img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--image-focuse-color);
+}
+
+/* Action Column Styling */
+.action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.action button,
+.action .delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.action button:hover,
+.action .delete:hover {
+    color: var(--text-color);
+    background-color: var(--button-hover-bg-color);
+    box-shadow: var(--button-shadow);
+    transform: scale(1.1);
+}
+
+.css-1auwxj7-MuiDataGrid-root .MuiTablePagination-root .MuiTablePagination-toolbar {
+    width: 100%;
+    padding-right: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.css-1klb8j8-MuiFormControl-root-MuiTextField-root-MuiDataGrid-toolbarQuickFilter input {
+    color: var(--text-color);
+}
+
+/* Target the input */
+.css-c63i49-MuiInputBase-input-MuiInput-input {
+    color: var(--text-color);
+    outline: none;
+    border-bottom: none;
+    /* Remove bottom border */
+    box-shadow: none;
+    /* Remove any focus shadow */
+}
+
+.css-17yf9jb-MuiButtonBase-root-MuiIconButton-root {
+    width: 30px;
+    color: var(--text-color);
+    border-radius: none;
+    -webkit-border-radius: none;
+    -moz-border-radius: none;
+    -ms-border-radius: none;
+    -o-border-radius: none;
+}
+
+.css-1knaqv7-MuiButtonBase-root-MuiButton-root {
+    width: 150px;
+    border: 1px solid var(--border-color);
+    background-color: rgb(18, 41, 95);
+}
+
+/* Apply this CSS to target the Export button */
+.custom-export-button {
+    width: 150px;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+}
+
+.custom-export-button:hover {
+    background-color: var(--hover-bg-color);
+    color: var(--hover-text-color);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.custom-export-button:active {
+    transform: scale(1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Individual Icons Styling */
+.text-2xl {
+    font-size: 1.5rem;
+}
+
+.text-green-700 {
+    color: var(--active-icon-color);
+}
+
+.text-red-700 {
+    color: var(--real-price-color);
+}
+
+/* Table Header Action Column */
+.pl-6 {
+    padding-left: 1.5rem;
+}
+
+/* Button Hover Effects */
+button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}

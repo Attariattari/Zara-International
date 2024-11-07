@@ -219,7 +219,7 @@ function SideBar() {
             </NavLink>
           </li>
         </ul>
-        <ul>
+        {/* <ul>
           <li>
             <NavLink
               to="/Admin/Products-Details/:name/:id"
@@ -232,7 +232,7 @@ function SideBar() {
               )}
             </NavLink>
           </li>
-        </ul>
+        </ul> */}
         <ul>
           <li>
             <NavLink

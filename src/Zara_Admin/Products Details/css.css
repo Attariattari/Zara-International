@@ -105,3 +105,44 @@
     width: 100%;
     height: auto;
 }
+
+.Product-details-area-data-area {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.Product-details-area-data-area .Left {
+    width: 35%;
+    height: 30em;
+    background-color: rgb(37, 100, 100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Product-details-area-data-area .Left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.Product-details-area-data-area .Right {
+    width: 65%;
+    height: 30em;
+    background-color: rgb(37, 100, 100);
+    display: flex;
+    justify-content: start;
+    padding: 10px;
+    align-items: start;
+}
+
+.Right-title {
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 500;
+    font-family: Roboto, sans-serif;
+}
