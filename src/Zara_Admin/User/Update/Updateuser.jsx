@@ -4,32 +4,58 @@ import "reactjs-popup/dist/index.css";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import "./css.css";
 import { LuPlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md"; // import the MdClose icon
 import Swal from "sweetalert2";
 import GallerySelect from "../../Add Products/Gallery-Select/GallerySelect";
 import axios from "axios";
-import { userContext, UserContextProvider } from "../../../Context/UserContext";
+import { userContext } from "../../../Context/UserContext";
 import Spinner from "../../../Spinner";
 
 // Define Zod schema with profileImage validation
-const userSchema = z.object({
-  firstname: z.string().min(1, "First name is required."),
-  lastname: z.string().min(1, "Last name is required."),
-  email: z
+const userUpdateSchema = z.object({
+  firstname: z
     .string()
-    .email("Enter a valid email address.")
-    .min(1, "Email is required."),
-  password: z.string().min(6, "Password must be at least 6 characters."),
-  phoneno: z.string().regex(/^\d{10,15}$/, "Enter a valid phone number."),
+    .min(1, "First name must have at least 1 character.")
+    .optional(),
+  lastname: z
+    .string()
+    .min(1, "Last name must have at least 1 character.")
+    .optional(),
+  email: z.string().email("Enter a valid email address.").optional(),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters.")
+    .optional(),
+  phoneno: z
+    .string()
+    .regex(/^\d{10,15}$/, "Phone number must be 10 to 15 digits.")
+    .optional(),
   profileImage: z
     .string()
     .url("Enter a valid URL for the profile image.")
     .optional(),
+  pageRoll: z
+    .number()
+    .int("Page roll must be a whole number.")
+    .min(0, "Page roll must be at least 0.")
+    .max(1, "Page roll must be 0 (user) or 1 (admin).")
+    .optional(),
+  verify: z.boolean().optional(),
 });
 
-function AddNewUser({ addnew, closePopup }) {
+function Updateuser({
+  Update,
+  closePopup,
+  UserData,
+  firstname: existingfirstname,
+  lastname: existinglastname,
+  email: existingemail,
+  phoneno: existingphoneno,
+  pageRoll: existingpageRoll,
+  verify: existingverify,
+  profileImage: existingprofileImage,
+}) {
   const {
     control,
     handleSubmit,
@@ -37,8 +63,18 @@ function AddNewUser({ addnew, closePopup }) {
     reset,
     setValue,
   } = useForm({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(userUpdateSchema),
+    defaultValues: {
+      firstname: existingfirstname || "",
+      lastname: existinglastname || "",
+      email: existingemail || "",
+      phoneno: existingphoneno || "",
+      profileImage: existingprofileImage || "",
+      pageRoll: existingpageRoll || 0,
+      verify: existingverify || false,
+    },
   });
+
   const { token } = useContext(userContext);
 
   const [state, setState] = useState({
@@ -46,13 +82,15 @@ function AddNewUser({ addnew, closePopup }) {
     ProfileGallery: false,
     loading: false,
   });
+  console.log(UserData._id);
+
   const onSubmit = async (data, e) => {
     e.preventDefault();
     setState((prevState) => ({ ...prevState, loading: true })); // Set loading to true
 
     try {
-      const response = await axios.post(
-        "http://localhost:1122/User/registerUser",
+      const response = await axios.put(
+        `http://localhost:1122/User/Update/${UserData._id}`,
         data,
         {
           withCredentials: true,
@@ -66,14 +104,14 @@ function AddNewUser({ addnew, closePopup }) {
         Swal.fire({
           icon: "success",
           title: "Success!",
-          text: response.data.message || "User Created Successfully!",
+          text: response.data.message || "User Update Successfully!",
           confirmButtonText: "OK",
         });
       } else {
         Swal.fire({
           icon: "error",
           title: "Error!",
-          text: response.data.message || "Registration failed.",
+          text: response.data.message || "Update failed.",
           confirmButtonText: "OK",
         });
       }
@@ -92,7 +130,7 @@ function AddNewUser({ addnew, closePopup }) {
       closePopup();
     }
   };
-  console.log("Loading state:", state.loading);
+
   const handleGallery = () => {
     if (!state.selectuserimage) {
       setState((prevState) => ({
@@ -119,16 +157,24 @@ function AddNewUser({ addnew, closePopup }) {
       ProfileGallery: true, // Reopen gallery for re-selection
     }));
   };
+  useEffect(() => {
+    if (existingprofileImage) {
+      setState((prevState) => ({
+        ...prevState,
+        selectuserimage: existingprofileImage, // Set the initial selected image
+      }));
+    }
+  }, [existingprofileImage]); // Runs when existingprofileImage changes
 
   return (
-    <div className="addnewuser">
+    <div className="Updateuser">
       {state.loading ? (
         <div className="spinner-container">
           <Spinner />
         </div>
       ) : (
         <Popup
-          open={addnew}
+          open={Update}
           onClose={closePopup}
           closeOnDocumentClick={false}
           modal
@@ -148,13 +194,13 @@ function AddNewUser({ addnew, closePopup }) {
         >
           <div className="user-form-area">
             <div className="user-form-area-topbar">
-              <p>Add New User.</p>
+              <p>Update User</p>
               <div className="flex gap-1">
                 <button
                   className="Add-now-button"
                   onClick={handleSubmit(onSubmit)}
                 >
-                  Add User.
+                  Update User
                 </button>
                 <button
                   className="Add-now-button w-10 hover:text-red-900"
@@ -208,20 +254,6 @@ function AddNewUser({ addnew, closePopup }) {
               </div>
 
               <div>
-                <label>Password.</label>
-                <Controller
-                  name="password"
-                  control={control}
-                  render={({ field }) => (
-                    <input {...field} placeholder="Password" type="password" />
-                  )}
-                />
-                {errors.password && (
-                  <p className="error">{errors.password.message}</p>
-                )}
-              </div>
-
-              <div>
                 <label>Phone Number.</label>
                 <Controller
                   name="phoneno"
@@ -232,6 +264,49 @@ function AddNewUser({ addnew, closePopup }) {
                 />
                 {errors.phoneno && (
                   <p className="error">{errors.phoneno.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label>Page Roll.</label>
+                <Controller
+                  name="pageRoll"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      } // Convert string to number
+                    >
+                      <option value={0}>User</option>
+                      <option value={1}>Admin</option>
+                    </select>
+                  )}
+                />
+                {errors.pageRoll && (
+                  <p className="error">{errors.pageRoll.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label>Verified.</label>
+                <Controller
+                  name="verify"
+                  control={control}
+                  render={({ field: { onChange, value, ...rest } }) => (
+                    <select
+                      {...rest}
+                      value={value}
+                      onChange={(e) => onChange(e.target.value === "true")}
+                    >
+                      <option value="true">True</option>
+                      <option value="false">False</option>
+                    </select>
+                  )}
+                />
+                {errors.verify && (
+                  <p className="error">{errors.verify.message}</p>
                 )}
               </div>
 
@@ -250,7 +325,7 @@ function AddNewUser({ addnew, closePopup }) {
                         style={{
                           width: "100%",
                           height: "100%",
-                          objectFit: "fit",
+                          objectFit: "cover",
                           objectposition: "top",
                         }}
                       />
@@ -281,7 +356,7 @@ function AddNewUser({ addnew, closePopup }) {
             </form>
           </div>
         </Popup>
-      )}
+      )}{" "}
       {state.ProfileGallery && (
         <GallerySelect
           handleGalleryfalse={() =>
@@ -295,4 +370,4 @@ function AddNewUser({ addnew, closePopup }) {
   );
 }
 
-export default AddNewUser;
+export default Updateuser;

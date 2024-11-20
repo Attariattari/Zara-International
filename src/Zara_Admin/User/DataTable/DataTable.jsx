@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./css.css";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { MdOutlineEditNote } from "react-icons/md";
@@ -6,34 +6,105 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert2
+import { userContext } from "../../../Context/UserContext";
+import Spinner from "../../../Spinner";
+import AddNewUser from "../AddNewUser/AddNewUser";
+import Updateuser from "../Update/Updateuser";
 
 function DataTable({ columns, rows, onDeleteUser }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  async function deleteUser(user) {
-    const config = {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    };
+  const { token } = useContext(userContext);
+  const [state, setState] = useState({
+    open: false,
+    Update: false,
+    selectedUser: null,
+    loading: false, // Updated key to "loading"
+  });
+  const closePopup = () => {
+    setState((prev) => ({
+      ...prev,
+      Update: false, // Set addnew to true on click
+    }));
+  };
+  const deleteUser = async (user, e) => {
+    if (e && e.preventDefault) e.preventDefault();
 
     try {
-      const res = await axios.delete(`/user/${user.id}`, config);
-      if (res.data.message === "jwt expired") {
-        return;
-      }
-      onDeleteUser(user.id);
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+      setState((prev) => ({
+        ...prev,
+        loading: true,
+      })); // Start loading
 
-  function showDeleteConfirmation(fullName, user) {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      };
+      const res = await axios.delete(
+        `http://localhost:1122/User/${user.id}`,
+        config
+      );
+
+      if (res.data.message === "jwt expired") {
+        navigate("/Admin/Authenticate");
+      } else if (res.status === 200) {
+        onDeleteUser(user.id); // Remove user locally upon successful deletion
+        Swal.fire({
+          title: "Deleted!",
+          text: `${
+            user.fullName
+          } has been successfully deleted. \n\n Server Response: ${
+            res.data.message || "No message."
+          }`,
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      if (error.response) {
+        const errorMessage =
+          error.response.data.message || "Something went wrong.";
+        if (error.response.status === 401) {
+          console.error("Unauthorized: Token may be invalid or expired.");
+          navigate("/Admin/Authenticate");
+        } else if (error.response.status === 403) {
+          console.error(
+            "Forbidden: You don’t have permission to delete this user."
+          );
+        } else {
+          console.error("Error deleting user:", errorMessage);
+        }
+        // Show error in SweetAlert
+        Swal.fire({
+          title: "Error!",
+          text: `Failed to delete user: ${errorMessage}\n\nServer Response: ${
+            error.response.data.error || "No additional details."
+          }`,
+          icon: "error",
+          confirmButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
+      } else {
+        console.error("Network error or server not responding:", error);
+        Swal.fire({
+          title: "Network Error",
+          text: "Server not responding or a network issue occurred.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
+      }
+    } finally {
+      setState((prev) => ({
+        ...prev,
+        loading: false,
+      })); // Stop loading after request completion
+    }
+  };
+
+  const showDeleteConfirmation = (fullName, user) => {
     Swal.fire({
-      title: `Are you sure you want to delete this user ${fullName}?`,
+      title: `Are you sure you want to delete ${fullName}?`,
       text: "This action cannot be undone.",
       icon: "warning",
       showCancelButton: true,
@@ -45,7 +116,7 @@ function DataTable({ columns, rows, onDeleteUser }) {
         deleteUser(user);
       }
     });
-  }
+  };
 
   const actionColumn = {
     field: "action",
@@ -58,9 +129,13 @@ function DataTable({ columns, rows, onDeleteUser }) {
       return (
         <div className="action cursor-pointer pl-3">
           <button
-            onClick={() => {
-              setSelectedUser(params.row);
-              setOpen(true);
+            onClick={(e) => {
+              e.preventDefault();
+              setState((Prev) => ({
+                ...Prev,
+                Update: true,
+                selectedUser: params.row,
+              }));
             }}
           >
             <MdOutlineEditNote className="text-2xl text-green-700 hover:border-b-2 border-y-yellow-600" />
@@ -78,6 +153,11 @@ function DataTable({ columns, rows, onDeleteUser }) {
 
   return (
     <div className="datatable">
+      {state.loading && (
+        <div className="spinner-container-Data">
+          <Spinner />
+        </div>
+      )}
       <DataGrid
         className="datagrid"
         rows={rows}
@@ -100,7 +180,7 @@ function DataTable({ columns, rows, onDeleteUser }) {
             showQuickFilter: true,
             quickFilterProps: {
               debounceMs: 200,
-              placeholder: "Search here", // Adds placeholder text
+              placeholder: "Search users by name, email, or role", // Add placeholder text here
             },
           },
         }}
@@ -111,6 +191,13 @@ function DataTable({ columns, rows, onDeleteUser }) {
         disableColumnSelector
         sx={{
           // Styles for cells, rows, pagination, etc.
+          "& .MuiInputBase-input::placeholder": {
+            color: "var(--text-color)", // Ensure it matches your theme
+            fontStyle: "italic", // Optional styling
+          },
+          "& .MuiInputBase-input": {
+            color: "var(--bg-color)", // Normal input text color
+          },
           "& .MuiDataGrid-cell": {
             backgroundColor: "var(--cell-bg-color)",
             color: "var(--text-color)",
@@ -204,6 +291,24 @@ function DataTable({ columns, rows, onDeleteUser }) {
         }}
         getRowClassName={(params) => (params.row.stock <= 5 ? "low-stock" : "")}
       />
+      {state.open && (
+        <AddNewUser
+          closePopup={closePopup}
+          addnew={state.open}
+          isUpdate:true
+          UserData={state.selectedUser}
+          {...state.selectedUser}
+        />
+      )}
+      {state.Update && (
+        <Updateuser
+          closePopup={closePopup}
+          Update={state.Update}
+          isUpdate:true
+          UserData={state.selectedUser}
+          {...state.selectedUser}
+        />
+      )}
     </div>
   );
 }

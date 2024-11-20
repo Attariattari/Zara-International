@@ -567,7 +567,7 @@
     background-color: var(--input-bg-color);
 }
 
-.popup-content {
+.popup-content-data {
     border-radius: 10px;
     width: 100%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -575,7 +575,14 @@
     position: relative;
 }
 
-.popup-content .popup-content-area {
+.popup-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Dark overlay with opacity */
+    backdrop-filter: blur(5px);
+    /* Background blur effect */
+}
+
+.popup-content-data .popup-content-area {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -605,7 +612,7 @@
     gap: 10px;
 }
 
-.popup-content button {
+.popup-content-data button {
     width: 30px;
     height: 30px;
     display: flex;
@@ -616,7 +623,7 @@
     right: 10px;
 }
 
-.popup-content button:hover {
+.popup-content-data button:hover {
     background-color: #d32f2f;
     /* Darker red on hover */
 }

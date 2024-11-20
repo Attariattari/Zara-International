@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: "Neue-Helvetica", "Helvetica", "Arial", "sans-serif";
+  font-family: 'Times New Roman', Times, serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -12,6 +12,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .FlterView {
@@ -48,4 +52,3 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
-

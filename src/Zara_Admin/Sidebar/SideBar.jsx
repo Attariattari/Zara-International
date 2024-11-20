@@ -121,7 +121,7 @@ function SideBar() {
             </NavLink>
           </li>
         </ul>
-        <ul>
+        {/* <ul>
           <li>
             <NavLink
               to="/Admin/Manage-Users"
@@ -134,7 +134,7 @@ function SideBar() {
               )}
             </NavLink>
           </li>
-        </ul>
+        </ul> */}
         <ul>
           <li>
             <NavLink
@@ -159,6 +159,20 @@ function SideBar() {
               <SiGooglemessages className="icon" />
               {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
                 <span className="cursor-pointer">Messages</span>
+              )}
+            </NavLink>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <NavLink
+              to="/Admin/Add-Products"
+              className={({ isActive }) => (isActive ? "link active" : "link")}
+              title="Add Products"
+            >
+              <RiFunctionAddFill className="icon" />
+              {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
+                <span className="cursor-pointer">Add Products</span>
               )}
             </NavLink>
           </li>
@@ -247,20 +261,7 @@ function SideBar() {
             </NavLink>
           </li>
         </ul>
-        <ul>
-          <li>
-            <NavLink
-              to="/Admin/Add-Products"
-              className={({ isActive }) => (isActive ? "link active" : "link")}
-              title="Add Products"
-            >
-              <RiFunctionAddFill className="icon" />
-              {((!isexpanded && !isMobile) || (isMobile && openDrawer)) && (
-                <span className="cursor-pointer">Add Products</span>
-              )}
-            </NavLink>
-          </li>
-        </ul>
+
         <ul>
           <li>
             <NavLink

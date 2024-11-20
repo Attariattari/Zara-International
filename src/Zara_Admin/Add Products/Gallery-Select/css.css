@@ -12,6 +12,9 @@
     transition: opacity 0.3s ease;
     opacity: 1;
     visibility: visible;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Dark overlay with opacity */
+    backdrop-filter: blur(5px);
 }
 
 

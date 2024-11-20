@@ -12,6 +12,8 @@ function GallerySelect({
   isVariation,
   allSelectedImages,
   activeVariationIndex,
+  onSelectProfileImage,
+  isprofileimage,
 }) {
   const { token } = useContext(userContext);
   const [state, setState] = useState({
@@ -126,8 +128,14 @@ function GallerySelect({
         <div className="Gallery-select-header">
           <div className="Gallery-select-header-title-button">
             <p>
-              {isVariation ? <p>Select Vaatiaion</p> : <p>Select Main Image</p>}
+              {isVariation ? (
+                <p>Select Variation</p>
+              ) : (
+                !isprofileimage && <p>Select Main Image</p>
+              )}
+              {isprofileimage && <p>Select Profile Image</p>}
             </p>
+
             {isVariation && (
               <button onClick={handleAddSelectedImages}>
                 Add Selected Images
@@ -201,6 +209,18 @@ function GallerySelect({
                       />
                     </div>
                   ))
+                : isprofileimage
+                ? sortedImages.map((imageUrl, index) => (
+                    <div key={index} className="image-item">
+                      <img
+                        src={imageUrl}
+                        alt={`image-${index}`}
+                        onClick={() => {
+                          onSelectProfileImage(imageUrl); // Pass to profile image handler
+                        }}
+                      />
+                    </div>
+                  ))
                 : sortedImages.map((imageUrl, index) => (
                     <div key={index} className="image-item">
                       <img
@@ -213,6 +233,73 @@ function GallerySelect({
                       />
                     </div>
                   ))}
+
+              {/* {isVariation
+                ? sortedImages.map((imageUrl, index) => (
+                    <div key={index} className="image-item">
+                      <img
+                        src={imageUrl}
+                        alt={`image-${index}`}
+                        onClick={() => {
+                          if (
+                            !allSelectedImages.includes(imageUrl) &&
+                            !state.selectedImageUrls.includes(imageUrl)
+                          ) {
+                            toggleImageSelection(imageUrl);
+                          }
+                        }}
+                        className={
+                          allSelectedImages.includes(imageUrl)
+                            ? "matched-image disabled" // Mark matched images with a special class
+                            : state.selectedImageUrls.includes(imageUrl)
+                            ? "selected"
+                            : ""
+                        }
+                        title={
+                          allSelectedImages.includes(imageUrl)
+                            ? "This image is already matched"
+                            : state.selectedImageUrls.includes(imageUrl)
+                            ? "Selected image"
+                            : ""
+                        }
+                        style={{
+                          opacity:
+                            allSelectedImages.includes(imageUrl) ||
+                            state.selectedImageUrls.includes(imageUrl)
+                              ? 0.6
+                              : 1,
+                        }} // Optional: visually indicate selected/disabled images
+                      />
+                      <input
+                        type="checkbox"
+                        checked={
+                          allSelectedImages.includes(imageUrl) ||
+                          state.selectedImageUrls.includes(imageUrl)
+                        }
+                        onChange={() => {
+                          if (
+                            !allSelectedImages.includes(imageUrl) &&
+                            !state.selectedImageUrls.includes(imageUrl)
+                          ) {
+                            toggleImageSelection(imageUrl);
+                          }
+                        }}
+                        disabled={allSelectedImages.includes(imageUrl)} // Disable checkbox if image is already matched
+                      />
+                    </div>
+                  ))
+                : sortedImages.map((imageUrl, index) => (
+                    <div key={index} className="image-item">
+                      <img
+                        src={imageUrl}
+                        alt={`image-${index}`}
+                        onClick={() => {
+                          onSelectImage(imageUrl); // Pass to main image handler
+                          handleGalleryfalse(); // Close the gallery popup
+                        }}
+                      />
+                    </div>
+                  ))} */}
             </div>
           )}
         </div>

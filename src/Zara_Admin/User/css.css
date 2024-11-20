@@ -174,9 +174,13 @@
   align-items: center;
   padding: 05px;
   background-color: var(--text-color);
-  /* Light background for the filter area */
-  border-radius: 8px;
+  /*Lightbackgroundforthefilterarea*/
+  border-radius: 3px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
 }
 
 .filter-container label {
@@ -192,12 +196,11 @@
   color: var(--text-color);
   background-color: var(--bg-color);
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 3px;
   transition: border-color 0.3s, box-shadow 0.3s;
   outline: none;
   cursor: pointer;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  /* Light shadow for the dropdown */
 }
 
 /* Select hover and focus effect */
@@ -244,7 +247,7 @@
 .users-area-topbar-Button-button {
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  background-color: var(--text-color);
+  background-color: var(--bg-color);
   /* Background based on theme */
   border-radius: 3px;
   cursor: pointer;
@@ -254,7 +257,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 30px;
+  padding: 12px 25px;
   font-size: 15px;
   font-weight: 500;
   line-height: 18px;

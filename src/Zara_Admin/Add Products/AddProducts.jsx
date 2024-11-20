@@ -789,12 +789,13 @@ const ProductForm = () => {
                   closeOnDocumentClick
                   modal
                   lockScroll
+                  overlayClassName="popup-overlay"
                 >
                   <div className="variation-popup">
                     <button title="Close Variation Items" onClick={closePopup}>
                       <MdClose />
                     </button>{" "}
-                    <div className="popup-content">
+                    <div className="popup-content-data">
                       <div className="popup-content-area">
                         <div>
                           <label>Color</label>

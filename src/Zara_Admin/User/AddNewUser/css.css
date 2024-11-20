@@ -1,0 +1,240 @@
+.user-form-area {
+  width: 100%;
+  height: auto;
+}
+
+.user-form-area-topbar {
+  width: 100%;
+  height: 60px;
+  background-color: rgb(5, 5, 5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.user-form-area-topbar p {
+  font-size: 20px;
+  line-height: 22px;
+  font-size: 500;
+  font-family: "Times New Roman", Times, serif;
+  color: white;
+}
+
+.Add-now-button {
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  /* Background based on theme */
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 25px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  gap: 5px;
+  width: 200px;
+}
+
+.Add-now-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: var(--button-hover-bg-color);
+  /* Hover color based on theme */
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.Add-now-button:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.Add-now-button:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: translateY(-2px);
+  box-shadow: var(--button-shadow);
+  /* Shadow based on theme */
+}
+
+.popup-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.user-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 10px 10px;
+}
+
+.user-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.user-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  color: var(--bg-color);
+}
+.user-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  color: var(--bg-color);
+  outline: none;
+}
+
+.user-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.user-form button.submit-button {
+  grid-column: span 2;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.user-form button.submit-button:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.user-form-area-image {
+  width: 20%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.user-form-area-image-main-Plus {
+  width: 30px;
+  height: 30px;
+}
+
+.user-form-area-Image-unSlected-parent {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.user-form-area-Image-unSlected {
+  opacity: 01;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-color);
+  background: var(--bg-color);
+  font-weight: bold;
+  transition: all 0.3s ease;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.user-form-area-Image-unSlected:hover {
+  transform: scale(1.05);
+  filter: brightness(0.9);
+  opacity: 1;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  color: rgb(95, 95, 95);
+  background-color: rgba(209, 28, 28, 0.879);
+}
+
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-form {
+    grid-template-columns: 1fr;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .Add-now-button {
+    padding: 6px 12px;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}

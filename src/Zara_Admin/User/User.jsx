@@ -20,7 +20,7 @@ function User() {
     error: null,
     verifiedFilter: "all",
     roleFilter: "all",
-    addnew: "false",
+    addnew: false, // Initial state set to false
   });
   const [pollingInterval] = useState(5000);
 
@@ -136,7 +136,6 @@ function User() {
     }
   };
 
-  // Handle user deletion
   const handleDeleteUser = (userId) => {
     setState((prev) => ({
       ...prev,
@@ -146,7 +145,6 @@ function User() {
       },
     }));
   };
-
   useEffect(() => {
     fetchData();
     const pollingId = setInterval(fetchData, pollingInterval);
@@ -168,10 +166,18 @@ function User() {
     return verifiedMatch && roleMatch;
   });
 
-  const handleaddnewuser = () => {
+  const handleAddNewUser = (e) => {
+    e.preventDefault();
     setState((prev) => ({
       ...prev,
-      addnew: true,
+      addnew: true, // Set addnew to true on click
+    }));
+  };
+
+  const closePopup = () => {
+    setState((prev) => ({
+      ...prev,
+      addnew: false, // Set addnew to true on click
     }));
   };
 
@@ -218,14 +224,12 @@ function User() {
             </div>
 
             <div className="users-area-topbar-Button-parent">
-              <button
+              <p
                 className="users-area-topbar-Button-button"
-                onclcik={() => {
-                  handleaddnewuser();
-                }}
+                onClick={handleAddNewUser} // Corrected the onClick typo
               >
                 Add New User
-              </button>
+              </p>
             </div>
           </div>
         </div>
@@ -249,7 +253,9 @@ function User() {
           onDeleteUser={handleDeleteUser}
         />
       )}
-      {state.addnew && <AddNewUser />}
+      {state.addnew && (
+        <AddNewUser addnew={state.addnew} closePopup={closePopup} />
+      )}
     </div>
   );
 }
