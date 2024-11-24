@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "./css.css";
@@ -33,11 +33,62 @@ const Add = ({ closePopup, type }) => {
   });
 
   const { token } = useContext(userContext);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [state, setState] = useState({
+    Loading: false,
+    data: [],
+    selectedMainCategoryId: "",
+    selectedSubCategoryId: "",
+  });
+
+  // Data Fetching Function
+  const data_fetch = async () => {
+    try {
+      setState((prevState) => ({ ...prevState, Loading: true }));
+
+      let response;
+      if (type === "subcategory") {
+        response = await axios.get(
+          "http://localhost:1122/MainCategory/getAll",
+          {
+            withCredentials: true,
+            headers: { authenticate: `Bearer ${token}` },
+          }
+        );
+      } else if (type === "childcategory") {
+        if (state.selectedMainCategoryId) {
+          response = await axios.get(
+            `http://localhost:1122/SubMainCategory/GetByMainCategory/${state.selectedMainCategoryId}`,
+            {
+              withCredentials: true,
+              headers: { authenticate: `Bearer ${token}` },
+            }
+          );
+        } else {
+          response = []; // Empty response if no main category selected
+        }
+      }
+
+      setState((prevState) => ({
+        ...prevState,
+        Loading: false,
+        data: Array.isArray(response?.data) ? response.data : [],
+      }));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setState((prevState) => ({ ...prevState, Loading: false }));
+    }
+  };
+
+  useEffect(() => {
+    data_fetch(); // Call data_fetch when the component mounts
+  }, []);
 
   // Submit Handler
   const onSubmit = async (data) => {
-    setLoading(true);
+    setState((prevState) => ({
+      ...prevState,
+      Loading: true,
+    }));
     try {
       let response;
       switch (type) {
@@ -99,7 +150,10 @@ const Add = ({ closePopup, type }) => {
         text: error.response?.data?.message || "Something went wrong!",
       });
     } finally {
-      setLoading(false);
+      setState((prevState) => ({
+        ...prevState,
+        Loading: false,
+      }));
     }
   };
 
@@ -136,12 +190,56 @@ const Add = ({ closePopup, type }) => {
                 <p className="error">{errors.MainCategoryName.message}</p>
               )}
             </div>
+
+            {/* Main Category or SubCategory Selection */}
+            {type === "subcategory" || type === "childcategory" ? (
+              <div>
+                <label>
+                  {type === "subcategory"
+                    ? "Select Main Category"
+                    : "Select Sub Category"}
+                </label>
+                <select
+                  onChange={(e) => {
+                    if (type === "subcategory") {
+                      setState({
+                        ...state,
+                        selectedMainCategoryId: e.target.value,
+                        selectedSubCategoryId: "", // Reset selected subcategory
+                      });
+                    } else if (type === "childcategory") {
+                      setState({
+                        ...state,
+                        selectedSubCategoryId: e.target.value,
+                      });
+                    }
+                  }}
+                  value={
+                    type === "subcategory"
+                      ? state.selectedMainCategoryId
+                      : state.selectedSubCategoryId
+                  }
+                >
+                  <option value="" disabled>
+                    {type === "subcategory"
+                      ? "Select Main Category"
+                      : "Select Sub Category"}
+                  </option>
+                  {(Array.isArray(state.data) ? state.data : []).map((item) => (
+                    <option key={item._id} value={item._id}>
+                      {item.MainCategoryName || item.SubMainCategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+
             <button
               type="submit"
               className="Add-now-button"
-              disabled={loading} // Disable button while loading
+              disabled={state.Loading} // Disable button while loading
             >
-              {loading ? "Adding..." : "Add"}
+              {state.Loading ? "Adding..." : "Add"}
             </button>
           </div>
         </form>
@@ -169,7 +267,7 @@ const Add = ({ closePopup, type }) => {
           padding: "0px",
         }}
       >
-        {loading ? (
+        {state.Loading ? (
           <div className="loading-spinner">Loading...</div>
         ) : (
           getPopupContent()
@@ -180,117 +278,3 @@ const Add = ({ closePopup, type }) => {
 };
 
 export default Add;
-
-// import React, { useContext, useState } from "react";
-// import Popup from "reactjs-popup";
-// import "reactjs-popup/dist/index.css";
-// import "./css.css";
-// import { useForm, Controller } from "react-hook-form";
-// import { z } from "zod";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import axios from "axios";
-// import Swal from "sweetalert2";
-// import { userContext } from "../../../Context/UserContext";
-
-// const category_Schema = z.object({
-//   MainCategoryName: z.string().min(4, "Category name is required."),
-// });
-
-// const Add = ({ closePopup, type }) => {
-//   const {
-//     control,
-//     handlesubmit,
-//     formState: { error },
-//     reset,
-//     setValue,
-//   } = useForm({
-//     resolver: zodResolver(category_Schema),
-//   });
-
-//   const { token } = useContext(userContext);
-
-//   const [state, setState] = useState({
-//     category: "",
-//   });
-
-//   const onSubmit = async (data, e) => {
-//     e.preventDefault();
-//   };
-
-//   const getPopupContent = () => {
-//     switch (type) {
-//       case "category":
-//         return (
-//           <div className="category-area">
-//             <div className="category-topbar">Add Main Category</div>
-//             <form className="user-form">
-//               <div className="category-body">
-//                 <div>
-//                   <label>Category Name</label>
-//                   <Controller
-//                     name="MainCategoryName"
-//                     control={control}
-//                     render={({ field }) => (
-//                       <input {...field} placeholder="First Name" />
-//                     )}
-//                   />
-//                   {error.MainCategoryName && (
-//                     <p className="error">{error.MainCategoryName.message}</p>
-//                   )}
-//                 </div>
-//                 <button
-//                   className="Add-now-button"
-//                   onClick={handlesubmit(onSubmit)}
-//                 >
-//                   Add Category
-//                 </button>
-//               </div>
-//             </form>
-//           </div>
-//         );
-//       case "subcategory":
-//         return (
-//           <div className="category-area">
-//             <div className="category-topbar">Add Sub Category</div>
-//             <div className="category-body">Add Sub Category Content</div>
-//           </div>
-//         );
-//       case "childcategory":
-//         return (
-//           <div className="category-area">
-//             <div className="category-topbar">Add Child Category</div>
-//             <div className="category-body">Add Child Category Content</div>
-//           </div>
-//         );
-//       default:
-//         return <div>No Content Available</div>;
-//     }
-//   };
-
-//   return (
-//     <div className="add">
-//       <Popup
-//         open={!!type} // Check if type is truthy
-//         onClose={closePopup}
-//         modal
-//         lockScroll
-//         overlayClassName="popup-overlay"
-//         contentStyle={{
-//           backgroundColor: "var(--bg-color)",
-//           color: "var(--text-color)",
-//           width: "400px",
-//           minWidth: "auto",
-//           boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-//           height: "450px",
-//           borderRadius: "0px",
-//           overflowY: "auto",
-//           padding: "0px",
-//         }}
-//       >
-//         {getPopupContent()}
-//       </Popup>
-//     </div>
-//   );
-// };
-
-// export default Add;
