@@ -219,7 +219,7 @@ function Product() {
                 </button>
               </MenuHandler>
               <MenuList>
-                <MenuItem>Menu Item 1</MenuItem>
+                <MenuItem>Table View</MenuItem>
                 <MenuItem>Menu Item 2</MenuItem>
                 <MenuItem>Menu Item 3</MenuItem>
               </MenuList>
@@ -337,24 +337,3 @@ function Product() {
 }
 
 export default Product;
-{
-  /* {state.data.length > 0 ? (
-              state.data.map((product, index) => (
-                <div key={index}>
-                  <img src={product.MainImage} alt="" /> <p>{product.Name}</p>
-                  {product.variations &&
-                  product.variations.length > 0 &&
-                  product.variations[0].image &&
-                  product.variations[0].image.length > 0 ? (
-                    product.variations[0].image.map((img, imgIndex) => (
-                      <img key={imgIndex} src={img} alt={product.name} />
-                    ))
-                  ) : (
-                    <p>No images available</p>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>No products available</p>
-            )} */
-}
