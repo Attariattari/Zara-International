@@ -23,21 +23,41 @@ const Child_category_Schema = z.object({
 });
 
 const Add = ({ closePopup, type }) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: zodResolver(category_Schema),
-  });
-
   const { token } = useContext(userContext);
   const [state, setState] = useState({
     Loading: false,
     data: [],
     selectedMainCategoryId: "",
     selectedSubCategoryId: "",
+    schema: category_Schema, // Default schema
+  });
+
+  useEffect(() => {
+    if (type === "subcategory") {
+      setState((prevState) => ({
+        ...prevState,
+        schema: Sub_category_Schema,
+      }));
+    } else if (type === "childcategory") {
+      setState((prevState) => ({
+        ...prevState,
+        schema: Child_category_Schema,
+      }));
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        schema: category_Schema,
+      }));
+    }
+  }, [type]);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(state.schema), // Use schema from state
   });
 
   // Data Fetching Function
@@ -55,23 +75,25 @@ const Add = ({ closePopup, type }) => {
           }
         );
       } else if (type === "childcategory") {
-        if (state.selectedMainCategoryId) {
-          response = await axios.get(
-            `http://localhost:1122/SubMainCategory/GetByMainCategory/${state.selectedMainCategoryId}`,
-            {
-              withCredentials: true,
-              headers: { authenticate: `Bearer ${token}` },
-            }
-          );
-        } else {
-          response = []; // Empty response if no main category selected
-        }
+        response = await axios.get(
+          `http://localhost:1122/SubMainCategory/getAll`,
+          {
+            withCredentials: true,
+            headers: { authenticate: `Bearer ${token}` },
+          }
+        );
       }
+
+      console.log("data View", response);
+
+      // Dynamically handle data structure based on API response
+      const responseData =
+        type === "subcategory" ? response?.data : response?.data?.data; // Adjusted for childcategory
 
       setState((prevState) => ({
         ...prevState,
         Loading: false,
-        data: Array.isArray(response?.data) ? response.data : [],
+        data: Array.isArray(responseData) ? responseData : [],
       }));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -118,17 +140,16 @@ const Add = ({ closePopup, type }) => {
           response = await axios.post(
             "http://localhost:1122/ChildSubCategory/Create",
             { ChildSubCategory: data.MainCategoryName }, // Adjust payload for child category
+
             {
               withCredentials: true,
               headers: { Authenticate: `Bearer ${token}` },
             }
           );
           break;
-
         default:
           throw new Error("Invalid type");
       }
-
       Swal.fire({
         icon: "success",
         title: `${
@@ -156,8 +177,10 @@ const Add = ({ closePopup, type }) => {
       }));
     }
   };
-
   // Get Content for Popup
+  console.log("Full State Data:", state.data);
+  console.log("Nested Data:", state.data?.data);
+
   const getPopupContent = () => {
     const title =
       type === "category"
@@ -190,9 +213,7 @@ const Add = ({ closePopup, type }) => {
                 <p className="error">{errors.MainCategoryName.message}</p>
               )}
             </div>
-
-            {/* Main Category or SubCategory Selection */}
-            {type === "subcategory" || type === "childcategory" ? (
+            {(type === "subcategory" || type === "childcategory") && (
               <div>
                 <label>
                   {type === "subcategory"
@@ -201,18 +222,12 @@ const Add = ({ closePopup, type }) => {
                 </label>
                 <select
                   onChange={(e) => {
-                    if (type === "subcategory") {
-                      setState({
-                        ...state,
-                        selectedMainCategoryId: e.target.value,
-                        selectedSubCategoryId: "", // Reset selected subcategory
-                      });
-                    } else if (type === "childcategory") {
-                      setState({
-                        ...state,
-                        selectedSubCategoryId: e.target.value,
-                      });
-                    }
+                    setState((prevState) => ({
+                      ...prevState,
+                      [type === "subcategory"
+                        ? "selectedMainCategoryId"
+                        : "selectedSubCategoryId"]: e.target.value,
+                    }));
                   }}
                   value={
                     type === "subcategory"
@@ -225,14 +240,31 @@ const Add = ({ closePopup, type }) => {
                       ? "Select Main Category"
                       : "Select Sub Category"}
                   </option>
-                  {(Array.isArray(state.data) ? state.data : []).map((item) => (
-                    <option key={item._id} value={item._id}>
-                      {item.MainCategoryName || item.SubMainCategory}
-                    </option>
-                  ))}
+
+                  {state.data?.length > 0 ? (
+                    state.data.map((item) => {
+                      console.log(
+                        "Fetched Data:",
+                        type === "subcategory" ? state.data : state.data?.data
+                      );
+
+                      const displayName =
+                        type === "subcategory"
+                          ? item.MainCategoryName
+                          : item.SubMainCategory || "Unnamed Subcategory";
+
+                      return (
+                        <option key={item._id} value={item._id}>
+                          {displayName}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <option disabled>No Data Available</option>
+                  )}
                 </select>
               </div>
-            ) : null}
+            )}
 
             <button
               type="submit"
