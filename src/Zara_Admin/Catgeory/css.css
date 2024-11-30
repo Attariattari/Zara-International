@@ -14,7 +14,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.3rem 1.5rem;
   gap: 1.5rem;
 }
 
@@ -26,6 +26,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  background-color: var(--text-color);
+  color: var(--bg-color);
 }
 
 .top-bar .top-bar-first {
@@ -87,7 +89,7 @@
 }
 
 .top-bar div button:hover {
-  color: var(--hover-text-color);
+  color: var(--text-color);
   box-shadow: var(--button-shadow);
   transform: translateY(-2px);
 }
@@ -95,6 +97,7 @@
 .Category-data {
   width: 100%;
   height: auto;
+
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -103,6 +106,8 @@
 .Category-data .Category-data-area {
   width: 32%;
   height: auto;
+  max-height: 446px;
+  overflow-y: auto;
   border: 1px solid var(--border-color);
 }
 
@@ -113,12 +118,19 @@
   justify-content: start;
   padding: 0px 20px;
   align-items: center;
+  background-color: var(--text-color);
+  color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
+  position: sticky; /* Sticky positioning for the top bar */
+  top: 0;
+  z-index: 1; /* Ensure it stays above scrollable content */
 }
 
 .Category-data-area .data {
   width: 100%;
   height: auto;
+  flex: 1; /* Allow it to grow and fill remaining space */
+  overflow-y: auto;
 }
 
 .data-Spinner {
@@ -135,4 +147,102 @@
   width: 100%;
   height: auto;
   padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.data .data-area div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-delete {
+  display: flex;
+  gap: 10px; /* Spacing between icons */
+  align-items: center; /* Align icons vertically */
+}
+
+.edit {
+  color: #28a745; /* Professional green color for edit */
+  font-size: 24px; /* Icon size */
+  cursor: pointer; /* Indicate interactivity */
+  transition: transform 0.2s ease, color 0.2s ease; /* Smooth hover effects */
+}
+
+.edit:hover {
+  color: #218838; /* Darker green on hover */
+  transform: scale(1.2); /* Slight zoom effect */
+}
+
+.delete {
+  color: #dc3545; /* Professional red color for delete */
+  font-size: 24px; /* Icon size */
+  cursor: pointer; /* Indicate interactivity */
+  transition: transform 0.2s ease, color 0.2s ease; /* Smooth hover effects */
+}
+
+.delete:hover {
+  color: #c82333; /* Darker red on hover */
+  transform: scale(1.2); /* Slight zoom effect */
+}
+
+.data .Category-card:not(:last-child),
+.data .SubCategory-card:not(:last-child),
+.data .ChildCategory-card:not(:last-child) {
+  border-bottom: 1px solid #ccc; /* Border color */
+}
+.no-data {
+  width: 100%;
+  height: 200px;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.no-data button {
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  background-color: var(--button-bg-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.no-data button span {
+  z-index: 2;
+}
+
+.no-data button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--button-hover-bg-color);
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.no-data button:hover::before {
+  width: 100%;
+}
+
+.no-data button:hover {
+  color: var(--text-color);
+  box-shadow: var(--button-shadow);
+  transform: translateY(-2px);
 }

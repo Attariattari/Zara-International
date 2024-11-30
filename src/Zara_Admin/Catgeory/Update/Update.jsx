@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import "./css.css";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,7 +32,13 @@ const ChildCategorySchema = z.object({
     .nonempty({ message: "Child Category is required" }),
 });
 
-const Add = ({ closePopup, type, fetchData }) => {
+const Update = ({
+  close_Update_Popup,
+  type_Update,
+  mainCategoryName: existingmainCategoryName,
+  subMainCategory: existingsubMainCategory,
+  childSubCategory: existingchildSubCategory,
+}) => {
   const { token } = useContext(userContext);
   const [state, setState] = useState({
     Loading: false,
@@ -44,9 +49,9 @@ const Add = ({ closePopup, type, fetchData }) => {
 
   // Initialize the correct schema based on the type
   const getSchema = () => {
-    if (type === "subcategory") {
+    if (type_Update === "subcategory") {
       return SubCategorySchema;
-    } else if (type === "childcategory") {
+    } else if (type_Update === "childcategory") {
       return ChildCategorySchema;
     }
     return MainCategorySchema;
@@ -58,18 +63,20 @@ const Add = ({ closePopup, type, fetchData }) => {
     formState: { errors },
     reset,
   } = useForm({
-    resolver: zodResolver(getSchema()), // Use schema based on type
+    resolver: zodResolver(getSchema()), // Use schema based on type_Update
+
     defaultValues: {
-      MainCategoryName: "",
+      MainCategoryName: existingmainCategoryName || "",
+      subMainCategory: existingsubMainCategory || "",
+      childSubCategory: existingchildSubCategory || "",
     },
   });
 
-  // Update schema dynamically when the type changes
+  // Update schema dynamically when the type_Update changes
   useEffect(() => {
-    const schema = getSchema(); // Get the current schema based on the type
-    // console.log("Current Schema Shape:", schema._def.shape()); // Log the shape of the schema
+    const schema = getSchema(); // Get the current schema based on the type_Update
     reset({}, { keepValues: false, resolver: zodResolver(schema) }); // Update the form resolver
-  }, [type]);
+  }, [type_Update]);
 
   // Data Fetching Function
   const data_fetch = async () => {
@@ -77,7 +84,7 @@ const Add = ({ closePopup, type, fetchData }) => {
       setState((prevState) => ({ ...prevState, Loading: true }));
 
       let response;
-      if (type === "subcategory") {
+      if (type_Update === "subcategory") {
         response = await axios.get(
           "http://localhost:1122/MainCategory/getAll",
           {
@@ -85,7 +92,7 @@ const Add = ({ closePopup, type, fetchData }) => {
             headers: { authenticate: `Bearer ${token}` },
           }
         );
-      } else if (type === "childcategory") {
+      } else if (type_Update === "childcategory") {
         response = await axios.get(
           `http://localhost:1122/SubMainCategory/getAll`,
           {
@@ -96,7 +103,7 @@ const Add = ({ closePopup, type, fetchData }) => {
       }
 
       const responseData =
-        type === "subcategory" ? response?.data : response?.data?.data;
+        type_Update === "subcategory" ? response?.data : response?.data?.data;
 
       setState((prevState) => ({
         ...prevState,
@@ -119,7 +126,7 @@ const Add = ({ closePopup, type, fetchData }) => {
 
     try {
       let response;
-      switch (type) {
+      switch (type_Update) {
         case "category":
           response = await axios.post(
             "http://localhost:1122/MainCategory/Create",
@@ -160,7 +167,7 @@ const Add = ({ closePopup, type, fetchData }) => {
           break;
 
         default:
-          throw new Error("Invalid type");
+          throw new Error("Invalid type_Update");
       }
 
       Swal.fire({
@@ -180,33 +187,33 @@ const Add = ({ closePopup, type, fetchData }) => {
       });
     } finally {
       setState((prevState) => ({ ...prevState, Loading: false }));
-      closePopup(false);
+      close_Update_Popup(false);
     }
   };
-
   const getPopupContent = () => {
     const title =
-      type === "category"
-        ? "Add Main Category"
-        : type === "subcategory"
-        ? "Add Sub Category"
-        : "Add Child Category";
+      type_Update === "category"
+        ? "Update Main Category"
+        : type_Update === "subcategory"
+        ? "Update Sub Category"
+        : "Update Child Category";
 
     return (
       <div className="category-area">
         <div className="category-topbar">{title}</div>
         <form className="category-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="category-body">
-            {(type === "subcategory" || type === "childcategory") && (
+            {(type_Update === "subcategory" ||
+              type_Update === "childcategory") && (
               <div>
                 <label>
-                  {type === "subcategory"
+                  {type_Update === "subcategory"
                     ? "Select Main Category"
                     : "Select Sub Category"}
                 </label>
                 <Controller
                   name={
-                    type === "subcategory"
+                    type_Update === "subcategory"
                       ? "MainCategory_id"
                       : "SubMainCategory_id"
                   }
@@ -218,7 +225,7 @@ const Add = ({ closePopup, type, fetchData }) => {
                       onChange={(e) => field.onChange(e.target.value)} // Handle changes manually
                     >
                       <option value="" disabled>
-                        {type === "subcategory"
+                        {type_Update === "subcategory"
                           ? "Select Main Category"
                           : "Select Sub Category"}
                       </option>
@@ -226,7 +233,7 @@ const Add = ({ closePopup, type, fetchData }) => {
                       {state.data?.length > 0 ? (
                         state.data.map((item) => {
                           const displayName =
-                            type === "subcategory"
+                            type_Update === "subcategory"
                               ? item.MainCategoryName
                               : item.SubMainCategory || "Unnamed Subcategory";
 
@@ -254,17 +261,17 @@ const Add = ({ closePopup, type, fetchData }) => {
 
             <div>
               <label>
-                {type === "category"
+                {type_Update === "category"
                   ? "Category Name"
-                  : type === "subcategory"
+                  : type_Update === "subcategory"
                   ? "Sub Category Name"
                   : "Child Category Name"}
               </label>
               <Controller
                 name={
-                  type === "category"
+                  type_Update === "category"
                     ? "MainCategoryName"
-                    : type === "subcategory"
+                    : type_Update === "subcategory"
                     ? "SubMainCategory"
                     : "ChildSubCategory"
                 }
@@ -301,8 +308,8 @@ const Add = ({ closePopup, type, fetchData }) => {
   return (
     <div className="add">
       <Popup
-        open={!!type} // Show popup if type is truthy
-        onClose={closePopup}
+        open={!!type_Update} // Show popup if type_Update is truthy
+        onClose={close_Update_Popup}
         modal
         lockScroll
         overlayClassName="popup-overlay"
@@ -330,4 +337,4 @@ const Add = ({ closePopup, type, fetchData }) => {
   );
 };
 
-export default Add;
+export default Update;

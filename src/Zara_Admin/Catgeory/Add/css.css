@@ -12,9 +12,125 @@
   padding: 0px 10px;
   font-size: 14px;
 }
+.category-form {
+  display: flex;
+  flex-direction: column;
+  height: 91.1%;
+  padding: 10px 10px;
+}
+.category-form div {
+  display: flex;
+  flex-direction: column;
+}
+.category-form label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.category-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+.category-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  color: var(--bg-color);
+  outline: none;
+  background-color: var(--text-color);
+}
+.category-form option {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  color: var(--bg-color);
+  outline: none;
+}
+
+.category-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.category-body button {
+  border: 1px solid var(--border-color, #ccc);
+  color: var(--text-color, #333);
+  background-color: var(--button-bg-color, #f9f9f9);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.category-body button span {
+  z-index: 2;
+}
+
+.category-body button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--button-hover-bg-color, rgba(0, 0, 0, 0.1));
+  z-index: 1;
+  transition: width 0.4s ease;
+}
+
+.loading-spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-body button:hover::before {
+}
+
+.category-body button:hover {
+  color: var(--text-color, #333);
+  box-shadow: var(--button-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
+  transform: translateY(-2px);
+}
+
+.category-body button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .category-body {
   width: 100%;
   height: auto;
-  padding: 10px;
+  gap: 20px;
   font-size: 14px;
 }

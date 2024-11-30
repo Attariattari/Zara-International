@@ -1,97 +1,116 @@
 body.light {
-    --bg-color: white;
-    --admin-bg-color: #858585b6;
-    --image-focuse-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    --text-color: black;
-    --border-color: #000000;
-    --scrollbar-bg: #f1f1f100;
-    --scrollbar-thumb: #090909;
-    --scrollbar-thumb-hover: #555;
-    --active-bg-color: #e0e0e0;
-    --active-text-color: #000000;
-    --active-border-color: #000000;
-    --input-bg-color: rgb(24, 24, 24);
-    --input-color: white;
-    --active-icon-color: rgb(46, 46, 46);
-    --grid-border-color: linear-gradient(90deg, rgba(0, 210, 247, 1) 0%, rgba(208, 54, 228, 1) 100%);
-    --button-bg-color: rgba(26, 26, 26, 0.3);
-    --variation-popup-bg: rgba(0, 0, 0, 0.7);
-    --product-content-overlay: rgba(255, 255, 255, 0.8);
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --shadow-color-hover: rgba(0, 0, 0, 0.3);
-    --shadow-inner-color: rgba(255, 255, 255, 0.1);
-    --shadow-inner-color-hover: rgba(255, 255, 255, 0.2);
-    --discount-color: #888;
-    --real-price-color: #000;
-    --button-bg-color: #f8f9fa;
-    --button-hover-bg-color: rgba(0, 0, 0, 0.05);
-    --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  --bg-color: white;
+  --admin-bg-color: #858585b6;
+  --image-focuse-color: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  --text-color: black;
+  --border-color: #000000;
+  --scrollbar-bg: #f1f1f100;
+  --scrollbar-thumb: #090909;
+  --scrollbar-thumb-hover: #555;
+  --active-bg-color: #e0e0e0;
+  --active-text-color: #000000;
+  --active-border-color: #000000;
+  --input-bg-color: rgb(24, 24, 24);
+  --input-color: white;
+  --active-icon-color: rgb(46, 46, 46);
+  --grid-border-color: linear-gradient(
+    90deg,
+    rgba(0, 210, 247, 1) 0%,
+    rgba(208, 54, 228, 1) 100%
+  );
+  --button-bg-color: rgba(26, 26, 26, 0.3);
+  --variation-popup-bg: rgba(0, 0, 0, 0.7);
+  --product-content-overlay: rgba(255, 255, 255, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-hover: rgba(0, 0, 0, 0.3);
+  --shadow-inner-color: rgba(255, 255, 255, 0.1);
+  --shadow-inner-color-hover: rgba(255, 255, 255, 0.2);
+  --discount-color: #888;
+  --real-price-color: #000;
+  --button-bg-color: #f8f9fa;
+  --button-hover-bg-color: rgba(0, 0, 0, 0.05);
+  --button-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 body.dark {
-    --bg-color: rgb(24, 24, 24);
-    --admin-bg-color: #3e3e3eac;
-    --image-focuse-color: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    --text-color: white;
-    --border-color: #ffffff;
-    --scrollbar-bg: rgba(24, 24, 24, 0);
-    --scrollbar-thumb: #ffffff;
-    --scrollbar-thumb-hover: #aaa;
-    --active-bg-color: #424242;
-    --active-text-color: #ffffff;
-    --active-border-color: #ffffff;
-    --input-bg-color: white;
-    --input-color: black;
-    --active-icon-color: rgb(178, 178, 178);
-    --grid-border-color: linear-gradient(90deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-    --button-bg-color: rgba(255, 255, 255, 0.3);
-    --variation-popup-bg: #3e3e3eac;
-    --product-content-overlay: rgba(37, 37, 37, 0.8);
-    --shadow-color: rgba(255, 255, 255, 0.1);
-    --shadow-color-hover: rgba(255, 255, 255, 0.3);
-    --shadow-inner-color: rgba(0, 0, 0, 0.2);
-    --shadow-inner-color-hover: rgba(0, 0, 0, 0.3);
-    --discount-color: #bbb;
-    --real-price-color: #fff;
-    --button-bg-color: #333;
-    --button-hover-bg-color: rgba(255, 255, 255, 0.1);
-    --button-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-
-
+  --bg-color: rgb(24, 24, 24);
+  --admin-bg-color: #3e3e3eac;
+  --image-focuse-color: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  --text-color: white;
+  --border-color: #ffffff;
+  --scrollbar-bg: rgba(24, 24, 24, 0);
+  --scrollbar-thumb: #ffffff;
+  --scrollbar-thumb-hover: #aaa;
+  --active-bg-color: #424242;
+  --active-text-color: #ffffff;
+  --active-border-color: #ffffff;
+  --input-bg-color: white;
+  --input-color: black;
+  --active-icon-color: rgb(178, 178, 178);
+  --grid-border-color: linear-gradient(
+    90deg,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  --button-bg-color: rgba(255, 255, 255, 0.3);
+  --variation-popup-bg: #3e3e3eac;
+  --product-content-overlay: rgba(37, 37, 37, 0.8);
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --shadow-color-hover: rgba(255, 255, 255, 0.3);
+  --shadow-inner-color: rgba(0, 0, 0, 0.2);
+  --shadow-inner-color-hover: rgba(0, 0, 0, 0.3);
+  --discount-color: #bbb;
+  --real-price-color: #fff;
+  --button-bg-color: #333;
+  --button-hover-bg-color: rgba(255, 255, 255, 0.1);
+  --button-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
+/* body {
+  cursor: url("https://upload.wikimedia.org/wikipedia/commons/7/73/Flat_tick_icon.svg"),
+    auto;
+} */
+
 .ChatPopupshow {
-    position: fixed;
-    z-index: 50;
-    bottom: 130px;
-    right: 0;
-    width: 120px;
-    height: 40px;
-    background-color: white;
-    border: 1px solid rgb(206, 206, 206);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    font-size: 12px;
+  position: fixed;
+  z-index: 50;
+  bottom: 130px;
+  right: 0;
+  width: 120px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid rgb(206, 206, 206);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 .ChatOnePopupshow {
-    position: fixed;
-    z-index: 50;
-    bottom: 130px;
-    left: 0;
-    width: 120px;
-    height: 40px;
-    background-color: white;
-    border: 1px solid rgb(206, 206, 206);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    font-size: 12px;
+  position: fixed;
+  z-index: 50;
+  bottom: 130px;
+  left: 0;
+  width: 120px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid rgb(206, 206, 206);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 /* button {
@@ -106,17 +125,17 @@ body.dark {
 } */
 
 @media (max-width: 768px) {
-    .ChatPopupshow {
-        display: none;
-    }
+  .ChatPopupshow {
+    display: none;
+  }
 
-    .chat-component {
-        display: none;
-    }
+  .chat-component {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) {
-    .chat-component {
-        display: block;
-    }
+  .chat-component {
+    display: block;
+  }
 }

@@ -92,7 +92,6 @@ function AddNewUser({ addnew, closePopup }) {
       closePopup();
     }
   };
-  console.log("Loading state:", state.loading);
   const handleGallery = () => {
     if (!state.selectuserimage) {
       setState((prevState) => ({
