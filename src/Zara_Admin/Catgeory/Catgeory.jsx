@@ -16,6 +16,7 @@ function Category() {
     child_category: [],
     popupType: null,
     Update_popupType: null,
+    select_Category: null,
     loading: {
       category: false,
       sub_category: false,
@@ -173,24 +174,25 @@ function Category() {
     childCategory = null,
     type_Update
   ) => {
-    const updatedState = { Update_popupType: type_Update };
+    const updatedState = {
+      Update_popupType: type_Update,
+      select_Category: null, // Reset initially
+    };
 
-    // Add data conditionally
+    // Set `select_Category` conditionally
     if (type_Update === "category" && category) {
-      updatedState.mainCategoryName = category.MainCategoryName;
+      updatedState.select_Category = category;
     } else if (type_Update === "subcategory" && subcategory) {
-      updatedState.subMainCategory = subcategory.SubMainCategory;
-    } else if (type_Update === "childCategory" && childCategory) {
-      updatedState.childSubCategory = childCategory.ChildSubCategory;
+      updatedState.select_Category = subcategory;
+    } else if (type_Update === "childcategory" && childCategory) {
+      updatedState.select_Category = childCategory;
     }
 
-    // Update state only with existing data
+    // Update state
     setState((prevState) => ({
       ...prevState,
       ...updatedState,
     }));
-
-    console.log("Updated State:", updatedState);
   };
 
   const close_Update_Popup = (shouldRefetch = false) => {
@@ -354,7 +356,7 @@ function Category() {
                               null,
                               null,
                               childCategory,
-                              "childCategory"
+                              "childcategory"
                             )
                           }
                         />
@@ -387,23 +389,17 @@ function Category() {
           fetchData={fetchData}
         />
       )}
-      <Update
-        type_Update={state.Update_popupType} // Required
-        close_Update_Popup={(shouldRefetch) =>
-          close_Update_Popup(shouldRefetch)
-        }
-        fetchData={fetchData}
-        // Pass additional data based on Update_popupType
-        {...(state.Update_popupType === "category" && {
-          mainCategoryName: state.mainCategoryName,
-        })}
-        {...(state.Update_popupType === "subcategory" && {
-          subMainCategory: state.subMainCategory,
-        })}
-        {...(state.Update_popupType === "childCategory" && {
-          childSubCategory: state.childSubCategory,
-        })}
-      />
+      {state.Update_popupType && (
+        <Update
+          type_Update={state.Update_popupType} // Required
+          close_Update_Popup={(shouldRefetch) =>
+            close_Update_Popup(shouldRefetch)
+          }
+          fetchData={fetchData}
+          category_select={state.select_Category}
+          {...state.select_Category}
+        />
+      )}
     </div>
   );
 }

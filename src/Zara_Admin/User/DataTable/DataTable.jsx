@@ -314,14 +314,3 @@ function DataTable({ columns, rows, onDeleteUser }) {
 }
 
 export default DataTable;
-
-{
-  /* {open && selectedUser && (
-        <Updateuser
-          slug="user"
-          setOpen={setOpen}
-          userData={selectedUser} // Pass the selected user data
-          {...selectedUser}
-        />
-      )} */
-}

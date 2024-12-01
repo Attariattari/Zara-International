@@ -35,9 +35,12 @@ const ChildCategorySchema = z.object({
 const Update = ({
   close_Update_Popup,
   type_Update,
-  mainCategoryName: existingmainCategoryName,
-  subMainCategory: existingsubMainCategory,
-  childSubCategory: existingchildSubCategory,
+  category_select,
+  MainCategoryName: existingmainCategoryName,
+  MainCategory_id: existingMainCategory_id,
+  SubMainCategory_id: existingSubMainCategory_id,
+  SubMainCategory: existingsubMainCategory,
+  ChildSubCategory: existingchildSubCategory,
 }) => {
   const { token } = useContext(userContext);
   const [state, setState] = useState({
@@ -46,7 +49,6 @@ const Update = ({
     selectedMainCategoryId: "",
     selectedSubCategoryId: "",
   });
-
   // Initialize the correct schema based on the type
   const getSchema = () => {
     if (type_Update === "subcategory") {
@@ -64,13 +66,40 @@ const Update = ({
     reset,
   } = useForm({
     resolver: zodResolver(getSchema()), // Use schema based on type_Update
-
     defaultValues: {
       MainCategoryName: existingmainCategoryName || "",
-      subMainCategory: existingsubMainCategory || "",
-      childSubCategory: existingchildSubCategory || "",
+      MainCategory_id: existingMainCategory_id || "",
+      SubMainCategory_id: existingSubMainCategory_id || "",
+      SubMainCategory: existingsubMainCategory || "",
+      ChildSubCategory: existingchildSubCategory || "",
     },
   });
+  useEffect(() => {
+    // Define default values dynamically based on type_Update
+    const defaultValues = {
+      MainCategoryName:
+        type_Update === "category" ? existingmainCategoryName || "" : "",
+      MainCategory_id:
+        type_Update === "subcategory" ? existingMainCategory_id || "" : "",
+      SubMainCategory_id:
+        type_Update === "childcategory" ? existingSubMainCategory_id || "" : "",
+      SubMainCategory:
+        type_Update === "subcategory" ? existingsubMainCategory || "" : "",
+      ChildSubCategory:
+        type_Update === "childcategory" ? existingchildSubCategory || "" : "",
+    };
+
+    // Reset form with dynamic default values
+    reset(defaultValues, { keepDirty: false });
+  }, [
+    type_Update,
+    existingmainCategoryName,
+    existingMainCategory_id,
+    existingSubMainCategory_id,
+    existingsubMainCategory,
+    existingchildSubCategory,
+    reset,
+  ]);
 
   // Update schema dynamically when the type_Update changes
   useEffect(() => {
@@ -128,8 +157,8 @@ const Update = ({
       let response;
       switch (type_Update) {
         case "category":
-          response = await axios.post(
-            "http://localhost:1122/MainCategory/Create",
+          response = await axios.put(
+            `http://localhost:1122/MainCategory/UpdateById/${category_select._id}`,
             data,
             {
               withCredentials: true,
@@ -139,8 +168,8 @@ const Update = ({
           break;
 
         case "subcategory":
-          response = await axios.post(
-            "http://localhost:1122/SubMainCategory/Create",
+          response = await axios.put(
+            `http://localhost:1122/SubMainCategory/${category_select._id}`,
             {
               MainCategory_id: data.MainCategory_id,
               SubMainCategory: data.SubMainCategory,
@@ -153,8 +182,8 @@ const Update = ({
           break;
 
         case "childcategory":
-          response = await axios.post(
-            "http://localhost:1122/ChildSubCategory/Create",
+          response = await axios.put(
+            `http://localhost:1122/ChildSubCategory/${category_select._id}`,
             {
               SubMainCategory_id: data.SubMainCategory_id,
               ChildSubCategory: data.ChildSubCategory,
@@ -297,7 +326,7 @@ const Update = ({
               disabled={state.Loading}
               className="Add-button"
             >
-              <span>{state.Loading ? "Adding..." : "Add"}</span>
+              <span>{state.Loading ? "Uploading..." : "Update"}</span>
             </button>
           </div>
         </form>

@@ -82,7 +82,6 @@ function Updateuser({
     ProfileGallery: false,
     loading: false,
   });
-  console.log(UserData._id);
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
