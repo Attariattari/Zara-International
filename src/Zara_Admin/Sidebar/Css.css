@@ -1,153 +1,151 @@
-
 .SideBar_Menu .link.active {
-    background-color: var(--active-bg-color);
-    color: var(--active-text-color);
-    border-left: 4px solid var(--active-border-color);
-    padding-left: 10px;
+  background-color: var(--active-bg-color);
+  color: var(--active-text-color);
+  border-left: 4px solid var(--active-border-color);
+  padding-left: 10px;
 }
 
 /* Sidebar Styles */
 .SideBar {
-    width: 100%;
-    border-right: 1px solid var(--border-color);
-    height: 100vh;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  border-right: 1px solid var(--border-color);
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .SideBar_Menu::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 .SideBar_Menu::-webkit-scrollbar-track {
-    background: var(--scrollbar-bg);
+  background: var(--scrollbar-bg);
 }
 
 .SideBar_Menu::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb);
-    border-radius: 10px;
-    border: 2px solid var(--scrollbar-bg);
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid var(--scrollbar-bg);
 }
 
 .SideBar_Menu::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
+  background: var(--scrollbar-thumb-hover);
 }
 
 .Drawer {
-    box-shadow: 5px 0 3px -3px #00000030;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    max-width: 250px;
-    height: 100%;
-    z-index: 99999999;
-    display: flex;
-    flex-direction: column;
+  box-shadow: 5px 0 3px -3px #00000030;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  z-index: 99999999;
+  display: flex;
+  flex-direction: column;
 }
 
 .DrawerOpen {
-    left: 0;
-    transition: left 0.6s ease-in-out;
-    padding-left: 15px;
+  left: 0;
+  transition: left 0.6s ease-in-out;
+  padding-left: 15px;
 }
 
 .DrawerClosed {
-    left: -100%;
-    transition: left 0.6s ease-in-out;
+  left: -100%;
+  transition: left 0.6s ease-in-out;
 }
 
 .FullSidebar {
-    width: 230px;
-    padding-left: 15px;
-    transition: all 0.2s ease;
-
+  width: 230px;
+  padding-left: 15px;
+  transition: all 0.2s ease;
 }
 
 .SmallSidebar {
-    width: 88px;
-    transition: all 0.2s ease;
+  width: 88px;
+  transition: all 0.2s ease;
 }
 
 .SmallSidebar .SideBar_Menu {
-    margin-top: 0;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex-direction: column;
-    padding-bottom: 20px;
+  margin-top: 0;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 1px;
 }
 
 .FullSidebar .SideBar_Menu {
-    padding-bottom: 20px;
+  padding-bottom: 1px;
 }
 
 .SmallSidebar .SideBar_Menu ul {
-    justify-content: center;
+  justify-content: center;
 }
 
 .SmallSidebar .SideBar_Menu ul li svg,
 .SmallSidebar .SideBar_Menu ul li .icon {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .SideBar_Menu .link .icon {
-    transition: color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.SideBar_Menu ul+ul {
-    margin-top: 10px;
+.SideBar_Menu ul + ul {
+  margin-top: 10px;
 }
 
 .SideBarLogo {
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .SideBarLogo div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
 }
 
 .SideBarLogo img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .SideBar_Menu {
-    width: 100%;
-    height: auto;
-    color: var(--text-color);
-    margin-top: 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
-
+  width: 100%;
+  height: auto;
+  color: var(--text-color);
+  margin-top: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .SideBar_Menu .link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    /* Adjust the space between icon and text */
-    text-decoration: none;
-    /* Remove default link underlining */
-    color: var(--text-color);
-    /* Ensure link text color matches the theme */
-    transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease, padding-left 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Adjust the space between icon and text */
+  text-decoration: none;
+  /* Remove default link underlining */
+  color: var(--text-color);
+  /* Ensure link text color matches the theme */
+  transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease,
+    padding-left 0.3s ease;
 }

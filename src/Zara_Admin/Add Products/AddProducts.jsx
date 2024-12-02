@@ -1425,7 +1425,7 @@ const ProductForm = () => {
                           spaceBetween={3}
                           freeMode={true}
                           modules={[FreeMode]}
-                          className="mySwiper"
+                          className="mySwiper p-1"
                         >
                           {variation.image.map((image, imgIndex) => (
                             <SwiperSlide key={imgIndex}>

@@ -262,7 +262,7 @@ function SideBar() {
           </li>
         </ul>
 
-        <ul>
+        {/* <ul>
           <li>
             <NavLink
               to="/Admin/Shopping-Cart"
@@ -275,7 +275,7 @@ function SideBar() {
               )}
             </NavLink>
           </li>
-        </ul>
+        </ul> */}
         <ul>
           <li>
             <NavLink
