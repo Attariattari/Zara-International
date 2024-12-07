@@ -109,7 +109,12 @@ function ShoppingBag() {
   return (
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
-        <div className="absolute w-full bg-white">
+        <div
+          className="absolute w-full"
+          style={{
+            backgroundColor: "var(--bg-color)",
+          }}
+        >
           <NavBar_Show_After_Cart />
           <div className="text-black mt-6 ShippingFavoButton">
             <button
@@ -138,7 +143,7 @@ function ShoppingBag() {
                 height="14"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="inherit"
+                fill="var(--text-color)"
                 stroke="inherit"
               >
                 <path
@@ -184,7 +189,7 @@ function ShoppingBag() {
                           height="24"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
-                          fill="inherit"
+                          fill="var(--text-color)"
                           stroke="inherit"
                           onClick={() => toggleWishlist(index)}
                         >
@@ -202,7 +207,7 @@ function ShoppingBag() {
                           height="24"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
-                          fill="inherit"
+                          fill="var(--text-color)"
                           stroke="inherit"
                           onClick={() => toggleWishlist(index)}
                         >
@@ -219,7 +224,7 @@ function ShoppingBag() {
                         height="24"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
-                        fill="inherit"
+                        fill="var(--text-color)"
                         stroke="inherit"
                       >
                         <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>
@@ -416,7 +421,7 @@ export default ShoppingBag;
 //                 height="14"
 //                 viewBox="0 0 24 24"
 //                 xmlns="http://www.w3.org/2000/svg"
-//                 fill="inherit"
+//                 fill="var(--text-color)"
 //                 stroke="inherit"
 //               >
 //                 <path
@@ -462,7 +467,7 @@ export default ShoppingBag;
 //                           height="24"
 //                           viewBox="0 0 24 24"
 //                           xmlns="http://www.w3.org/2000/svg"
-//                           fill="inherit"
+//                           fill="var(--text-color)"
 //                           stroke="inherit"
 //                           onClick={() => toggleWishlist(index)}
 //                         >
@@ -480,7 +485,7 @@ export default ShoppingBag;
 //                           height="24"
 //                           viewBox="0 0 24 24"
 //                           xmlns="http://www.w3.org/2000/svg"
-//                           fill="inherit"
+//                           fill="var(--text-color)"
 //                           stroke="inherit"
 //                           onClick={() => toggleWishlist(index)}
 //                         >
@@ -497,7 +502,7 @@ export default ShoppingBag;
 //                         height="24"
 //                         viewBox="0 0 24 24"
 //                         xmlns="http://www.w3.org/2000/svg"
-//                         fill="inherit"
+//                         fill="var(--text-color)"
 //                         stroke="inherit"
 //                       >
 //                         <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"></path>

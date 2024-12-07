@@ -13,7 +13,7 @@ const NavBar_Show_After_Cart = () => {
   };
 
   return (
-    <div className="navbarmain">
+    <div className="navbarmain pb-2">
       <div className="firstsection">
         <div className="sidebaricon cursor-pointer" onClick={handleBackClick}>
           <svg
@@ -21,7 +21,7 @@ const NavBar_Show_After_Cart = () => {
             height="24"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
+            fill="var(--text-color)"
             stroke="inherit"
             className="layout-header-icon__icon"
           >
@@ -34,6 +34,7 @@ const NavBar_Show_After_Cart = () => {
               className="worldwide__logo"
               viewBox="0 0 132 55"
               xmlns="http://www.w3.org/2000/svg"
+              fill="var(--text-color)"
             >
               <path
                 fillRule="evenodd"
@@ -82,7 +83,7 @@ export default NavBar_Show_After_Cart;
 //             height="24"
 //             viewBox="0 0 24 24"
 //             xmlns="http://www.w3.org/2000/svg"
-//             fill="inherit"
+//             fill="var(--text-color)"
 //             stroke="inherit"
 //             class="layout-header-icon__icon"
 //           >

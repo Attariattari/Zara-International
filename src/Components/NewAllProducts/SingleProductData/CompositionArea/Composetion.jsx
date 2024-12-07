@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { TbWashOff } from "react-icons/tb";
+import { TbBleachOff } from "react-icons/tb";
+import { CiCircleInfo } from "react-icons/ci";
+import { MdOutlineIron } from "react-icons/md";
+import { TbWashDrycleanOff } from "react-icons/tb";
 function Composetion({ expanded, toggleExpanded }) {
   return (
     <div>
@@ -48,43 +52,23 @@ function Composetion({ expanded, toggleExpanded }) {
           </p>
           <Link>Clothing Care Guided</Link>
           <div className="space-x-5">
-            <img
-              src="https://static.zara.net/photos///contents/cm/product-cares-9-icon_0.svg?ts=1604343299129"
-              alt=""
-              width="20"
-            />
+            <TbWashOff style={{ width: "60px", height: "20px" }} />
             <p>Do not wash</p>
           </div>
           <div className="space-x-5">
-            <img
-              src="https://static.zara.net/photos///contents/cm/product-cares-14-icon_0.svg?ts=1604343289322"
-              alt=""
-              width="20"
-            />
+            <TbBleachOff style={{ width: "60px", height: "20px" }} />
             <p>Do not use bleach</p>
           </div>
           <div className="space-x-5">
-            <img
-              src="https://static.zara.net/photos///contents/cm/product-cares-18-icon_0.svg?ts=1604343283533"
-              alt=""
-              width="20"
-            />
+            <MdOutlineIron style={{ width: "60px", height: "20px" }} />
             <p>Iron at a maximum of 110ºC/230ºF</p>
           </div>
           <div className="space-x-5">
-            <img
-              src="https://static.zara.net/photos///contents/cm/product-cares-125-icon_0.svg?ts=1604671818114"
-              alt=""
-              width="20"
-            />
+            <CiCircleInfo style={{ width: "60px", height: "20px" }} />
             <p>Dry clean with tetrachloroethylene</p>
           </div>
           <div className="space-x-5">
-            <img
-              src="https://static.zara.net/photos///contents/cm/product-cares-35-icon_0.svg?ts=1604343281266"
-              alt=""
-              width="20"
-            />
+            <TbWashDrycleanOff style={{ width: "60px", height: "20px" }} />
             <p>Do not tumble dry</p>
           </div>
         </>

@@ -28,7 +28,7 @@ function AllProductDataView({ womenProducts }) {
 
   const openDrawer = (drawer) => {
     setDrawerType(drawer);
-    setSelectedSize(null)
+    setSelectedSize(null);
   };
 
   const closeDrawer = () => {
@@ -79,7 +79,7 @@ function AllProductDataView({ womenProducts }) {
             height="16"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
+            fill="var(--text-color)"
             stroke="inherit"
           >
             <path
@@ -118,7 +118,7 @@ function AllProductDataView({ womenProducts }) {
           <span className="color-box" style={{ backgroundColor: "black" }} />
           <span className="color-box" style={{ backgroundColor: "blue" }} />
         </div>
-        <span className="product-sizes">
+        <span className="product-sizes p-0">
           {womenProducts[0].size.map((size, index) => (
             <button
               key={index}
@@ -154,7 +154,10 @@ function AllProductDataView({ womenProducts }) {
         ADD
       </button>
       <div>
-        <SHIPPING_AND_RETURNS drawerType={drawerType} closeDrawer={closeDrawer} />
+        <SHIPPING_AND_RETURNS
+          drawerType={drawerType}
+          closeDrawer={closeDrawer}
+        />
       </div>
     </div>
   );

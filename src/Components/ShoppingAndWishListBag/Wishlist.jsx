@@ -65,7 +65,7 @@ function Wishlist() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const closeDrawer = () => {
     setDrawerType(null);
   };
@@ -87,7 +87,12 @@ function Wishlist() {
   return (
     <div>
       <div className="sticky top-0 z-10" style={{ marginTop: "-9px" }}>
-        <div className="absolute w-full bg-white">
+        <div
+          className="absolute w-full"
+          style={{
+            backgroundColor: "var(--bg-color)",
+          }}
+        >
           <NavBar_Show_After_Cart />
           {token && (
             <div className="Wishlist_Buttons_For_Controls mt-6">

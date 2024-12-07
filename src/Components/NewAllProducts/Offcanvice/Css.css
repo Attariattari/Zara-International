@@ -1,5 +1,6 @@
 .Custom-Drawer {
-  border-left: 1px solid black;
+  border-left: 1px solid var(--border-color);
+  background-color: var(--bg-color);
 }
 
 .circle-before,
@@ -11,7 +12,7 @@
 }
 
 .circle-before::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -10px;
   top: 25%;
@@ -23,7 +24,7 @@
 }
 
 .circle-beforetwo::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -10px;
   top: 45%;
@@ -43,7 +44,8 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
-  color: rgb(68, 68, 68);
+  color: var(--text-color);
+  font-size: 12px;
 }
 
 .SlidesButtons {
@@ -51,20 +53,22 @@
 }
 
 .SlidesButtonsXS {
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   font-size: 12px;
 }
 
 .SlidesButtonsS,
-.SlidesButtonsM, .SlidesButtonsL, .SlidesButtonsXL {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+.SlidesButtonsM,
+.SlidesButtonsL,
+.SlidesButtonsXL {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
   font-size: 12px;
 }
 
 .activeSize {
-  color: rgb(0, 0, 0);
+  color: rgb(30, 174, 59);
   font-weight: bold;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   font-size: 12px;
@@ -72,14 +76,17 @@
   transform: scale(1.1);
 }
 
+.swiper-slide {
+  font-size: 12px;
+}
+
 /* Cart Area */
 .cartproductinfo {
   width: 100%;
   height: 205px;
   margin-top: 12px;
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   display: flex;
-
 }
 
 .imageareameasurement {
@@ -87,11 +94,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
 }
 
 .cartproductinfo img {
-  border-right: 1px solid black;
+  border-right: 1px solid var(--border-color);
 }
 
 .cartproductinfo div {
@@ -103,8 +110,8 @@
 .SEESHOPPINGBASKET {
   margin-top: 20px;
   font-size: 11px;
-  border: 1px solid black;
-  color: rgb(43, 43, 43);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
 }
 
 .SEESHOPPINGBASKET:hover {

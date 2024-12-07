@@ -63,7 +63,7 @@ function DetailsDisplayProduct() {
             </div>
             <div className="Detailed">
               <div className="DetailedTitleandSVG">
-                <h4>
+                <h4 className="Detailedtitle">
                   {product.title.length > 25
                     ? `${product.title.substring(0, 25)}...`
                     : product.title}
@@ -76,7 +76,7 @@ function DetailsDisplayProduct() {
                     height="18"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="inherit"
+                    fill="var(--text-color)"
                     stroke="inherit"
                     onClick={() => toggleWishlist(index)}
                   >
@@ -94,7 +94,7 @@ function DetailsDisplayProduct() {
                     height="18"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="inherit"
+                    fill="var(--text-color)"
                     stroke="inherit"
                     onClick={() => toggleWishlist(index)}
                   >

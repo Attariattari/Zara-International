@@ -1,380 +1,383 @@
 .ShoppingBAg {
-    width: 100%;
-    height: auto;
-    padding-top: 188.4px;
-    transition: all 0.6s ease;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  width: 100%;
+  height: auto;
+  padding-top: 188.4px;
+  transition: all 0.6s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .custom-size {
-    font-size: 12px;
-    border: 1px solid black !important;
+  font-size: 12px;
+  border: 1px solid var(--border-color) !important;
 }
 
 .custom-swal-btn {
-    background-color: white !important;
-    border: 1px solid black !important;
-    color: black !important;
-    box-shadow: none !important;
-    width: 350px !important;
-    padding: 0%;
+  background-color: var(--bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-color) !important;
+  box-shadow: none !important;
+  width: 350px !important;
+  padding: 0%;
 }
 
 .ShippingFavoButton {
-    width: 100%;
-    height: 30px;
-    border-bottom: 1px solid black;
-    display: flex;
-    flex-direction: row;
-    transition: all 0.6s ease;
+  width: 100%;
+  height: 30px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: row;
+  transition: all 0.6s ease;
 }
 
 .ShippingFavoButton button {
-    width: 335px;
-    height: 30px;
-    font-size: 11px;
-    transition: all 0.6s ease;
+  width: 335px;
+  height: 30px;
+  font-size: 11px;
+  transition: all 0.6s ease;
 }
 
 .ShippingButton,
 .WishListButton {
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-right: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
 }
 
 .activeButton {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .CartProducts {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid black;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .Cartdata {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    max-width: 100%;
-    width: 100%;
-    transition: all 0.6s ease;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 100%;
+  width: 100%;
+  transition: all 0.6s ease;
 }
 
 .CartGridView {
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .cartproductimage img {
-    width: 100%;
-    height: 420px;
-    border-bottom: 1px solid black;
+  width: 100%;
+  height: 420px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .cartprdocutsdetailes {
-    display: flex;
-    padding: 6px 6px 0px 6px;
-    font-size: 11px;
-    height: 110px;
-    justify-content: space-between;
-    flex-direction: column;
+  display: flex;
+  padding: 6px 6px 0px 6px;
+  font-size: 11px;
+  height: 110px;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .cartseconds {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .cartitemicons {
-    display: flex;
-    cursor: pointer;
+  display: flex;
+  cursor: pointer;
 }
 
 .cartitemquantity {
-    display: flex;
-    width: 100%;
-    justify-content: start;
-    align-items: start;
-    gap: 3px;
-    margin-bottom: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  align-items: start;
+  gap: 3px;
+  margin-bottom: 10px;
 }
 
 .cartitemquantity div {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    font-size: 12px;
-
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
 }
 
 .CartLikeProducts {
-    font-size: 11px;
-    margin-top: 50px;
+  font-size: 11px;
+  margin-top: 50px;
 }
 
 .CartpropccessOrder {
-    width: 100%;
-    height: 78px;
-    background-color: white;
-    border-top: 1px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.6s ease;
+  width: 100%;
+  height: 78px;
+  background-color: var(--text-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.6s ease;
 }
 
 .CartMobileDataCountinues {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border-top: 1px solid black;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--text-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--bg-color);
 }
 
 .ExpendSVGButtonForCart {
-    width: 100%;
-    height: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+  width: 100%;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .ExpendSVGButtonForCart div {
-    width: 50px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  width: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .CartProccessView {
-    width: 100%;
-    height: 78px;
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
+  width: 100%;
+  height: 78px;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--bg-color);
 }
 
 .totalitems {
-    display: none;
-    transition: all 06s ease;
-    -webkit-transition: all 06s ease;
-    -moz-transition: all 06s ease;
-    -ms-transition: all 06s ease;
-    -o-transition: all 06s ease;
+  display: none;
+  transition: all 06s ease;
+  -webkit-transition: all 06s ease;
+  -moz-transition: all 06s ease;
+  -ms-transition: all 06s ease;
+  -o-transition: all 06s ease;
 }
 
 .show-totalitems {
-    opacity: 1;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    padding: 0px 300px 0px 0px;
-    font-size: 10px;
-    gap: 20px;
-    transition: all 0.6s ease;
+  opacity: 1;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0px 300px 0px 0px;
+  font-size: 10px;
+  gap: 20px;
+  transition: all 0.6s ease;
 }
 
 .CartPropssesstitle {
-    font-size: 12px;
-    padding-left: 20px;
-    width: 70%;
-    transition: all 0.6s ease;
+  font-size: 12px;
+  padding-left: 20px;
+  width: 70%;
+  transition: all 0.6s ease;
 }
 
 .CartProccesses {
-    width: 370px;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 0px 0px 0px;
-    font-size: 11px;
-    transition: all 0.6s ease;
-    gap: 30px;
+  width: 370px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 0px 0px 0px;
+  font-size: 11px;
+  transition: all 0.6s ease;
+  gap: 30px;
 }
 
 .CartProccesses div {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 15px;
-    transition: all 0.6s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 15px;
+  transition: all 0.6s ease;
 }
 
 .CardFinalViewDataanditem {
-    display: flex;
-    flex-direction: column;
-    margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
 }
 
 .CartProccesses div :nth-child(2) {
-    gap: 0px;
+  gap: 0px;
 }
 
 .CartProccessesTotal {
-    width: 83%;
-    display: flex;
-    justify-content: end;
-    padding-left: 20px;
-    padding-right: 20px;
+  width: 83%;
+  display: flex;
+  justify-content: end;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .Justshowinpayconform {
-    width: 100%;
-    height: 80px;
-    border-top: 1px solid;
-    padding: 10px 15px 10px 15px;
-    background-color: white;
-    font-size: 11px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: grey;
+  width: 100%;
+  height: 80px;
+  border-top: 1px solid;
+  padding: 10px 15px 10px 15px;
+  background-color: var(--bg-color);
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: grey;
 }
 
 .Justshowinpayconform :nth-child(3) {
-    font-weight: bold;
-    color: black;
-
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 .Cartcontinuebutton {
-    width: 146px;
-    color: white;
-    height: 100%;
-    background-color: rgb(225, 41, 41);
-    transition: all 0.6s ease;
+  width: 146px;
+  color: var(--text-color);
+  height: 100%;
+  background-color: rgb(225, 41, 41);
+  transition: all 0.6s ease;
 }
 
 .Contiun {
-    width: 100%;
-    color: white;
-    border: none;
-    height: 100%;
-    background-color: black;
+  width: 100%;
+  color: var(--text-color);
+  border: none;
+  height: 100%;
+  transition: all 0.6s ease;
+  background-color: var(--bg-color);
 }
 
 .Contiun:hover {
-    background-color: rgb(40, 40, 40);
+  background-color: rgb(40, 40, 40);
+  color: var(--bg-color);
 }
 
 @media (max-width: 1279px) {
-    .ShoppingBAg {
-        padding-top: 175.4px;
-    }
+  .ShoppingBAg {
+    padding-top: 175.4px;
+  }
 }
 
 @media (max-width: 1179px) {
-    .ShoppingBAg {
-        padding-top: 156px;
-    }
+  .ShoppingBAg {
+    padding-top: 156px;
+  }
 }
 
 @media (max-width: 1024px) {
-    .ShoppingBAg {
-        padding-top: 146px;
-    }
+  .ShoppingBAg {
+    padding-top: 146px;
+  }
 
-    .cartproductimage img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        border-bottom: 1px solid black;
-    }
+  .cartproductimage img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-bottom: 1px solid var(--border-color);
+  }
 
-    .CartProducts {
-        border: none;
-    }
+  .CartProducts {
+    border: none;
+  }
 
-    .Cartdata {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 100%;
-        width: 100%;
-    }
+  .Cartdata {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 @media (max-width: 983px) {
-    .ShoppingBAg {
-        padding-top: 144px;
-    }
+  .ShoppingBAg {
+    padding-top: 144px;
+  }
 }
 
 @media (max-width: 850px) {
-    .ShoppingBAg {
-        padding-top: 134px;
-    }
+  .ShoppingBAg {
+    padding-top: 134px;
+  }
 }
 
 @media (max-width: 768px) {
-    .ShoppingBAg {
-        padding-top: 79px;
-    }
+  .ShoppingBAg {
+    padding-top: 79px;
+  }
 
-    .CartGridView {
-        border-right: 1px solid black;
-    }
+  .CartGridView {
+    border-right: 1px solid var(--border-color);
+  }
 
-    .Cartdata {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        max-width: 100%;
-        width: 100%;
-    }
+  .Cartdata {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 100%;
+    width: 100%;
+  }
 
-    .CartPropssesstitle {
-        display: none;
-    }
+  .CartPropssesstitle {
+    display: none;
+  }
 
-    .CartProccesses div {
-        padding-right: 20px;
-    }
+  .CartProccesses div {
+    padding-right: 20px;
+  }
 
-    .CartProccesses {
-        width: 100%;
-        flex-direction: row-reverse;
-        padding: 0px;
-    }
+  .CartProccesses {
+    width: 100%;
+    flex-direction: row-reverse;
+    padding: 0px;
+  }
 
-    .CartProccessesTotal {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
+  .CartProccessesTotal {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
-    .formobile {
-        width: 100%;
-        height: 50px;
-        flex-direction: row-reverse;
-        background-color: white;
-        border-top: 1px solid black;
-    }
+  .formobile {
+    width: 100%;
+    height: 50px;
+    flex-direction: row-reverse;
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+  }
 
-    .Cartcontinuebutton {
-        width: 50%;
-    }
+  .Cartcontinuebutton {
+    width: 50%;
+  }
 
-    .ShippingFavoButton {
-        margin-top: 10px;
-    }
+  .ShippingFavoButton {
+    margin-top: 10px;
+  }
 
-    .ShippingFavoButton button {
-        width: 50%;
-    }
+  .ShippingFavoButton button {
+    width: 50%;
+  }
 }

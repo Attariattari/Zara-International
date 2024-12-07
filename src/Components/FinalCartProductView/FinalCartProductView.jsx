@@ -56,7 +56,12 @@ const FinalCartProductView = () => {
   return (
     <div>
       <div className="sticky top-0 z-10">
-        <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
+        <div
+          className="absolute w-full"
+          style={{
+            backgroundColor: isScrolled ? "var(--bg-color)" : "transparent",
+          }}
+        >
           <NavBar_Show_After_Cart />
         </div>
       </div>
@@ -119,9 +124,7 @@ const FinalCartProductView = () => {
       </div>
       <Footer />
       <div className="sticky bottom-0 z-50">
-        <div
-          className={isMobile ? "formobile" : "CartpropccessOrder"}
-        >
+        <div className={isMobile ? "formobile" : "CartpropccessOrder"}>
           <div className="CartPropssesstitle opacity-0">
             *By continuing, I declare that I have read and accept the Purchase
             Conditions and understand Zara's Privacy and Cookie Policy.

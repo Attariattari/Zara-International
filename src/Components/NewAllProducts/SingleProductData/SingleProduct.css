@@ -1,112 +1,112 @@
 .SingleProduct {
-    width: 100%;
-    height: 100%;
-    padding: 150px 89px 0px 89px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    transition: all 0.6s ease;
+  width: 100%;
+  height: 100%;
+  padding: 150px 89px 0px 89px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: all 0.6s ease;
 }
 
 .Main_Area {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-size: 13px;
-    transition: all 0.6s ease;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 13px;
+  transition: all 0.6s ease;
 }
 
 .COMPOSITIONAREA {
-    max-width: 280px;
-    width: 100%;
-    overflow-y: auto;
-    height: 440px;
-    display: flex;
-    justify-content: start;
-    align-items: start;
-    border: 1px solid black;
-    padding: 13px 19px 0px 19px;
-    flex-direction: column;
-    transition: all 0.6s ease;
+  max-width: 280px;
+  width: 100%;
+  overflow-y: auto;
+  height: 440px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  border: 1px solid var(--border-color);
+  padding: 13px 19px 0px 19px;
+  flex-direction: column;
+  transition: all 0.6s ease;
 }
 
 .compact {
-    height: 55%;
-    top: 198px;
-    position: relative;
-    padding: 13px 19px 20px 19px;
+  height: 55%;
+  top: 198px;
+  position: relative;
+  padding: 13px 19px 20px 19px;
 }
 
 .COMPOSITIONAREA::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 .COMPOSITIONAREA::-webkit-scrollbar-thumb {
-    background-color: #828282;
+  background-color: var(--text-color);
 }
 
 .COMPOSITIONAREA::-webkit-scrollbar-track {
-    background-color: #ffffff;
+  background-color: var(--bg-color);
 }
 
 .COMPOSITIONAREA :nth-child(19),
 .COMPOSITIONAREA :nth-child(2) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
+  font-size: 11px;
+  margin: 15px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(11),
 .COMPOSITIONAREA :nth-child(3) {
-    font-size: 11px;
-    margin: 10px 30px 0px 0px;
+  font-size: 11px;
+  margin: 10px 30px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(13),
 .COMPOSITIONAREA :nth-child(4),
 .COMPOSITIONAREA :nth-child(6) {
-    font-size: 12px;
-    margin: 10px 0px 0px 0px;
+  font-size: 12px;
+  margin: 10px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(5),
 .COMPOSITIONAREA :nth-child(10),
 .COMPOSITIONAREA :nth-child(14),
 .COMPOSITIONAREA :nth-child(7) {
-    font-size: 11px;
-    margin: 0px 0px 0px 0px;
+  font-size: 11px;
+  margin: 0px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(8) {
-    font-size: 13px;
-    margin: 40px 0px 0px 0px;
+  font-size: 13px;
+  margin: 40px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(18),
 .COMPOSITIONAREA :nth-child(9) {
-    font-size: 11px;
-    margin: 10px 0px 0px 0px;
+  font-size: 11px;
+  margin: 10px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(11) {
-    font-size: 11px;
-    margin: 40px 0px 0px 0px;
+  font-size: 11px;
+  margin: 40px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(15) {
-    font-size: 11px;
-    margin: 20px 0px 0px 0px;
+  font-size: 11px;
+  margin: 20px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(16) {
-    font-size: 11px;
-    margin: 30px 0px 0px 0px;
+  font-size: 11px;
+  margin: 30px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(17) {
-    font-size: 12px;
-    margin: 30px 0px 0px 0px;
+  font-size: 12px;
+  margin: 30px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA :nth-child(24),
@@ -114,11 +114,11 @@
 .COMPOSITIONAREA :nth-child(22),
 .COMPOSITIONAREA :nth-child(21),
 .COMPOSITIONAREA :nth-child(20) {
-    font-size: 11px;
-    margin: 15px 0px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  font-size: 11px;
+  margin: 15px 0px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .COMPOSITIONAREA :nth-child(20),
@@ -126,309 +126,747 @@
 .COMPOSITIONAREA :nth-child(23),
 .COMPOSITIONAREA :nth-child(24),
 .COMPOSITIONAREA :nth-child(22) p {
-    margin: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 .COMPOSITIONAREA button {
-    padding: 0px 0px 0px 0px;
-    width: 80px;
-    height: 20px;
-    margin: 15px 0px 10px 0px;
-    text-decoration: underline;
+  padding: 0px 0px 0px 0px;
+  width: 80px;
+  height: 20px;
+  margin: 15px 0px 10px 0px;
+  text-decoration: underline;
 }
 
 .ImagesCarusalall {
-    width: 100%;
-    height: 440px;
-    display: flex;
-    justify-content: start;
-    align-items: start;
+  width: 100%;
+  height: 440px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
 }
 
 .CarosualArea {
-    max-width: 360px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: end;
-    transition: all 0.6s ease;
-
+  max-width: 360px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  transition: all 0.6s ease;
 }
 
 .CarosualOverflow {
-    width: 350px;
-    height: 440px;
-    overflow-y: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    scroll-behavior: smooth;
-
+  width: 350px;
+  height: 440px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-behavior: smooth;
 }
 
 .CarosualOverflow::-webkit-scrollbar {
-    width: 4px;
-    height: 100%;
+  width: 4px;
+  height: 100%;
 }
 
 .CarosualOverflow::-webkit-scrollbar-thumb {
-    background-color: #828282;
+  background-color: #828282;
 }
 
 .CarosualOverflow::-webkit-scrollbar-track {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .ImagesCarosual {
-    width: 300px;
-    height: 440px;
-    cursor: pointer;
+  width: 300px;
+  height: 440px;
+  cursor: pointer;
 }
 
 .ImagesCarosual img {
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
 .ImagesForCarsualUpdates {
-    width: 08%;
-    height: auto;
-    z-index: 20;
-    position: absolute;
+  width: 08%;
+  height: auto;
+  z-index: 20;
+  position: absolute;
 }
 
 .UpdaterImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 .UpdaterImage img {
-    width: 100%;
-    height: 2.7em;
-    object-fit: cover;
+  width: 100%;
+  height: 2.7em;
+  object-fit: cover;
 }
 
 .UpdaterImage img {
-    transition: filter 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 .UpdaterImage.active img {
-    filter: brightness(100%);
+  filter: brightness(100%);
 }
 
 .UpdaterImage:not(.active) img {
-    filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 
 .swiper {
-    width: 100%;
-    height: 100%;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  text-align: center;
+  font-size: 12px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
 }
 
 .AllProductDataView {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    border: 1px solid black;
-    flex-direction: column;
-    transition: all 0.6s ease;
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  flex-direction: column;
+  transition: all 0.6s ease;
 }
 
 .Productdetails {
-    width: 100%;
-    height: 39%;
-    padding: 24px 20px 24px 20px;
+  width: 100%;
+  height: 39%;
+  padding: 24px 20px 24px 20px;
 }
 
 .productcolorsandsize {
-    width: 100%;
-    height: 39%;
-    padding: 24px 20px 24px 20px;
+  width: 100%;
+  height: 39%;
+  padding: 24px 20px 24px 20px;
 }
 
 .Productdetails {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .Productdetails :nth-child(1) {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .Productdetails :nth-child(2) {
-    font-size: 10px;
-    margin: 01px 0px 0px 0px;
+  font-size: 10px;
+  margin: 01px 0px 0px 0px;
 }
 
 .Productdetails :nth-child(3) {
-    font-size: 11px;
-    margin: 20px 0px 20px 0px;
+  font-size: 11px;
+  margin: 20px 0px 20px 0px;
 }
 
 .Productdetails :nth-child(4),
 .Productdetails :nth-child(6) {
-    font-size: 10px;
-    margin: 20px 0px 0px 0px;
+  font-size: 10px;
+  margin: 20px 0px 0px 0px;
 }
 
 .Productdetails span {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .Productdetails span :nth-child(2) {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .productcolorsandsize :nth-child(1) {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .productcolorsandsize :nth-child(4) {
-    font-size: 10px;
-    padding-top: 10px;
+  font-size: 10px;
 }
 
 .productcolorsandsize .Colors {
-    font-size: 10px;
-    padding: 10px 0px 0px 0px;
-    height: 40px;
+  font-size: 10px;
+  padding: 10px 0px 0px 0px;
+  height: 40px;
 }
 
 .productcolorsandsize .color-box {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border: 1px solid #919191;
-    padding: 0px;
-    vertical-align: middle;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #919191;
+  padding: 0px;
+  vertical-align: middle;
 }
 
 .Color {
-    display: flex;
-    font-size: 09px;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
+  display: flex;
+  font-size: 09px;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
 }
 
 .box_COLOR {
-    display: inline-block;
-    width: 0px;
-    height: 20px;
-    margin-right: 05px;
-    border: 1px solid #919191;
-    padding: 0px;
-    vertical-align: middle;
+  display: inline-block;
+  width: 0px;
+  height: 20px;
+  margin-right: 05px;
+  border: 1px solid #919191;
+  padding: 0px;
+  vertical-align: middle;
 }
 
 .product-sizes {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 5px;
 }
 
 .product-sizes button {
-    width: 49%;
+  width: 49%;
+  height: 28px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.product-sizes button:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+}
+
+.Size {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: 1px solid var(--bg-color);
+}
+
+.selected {
+  background-color: #000000;
+  border: none;
+  color: white;
+}
+
+.AddButton {
+  width: 100%;
+  height: 40px;
+  border-top: 1px solid var(--border-color);
+  /* Dark Gray Border */
+  background-color: var(--button-bg-color);
+  /* Professional Blue */
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.AddButton:hover {
+  background-color: #0056b3;
+  /* Darker Blue on Hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Soft Shadow */
+  transform: translateY(-2px);
+}
+
+.AddButton:active {
+  background-color: #003f8e;
+  /* Deep Blue for Active State */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+}
+
+.AddButton.selected {
+  background-color: #28a745;
+  /* Subtle Green for Selected */
+  border-top: 1px solid var(--border-color);
+  /* Darker Green Border */
+}
+
+.LikeSameWithProductData {
+  width: 100%;
+  height: auto;
+  padding: 50px 0px 0px 0px;
+}
+
+.LikeSameWithProductData p {
+  font-size: 10px;
+  padding: 0px 0px 30px 30px;
+}
+
+.ProdcutsDisplays {
+  width: 100%;
+  height: auto;
+  padding: 20px 0px 0px 0px;
+}
+
+.JUST_SHOW_MOBILE {
+  display: none;
+  transition: all 0.6s ease;
+  z-index: 100;
+  /* -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; */
+  cursor: pointer;
+}
+
+.JUST_SHOW_MOBILE_Button_visible_hide {
+  display: none;
+  transition: all 0.6s ease;
+}
+
+.NoExpendArea {
+  display: none;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid black;
+  padding: 20px 10px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  background-color: #ffffff;
+  transition: all 0.6s ease;
+}
+
+.Noexpend {
+  display: none;
+  width: 100%;
+  height: 124px;
+  top: 81.2vh;
+  overflow: hidden;
+  transition: all 0.6s ease;
+}
+
+.isexpanded {
+  height: auto;
+  top: 0;
+  transition: all 0.6s ease;
+}
+
+.ExpendArea {
+  display: none;
+  transition: all 0.6s ease;
+  background-color: white;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar {
+  width: 4px;
+  height: 100%;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar-thumb {
+  background-color: #828282;
+}
+
+.JUST_SHOW_MOBILE::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+.compoinmobile {
+  margin: 20px 0px 0px 0px;
+  padding: 0px 10px 0px 10px;
+}
+
+.compoinmobile :nth-child(1),
+.compoinmobile :nth-child(2) {
+  margin: 20px 0px 0px 0px;
+  font-size: 12px;
+}
+
+.compoinmobile :nth-child(3) {
+  margin: 10px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 11px;
+}
+
+.compoinmobile :nth-child(4) {
+  margin: 10px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 11px;
+}
+
+.compoinmobile :nth-child(5),
+.compoinmobile :nth-child(10),
+.compoinmobile :nth-child(7),
+.compoinmobile :nth-child(14) {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 11px;
+}
+
+.compoinmobile :nth-child(6),
+.compoinmobile :nth-child(12),
+.compoinmobile :nth-child(13),
+.compoinmobile :nth-child(15),
+.compoinmobile :nth-child(17) {
+  margin: 20px 0px 0px 0px;
+  font-size: 11px;
+}
+
+.compoinmobile :nth-child(18) {
+  margin: 20px 0px 20px 0px;
+  font-size: 11px;
+}
+
+.compoinmobile :nth-child(8),
+.compoinmobile :nth-child(11) {
+  margin: 50px 0px 0px 0px;
+  font-size: 12px;
+}
+
+.compoinmobile :nth-child(9),
+.compoinmobile :nth-child(16),
+.compoinmobile :nth-child(19) {
+  margin: 30px 0px 0px 0px;
+  font-size: 12px;
+}
+
+.compoinmobile :nth-child(20),
+.compoinmobile :nth-child(21),
+.compoinmobile :nth-child(22),
+.compoinmobile :nth-child(23),
+.compoinmobile :nth-child(24) {
+  margin: 0px 0px 0px 0px;
+  font-size: 12px;
+  width: 100%;
+  display: flex;
+}
+
+.YouMayLikeFor_Mobile {
+  width: 100%;
+  height: auto;
+  margin-top: 40px;
+}
+
+.YouMayLikeFor_Mobile p {
+  padding: 0px 0px 0px 40px;
+  font-size: 13px;
+}
+
+.Media {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.offcanvas-container {
+  position: fixed;
+  top: 0;
+  right: -380px;
+  bottom: 0;
+  width: 380px;
+  z-index: 200;
+  background-color: white;
+  box-shadow: -4px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  overflow-x: hidden;
+  /* Ensure no horizontal overflow */
+  transition: right 0.3s ease;
+  /* Smooth transition when opening and closing */
+}
+
+.offcanvas.open {
+  right: 0;
+  /* Slide in from the right when open */
+}
+
+.offcanvas button.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.offcanvas-content {
+  padding: 20px;
+  /* Adjust content padding as needed */
+}
+
+.offcanvas-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: none;
+}
+
+.offcanvas.open+.offcanvas-overlay {
+  display: block;
+}
+
+.SucccessAddTocartArea {
+  width: 100%;
+  height: auto;
+}
+
+.SucccessAddTocartArea .details {
+  width: 100%;
+  height: 30px;
+  padding: 10px 30px 10px 30px;
+  margin: 10px 0px 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SucccessAddTocartArea .details :nth-child(1) {
+  color: #383838;
+  font-size: 12px;
+}
+
+.SucccessAddTocartArea .details :nth-child(2) {
+  color: #060606;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 1279px) {
+  .SingleProduct {
+    padding: 135px 150px 0px 150px;
+  }
+
+  .COMPOSITIONAREA {
+    max-width: 240px;
+    width: 100%;
+    padding: 13px 19px 0px 19px;
+  }
+
+  .compact {
+    height: 58%;
+    top: 185px;
+    padding: 13px 19px 0px 19px;
+  }
+}
+
+@media (max-width: 1179px) {
+  .SingleProduct {
+    padding: 120px 126px 0px 126px;
+  }
+
+  .COMPOSITIONAREA {
+    max-width: 240px;
+    width: 100%;
+    padding: 13px 19px 0px 19px;
+  }
+
+  .compact {
+    height: 58%;
+    top: 185px;
+    padding: 13px 19px 0px 19px;
+  }
+}
+
+@media (max-width: 1152px) {
+  .SingleProduct {
+    padding: 120px 126px 0px 126px;
+  }
+
+  .COMPOSITIONAREA {
+    max-width: 240px;
+    width: 100%;
+    padding: 13px 19px 0px 19px;
+  }
+
+  .compact {
+    height: 58%;
+    top: 185px;
+    padding: 13px 19px 0px 19px;
+  }
+
+  .AllProductDataView {
+    max-width: 240px;
+    width: 100%;
+    height: auto;
+  }
+
+  .Productdetails,
+  .productcolorsandsize {
+    height: 41.5%;
+    padding: 18px 12px 18px 12px;
+  }
+
+  .product-sizes button {
+    width: 48.5%;
     height: 28px;
     border: 1px solid #000000;
     cursor: pointer;
     font-size: 10px;
+  }
 }
 
-.product-sizes button:hover {
-    background-color: #e0e0e0;
-}
-
-.Size {
-    background-color: #000000;
-    color: #fff;
-    border: none;
-}
-
-.selected {
-    background-color: #000000;
-    border: none;
-    color: white;
-}
-
-/* .product-sizes button:focus {
-    outline: none;
-    box-shadow: 0 0 0 1px #363636;
-} */
-
-.AddButton {
-    width: 100%;
-    height: 40px;
-    border-top: 1px solid #000000;
-    cursor: pointer;
-    font-size: 12px;
-    margin-top: 20px;
-}
-
-.LikeSameWithProductData {
-    width: 100%;
-    height: auto;
-    padding: 50px 0px 0px 0px;
-}
-
-.LikeSameWithProductData p {
-    font-size: 10px;
-    padding: 0px 0px 30px 30px;
-}
-
-.ProdcutsDisplays {
-    width: 100%;
-    height: auto;
-    padding: 20px 0px 0px 0px;
-}
-
-.JUST_SHOW_MOBILE {
+@media (max-width: 1023px) {
+  .COMPOSITIONAREA {
     display: none;
-    transition: all 0.6s ease;
+  }
+}
+
+@media (max-width: 852px) {
+  .SingleProduct {
+    padding: 120px 50px 0px 126px;
+  }
+}
+
+@media (max-width: 768px) {
+  .SingleProduct {
+    padding: 0px 0px 0px 0px;
+    position: relative;
+  }
+
+  .Main_Area {
+    flex-direction: column;
+  }
+
+  .ImagesCarusalall {
+    width: 100%;
+    height: 522px;
+  }
+
+  .CarosualArea {
+    max-width: 100%;
+    height: 100vh;
+  }
+
+  .ImagesCarosual {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ImagesCarosual img {
+    width: 100%;
+    height: 100dvh;
+    object-fit: cover;
+  }
+
+  .swiper-slide {
+    margin-bottom: 0px;
+    padding-bottom: 0%;
+    gap: 0%;
+  }
+
+  .ImagesForCarsualUpdates {
+    display: none;
+  }
+
+  .AllProductDataView {
+    display: none;
+  }
+
+  .LikeProduct {
+    display: none;
+  }
+
+  .JUST_SHOW_MOBILE {
+    width: 100%;
+    height: 100vh;
+    top: 5dvh;
+    position: fixed;
     z-index: 100;
-    /* -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; */
-    cursor: pointer;
-}
+    display: block;
+    overflow-y: auto;
+  }
 
-.JUST_SHOW_MOBILE_Button_visible_hide {
-    display: none;
-    transition: all 0.6s ease;
-}
+  .JUST_SHOW_MOBILE_Button_visible_hide {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4px;
+  }
 
-.NoExpendArea {
-    display: none;
+  .JUST_SHOW_MOBILE_Button_visible_hide div {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4px;
+    width: auto;
+    padding: 0px 0px 10px 0px;
+  }
+
+  .Noexpend {
+    display: block;
+    width: 100%;
+    height: 134px;
+    top: 79vh;
+    overflow: hidden;
+  }
+
+  .NoExpendArea_Buttons {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .NoExpendArea_Add {
+    border: 1px solid black;
+    width: 90%;
+    height: 30px;
+    font-size: 11px;
+    margin-bottom: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  }
+
+  .NoExpendArea_Wishlist {
+    border: 1px solid black;
+    width: 10%;
+    height: 30px;
+    font-size: 11px;
+    margin-bottom: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .NoExpendArea {
+    display: block;
     width: 100%;
     height: 100%;
     border-top: 1px solid black;
@@ -438,537 +876,123 @@
     justify-content: space-between;
     align-items: start;
     background-color: #ffffff;
-    transition: all 0.6s ease;
-}
+  }
 
-.Noexpend {
-    display: none;
-    width: 100%;
-    height: 124px;
-    top: 81.2vh;
-    overflow: hidden;
-    transition: all 0.6s ease;
-}
-
-.isexpanded {
-    height: auto;
-    top: 0;
-    transition: all 0.6s ease;
-}
-
-.ExpendArea {
-    display: none;
-    transition: all 0.6s ease;
+  .ExpendArea {
+    display: block;
     background-color: white;
-}
+  }
 
-.JUST_SHOW_MOBILE::-webkit-scrollbar {
-    width: 4px;
-    height: 100%;
-}
-
-.JUST_SHOW_MOBILE::-webkit-scrollbar-thumb {
-    background-color: #828282;
-}
-
-.JUST_SHOW_MOBILE::-webkit-scrollbar-track {
-    background-color: #ffffff;
-}
-
-.compoinmobile {
-    margin: 20px 0px 0px 0px;
-    padding: 0px 10px 0px 10px;
-}
-
-.compoinmobile :nth-child(1),
-.compoinmobile :nth-child(2) {
-    margin: 20px 0px 0px 0px;
-    font-size: 12px;
-}
-
-.compoinmobile :nth-child(3) {
-    margin: 10px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
+  .NoExpendArea_Title {
     font-size: 11px;
-}
-
-.compoinmobile :nth-child(4) {
-    margin: 10px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    font-size: 11px;
-}
-
-.compoinmobile :nth-child(5),
-.compoinmobile :nth-child(10),
-.compoinmobile :nth-child(7),
-.compoinmobile :nth-child(14) {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    font-size: 11px;
-
-}
-
-.compoinmobile :nth-child(6),
-.compoinmobile :nth-child(12),
-.compoinmobile :nth-child(13),
-.compoinmobile :nth-child(15),
-.compoinmobile :nth-child(17) {
-    margin: 20px 0px 0px 0px;
-    font-size: 11px;
-}
-
-.compoinmobile :nth-child(18) {
-    margin: 20px 0px 20px 0px;
-    font-size: 11px;
-}
-
-.compoinmobile :nth-child(8),
-.compoinmobile :nth-child(11) {
-    margin: 50px 0px 0px 0px;
-    font-size: 12px;
-}
-
-.compoinmobile :nth-child(9),
-.compoinmobile :nth-child(16),
-.compoinmobile :nth-child(19) {
-    margin: 30px 0px 0px 0px;
-    font-size: 12px;
-}
-
-.compoinmobile :nth-child(20),
-.compoinmobile :nth-child(21),
-.compoinmobile :nth-child(22),
-.compoinmobile :nth-child(23),
-.compoinmobile :nth-child(24) {
-    margin: 0px 0px 0px 0px;
-    font-size: 12px;
-    width: 100%;
-    display: flex;
-}
-
-
-.YouMayLikeFor_Mobile {
-    width: 100%;
-    height: auto;
-    margin-top: 40px;
-}
-
-.YouMayLikeFor_Mobile p {
-    padding: 0px 0px 0px 40px;
-    font-size: 13px;
-}
-
-.Media {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.offcanvas-container {
-    position: fixed;
-    top: 0;
-    right: -380px;
-    bottom: 0;
-    width: 380px;
-    z-index: 200;
-    background-color: white;
-    box-shadow: -4px 0px 10px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    overflow-x: hidden;
-    /* Ensure no horizontal overflow */
-    transition: right 0.3s ease;
-    /* Smooth transition when opening and closing */
-}
+    gap: 2px;
+  }
 
-.offcanvas.open {
-    right: 0;
-    /* Slide in from the right when open */
-}
-
-.offcanvas button.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.offcanvas-content {
-    padding: 20px;
-    /* Adjust content padding as needed */
-}
-
-.offcanvas-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
-    display: none;
-}
-
-.offcanvas.open+.offcanvas-overlay {
-    display: block;
-}
-
-.SucccessAddTocartArea {
-    width: 100%;
-    height: auto;
-}
-
-.SucccessAddTocartArea .details {
-    width: 100%;
-    height: 30px;
-    padding: 10px 30px 10px 30px;
-    margin: 10px 0px 10px 0px;
+  .Womendiscription {
+    font-size: 11px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    padding: 45px 10px 0px 10px;
+    margin: 0px 0px 0px;
+  }
 
-.SucccessAddTocartArea .details :nth-child(1) {
-    color: #383838;
-    font-size: 12px;
-}
+  .Womencolor {
+    font-size: 11px;
+    display: flex;
+    padding: 0px 10px 0px 10px;
+  }
 
-.SucccessAddTocartArea .details :nth-child(2) {
-    color: #060606;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
+  .WomenOUTESHELL {
+    font-size: 11px;
+    display: flex;
+    padding: 0px 0px 0px 0px;
+  }
 
-@media (max-width: 1279px) {
-    .SingleProduct {
-        padding: 135px 150px 0px 150px;
-    }
+  .Colors {
+    font-size: 10px;
+    padding: 0px 0px 0px 0px;
+    display: flex;
+  }
 
-    .COMPOSITIONAREA {
-        max-width: 240px;
-        width: 100%;
-        padding: 13px 19px 0px 19px;
+  .color-box {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border: 1px solid black;
+  }
 
-    }
+  .One {
+    display: none;
+  }
 
-    .compact {
-        height: 58%;
-        top: 185px;
-        padding: 13px 19px 0px 19px;
-    }
-}
-
-@media (max-width: 1179px) {
-    .SingleProduct {
-        padding: 120px 126px 0px 126px;
-    }
-
-    .COMPOSITIONAREA {
-        max-width: 240px;
-        width: 100%;
-        padding: 13px 19px 0px 19px;
-    }
-
-    .compact {
-        height: 58%;
-        top: 185px;
-        padding: 13px 19px 0px 19px;
-    }
-}
-
-@media (max-width: 1152px) {
-    .SingleProduct {
-        padding: 120px 126px 0px 126px;
-    }
-
-    .COMPOSITIONAREA {
-        max-width: 240px;
-        width: 100%;
-        padding: 13px 19px 0px 19px;
-
-    }
-
-    .compact {
-        height: 58%;
-        top: 185px;
-        padding: 13px 19px 0px 19px;
-    }
-
-    .AllProductDataView {
-        max-width: 240px;
-        width: 100%;
-        height: auto;
-    }
-
-    .Productdetails,
-    .productcolorsandsize {
-        height: 41.5%;
-        padding: 18px 12px 18px 12px;
-    }
-
-    .product-sizes button {
-        width: 48.5%;
-        height: 28px;
-        border: 1px solid #000000;
-        cursor: pointer;
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 1023px) {
-    .COMPOSITIONAREA {
-        display: none;
-    }
-}
-
-@media (max-width: 852px) {
-    .SingleProduct {
-        padding: 120px 50px 0px 126px;
-    }
-}
-
-@media (max-width: 768px) {
-    .SingleProduct {
-        padding: 0px 0px 0px 0px;
-        position: relative;
-    }
-
-    .Main_Area {
-        flex-direction: column;
-    }
-
-    .CarosualArea {
-        max-width: 100%;
-        height: 100vh;
-    }
-
-    .ImagesCarosual {
-        width: 100%;
-        height: 100%;
-    }
-
-    .ImagesCarosual img {
-        width: 100%;
-        height: 100dvh;
-        object-fit: cover;
-    }
-
-    .swiper-slide {
-        margin-bottom: 0px;
-        padding-bottom: 0%;
-        gap: 0%;
-    }
-
-    .ImagesForCarsualUpdates {
-        display: none;
-    }
-
-    .AllProductDataView {
-        display: none;
-    }
-
-    .LikeProduct {
-        display: none;
-    }
-
-    .JUST_SHOW_MOBILE {
-        width: 100%;
-        height: 100vh;
-        top: 5dvh;
-        position: fixed;
-        z-index: 100;
-        display: block;
-        overflow-y: auto;
-    }
-
-    .JUST_SHOW_MOBILE_Button_visible_hide {
-        display: block;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 4px;
-
-    }
-
-    .JUST_SHOW_MOBILE_Button_visible_hide div {
-        display: block;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 4px;
-        width: auto;
-        padding: 0px 0px 10px 0px;
-    }
-
-    .Noexpend {
-        display: block;
-        width: 100%;
-        height: 134px;
-        top: 79vh;
-        overflow: hidden;
-    }
-
-    .NoExpendArea_Buttons {
-        width: 100%;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        margin-top: 15px;
-    }
-
-    .NoExpendArea_Add {
-        border: 1px solid black;
-        width: 90%;
-        height: 30px;
-        font-size: 11px;
-        margin-bottom: 10px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    }
-
-    .NoExpendArea_Wishlist {
-        border: 1px solid black;
-        width: 10%;
-        height: 30px;
-        font-size: 11px;
-        margin-bottom: 10px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .NoExpendArea {
-        display: block;
-        width: 100%;
-        height: 100%;
-        border-top: 1px solid black;
-        padding: 20px 10px 20px 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: start;
-        background-color: #ffffff;
-    }
-
-    .ExpendArea {
-        display: block;
-        background-color: white;
-    }
-
-    .NoExpendArea_Title {
-        font-size: 11px;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .Womendiscription {
-        font-size: 11px;
-        display: flex;
-        padding: 45px 10px 0px 10px;
-        margin: 0px 0px 0px;
-    }
-
-    .Womencolor {
-        font-size: 11px;
-        display: flex;
-        padding: 0px 10px 0px 10px;
-    }
-
-    .WomenOUTESHELL {
-        font-size: 11px;
-        display: flex;
-        padding: 0px 0px 0px 0px;
-    }
-
-    .Colors {
-        font-size: 10px;
-        padding: 0px 0px 0px 0px;
-        display: flex;
-    }
-
-    .color-box {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-        border: 1px solid black;
-    }
-
-    .One {
-        display: none;
-    }
-
-    .footerFor {
-        display: block;
-    }
+  .footerFor {
+    display: block;
+  }
 }
 
 .JustmobileSize {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: 66666;
-    z-index: 999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: 66666;
+  z-index: 999;
 }
 
 .BottomDraver {
-    border-top: 1px solid;
-    padding: 0%;
+  border-top: 1px solid;
+  padding: 0%;
 }
 
 .Drawer_Size_Title {
-    width: 100%;
-    height: 70px;
-    border-bottom: 1px solid black;
-    font-size: 11px;
-    padding: 10px 0px 10px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    flex-direction: column;
-    gap: 4px;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid black;
+  font-size: 11px;
+  padding: 10px 0px 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .Drawer_Size_Data {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    border: none;
-    justify-content: start;
-
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  border: none;
+  justify-content: start;
 }
 
 .Drawer_Size_Data button {
-    flex-basis: calc(50%);
-    height: auto;
-    border-right: 1px solid black;
-    border-top: none;
-    border-left: none;
-    border-bottom: 1px solid black;
-    cursor: pointer;
-    margin: 0;
-    padding: 20px 30px 20px 30px;
+  flex-basis: calc(50%);
+  height: auto;
+  border-right: 1px solid black;
+  border-top: none;
+  border-left: none;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+  margin: 0;
+  padding: 20px 30px 20px 30px;
 }
 
 .Drawer_Size_Measure {
-    width: 100%;
-    height: 60px;
-    font-size: 12px;
-    display: flex;
-    margin-top: 55px;
-    border-top: 1px solid black;
+  width: 100%;
+  height: 60px;
+  font-size: 12px;
+  display: flex;
+  margin-top: 55px;
+  border-top: 1px solid black;
 }
 
 .Drawer_Size_Measure div {
-    width: 50%;
+  width: 50%;
 }
 
 .Drawer_Size_Measure :nth-child(1) {
-    padding: 10px 0px 10px 20px;
+  padding: 10px 0px 10px 20px;
 }

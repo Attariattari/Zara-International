@@ -1,180 +1,182 @@
 .Navbar {
-    top: 0;
-    width: 100%;
-    z-index: 100;
+  top: 0;
+  width: 100%;
+  z-index: 100;
 }
 
 .navbarmain {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .sidebaricon {
-    width: 20px;
-    height: 20px;
-    margin: 20px 0px 0px 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 20px;
+  height: 20px;
+  margin: 20px 0px 0px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navzara {
-    margin: 20px 0px 0px 54px;
-    width: 15.789em;
-    transition: all 0.6s ease;
+  margin: 20px 0px 0px 54px;
+  width: 15.789em;
+  transition: all 0.6s ease;
 }
 
 .navsearch {
-    transition: all 0.6s ease;
-    width: 55%;
+  transition: all 0.6s ease;
+  width: 55%;
 }
 
 .input {
-    width: 100%;
-    height: 27%;
-    position: relative;
-    border: 1px solid black;
-    margin-top: 30px;
-    cursor: pointer;
-    display: flex;
-    justify-content: end;
-    align-items: center;
+  width: 100%;
+  height: 27%;
+  position: relative;
+  border: 1px solid var(--bg-color);
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  margin-top: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 
 .input {
-    padding-right: 30px;
+  padding-right: 30px;
 }
 
 .navlhs {
-    display: flex;
-    padding: 20px 20px 0px 0px;
-    font-size: 11px;
-    width: 45%;
-    color: rgb(129, 129, 129);
-    gap: 50px;
-    transition: all 0.6s ease;
-    justify-content: end;
+  display: flex;
+  padding: 20px 20px 0px 0px;
+  font-size: 11px;
+  width: 45%;
+  color: var(--text-color);
+  gap: 50px;
+  transition: all 0.6s ease;
+  justify-content: end;
 }
 
 .searchicon {
-    display: none;
+  display: none;
 }
 
 .firstsection {
-    width: 45%;
-    display: flex;
+  width: 45%;
+  display: flex;
 }
 
 .secondsection {
-    width: 55%;
-    display: flex;
+  width: 55%;
+  display: flex;
 }
 
 .secondsections {
-    width: 55%;
-    display: flex;
+  width: 55%;
+  display: flex;
 }
 
 .secondsections>* {
-    flex: 1;
+  flex: 1;
 }
 
 .secondsection>* {
-    flex: 1;
+  flex: 1;
 }
 
 .navlhs div {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .navsearch {
-    position: relative;
+  position: relative;
 }
 
 @media (max-width: 1279px) {
-    .navzara {
-        margin: 20px 0px 0px 114px;
-        width: 13.789em;
-    }
+  .navzara {
+    margin: 20px 0px 0px 114px;
+    width: 13.789em;
+  }
 
-    .navsearch {
-        width: 46%;
-    }
+  .navsearch {
+    width: 46%;
+  }
 
-    .navlhs {
-        padding: 20px 20px 0px 0px;
-    }
+  .navlhs {
+    padding: 20px 20px 0px 0px;
+  }
 }
 
 @media (max-width: 1179px) {
-    .login {
-        padding: 0px 0px 0px 130px;
-    }
+  .login {
+    padding: 0px 0px 0px 130px;
+  }
 
-    .navzara {
-        margin: 20px 0px 0px 90px;
-        width: 33.5%;
-    }
+  .navzara {
+    margin: 20px 0px 0px 90px;
+    width: 33.5%;
+  }
 
-    .navsearch {
-        width: 56%;
-    }
+  .navsearch {
+    width: 56%;
+  }
 
-    .navlhs {
-        padding: 20px 20px 0px 0px;
-    }
+  .navlhs {
+    padding: 20px 20px 0px 0px;
+  }
 }
 
 @media (max-width: 970px) {
-    .navlhs {
-        padding: 20px 20px 0px 0px;
-        gap: 20px;
-    }
+  .navlhs {
+    padding: 20px 20px 0px 0px;
+    gap: 20px;
+  }
 }
 
 @media (max-width: 768px) {
-    .Navbar {
-        height: 40px;
-    }
+  .Navbar {
+    height: 40px;
+  }
 
-    .navlhs {
-        padding: 10px 0px 0px 25px;
-    }
+  .navlhs {
+    padding: 10px 0px 0px 25px;
+  }
 
-    .sidebaricon {
-        margin: 10px 20px 0px 10px;
-    }
+  .sidebaricon {
+    margin: 10px 20px 0px 10px;
+  }
 
-    .navzara,
-    .navsearch {
-        display: none;
-    }
-    
-    .navlhs div {
-        display: block;
-    }
+  .navzara,
+  .navsearch {
+    display: none;
+  }
 
-    .navlhs div:not(:nth-last-child(-n+2)) {
-        display: none;
-    }
+  .navlhs div {
+    display: block;
+  }
 
-    .navlhs div:last-child {
-        margin-bottom: auto;
-        margin-right: 0;
-        align-self: flex-end;
-    }
+  .navlhs div:not(:nth-last-child(-n + 2)) {
+    display: none;
+  }
 
-    .cartbut {
-        padding-right: 10px;
-    }
+  .navlhs div:last-child {
+    margin-bottom: auto;
+    margin-right: 0;
+    align-self: flex-end;
+  }
 
-    .helpbut {
-        padding-right: 10px;
-        display: none;
-    }
+  .cartbut {
+    padding-right: 10px;
+  }
 
-    .secondsections {
-        display: none;
-    }
+  .helpbut {
+    padding-right: 10px;
+    display: none;
+  }
+
+  .secondsections {
+    display: none;
+  }
 }

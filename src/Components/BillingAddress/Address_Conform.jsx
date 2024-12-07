@@ -118,7 +118,12 @@ function Address_Conform() {
   return (
     <div>
       <div className="sticky top-0 z-50" style={{ marginTop: "-9px" }}>
-        <div className="absolute w-full bg-white">
+        <div
+          className="absolute w-full "
+          style={{
+            backgroundColor: "var(--bg-color)",
+          }}
+        >
           <NavBar_Show_After_Cart />
         </div>
       </div>
@@ -135,10 +140,11 @@ function Address_Conform() {
             <div className="BillingInputArea" id="billingForm">
               <div className="BillingInputAreaFisrt">
                 <div
-                  className={`mb-4 relative ${focusedFields.firstName
+                  className={`mb-4 relative ${
+                    focusedFields.firstName
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -161,8 +167,10 @@ function Address_Conform() {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.firstName
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                     autoComplete="given-name"
                   />
@@ -177,28 +185,30 @@ function Address_Conform() {
                     </div>
                   )}
                 </div>
-                <div className="Privacyslect">
+                <div
+                  className="Privacyslect"
+                  style={{ borderBottom: "1px solid var(--border-color)" }}
+                >
                   <label htmlFor="countrySelect">SEND TO</label>
-                  <span className="select-container">
+                  <div className="select-container">
                     <select
                       id="country"
                       value={selectedCountry}
                       onChange={handleSelect}
                     >
-                      {/* Render options for each country */}
                       {countries.map((country) => (
                         <option key={country.code} value={country.code}>
                           {country.name}
                         </option>
                       ))}
                     </select>
-                  </span>
+                  </div>
                 </div>
+
                 <div
-                  className={`mb-4 relative ${focusedFields.address
-                      ? "border-b-1"
-                      : "border-b-1 border-red-500"
-                    }`}
+                  className={`mb-4 relative ${
+                    focusedFields.address ? "" : "border-b-1 border-red-500"
+                  }`}
                 >
                   <label
                     className={
@@ -219,10 +229,13 @@ function Address_Conform() {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.address
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                   />
+
                   {!focusedFields.address && errors.address && (
                     <div
                       className="text-red-500 text-[11px]"
@@ -235,10 +248,11 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${focusedFields.cityTown
+                  className={`mb-4 relative ${
+                    focusedFields.cityTown
                       ? "border-b-1 border-red-500"
                       : "border-b-1"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -259,9 +273,11 @@ function Address_Conform() {
                       handleInputBlur("cityTown", ev.target.value)
                     }
                     style={{
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                       borderBottom: focusedFields.cityTown
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
                     }}
                   />
                   {!focusedFields.cityTown && errors.cityTown && (
@@ -276,10 +292,11 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${focusedFields.stateProvince
+                  className={`mb-4 relative ${
+                    focusedFields.stateProvince
                       ? "border-b-1 border-red-500"
                       : "border-b-1"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -302,9 +319,11 @@ function Address_Conform() {
                       handleInputBlur("stateProvince", ev.target.value)
                     }
                     style={{
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                       borderBottom: focusedFields.stateProvince
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
                     }}
                   />
                   {!focusedFields.stateProvince && errors.stateProvince && (
@@ -320,10 +339,11 @@ function Address_Conform() {
                 </div>
                 <span className="BillingAndnumberarea">
                   <div
-                    className={`mb-4 relative ${focusedFields.prefix
+                    className={`mb-4 relative ${
+                      focusedFields.prefix
                         ? "border-b-1 border-red-500"
                         : "border-b-1"
-                      }`}
+                    }`}
                   >
                     <label
                       className={
@@ -344,9 +364,11 @@ function Address_Conform() {
                         handleInputBlur("prefix", ev.target.value)
                       }
                       style={{
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
                         borderBottom: focusedFields.prefix
-                          ? "1px solid black"
-                          : "1px solid black",
+                          ? "1px solid var(--border-color)"
+                          : "1px solid var(--border-color)",
                       }}
                       autoComplete="country"
                     />
@@ -362,10 +384,11 @@ function Address_Conform() {
                     )}
                   </div>
                   <div
-                    className={`mb-4 relative ${focusedFields.phoneNumber
+                    className={`mb-4 relative ${
+                      focusedFields.phoneNumber
                         ? "border-b-1 border-red-500"
                         : "border-b-1"
-                      }`}
+                    }`}
                   >
                     <label
                       className={
@@ -388,9 +411,11 @@ function Address_Conform() {
                         handleInputBlur("phoneNumber", ev.target.value)
                       }
                       style={{
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
                         borderBottom: focusedFields.phoneNumber
-                          ? "1px solid black"
-                          : "1px solid black",
+                          ? "1px solid var(--border-color)"
+                          : "1px solid var(--border-color)",
                       }}
                       autoComplete="phone"
                     />
@@ -409,10 +434,11 @@ function Address_Conform() {
               </div>
               <div className="BillingInputAreaSecond">
                 <div
-                  className={`mb-4 relative ${focusedFields.lastName
+                  className={`mb-4 relative ${
+                    focusedFields.lastName
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -435,8 +461,10 @@ function Address_Conform() {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.lastName
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                     autoComplete="family-name"
                   />
@@ -451,7 +479,7 @@ function Address_Conform() {
                     </div>
                   )}
                 </div>
-                <div className="Privacyslecttwo opacity-0">
+                <div className="Privacyslecttwo opacity-0 disabled:true">
                   <label>SEND TO</label>
                   <select>
                     <option value="someOption">Aland Islands</option>
@@ -465,10 +493,11 @@ function Address_Conform() {
                   </select>
                 </div>
                 <div
-                  className={`mb-4 relative ${focusedFields.addressSecond
+                  className={`mb-4 relative ${
+                    focusedFields.addressSecond
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -493,8 +522,10 @@ function Address_Conform() {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.addressSecond
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                     autoComplete="address-line2"
                   />
@@ -510,10 +541,11 @@ function Address_Conform() {
                   )}
                 </div>
                 <div
-                  className={`mb-4 relative ${focusedFields.zipCode
+                  className={`mb-4 relative ${
+                    focusedFields.zipCode
                       ? "border-b-1"
                       : "border-b-1 border-red-500"
-                    }`}
+                  }`}
                 >
                   <label
                     className={
@@ -534,8 +566,10 @@ function Address_Conform() {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.zipCode
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                     autoComplete="postal-code"
                   />
@@ -558,7 +592,10 @@ function Address_Conform() {
       <Footer />
       <div className="sticky bottom-0 z-50">
         <div className="CartpropccessOrder">
-          <div className="CartPropssesstitle opacity-0">*By continuing, I declare that I have read and accept the Purchase Conditions and understand Zara's Privacy and Cookie Policy.</div>
+          <div className="CartPropssesstitle opacity-0">
+            *By continuing, I declare that I have read and accept the Purchase
+            Conditions and understand Zara's Privacy and Cookie Policy.
+          </div>
           <div className="CartProccesses">
             <div>
               <p>SHIPPING</p>

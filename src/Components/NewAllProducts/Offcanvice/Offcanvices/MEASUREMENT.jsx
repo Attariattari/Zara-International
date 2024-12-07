@@ -67,7 +67,7 @@ function MEASUREMENT({ closeDrawer }) {
             height="24"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
+            fill="var(--text-color)"
             stroke="inherit"
             class="zds-dialog-icon-button__icon zds-dialog-close-button__icon"
           >
@@ -80,7 +80,7 @@ function MEASUREMENT({ closeDrawer }) {
         <div
           className="mt-5"
           style={{
-            border: "1px solid black",
+            border: "1px solid var(--border-color)",
           }}
         >
           <img src="https://i.ibb.co/GM4XVJF/c0f442f96d55.jpg" alt="" />
@@ -94,7 +94,7 @@ function MEASUREMENT({ closeDrawer }) {
                 }`}
                 onClick={() => handleSizeSelect("EU XS / US XS")}
               >
-                EU XS / US XS
+                <p style={{ fontSize: "12px" }}>EU XS / US XS</p>
               </SwiperSlide>
               <SwiperSlide
                 className={`SlidesButtonsS ${
@@ -102,7 +102,7 @@ function MEASUREMENT({ closeDrawer }) {
                 }`}
                 onClick={() => handleSizeSelect("EU S / US S")}
               >
-                EU S / US S
+                <p style={{ fontSize: "12px" }}>EU S / US S</p>{" "}
               </SwiperSlide>
               <SwiperSlide
                 className={`SlidesButtonsM ${
@@ -110,7 +110,7 @@ function MEASUREMENT({ closeDrawer }) {
                 }`}
                 onClick={() => handleSizeSelect("EU M / US M")}
               >
-                EU M / US M
+                <p style={{ fontSize: "12px" }}>EU M / US M</p>
               </SwiperSlide>
               <SwiperSlide
                 className={`SlidesButtonsL ${
@@ -118,7 +118,7 @@ function MEASUREMENT({ closeDrawer }) {
                 }`}
                 onClick={() => handleSizeSelect("EU L / US L")}
               >
-                EU L / US L
+                <p style={{ fontSize: "12px" }}>EU L / US L</p>
               </SwiperSlide>
               <SwiperSlide
                 className={`SlidesButtonsXL ${
@@ -126,7 +126,7 @@ function MEASUREMENT({ closeDrawer }) {
                 }`}
                 onClick={() => handleSizeSelect("EU XL / US XL")}
               >
-                EU XL / US XL
+                <p style={{ fontSize: "12px" }}>EU XL / US XL</p>
               </SwiperSlide>
             </Swiper>
           </div>
@@ -136,7 +136,10 @@ function MEASUREMENT({ closeDrawer }) {
               className="w-full mr-5 text-left rtl:text-right "
               style={{ fontSize: "11px" }}
             >
-              <thead className="" style={{ border: "1px solid black" }}>
+              <thead
+                className=""
+                style={{ border: "1px solid var(--border-color)" }}
+              >
                 <tr>
                   <th scope="col" className="px-3 py-2 ">
                     AREA
@@ -155,12 +158,12 @@ function MEASUREMENT({ closeDrawer }) {
                     ([key, value]) => (
                       <tr
                         key={key}
-                        className="bg-white dark:bg-gray-800"
-                        style={{ border: "1px solid black" }}
+                        className=" "
+                        style={{ border: "1px solid var(--border-color)" }}
                       >
                         <th
                           scope="row"
-                          className="px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          className="px-3 py-2 font-medium  whitespace-nowrap "
                         >
                           {key}
                         </th>

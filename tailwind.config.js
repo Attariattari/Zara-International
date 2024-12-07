@@ -11,6 +11,9 @@ module.exports = {
 module.exports = {
   theme: {
     extend: {},
+    colors: {
+      "custom-bg": "var(--bg-color)", // Tailwind utility for `--bg-color`
+    },
   },
   plugins: [
     function ({ addUtilities }) {

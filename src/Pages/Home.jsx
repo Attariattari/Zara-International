@@ -93,7 +93,7 @@ export default function Home() {
       ],
       babyjacket: [
         "https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
-        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png"
+        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png",
       ],
       babyshoes: [
         "https://images.pexels.com/photos/1094084/pexels-photo-1094084.jpeg?cs=srgb&dl=pexels-vika-glitter-392079-1094084.jpg&fm=jpg",
@@ -103,8 +103,8 @@ export default function Home() {
   };
 
   const [currentCategory, setCurrentCategory] = useState("women");
-  const [currentSubcategory, setCurrentSubcategory] = useState(null);
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const [scrollTimeout, setScrollTimeout] = useState(true);
   const [manualScroll, setManualScroll] = useState(false);
   const swiperRef = useRef(null);
   const navigate = useNavigate();
@@ -115,7 +115,6 @@ export default function Home() {
     const defaultSubcategory = subcategories
       ? Object.keys(subcategories)[0]
       : null;
-    setCurrentSubcategory(defaultSubcategory);
 
     const firstSlide = subcategories ? subcategories[defaultSubcategory] : [];
     const firstSlideIsVideo = isVideo(firstSlide);
@@ -225,11 +224,11 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div className="Home">
-      <div className="sticky top-0 z-10">
-        <div className="absolute w-full">
+      <div className="sticky top-0 z-10 Home_navbar ">
+        <div className=" bg-transparent w-full">
           <Navbar />
         </div>
         <div className="CategoryButtons">

@@ -1,11 +1,9 @@
 body.light {
   --bg-color: white;
   --admin-bg-color: #858585b6;
-  --image-focuse-color: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
+  --image-focuse-color: radial-gradient(circle,
+      rgba(238, 174, 202, 1) 0%,
+      rgba(148, 187, 233, 1) 100%);
   --text-color: black;
   --border-color: #000000;
   --scrollbar-bg: #f1f1f100;
@@ -17,11 +15,9 @@ body.light {
   --input-bg-color: rgb(24, 24, 24);
   --input-color: white;
   --active-icon-color: rgb(46, 46, 46);
-  --grid-border-color: linear-gradient(
-    90deg,
-    rgba(0, 210, 247, 1) 0%,
-    rgba(208, 54, 228, 1) 100%
-  );
+  --grid-border-color: linear-gradient(90deg,
+      rgba(0, 210, 247, 1) 0%,
+      rgba(208, 54, 228, 1) 100%);
   --button-bg-color: rgba(26, 26, 26, 0.3);
   --variation-popup-bg: rgba(0, 0, 0, 0.7);
   --product-content-overlay: rgba(255, 255, 255, 0.8);
@@ -39,11 +35,9 @@ body.light {
 body.dark {
   --bg-color: rgb(24, 24, 24);
   --admin-bg-color: #3e3e3eac;
-  --image-focuse-color: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
+  --image-focuse-color: radial-gradient(circle,
+      rgba(238, 174, 202, 1) 0%,
+      rgba(148, 187, 233, 1) 100%);
   --text-color: white;
   --border-color: #ffffff;
   --scrollbar-bg: rgba(24, 24, 24, 0);
@@ -55,11 +49,9 @@ body.dark {
   --input-bg-color: white;
   --input-color: black;
   --active-icon-color: rgb(178, 178, 178);
-  --grid-border-color: linear-gradient(
-    90deg,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
+  --grid-border-color: linear-gradient(90deg,
+      rgba(238, 174, 202, 1) 0%,
+      rgba(148, 187, 233, 1) 100%);
   --button-bg-color: rgba(255, 255, 255, 0.3);
   --variation-popup-bg: #3e3e3eac;
   --product-content-overlay: rgba(37, 37, 37, 0.8);

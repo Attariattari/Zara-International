@@ -1,186 +1,199 @@
 .Address_Conform {
-    width: 100%;
-    height: auto;
-    padding: 136px 90px 0px 90px;
-    transition: all 0.6s ease;
+  width: 100%;
+  height: auto;
+  padding: 136px 90px 0px 90px;
+  transition: all 0.6s ease;
 }
 
 .BillingArea {
-    margin: 30px 0px 0px 0px;
-    width: 100%;
-    height: 600px;
-    transition: all 0.6s ease;
+  margin: 30px 0px 0px 0px;
+  width: 100%;
+  height: 600px;
+  transition: all 0.6s ease;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .Billingtitle {
-    width: 100%;
-    height: 70px;
-    padding: 0px 0px 0px 0px;
+  width: 100%;
+  height: 70px;
+  padding: 0px 0px 0px 0px;
 }
 
 .Billingtitle :nth-child(2) {
-    font-size: 11px;
-    margin-top: 5px;
+  font-size: 11px;
+  margin-top: 5px;
 }
 
 .BillingInputArea {
-    width: 70%;
+  width: 70%;
+  height: auto;
+  padding: 0px 0px 0px 0px;
+  height: 88%;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  transition: all 0.6s ease;
+}
+
+.BillingInputArea div {
+  width: 50%;
+  height: 96%;
+  margin: 20px 0px 0px 0px;
+  transition: all 0.6s ease;
+}
+
+.BillingInputAreaFisrt {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.6s ease;
+}
+.Privacyslecttwo {
+  width: 100%;
+  height: 40px;
+  opacity: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.BillingInputAreaFisrt div {
+  width: 100%;
+  height: 40px;
+  transition: all 0.6s ease;
+}
+
+.BillingAndnumberarea {
+  display: flex;
+  gap: 15px;
+  transition: all 0.6s ease;
+}
+
+.BillingAndnumberarea :nth-child(1) {
+  width: 20%;
+}
+
+.BillingInputAreaSecond {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.6s ease;
+}
+
+.BillingInputAreaSecond div {
+  width: 100%;
+  height: 40px;
+  transition: all 0.6s ease;
+}
+
+.Privacyslect {
+  width: 100%;
+  height: auto;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.select-container select {
+  appearance: none;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  width: 100%;
+  border-bottom: 1px solid var(--border-color) !important;
+  height: 40px;
+  padding: 5px;
+}
+
+.search-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-top: none;
+}
+
+.search-container input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  outline: none;
+}
+
+@media (max-width: 1279px) {
+  .Address_Conform {
+    width: 100%;
+    height: auto;
+    padding: 122px 150px 0px 150px;
+  }
+
+  .BillingInputArea {
+    width: 80%;
     height: auto;
     padding: 0px 0px 0px 0px;
     height: 88%;
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    transition: all 0.6s ease;
-}
-
-.BillingInputArea div {
-    width: 50%;
-    height: 96%;
-    margin: 20px 0px 0px 0px;
-    transition: all 0.6s ease;
-}
-
-.BillingInputAreaFisrt {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: all 0.6s ease;
-}
-
-.Privacyslecttwo {
-    width: 100%;
-    height: 40px;
-    opacity: 0;
-}
-
-.BillingInputAreaFisrt div {
-    width: 100%;
-    height: 40px;
-    transition: all 0.6s ease;
-
-}
-
-.BillingAndnumberarea {
-    display: flex;
-    gap: 15px;
-    transition: all 0.6s ease;
-}
-
-.BillingAndnumberarea :nth-child(1) {
-    width: 20%;
-}
-
-.BillingInputAreaSecond {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: all 0.6s ease;
-}
-
-.BillingInputAreaSecond div {
-    width: 100%;
-    height: 40px;
-    transition: all 0.6s ease;
-}
-
-.select-container {
-    position: relative;
-}
-
-.search-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #000000;
-    border: 1px solid #ccc;
-    border-top: none;
-}
-
-.search-container input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    outline: none;
-}
-
-@media (max-width: 1279px) {
-    .Address_Conform {
-        width: 100%;
-        height: auto;
-        padding: 122px 150px 0px 150px;
-    }
-
-    .BillingInputArea {
-        width: 80%;
-        height: auto;
-        padding: 0px 0px 0px 0px;
-        height: 88%;
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-    }
+  }
 }
 
 @media (max-width: 1179px) {
-    .Address_Conform {
-        width: 100%;
-        height: auto;
-        padding: 100px 126px 0px 126px;
-    }
+  .Address_Conform {
+    width: 100%;
+    height: auto;
+    padding: 100px 126px 0px 126px;
+  }
 
-    .BillingInputArea {
-        width: 80%;
-        height: auto;
-        padding: 0px 0px 0px 0px;
-        height: 88%;
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-    }
+  .BillingInputArea {
+    width: 80%;
+    height: auto;
+    padding: 0px 0px 0px 0px;
+    height: 88%;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
 }
 
 @media (max-width: 1024px) {
-
-    .BillingInputArea {
-        width: 90%;
-    }
+  .BillingInputArea {
+    width: 90%;
+  }
 }
 
 @media (max-width: 768px) {
-    .Address_Conform {
-        width: 100%;
-        height: auto;
-        padding: 30px 10px 0px 10px;
-    }
+  .Address_Conform {
+    width: 100%;
+    height: auto;
+    padding: 30px 10px 0px 10px;
+  }
 
-    .BillingInputArea {
-        width: 100%;
-        gap: 0px;
-        height: auto;
-        flex-direction: column;
-    }
+  .BillingInputArea {
+    width: 100%;
+    gap: 0px;
+    height: auto;
+    flex-direction: column;
+  }
 
-    .BillingArea {
-        margin: 30px 0px 0px 0px;
-        width: 100%;
-        height: auto;
-    }
+  .BillingArea {
+    margin: 30px 0px 0px 0px;
+    width: 100%;
+    height: auto;
+  }
 
-    .BillingInputArea div {
-        width: 100%;
-        height: 100%;
-        margin: 20px 0px 0px 0px;
-    }
+  .BillingInputArea div {
+    width: 100%;
+    height: 100%;
+    margin: 20px 0px 0px 0px;
+  }
 
-    .Privacyslecttwo {
-        width: 100%;
-        height: 40px;
-        display: none;
-    }
+  .Privacyslecttwo {
+    width: 100%;
+    height: 40px;
+    display: none;
+  }
 }

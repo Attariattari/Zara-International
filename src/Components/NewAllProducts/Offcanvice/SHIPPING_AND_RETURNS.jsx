@@ -93,7 +93,7 @@ function SHIPPING_AND_RETURNS({
         size={getDrawerSize()}
         onClose={closeDrawer}
         placement="right"
-        className="p-4 Custom-Drawer bg-white overflow-y-auto"
+        className="p-4 overflow-y-auto bg-custom-bg Custom-Drawer"
       >
         {drawerType === "shipping" && <Shipping closeDrawer={closeDrawer} />}
         {drawerType === "avail" && <Avalibilty closeDrawer={closeDrawer} />}
@@ -105,7 +105,7 @@ function SHIPPING_AND_RETURNS({
         size={getBottomDrawerSize()}
         onClose={closebottomdrawer}
         placement="bottom"
-        className="p-4 Custom-Drawer bg-white overflow-y-auto"
+        className="p-4 overflow-y-auto bg-custom-bg Custom-Drawer"
       >
         {MEASUREPENS && (
           <>

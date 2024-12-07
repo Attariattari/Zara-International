@@ -49,7 +49,7 @@ function LikeSameWithProductData() {
                       height="18"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="inherit"
+                      fill="var(--text-color)"
                       stroke="inherit"
                       onClick={() => toggleWishlist(index)}
                     >
@@ -67,7 +67,7 @@ function LikeSameWithProductData() {
                       height="18"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="inherit"
+                      fill="var(--text-color)"
                       stroke="inherit"
                       onClick={() => toggleWishlist(index)}
                     >

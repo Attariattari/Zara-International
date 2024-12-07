@@ -39,7 +39,12 @@ function New() {
 
   return (
     <div>
-      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
+      <div
+        className={`sticky top-0 z-10`}
+        style={{
+          backgroundColor: isScrolled ? "var(--bg-color)" : "transparent",
+        }}
+      >
         <div className="absolute w-full">
           <Navbar />
         </div>
@@ -53,7 +58,7 @@ function New() {
               height="24"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
+              fill="var(--text-color)"
               stroke="inherit"
               onClick={() => handleComponentChange("FullDisplay")}
             >
@@ -73,7 +78,7 @@ function New() {
               height="24"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
+              fill="var(--text-color)"
               stroke="inherit"
               onClick={() => handleComponentChange("DetailsDisplay")}
             >
@@ -93,7 +98,7 @@ function New() {
               height="24"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
+              fill="var(--text-color)"
               stroke="inherit"
               onClick={() => handleComponentChange("SamallDipaly")}
             >

@@ -81,7 +81,7 @@ function MEASUREMENTBOTTOM({ closebottomdrawer }) {
             height="24"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
-            fill="inherit"
+            fill="var(--text-color)"
             stroke="inherit"
             class="zds-dialog-icon-button__icon zds-dialog-close-button__icon"
           >

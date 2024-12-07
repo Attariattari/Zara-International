@@ -1,5 +1,11 @@
 import React, { useContext, useState, useRef } from "react";
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { VscClose } from "react-icons/vsc";
 import "./Navbar.css";
 import SidePopup from "./Sidepopup/SidePopup";
@@ -30,8 +36,11 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
     <div ref={navbarRef} className="">
       <div className="navbarmain">
         <div className="firstsection">
-          <div className="sidebaricon cursor-pointer" onClick={handleTogglePopup}>
-            {(showSidePopup || isLocalPopupVisible) ? (
+          <div
+            className="sidebaricon cursor-pointer"
+            onClick={handleTogglePopup}
+          >
+            {showSidePopup || isLocalPopupVisible ? (
               <VscClose />
             ) : (
               <svg
@@ -39,9 +48,9 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
                 height="24"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="inherit"
                 stroke="inherit"
                 className="layout-header-icon__icon"
+                fill="var(--text-color)"
               >
                 <path
                   fillRule="evenodd"
@@ -57,6 +66,7 @@ export default function Navbar({ showSidePopup, toggleSidePopup }) {
                 className="worldwide__logo"
                 viewBox="0 0 132 55"
                 xmlns="http://www.w3.org/2000/svg"
+                fill="var(--text-color)"
               >
                 <path
                   fillRule="evenodd"
