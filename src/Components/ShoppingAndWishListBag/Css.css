@@ -168,7 +168,8 @@
   height: 78px;
   display: flex;
   justify-content: space-between;
-  background-color: var(--bg-color);
+  background-color: var(--text-color);
+  color: var(--bg-color);
 }
 
 .totalitems {
@@ -187,6 +188,8 @@
   display: flex;
   justify-content: end;
   align-items: center;
+  background-color: var(--text-color);
+  color: var(--bg-color);
   padding: 0px 300px 0px 0px;
   font-size: 10px;
   gap: 20px;
@@ -209,6 +212,8 @@
   padding: 0px 0px 0px 0px;
   font-size: 11px;
   transition: all 0.6s ease;
+  background-color: var(--text-color);
+  color: var(--bg-color);
   gap: 30px;
 }
 

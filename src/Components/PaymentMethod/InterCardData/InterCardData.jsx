@@ -153,7 +153,12 @@ const InterCardData = () => {
   return (
     <div>
       <div className="sticky top-0 z-10">
-      <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
+        <div
+          className="absolute w-full"
+          style={{
+            backgroundColor: isScrolled ? "var(--bg-color)" : "transparent",
+          }}
+        >
           <NavBar_Show_After_Cart />
         </div>
       </div>
@@ -190,7 +195,9 @@ const InterCardData = () => {
                     }
                     onChange={handleInputChange}
                     style={{
-                      borderBottom: "1px solid black",
+                      borderBottom: "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                   />
                   {!focusedFields.cardNumber && errors.cardNumber && (
@@ -245,8 +252,10 @@ const InterCardData = () => {
                       onChange={handleInputChange}
                       style={{
                         borderBottom: focusedFields.cardMonth
-                          ? "1px solid black"
-                          : "1px solid black",
+                          ? "1px solid var(--border-color)"
+                          : "1px solid var(--border-color)",
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
                       }}
                     >
                       <option value="">Select Month</option>
@@ -289,8 +298,10 @@ const InterCardData = () => {
                       onChange={handleInputChange}
                       style={{
                         borderBottom: focusedFields.cardYear
-                          ? "1px solid black"
-                          : "1px solid black",
+                          ? "1px solid var(--border-color)"
+                          : "1px solid var(--border-color)",
+                        backgroundColor: "var(--bg-color)",
+                        color: "var(--text-color)",
                       }}
                     >
                       <option value="">Select Year</option>
@@ -343,8 +354,10 @@ const InterCardData = () => {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.cardHolder
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                   />
 
@@ -404,8 +417,10 @@ const InterCardData = () => {
                     onChange={handleInputChange}
                     style={{
                       borderBottom: focusedFields.cardCVC
-                        ? "1px solid black"
-                        : "1px solid black",
+                        ? "1px solid var(--border-color)"
+                        : "1px solid var(--border-color)",
+                      backgroundColor: "var(--bg-color)",
+                      color: "var(--text-color)",
                     }}
                   />
                   {!focusedFields.cardCVC && errors.cardCVC && (

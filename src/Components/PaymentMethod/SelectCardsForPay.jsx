@@ -34,7 +34,7 @@ const SelectCardsForPay = () => {
   const Totalviewfalse = () => {
     setTotoalitemshow(false);
   };
-  
+
   const Expendfortotal = () => {
     setExpendview(!expendview);
   };
@@ -58,7 +58,12 @@ const SelectCardsForPay = () => {
   return (
     <div>
       <div className="sticky top-0 z-10">
-      <div className={`absolute w-full ${isScrolled ? "bg-white" : ""}`}>
+        <div
+          className="absolute w-full"
+          style={{
+            backgroundColor: isScrolled ? "var(--bg-color)" : "transparent",
+          }}
+        >
           <NavBar_Show_After_Cart />
         </div>
       </div>
