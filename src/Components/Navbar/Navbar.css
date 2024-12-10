@@ -11,12 +11,38 @@
 }
 
 .sidebaricon {
-  width: 20px;
-  height: 20px;
-  margin: 20px 0px 0px 16px;
+  width: 30px; /* Larger for better visibility */
+  height: 30px;
+  margin: 20px 0 0 16px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 5%; /* Circular shape for a modern look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Subtle layered shadow */
+  transition: all 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* Indicates interactivity */
+}
+
+.sidebaricon:hover {
+  transform: scale(1.1); /* Slight scale-up for hover effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+.sidebaricon:active {
+  transform: scale(0.95); /* Slight shrink for click feedback */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1); /* Reduced shadow on click */
+}
+
+.sidebaricon svg {
+  width: 20px;
+  height: 20px;
+  transition: fill 0.3s ease; /* Smooth transition for color change */
+}
+
+.sidebaricon:hover svg {
+  fill: var(--highlight-color); /* Changes icon color on hover */
 }
 
 .navzara {
@@ -51,12 +77,38 @@
 .navlhs {
   display: flex;
   padding: 20px 20px 0px 0px;
-  font-size: 11px;
+  font-size: 12px;
   width: 45%;
   color: var(--text-color);
-  gap: 50px;
-  transition: all 0.6s ease;
+  gap: 20px;
+  transition: all 0.3s ease;
   justify-content: end;
+}
+
+.navlhs div {
+  cursor: pointer;
+  background-color: var(--bg-color);
+  height: 35px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06); /* Layered shadow for depth */
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  text-align: center;
+}
+
+.navlhs div:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  transform: translateY(-4px); /* Lift effect */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
+}
+
+.navlhs div:active {
+  transform: translateY(0); /* Reset lift effect on click */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1); /* Slightly dimmed shadow */
+  opacity: 0.95; /* Minor feedback effect */
 }
 
 .searchicon {
@@ -78,16 +130,12 @@
   display: flex;
 }
 
-.secondsections>* {
+.secondsections > * {
   flex: 1;
 }
 
-.secondsection>* {
+.secondsection > * {
   flex: 1;
-}
-
-.navlhs div {
-  cursor: pointer;
 }
 
 .navsearch {
@@ -116,15 +164,45 @@
 
   .navzara {
     margin: 20px 0px 0px 90px;
-    width: 33.5%;
+    width: 44.5%;
   }
-
-  .navsearch {
-    width: 56%;
+  .secondsection {
+    width: 65%;
+    display: flex;
   }
-
   .navlhs {
     padding: 20px 20px 0px 0px;
+  }
+}
+
+@media (max-width: 1090px) {
+  .secondsection {
+    width: 75%;
+    display: flex;
+  }
+}
+@media (max-width: 1024px) {
+  .secondsection {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navzara {
+    margin: 20px 0px 0px 90px;
+    width: 70%;
+  }
+  .navlhs {
+    width: 100%;
+    justify-content: center;
+  }
+  .navsearch {
+    transition: all 0.6s ease;
+    width: 75%;
+  }
+  .input {
+    height: 50%;
   }
 }
 
@@ -152,28 +230,22 @@
   .navsearch {
     display: none;
   }
-
+  .navlhs {
+    width: 100%;
+    justify-content: end;
+  }
   .navlhs div {
     display: block;
   }
 
-  .navlhs div:not(:nth-last-child(-n + 2)) {
+  .navlhs div:not(:nth-last-child(-n + 1)) {
     display: none;
   }
 
   .navlhs div:last-child {
     margin-bottom: auto;
-    margin-right: 0;
+    margin-right: 20px;
     align-self: flex-end;
-  }
-
-  .cartbut {
-    padding-right: 10px;
-  }
-
-  .helpbut {
-    padding-right: 10px;
-    display: none;
   }
 
   .secondsections {
