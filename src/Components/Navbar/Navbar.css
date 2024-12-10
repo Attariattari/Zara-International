@@ -11,7 +11,7 @@
 }
 
 .sidebaricon {
-  width: 30px; /* Larger for better visibility */
+  width: 30px;
   height: 30px;
   margin: 20px 0 0 16px;
   display: flex;
@@ -30,11 +30,6 @@
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
-.sidebaricon:active {
-  transform: scale(0.95); /* Slight shrink for click feedback */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1); /* Reduced shadow on click */
-}
-
 .sidebaricon svg {
   width: 20px;
   height: 20px;
@@ -42,7 +37,7 @@
 }
 
 .sidebaricon:hover svg {
-  fill: var(--highlight-color); /* Changes icon color on hover */
+  fill: var(--text-color);
 }
 
 .navzara {

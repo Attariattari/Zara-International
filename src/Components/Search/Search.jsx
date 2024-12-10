@@ -61,7 +61,12 @@ function Search() {
 
   return (
     <div>
-      <div className={`sticky top-0 z-10 ${isScrolled ? "bg-white" : ""}`}>
+      <div
+        className={`sticky top-0 z-10`}
+        style={{
+          backgroundColor: isScrolled ? "var(--bg-color)" : "transparent",
+        }}
+      >
         <div className="absolute w-full">
           <Navbar />
         </div>
@@ -85,7 +90,7 @@ function Search() {
               height="24"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
+              fill="var(--text-color)"
               stroke="inherit"
               onClick={clearInput}
               style={{ cursor: "pointer" }}

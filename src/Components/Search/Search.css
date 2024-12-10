@@ -1,46 +1,49 @@
 .Search {
-    width: 100%;
-    height: auto;
-    padding: 5px 0px 0px 0px;
+  width: 100%;
+  height: auto;
+  padding: 5px 0px 0px 0px;
 }
 
 .SearchCatagory {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 146px 0px 20px 40px;
-    transition: all 0.6s ease;
-    gap: 30px;
-    font-size: 11px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 146px 0px 20px 40px;
+  transition: all 0.6s ease;
+  gap: 30px;
+  font-size: 11px;
 }
 
 .SearchCatagory p {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .SearchInput {
-    width: 100%;
-    height: 60px;
-    padding: 0px 40px 0px 40px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 0px 40px 0px 40px;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .SearchInput input {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    border-radius: 0%;
-    text-transform: uppercase;
-    font-size: 12px;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border-radius: 0%;
+  text-transform: uppercase;
+  padding: 0px 20px 0px 20px;
+  font-size: 12px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 .SearchInput input::placeholder {
-    font-size: 12px;
-    text-transform: uppercase;
+  font-size: 12px;
+  text-transform: uppercase;
 }
