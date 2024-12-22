@@ -56,11 +56,13 @@ const Uploadimages = ({ closeuploadpop }) => {
     setNewFolderName(oldFolderName);
     setActiveFolderId(folderId);
   };
+
   const handleCancel = () => {
     setEditFolderId(null);
     setActiveFolderId(null); // Reset active folder on cancel
     setNewFolderName("");
   };
+
   const handleFolderNameChange = (e) => {
     setNewFolderName(e.target.value);
   };
@@ -79,8 +81,9 @@ const Uploadimages = ({ closeuploadpop }) => {
           folderName: newFolderName,
         },
         {
+          withCredentials: true,
           headers: {
-            "Content-Type": "application/json", // Ensure this matches your server expectation
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
@@ -101,8 +104,6 @@ const Uploadimages = ({ closeuploadpop }) => {
   const fetchGalleryData = async () => {
     setLoading(true);
     try {
-      console.log("Sending token:", token);
-      // Fetch gallery data from the API
       const response = await axios.get("http://localhost:1122/images/", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -123,6 +124,11 @@ const Uploadimages = ({ closeuploadpop }) => {
       setLoading(false);
     }
   };
+  console.log("Folder Name:", newFolderName);
+  console.log("Payload:", {
+    galleryName,
+    folderName: newFolderName,
+  });
 
   useEffect(() => {
     fetchGalleryData();
@@ -371,12 +377,6 @@ const Uploadimages = ({ closeuploadpop }) => {
       fileInputRefs.current[index].click();
     }
   };
-
-  // const handleRemoveImage = (index) => {
-  //   const newImages = [...images];
-  //   newImages.splice(index, 1); // Remove image from the array
-  //   setImages(newImages);
-  // };
 
   return (
     <div className="Uploadimages">

@@ -9,7 +9,7 @@ import Select from "react-select";
 import { PiUserCirclePlusFill } from "react-icons/pi";
 import { CiEdit } from "react-icons/ci";
 import { IoStorefrontSharp } from "react-icons/io5";
-import { CgCopy } from "react-icons/cg";
+import Multiselect from "multiselect-react-dropdown";
 import { LuPlus } from "react-icons/lu";
 import GallerySelect from "./Gallery-Select/GallerySelect";
 import { MdClose } from "react-icons/md";
@@ -42,7 +42,9 @@ const productSchema = z.object({
           name: z.string().min(1, "Color name is required"),
           code: z.string().optional(), // Color code is optional
         }),
-        size: z.string().min(1, "Size is required"),
+        size: z
+          .array(z.string().min(1, "Each size must be valid")) // Allowing multiple sizes
+          .nonempty("At least one size is required"),
         dimensions: z
           .object({
             length: z.number().optional(),
@@ -105,6 +107,14 @@ const productSchema = z.object({
 
   publishStatus: z.enum(["Published", "Draft"]).default("Draft"),
 });
+const sizeOptions = [
+  { name: "XS", id: "XS" },
+  { name: "S", id: "S" },
+  { name: "M", id: "M" },
+  { name: "L", id: "L" },
+  { name: "XL", id: "XL" },
+  { name: "XXL", id: "XXL" },
+];
 const ProductForm = () => {
   const {
     register,
@@ -133,7 +143,7 @@ const ProductForm = () => {
       {
         image: [],
         color: { name: "", code: "" },
-        size: "",
+        size: [],
         price: { real: "", discount: "" },
         material: undefined,
         dimensions: { length: 0, width: 0, height: 0 },
@@ -388,7 +398,7 @@ const ProductForm = () => {
         {
           image: [],
           color: { name: "", code: "" },
-          size: "",
+          size: [],
           price: { real: "", discount: "" },
           material: undefined,
           dimensions: { length: 0, width: 0, height: 0 },
@@ -602,7 +612,7 @@ const ProductForm = () => {
         {
           image: [],
           color: { name: "", code: "" },
-          size: "",
+          size: [],
           price: { real: "", discount: "" },
           material: { material: "", percentage: 0 },
           dimensions: { length: 0, width: 0, height: 0 },
@@ -613,6 +623,15 @@ const ProductForm = () => {
       ],
     }));
   };
+  useEffect(() => {
+    // Popup band hone par state ko preserve karna
+    if (!state.showVariationPopup) {
+      setValue(
+        `variations.${state.activeVariationIndex}.size`,
+        state.variations[state.activeVariationIndex]?.size || []
+      );
+    }
+  }, [state.showVariationPopup]);
 
   const removeVariation = (index) => {
     setState((prevState) => {
@@ -786,13 +805,18 @@ const ProductForm = () => {
                 <Popup
                   open={state.showVariationPopup}
                   onClose={closePopup}
+                  destroyOnClose={false}
                   closeOnDocumentClick
                   modal
                   lockScroll
                   overlayClassName="popup-overlay"
                 >
                   <div className="variation-popup">
-                    <button title="Close Variation Items" onClick={closePopup}>
+                    <button
+                      title="Close Variation Items"
+                      className=".variation-popup-button"
+                      onClick={closePopup}
+                    >
                       <MdClose />
                     </button>{" "}
                     <div className="popup-content-data">
@@ -1049,25 +1073,62 @@ const ProductForm = () => {
                       <div className="popup-content-area">
                         <div>
                           <label>Size</label>
-                          <select
-                            defaultValue=""
-                            {...register(
-                              `variations.${state.activeVariationIndex}.size`,
-                              {
-                                required: "Size is required",
-                              }
-                            )}
-                          >
-                            <option value="" disabled hidden>
-                              Select size
-                            </option>
-                            <option value="XS">XS</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
-                          </select>
+
+                          <Multiselect
+                            options={sizeOptions} // Size options array
+                            selectedValues={
+                              state.variations[
+                                state.activeVariationIndex
+                              ]?.size.map((size) => ({
+                                name: size,
+                                id: size,
+                              })) || []
+                            }
+                            displayValue="name"
+                            onSelect={(selectedList) => {
+                              const selectedSizes = selectedList.map(
+                                (item) => item.name
+                              );
+                              state.variations[
+                                state.activeVariationIndex
+                              ].size = selectedSizes;
+                              setValue(
+                                `variations.${state.activeVariationIndex}.size`,
+                                selectedSizes
+                              );
+                            }}
+                            onRemove={(selectedList) => {
+                              const selectedSizes = selectedList.map(
+                                (item) => item.name
+                              );
+                              setValue(
+                                `variations.${state.activeVariationIndex}.size`,
+                                selectedSizes
+                              ); // Directly set value in form state
+                            }}
+                            placeholder="Select sizes"
+                            style={{
+                              searchBox: {
+                                backgroundColor: "transparent",
+                                border: "1px solid var(--border-color)",
+                                color: "var(--text-color)",
+                                padding: "5px 10px",
+                                borderRadius: "4px",
+                              },
+                              chips: {
+                                background: "var(--bg-color)",
+                                color: "white",
+                              },
+                              multiselectContainer: {
+                                color: "var(--text-color)",
+                              },
+                              option: {
+                                color: "var(--text-color)",
+                                backgroundColor: "transparent",
+                              },
+                            }}
+                          />
+
                           {errors.variations?.[state.activeVariationIndex]
                             ?.size && (
                             <span>

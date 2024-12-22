@@ -30,6 +30,7 @@
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "material-ui-popup-state": "^5.1.2",
+    "multiselect-react-dropdown": "^2.0.25",
     "prop-types": "^15.8.1",
     "react-bootstrap": "^2.10.1",
     "react-colorful": "^5.6.1",
