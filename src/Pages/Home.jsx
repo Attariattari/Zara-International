@@ -78,38 +78,23 @@ export default function Home() {
         "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-joinlife/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-e5f251d6-cf1a-4ea4-8980-4cbaa5b602c5-default_0.jpg?ts=1708507654789",
       ],
     },
-    kids: {
-      main: [
-        "https://wallpapercave.com/wp/wp8575693.jpg",
-        "https://previews.123rf.com/images/olgagi/olgagi1805/olgagi180500032/101295477-collection-of-child-s-clothes-kid-s-summerclothing-set-isolated.jpg",
-      ],
-      babyshirts: [
-        "https://t4.ftcdn.net/jpg/04/64/71/65/360_F_464716593_LD9IBzIJwlRMwQzjqVwHLL7XeupROIlS.jpg",
-        "https://images.unsplash.com/photo-1604467794349-0b74285de7e7?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
-      ],
-      babypants: [
-        "https://e1.pxfuel.com/desktop-wallpaper/760/61/desktop-wallpaper-kids-fashion-baby-clothes.jpg",
-        "https://e1.pxfuel.com/desktop-wallpaper/500/124/desktop-wallpaper-kids%EE%80%81-fashion-clothes-clothing-cute-pinterest-kids-fashion.jpg",
-      ],
-      babyjacket: [
-        "https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a2lkcyUyMGNsb3RoZXN8ZW58MHx8MHx8fDA%3D",
-        "https://landing-page-backend.s3.ap-south-1.amazonaws.com/blog_page_prodimages/0efb2b7e-fd8d-41a4-a4d7-9007ecbd293f/Kids-Clothes_auto.png",
-      ],
-      babyshoes: [
-        "https://images.pexels.com/photos/1094084/pexels-photo-1094084.jpeg?cs=srgb&dl=pexels-vika-glitter-392079-1094084.jpg&fm=jpg",
-        "https://static.yfswebstatic.com/desktop/assets/img/better-product2.11a83cab.jpg",
-      ],
-    },
   };
 
-  const [currentCategory, setCurrentCategory] = useState("women");
-  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
-  const [scrollTimeout, setScrollTimeout] = useState(true);
-  const [manualScroll, setManualScroll] = useState(false);
+  const [state, setState] = useState({
+    currentCategory: "women",
+    autoplayEnabled: true,
+    scrollTimeout: true,
+    manualScroll: false,
+    data: [],
+    loading: false,
+  });
   const swiperRef = useRef(null);
   const navigate = useNavigate();
   const handleCategoryChange = (category) => {
-    setCurrentCategory(category);
+    setState((prevState) => ({
+      ...prevState,
+      currentCategory: category,
+    }));
 
     const subcategories = categories[category];
     const defaultSubcategory = subcategories
@@ -124,21 +109,30 @@ export default function Home() {
       swiper.slideTo(0);
 
       if (firstSlideIsVideo) {
-        setAutoplayEnabled(true);
+        setState((prevState) => ({
+          ...prevState,
+          autoplayEnabled: true,
+        }));
         swiper.autoplay.start();
       } else {
-        setAutoplayEnabled(false);
+        setState((prevState) => ({
+          ...prevState,
+          autoplayEnabled: false,
+        }));
         swiper.autoplay.stop();
       }
     }
-    setManualScroll(false);
+    setState((prevState) => ({
+      ...prevState,
+      manualScroll: false,
+    }));
   };
 
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
 
     const handleSlideChange = () => {
-      if (!manualScroll) {
+      if (!state.manualScroll) {
         swiper.autoplay.start();
       }
     };
@@ -152,41 +146,45 @@ export default function Home() {
         swiper.off("slideChange", handleSlideChange);
       }
     };
-  }, [manualScroll]);
+  }, [state.manualScroll]);
 
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     const activeIndex = swiper.activeIndex;
 
-    if (activeIndex === 0 && !manualScroll) {
+    if (activeIndex === 0 && !state.manualScroll) {
       swiper.autoplay.start();
     } else {
       swiper.autoplay.stop();
     }
-  }, [currentCategory, manualScroll]);
+  }, [state.currentCategory, state.manualScroll]);
 
   const handleScroll = () => {
-    setManualScroll(true);
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
+    setState((prevState) => ({
+      ...prevState,
+      manualScroll: true,
+    }));
+    if (state.scrollTimeout) {
+      clearTimeout(state.scrollTimeout);
     }
-    setScrollTimeout(
-      setTimeout(() => {
-        setManualScroll(false);
-      }, 500)
-    );
+    setState((prevState) => ({
+      ...prevState,
+      manualScroll: setTimeout(() => {
+        state.manualScroll(false);
+      }, 500),
+    }));
   };
 
   const handleNextCategory = () => {
     const categoriesList = Object.keys(categories);
-    const currentIndex = categoriesList.indexOf(currentCategory);
+    const currentIndex = categoriesList.indexOf(state.currentCategory);
     const nextIndex = (currentIndex + 1) % categoriesList.length;
     handleCategoryChange(categoriesList[nextIndex]);
   };
 
   const handlePrevCategory = () => {
     const categoriesList = Object.keys(categories);
-    const currentIndex = categoriesList.indexOf(currentCategory);
+    const currentIndex = categoriesList.indexOf(state.currentCategory);
     const prevIndex =
       (currentIndex - 1 + categoriesList.length) % categoriesList.length;
     handleCategoryChange(categoriesList[prevIndex]);
@@ -197,7 +195,7 @@ export default function Home() {
       <button
         key={category}
         onClick={() => handleCategoryChange(category)}
-        className={currentCategory === category ? "active" : "wmk"}
+        className={state.currentCategory === category ? "active" : "wmk"}
       >
         {category.charAt(0).toUpperCase() + category.slice(1)}
       </button>
@@ -205,15 +203,15 @@ export default function Home() {
   };
 
   const getCategorySlides = () => {
-    const subcategories = categories[currentCategory];
+    const subcategories = categories[state.currentCategory];
 
     return Object.keys(subcategories)
       .flatMap((subcategory) => {
         const imageUrls = subcategories[subcategory];
-        return getSlides(`${currentCategory}-${subcategory}`, imageUrls);
+        return getSlides(`${state.currentCategory}-${subcategory}`, imageUrls);
       })
       .concat([
-        <SwiperSlide key={`${currentCategory}-social-slide`}>
+        <SwiperSlide key={`${state.currentCategory}-social-slide`}>
           <div className="social-slide-page w-full h-full flex justify-center items-center">
             <SocialSlidepage />
           </div>
