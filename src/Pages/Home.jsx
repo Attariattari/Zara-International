@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Mousewheel, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -8,6 +8,8 @@ import Navbar from "../Components/Navbar/Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import SocialSlidepage from "../Components/SocialPageforHome/SocialSlidepage";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { userContext } from "../Context/UserContext";
 
 // Helper function to check if the URL is a video
 const isVideo = (url) => {
@@ -15,10 +17,15 @@ const isVideo = (url) => {
 };
 
 // Helper function to generate slides based on image URLs
-const getSlides = (category, imageUrls) => {
-  return imageUrls.map((imageUrl, index) => (
+const getSlides = (category, products) => {
+  if (!Array.isArray(products)) {
+    console.error("Expected products to be an array, but got:", products);
+    return []; // Return an empty array if products is not an array
+  }
+
+  return products.map((product, index) => (
     <SwiperSlide className="Swiper__Slide" key={`${category}-slide-${index}`}>
-      {index === 0 && isVideo(imageUrl) ? (
+      {index === 0 && isVideo(product.MainImage) ? (
         <Link to="/New">
           <video
             autoPlay
@@ -28,13 +35,13 @@ const getSlides = (category, imageUrls) => {
             onEnded={() => handleVideoEnd()}
             className="video"
           >
-            <source src={imageUrl} type="video/mp4" />
+            <source src={product.MainImage} type="video/mp4" />
           </video>
         </Link>
       ) : (
         <img
-          src={imageUrl}
-          alt=""
+          src={product.MainImage}
+          alt={product.Name} // Added alt text for accessibility
           className="Swiper_Slider_Images"
           onClick={() => navigate("/New")}
         />
@@ -44,42 +51,6 @@ const getSlides = (category, imageUrls) => {
 };
 
 export default function Home() {
-  const categories = {
-    women: {
-      main: [
-        "https://images.pexels.com/photos/1126993/pexels-photo-1126993.jpeg?cs=srgb&dl=pexels-kowalievska-1126993.jpg&fm=jpg",
-        "https://images.pexels.com/photos/1198178/pexels-photo-1198178.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        "https://images.pexels.com/photos/1034859/pexels-photo-1034859.jpeg",
-      ],
-      shirts: [
-        "https://c0.wallpaperflare.com/preview/710/671/653/people-girl-female-lady.jpg",
-        "https://w0.peakpx.com/wallpaper/114/476/HD-wallpaper-gorgeous-girl-outdoors-wearing-sport-clothes-girls-model.jpg",
-      ],
-      shoes: [
-        "https://images3.alphacoders.com/117/1174056.jpg",
-        "https://www.hdwallpapers.in/download/girl_model_is_wearing_red_dress_4k_hd_girls-2560x1440.jpg",
-      ],
-      Blaouse: [
-        "https://www.hdwallpapers.in/download/women_model_black_dress_4k_5k_hd-HD.jpg",
-        "https://rare-gallery.com/mocahbig/82116-dress-girls-model-hd-4k-5k.jpg",
-        "https://www.pixel4k.com/wp-content/uploads/2019/12/black-dress-clothing-girl_1575665766.jpg",
-      ],
-    },
-    men: {
-      main: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-new/subhome-xmedia-10//w/1360/IMAGE-landscape-fill-388c511e-0ae7-4fde-a636-e02f7e298861-default_0.jpg?ts=1709565857511",
-      ],
-      tshirt: [
-        "https://static.zara.net/photos///2024/V/T/1/p/0686/140/144/2/w/1097/0686140144_15_3_1.jpg?ts=1708528064312",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-coats/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-8254875b-8f3a-4892-9cbe-aaebd3704fbb-default_0.jpg?ts=1708606681952",
-      ],
-      halfpant: [
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-shoes/subhome-xmedia-08//w/1360/IMAGE-landscape-fill-d506e232-e46c-4a6b-b3a6-b825618a3d0e-default_0.jpg?ts=1708531602763",
-        "https://static.zara.net/photos///contents/mkt/spots/ss24-north-man-joinlife/subhome-xmedia-08//w/1360/IMAGE-landscape-default-fill-e5f251d6-cf1a-4ea4-8980-4cbaa5b602c5-default_0.jpg?ts=1708507654789",
-      ],
-    },
-  };
-
   const [state, setState] = useState({
     currentCategory: "women",
     autoplayEnabled: true,
@@ -88,6 +59,86 @@ export default function Home() {
     data: [],
     loading: false,
   });
+  const { token } = useContext(userContext);
+
+  const fetchproducts = async () => {
+    setState((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
+
+    try {
+      const response = await axios.get(
+        `http://localhost:1122/Product/carousel-products`,
+        {
+          headers: {
+            Authenticate: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log(response.data, "hello");
+
+      setState((prevState) => ({
+        ...prevState,
+        data: Array.isArray(response.data) ? response.data : [],
+        loading: false,
+      }));
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setState((prevState) => ({
+        ...prevState,
+        loading: false,
+        error: error.message,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    fetchproducts();
+  }, []);
+
+  useEffect(() => {
+    if (state.data && state.data.length > 0) {
+      // Dynamically categories ko identify karenge
+      const categories = {};
+
+      // Har product ko loop karenge aur categories ko dynamically add karenge
+      state.data.forEach((product) => {
+        const categoryName = product.category.MainCategoryName;
+
+        // Agar category already exist karti hai toh uske main images ko add karenge
+        if (!categories[categoryName]) {
+          categories[categoryName] = [];
+        }
+
+        // Main image ko add karenge
+        categories[categoryName].push({
+          MainImage: product.MainImage,
+          Name: product.Name,
+        });
+      });
+
+      // Categories ko unki length ke hisaab se sort karenge
+      const sortedCategories = Object.entries(categories)
+        .sort((a, b) => b[1].length - a[1].length) // Length ke hisaab se descending order
+        .reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+
+      // Sorted categories ko state mein set karenge
+      setState((prevState) => ({
+        ...prevState,
+        categories: sortedCategories,
+      }));
+
+      // Sorted categories ko console mein log karenge
+      console.log("Sorted Categories:", sortedCategories);
+    }
+  }, [state.data]);
+
   const swiperRef = useRef(null);
   const navigate = useNavigate();
   const handleCategoryChange = (category) => {
@@ -96,7 +147,7 @@ export default function Home() {
       currentCategory: category,
     }));
 
-    const subcategories = categories[category];
+    const subcategories = state.categories[category];
     const defaultSubcategory = subcategories
       ? Object.keys(subcategories)[0]
       : null;
@@ -164,34 +215,51 @@ export default function Home() {
       ...prevState,
       manualScroll: true,
     }));
+
     if (state.scrollTimeout) {
       clearTimeout(state.scrollTimeout);
     }
+
+    const timeout = setTimeout(() => {
+      setState((prevState) => ({
+        ...prevState,
+        manualScroll: false,
+      }));
+    }, 500);
+
     setState((prevState) => ({
       ...prevState,
-      manualScroll: setTimeout(() => {
-        state.manualScroll(false);
-      }, 500),
+      scrollTimeout: timeout,
     }));
   };
 
   const handleNextCategory = () => {
-    const categoriesList = Object.keys(categories);
+    const categoriesList = Object.keys(state.categories); // Dynamic categories list
     const currentIndex = categoriesList.indexOf(state.currentCategory);
-    const nextIndex = (currentIndex + 1) % categoriesList.length;
-    handleCategoryChange(categoriesList[nextIndex]);
+
+    if (currentIndex === -1) return; // Agar current category nahi mili toh return karen
+
+    const nextIndex = (currentIndex + 1) % categoriesList.length; // Next index
+    handleCategoryChange(categoriesList[nextIndex]); // Next category pe switch
   };
 
   const handlePrevCategory = () => {
-    const categoriesList = Object.keys(categories);
+    const categoriesList = Object.keys(state.categories); // Dynamic categories list
     const currentIndex = categoriesList.indexOf(state.currentCategory);
+
+    if (currentIndex === -1) return; // Agar current category nahi mili toh return karen
+
     const prevIndex =
-      (currentIndex - 1 + categoriesList.length) % categoriesList.length;
-    handleCategoryChange(categoriesList[prevIndex]);
+      (currentIndex - 1 + categoriesList.length) % categoriesList.length; // Previous index
+    handleCategoryChange(categoriesList[prevIndex]); // Previous category pe switch
   };
 
   const getCategoryButtons = () => {
-    return Object.keys(categories).map((category) => (
+    if (!state.categories || Object.keys(state.categories).length === 0) {
+      return <p>Loading categories...</p>; // Fallback message agar categories load na hui ho
+    }
+
+    return Object.keys(state.categories).map((category) => (
       <button
         key={category}
         onClick={() => handleCategoryChange(category)}
@@ -203,12 +271,27 @@ export default function Home() {
   };
 
   const getCategorySlides = () => {
-    const subcategories = categories[state.currentCategory];
+    if (!state.categories || !state.currentCategory) {
+      return []; // Agar categories ya currentCategory nahi hain toh khali array return karo
+    }
+
+    const subcategories = state.categories[state.currentCategory];
+
+    if (!subcategories) {
+      return []; // Agar currentCategory ke subcategories nahi hain toh khali array return karo
+    }
 
     return Object.keys(subcategories)
       .flatMap((subcategory) => {
-        const imageUrls = subcategories[subcategory];
-        return getSlides(`${state.currentCategory}-${subcategory}`, imageUrls);
+        const products = subcategories[subcategory];
+
+        // Ensure products is always an array
+        const productArray = Array.isArray(products) ? products : [products];
+
+        return getSlides(
+          `${state.currentCategory}-${subcategory}`,
+          productArray
+        );
       })
       .concat([
         <SwiperSlide key={`${state.currentCategory}-social-slide`}>
@@ -222,7 +305,6 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <div className="Home">
       <div className="sticky top-0 z-10 Home_navbar ">
