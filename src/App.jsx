@@ -9,8 +9,6 @@ import {
 import { userContext } from "./Context/UserContext.jsx";
 import "./App.css";
 import ProtectedRoutes from "./Context/ProtectedRoutes.jsx";
-import Spinner from "./Spinner.jsx";
-
 import FinalCartProductView from "./Components/FinalCartProductView/FinalCartProductView.jsx";
 import SingleProduct from "./Components/NewAllProducts/SingleProductData/SingleProduct.jsx";
 import InterCardData from "./Components/PaymentMethod/InterCardData/InterCardData";
@@ -176,13 +174,14 @@ function App() {
             }
           />
           <Route
-            path="/New"
+            path="/Product/:name/:cid/:csid"
             element={
               <ProtectedRoute redirectTo="/welcome">
                 <New />
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/SingleProduct"
             element={

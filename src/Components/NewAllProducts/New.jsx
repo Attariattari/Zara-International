@@ -1,20 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./New.css";
 import Navbar from "../Navbar/Navbar";
 import FullDisplayWithOutDetails from "../NewAllProducts/ProductsPages/FullDisplayWithOutDetails";
 import SamallDipalyProducts from "../NewAllProducts/ProductsPages/SamallDipalyProducts";
 import DetailsDisplayProduct from "../NewAllProducts/ProductsPages/DetailsDisplayProduct";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { userContext } from "./../../Context/UserContext";
 
 function New() {
   const [selectedComponent, setSelectedComponent] = useState(
     localStorage.getItem("selectedComponent") || "FullDisplay"
   );
   const [isScrolled, setIsScrolled] = useState(false);
+  const [state, setState] = useState({
+    currentCategory: "women",
+    autoplayEnabled: true,
+    scrollTimeout: true,
+    manualScroll: false,
+    data: [],
+    newdata: [],
+    loading: false,
+  });
+
+  const { token } = useContext(userContext);
+
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
     localStorage.setItem("selectedComponent", component);
   };
+  const { name, cid, csid } = useParams();
 
+  const fetchNewProducts = async () => {
+    setState((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
+
+    try {
+      const response = await axios.get(
+        `http://localhost:1122/Product/products/new/${cid}`, // cid dynamically pass ho raha hai
+        {
+          headers: {
+            Authenticate: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log(response.data, "hello new data");
+
+      setState((prevState) => ({
+        ...prevState,
+        newdata: Array.isArray(response.data) ? response.data : [],
+        loading: false,
+      }));
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setState((prevState) => ({
+        ...prevState,
+        loading: false,
+        error: error.message,
+      }));
+    }
+  };
+  useEffect(() => {
+    fetchNewProducts();
+  }, []);
   useEffect(() => {
     const storedComponent = localStorage.getItem("selectedComponent");
     if (storedComponent) {

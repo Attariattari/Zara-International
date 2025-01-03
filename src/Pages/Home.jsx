@@ -43,7 +43,6 @@ const getSlides = (category, products) => {
           src={product.MainImage}
           alt={product.Name} // Added alt text for accessibility
           className="Swiper_Slider_Images"
-          onClick={() => navigate("/New")}
         />
       )}
     </SwiperSlide>
@@ -100,42 +99,56 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (state.data && state.data.length > 0) {
-      // Dynamically categories ko identify karenge
+    if (Array.isArray(state.data) && state.data.length > 0) {
+      // Dynamic category object
       const categories = {};
+      let firstNewProduct = null; // Store the first new product
 
-      // Har product ko loop karenge aur categories ko dynamically add karenge
       state.data.forEach((product) => {
-        const categoryName = product.category.MainCategoryName;
+        const categoryName =
+          product?.category?.MainCategoryName || "Uncategorized";
 
-        // Agar category already exist karti hai toh uske main images ko add karenge
         if (!categories[categoryName]) {
           categories[categoryName] = [];
         }
 
-        // Main image ko add karenge
-        categories[categoryName].push({
-          MainImage: product.MainImage,
-          Name: product.Name,
-        });
+        // Create reusable product object
+        const productDetails = {
+          MainImage: product?.MainImage,
+          Name: product?.Name,
+          id: product?._id,
+          cid: product?.category?._id,
+          cn: product?.category?.MainCategoryName,
+          csid: product?.subcategory?._id,
+        };
+
+        // Check if it's the first 'new' product
+        if (product?.new && !firstNewProduct) {
+          firstNewProduct = productDetails;
+        }
+
+        // Add product to its category
+        categories[categoryName].push(productDetails);
       });
 
-      // Categories ko unki length ke hisaab se sort karenge
+      // Sort categories by product count
       const sortedCategories = Object.entries(categories)
-        .sort((a, b) => b[1].length - a[1].length) // Length ke hisaab se descending order
+        .sort((a, b) => b[1].length - a[1].length)
         .reduce((acc, [key, value]) => {
           acc[key] = value;
           return acc;
         }, {});
 
-      // Sorted categories ko state mein set karenge
+      // Update state with categories and first new product
       setState((prevState) => ({
         ...prevState,
         categories: sortedCategories,
+        firstNewProduct, // Add the first new product directly to state
       }));
 
-      // Sorted categories ko console mein log karenge
-      console.log("Sorted Categories:", sortedCategories);
+      if (firstNewProduct) {
+        console.log("First New Product:", firstNewProduct);
+      }
     }
   }, [state.data]);
 
@@ -256,7 +269,7 @@ export default function Home() {
 
   const getCategoryButtons = () => {
     if (!state.categories || Object.keys(state.categories).length === 0) {
-      return <p>Loading categories...</p>; // Fallback message agar categories load na hui ho
+      return <div className="loader"></div>; // Fallback message agar categories load na hui ho
     }
 
     return Object.keys(state.categories).map((category) => (
@@ -270,6 +283,18 @@ export default function Home() {
     ));
   };
 
+  useEffect(() => {
+    if (!state.categories) return;
+
+    // Automatically select the first category by default
+    const defaultCategory = Object.keys(state.categories)[0]; // Pehla (0 index) category select karo
+
+    // Update the state to set the default category
+    if (defaultCategory && state.currentCategory !== defaultCategory) {
+      handleCategoryChange(defaultCategory);
+    }
+  }, [state.categories]);
+
   const getCategorySlides = () => {
     if (!state.categories || !state.currentCategory) {
       return []; // Agar categories ya currentCategory nahi hain toh khali array return karo
@@ -281,25 +306,98 @@ export default function Home() {
       return []; // Agar currentCategory ke subcategories nahi hain toh khali array return karo
     }
 
-    return Object.keys(subcategories)
-      .flatMap((subcategory) => {
+    const slides = [];
+
+    // 🆕 **Sabse Pehle Category-wise Product Show Karo**
+    let categoryProduct =
+      state.data?.find(
+        (product) =>
+          product.new === true &&
+          product.category.MainCategoryName === state.currentCategory
+      ) ||
+      state.data?.find(
+        (product) => product.category.MainCategoryName === state.currentCategory
+      );
+
+    if (categoryProduct) {
+      slides.push(
+        <SwiperSlide
+          key={`category-product-slide-${state.currentCategory}`}
+          onClick={() => {
+            if (
+              categoryProduct.cn &&
+              categoryProduct.cid &&
+              categoryProduct.csid
+            ) {
+              navigate(
+                `/Product/${categoryProduct.cn}/${categoryProduct.cid}/${categoryProduct.csid}`
+              );
+            } else {
+              console.log("Product details are missing:", categoryProduct);
+            }
+          }}
+        >
+          <div className="relative w-full h-full">
+            <div className="relative w-full h-full">
+              <img
+                src={categoryProduct.MainImage}
+                alt="Category Product"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {categoryProduct.new === true && (
+              <h3 className="absolute bottom-3 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md text-sm font-semibold">
+                NEW
+              </h3>
+            )}
+          </div>
+        </SwiperSlide>
+      );
+    }
+
+    // ✅ **Baaki Subcategories ke Products Show Karo**
+    slides.push(
+      ...Object.keys(subcategories).flatMap((subcategory) => {
         const products = subcategories[subcategory];
 
-        // Ensure products is always an array
         const productArray = Array.isArray(products) ? products : [products];
 
         return getSlides(
           `${state.currentCategory}-${subcategory}`,
           productArray
-        );
+        ).map((slide, index) => (
+          <SwiperSlide
+            key={`${state.currentCategory}-${subcategory}-${index}`}
+            onClick={() =>
+              navigate(
+                `/Product/${productArray[index]?.cn}/${productArray[index]?.cid}/${productArray[index]?.csid}`
+              )
+            }
+          >
+            <div className="relative w-full h-full">
+              <div className="relative w-full h-full">{slide}</div>
+              <h3 className="absolute bottom-3 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md text-sm font-semibold">
+                {productArray[index]?.Name || "No Name Available"}
+              </h3>
+            </div>
+          </SwiperSlide>
+        ));
       })
-      .concat([
-        <SwiperSlide key={`${state.currentCategory}-social-slide`}>
-          <div className="social-slide-page w-full h-full flex justify-center items-center">
-            <SocialSlidepage />
-          </div>
-        </SwiperSlide>,
-      ]);
+    );
+
+    // 🌟 **Social Slide Add Karo**
+    slides.push(
+      <SwiperSlide
+        key={`${state.currentCategory}-social-slide`}
+        onClick={() => console.log("Social Slide Clicked")}
+      >
+        <div className="social-slide-page w-full h-full flex justify-center items-center">
+          <SocialSlidepage />
+        </div>
+      </SwiperSlide>
+    );
+
+    return slides;
   };
 
   useEffect(() => {
@@ -347,7 +445,6 @@ export default function Home() {
           onTransitionEnd={() => {}}
           pagination={false}
           onScroll={() => handleScroll()}
-          onClick={() => navigate("/New")}
         >
           {getCategorySlides()}
         </Swiper>

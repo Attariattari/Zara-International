@@ -27,7 +27,7 @@
 
 .socialmedia a {
   width: 90%;
-  border-bottom: 1px dotted black;
+  border-bottom: 1px dotted var(--border-color);
 }
 
 .privacyarea {

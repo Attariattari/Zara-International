@@ -19,21 +19,27 @@
   align-items: center;
   background-color: var(--bg-color);
   color: var(--text-color);
-  border-radius: 5%; /* Circular shape for a modern look */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Subtle layered shadow */
+  border-radius: 5%;
+  /* Circular shape for a modern look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  /* Subtle layered shadow */
   transition: all 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer; /* Indicates interactivity */
+  cursor: pointer;
+  /* Indicates interactivity */
 }
 
 .sidebaricon:hover {
-  transform: scale(1.1); /* Slight scale-up for hover effect */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+  transform: scale(1.1);
+  /* Slight scale-up for hover effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
+  /* Stronger shadow on hover */
 }
 
 .sidebaricon svg {
   width: 20px;
   height: 20px;
-  transition: fill 0.3s ease; /* Smooth transition for color change */
+  transition: fill 0.3s ease;
+  /* Smooth transition for color change */
 }
 
 .sidebaricon:hover svg {
@@ -82,28 +88,51 @@
 
 .navlhs div {
   cursor: pointer;
-  background-color: var(--bg-color);
-  height: 35px;
-  padding: 8px 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06); /* Layered shadow for depth */
-  font-weight: 500;
-  color: var(--text-color);
-  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   text-align: center;
+  font-weight: 500;
+  height: 35px;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+  /* Ensure child elements respect the rounded corners */
 }
 
+/* NavLink ko pura div occupy karna */
+.navlhs div .NavLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  /* Flex use kar ke align karenge */
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  height: 35px;
+}
+
+/* Active State */
+.navlhs div .NavLink.active {
+  background-color: var(--bg-color);
+  /* Active link highlight */
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+/* Hover Effect */
 .navlhs div:hover {
   background-color: var(--text-color);
   color: var(--bg-color);
-  transform: translateY(-4px); /* Lift effect */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* Click (Active State) */
 .navlhs div:active {
-  transform: translateY(0); /* Reset lift effect on click */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1); /* Slightly dimmed shadow */
-  opacity: 0.95; /* Minor feedback effect */
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+  opacity: 0.95;
 }
 
 .searchicon {
@@ -125,11 +154,11 @@
   display: flex;
 }
 
-.secondsections > * {
+.secondsections>* {
   flex: 1;
 }
 
-.secondsection > * {
+.secondsection>* {
   flex: 1;
 }
 
@@ -161,10 +190,12 @@
     margin: 20px 0px 0px 90px;
     width: 44.5%;
   }
+
   .secondsection {
     width: 65%;
     display: flex;
   }
+
   .navlhs {
     padding: 20px 20px 0px 0px;
   }
@@ -176,6 +207,7 @@
     display: flex;
   }
 }
+
 @media (max-width: 1024px) {
   .secondsection {
     width: 75%;
@@ -184,18 +216,22 @@
     justify-content: space-between;
     align-items: center;
   }
+
   .navzara {
     margin: 20px 0px 0px 90px;
     width: 70%;
   }
+
   .navlhs {
     width: 100%;
     justify-content: center;
   }
+
   .navsearch {
     transition: all 0.6s ease;
     width: 75%;
   }
+
   .input {
     height: 50%;
   }
@@ -225,10 +261,12 @@
   .navsearch {
     display: none;
   }
+
   .navlhs {
     width: 100%;
     justify-content: end;
   }
+
   .navlhs div {
     display: block;
   }
